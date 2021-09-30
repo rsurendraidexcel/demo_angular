@@ -1,0 +1,60 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+
+        <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Bucket Ageing</h3>
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="addEditAPBucketAgeing" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveData(addEditAPBucketAgeing.value,addEditAPBucketAgeing.valid)">
+                <div class="has-scrollbar" id="main_contents">
+                    <div class="form-group">
+                            <div class="row no-marg">
+                                <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                    <label>Bucket Number</label>
+                                    <input type="text" formControlName="bucket_number" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                    <label>Bucket Days
+                                        <span class="required">*</span>
+                                    </label>
+                                    <input type="text" formControlName="bucket_days" class="form-control" id="bucketdays" [ngClass]="displayFieldCss('bucket_days')">
+                                    <cync-input-field-error-msg [control]="getFormControl('bucket_days')" labelName="Bucket Days">
+                                    </cync-input-field-error-msg>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                    <label>Bucket Name
+                                        <span class="required">*</span>
+                                    </label>
+                                    <input type="text" formControlName="bucket_name" class="form-control" id="bucketname" [ngClass]="displayFieldCss('bucket_name')">
+                                    <cync-input-field-error-msg [control]="getFormControl('bucket_name')" labelName="Bucket Name">
+                                    </cync-input-field-error-msg>
+                                </div>
+                            </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                                <hr>
+                                <button (click)="navigateToSummaryPage()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel">
+                                    <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                                </button>
+
+                                <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" (click)="saveNContinue(addEditAPBucketAgeing.value,addEditAPBucketAgeing.valid)" id="action_savenew"
+                                    label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                                </button>
+
+                                <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+
+    </div>
+</div>

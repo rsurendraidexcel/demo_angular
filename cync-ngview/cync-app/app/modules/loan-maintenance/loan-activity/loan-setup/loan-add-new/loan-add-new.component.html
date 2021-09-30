@@ -1,0 +1,174 @@
+<div mat-dialog-title style="background: #3466b3; border: 1px solid #3466b3;">
+	<label class="top-title"> Create New </label>
+	<i style="font-size:20px; cursor: pointer; margin: 5px; color: #ffff;" class="fa close-btn pull-right"
+		(click)="closeModal()">&#xf057;</i>
+</div>
+<div class="hrline"></div>
+<div mat-dialog-content>
+	<div class="pad-inner">
+		<div class="inner-scroll-modal-content">
+			<div class="row form-group bPCommonCardsBlock">
+				<div [formGroup]="createNewLoanSetUpForm">
+					<div class="form-group">
+						<div class="row basicParameterWarpbox">
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label>Loan ID<span class="required">*</span></label>
+								<input type="text" class="form-control commonDropdownStyle" formControlName="loan_no">
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Loan Name<span class="required">*</span></label>
+								<input type="text" class="form-control commonDropdownStyle" formControlName="loan_name">
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Loan Type </label>
+								<select class="form-control commonDropdownStyle" formControlName="loan_type">
+									<option *ngFor="let loanItem of loanTypesDropDown" value="{{loanItem.id}}">
+										{{loanItem.loan_type}} </option>
+								</select>
+							</div>
+
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Credit Line </label>
+								<input type="text" class="form-control commonDropdownStyle" formControlName="credit_line_amt">
+							</div>
+						</div>
+						<div class="row basicParameterWarpbox">
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label>Interest Rate Code</label>
+
+								<select class="form-control commonDropdownStyle" formControlName="interest_rate_code_id">
+									<option selected value="null">Please Select</option>
+									<option *ngFor="let interestRateItem of interestRateCodeDropDown" value="{{interestRateItem.id}}">
+										{{interestRateItem.rate_name}} </option>
+								</select>
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Interest Rate</label>
+								<input type="text" class="form-control commonDropdownStyle" disabled>
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Rate Adjustment </label>
+								<input type="text" class="form-control commonDropdownStyle" disabled>
+							</div>
+
+						</div>
+						<div class="row basicParameterWarpbox">
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Min. Interest Rate</label>
+								<input type="text" class="form-control commonDropdownStyle" formControlName="min_interest_rt">
+							</div>
+
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Max. Interest Rate </label>
+								<input type="text" class="form-control commonDropdownStyle" formControlName="max_interest_rt">
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Loan Status </label>
+								<select class="form-control commonDropdownStyle" formControlName="active">
+									<option value="true" selected>Active</option>
+									<option value="false">Inactive</option>
+								</select>
+							</div>
+						</div>
+						<div class="row basicParameterWarpbox">
+							<div formArrayName="custom_fields">
+								<!-- <fieldset class="field-Panel">
+									<legend class="legend-title">UDF Mapping Field:</legend> -->
+								<div class="custom-field" *ngFor="let customAttributes of custom_fields_attributes; let idx=index">
+									<div class="bpcommonElementBoxMd margin-box-common">
+										<div [formGroupName]="idx" class="bpcommonElementBoxMd margin-box-common">
+											<div *ngIf="customAttributes.validation_type !== 'LOV'">
+												<label>{{customAttributes.udf_name}}</label>
+												<input type="text" class="form-control commonDropdownStyle" formControlName="udf_value" />
+											</div>
+											<div *ngIf="customAttributes.validation_type === 'LOV'">
+												<label>{{customAttributes.udf_name}}</label>
+												<select type="text" class="form-control commonDropdownStyle" formControlName="udf_value">
+													<option selected *ngFor="let lvOpt of customAttributes.lov_values; let lvIdx=index" [value]="lvOpt.lov_value"> {{lvOpt.lov_value}}</option>
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							<!-- </fieldset>	 -->
+							</div>
+						</div>
+						<div class="row basicParameterWarpbox">
+
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label>Loan Signed</label>
+								<br>
+								<p-calendar yearRange="2000:2030" formControlName="loan_signed_on_dt" dateFormat="mm/dd/yy"
+									[monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+									[inputStyle]="{'width':'260px'}" [appendTo]="loanSignedPicker">
+								</p-calendar>
+								<div #loanSignedPicker></div>
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Loan Origination<span class="required">*</span></label>
+								<br>
+								<p-calendar yearRange="2000:2030" formControlName="loan_origination_dt" dateFormat="mm/dd/yy"
+									[monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+									[inputStyle]="{'width':'260px'}" [appendTo]="loanOriginationPicker">
+								</p-calendar>
+								<div #loanOriginationPicker></div>
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Loan Maturity </label>
+								<br>
+								<p-calendar yearRange="2000:2030" formControlName="loan_maturity_dt" dateFormat="mm/dd/yy"
+									[monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+									[inputStyle]="{'width':'260px'}" [appendTo]="loanMaturityPicker">
+								</p-calendar>
+								<div #loanMaturityPicker></div>
+
+							</div>
+							<div class="bpcommonElementBoxMd margin-box-common">
+								<label> Loan Paid Off </label>
+								<input type="text" class="form-control commonDropdownStyle" disabled>
+							</div>
+
+						</div>
+						<div class="row basicParameterWarpbox">
+							<label class="mg-ducument-label"> Loan Documents</label>
+							<div class="upload-section">
+								<div class="file-Uplaod">
+									<label
+										class="file-upload-label ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+										<i class="fa fa-upload" aria-hidden="true"></i> Upload Loan Documents </label>
+									<input type="file" name="documents" multiple (change)="onFileSelect($event)"
+										formControlName="documents" />
+								</div>
+								<div class="fileList">
+									<span *ngFor="let item of listFile; let i =index;">
+										{{item.name}} <i class="fa fa-window-close remove-file" (click)="removeFile(i)"
+											aria-hidden="true"></i>
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="row basicParameterWarpbox">
+							<div class="bpcommonElementCheckBoxMd margin-Checkbox-common" style="margin-right: -2.3vw;">
+								<label>Add To BBC
+									<input type="checkbox" class="checkbox-controle" formControlName="add_to_bbc" />
+								</label>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="right-btn-groups" style="margin-right: 15px;">
+	<button type="button"
+		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn"
+		(click)="onClickSave()" style="margin-right: 5px;">Save</button>
+	<button type="button"
+		class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn"
+		(click)="createSaveAndNew()">Save & New</button>
+	<div>

@@ -1,0 +1,186 @@
+
+.m-t-15{
+    margin: 0 !important;
+    margin-top: 15px !important;
+}
+
+// css for template name box
+.tempNameBlock {
+    width: 44.5vw;
+}
+#templateName{
+    width: 65%;
+    height: 2vw;
+    margin-left: 5px;
+}
+//************
+
+// css for template description box
+.tempDescriptionBlock {
+    margin-left: 10px;
+    width: 36.5vw;
+    
+}
+#templateDescription{
+    width: 70%;
+    height: 2vw;
+    margin-left: 2px;
+}
+//************
+
+// css for template buttons
+.templateDetailsButtonStyle{
+    width: 15vw;
+    display: flex;
+}
+.buttonspanTemplate{
+    margin-bottom: 4px;
+    margin-left: 3px;
+    font-weight: 300;
+}
+.templateActivePannel{
+    margin-top: 0.3vw;
+    width: 5.7vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.templateDefaultPannel{
+    margin-top: 0.3vw;
+    width: 6.2vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+//*********
+
+.moreMarginhr {
+    margin: 5px 0px 5px 0px;
+    height: 1px;
+    border-collapse: collapse;
+    border-top:1px solid  lightgrey;
+    display: block;
+  }
+
+
+
+.topHeadingPannel{
+    margin: 0px;
+    background: #F4F1F1;
+}
+.templateDetailPannel{
+    margin: 20px;
+    display: flex;
+}
+// .primarysavebtn{
+//     height: 80%;
+// }
+.primarycancelbtn{
+
+    margin-left: 10px;
+}
+.text-right{
+    text-align: right;
+}
+
+// ***** Switch button Css
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 37px;
+    height: 17px;
+  }
+  
+  .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 11px;
+    width: 11px;
+    left: 1px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(17px);
+    -ms-transform: translateX(17px);
+    transform: translateX(17px);
+  }
+  
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+
+// ***********************
+
+.linkBtnActive{
+    background-color:  #F4F1F1;
+}
+
+.linkBtninActive{
+    background-color: white;
+}
+
+.active {
+    display: block;
+}
+.inactive{
+    display: none;
+}
+
+.tabbuttonBar{
+    border-bottom: 1px solid lightgrey;
+}
+
+.actionIconLink{
+    margin-right: 1.2vw;
+    cursor: pointer;
+}
+
+// back navigation button css
+.headingmain{
+    display: flex
+}
+.backIndexLink{
+    margin-top: 7px;
+}
+.backIndexicon{
+    font-size: 18px;
+    color: darkgray;
+    cursor: pointer;
+}

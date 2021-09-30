@@ -1,0 +1,90 @@
+
+<div class="app-body-container bg-white loan-enquiry-main-dev" id="cync_app-body-container">
+	<div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+	<div class="pad-inner">
+		<div class="row">
+			<div class="col-md-12 loan-equiry-heading">
+        <h3 style="margin: 0;">AR Aging Summary Report
+
+        </h3>
+        </div>
+
+        </div>
+        <form  #myform="ngForm" (ngSubmit)="saveForm(myform)">
+        <div class="row" style="margin-top: 20px;">
+          <div class="search_row">
+            <div class="search-from-date" style="display:none !important">
+              <label id="fromED" for="from_effective_date">Date Macro</label>&nbsp;&nbsp;
+              <select ngModel name="date_macro">
+                <option value=null>Select</option>
+                <option value="Today">Today</option>
+                <option value="Yesterday">Yesterday</option>
+                <option value="This Week">This Week</option>
+                <option value="Last Week">Last Week</option>
+                <option value="This Week-to-date">This Week-to-date</option>
+                <option value="Last Week-to-date">Last Week-to-date</option>               
+                <option value="Next Week">Next Week</option>
+                <option value="Next 4 Week">Next 4 Week</option>
+                <option value="This Month">This Month</option>
+                <option value="Last Month">Last Month</option>
+                <option value="This Month-to-date">This Month-to-date</option>
+                <option value="Last Month-to-date">Last Month-to-date</option>  
+                <option value="Next Month">Next Month</option>
+                <option value="This Fiscal Quarter">This Fiscal Quarter</option>
+                <option value="Last Fiscal Quarter">Last Fiscal Quarter</option>
+                <option value="This Fiscal Quarter-to-date">This Fiscal Quarter-to-date</option>
+                <option value="Last Fiscal Quarter-to-date">Last Fiscal Quarter-to-date</option>  
+                <option value="Next Fiscal Quarter">Next Fiscal Quarter</option>
+                <option value="This Fiscal Year">This Fiscal Year</option>
+                <option value="Last Fiscal Year">Last Fiscal Year</option>
+                <option value="This Fiscal Year-to-date">This Fiscal Year-to-date</option>
+                <option value="Last Fiscal Year-to-date">Last Fiscal Year-to-date</option>  
+                <option value="Next Fiscal Year">Next Fiscal Year</option>
+              </select>
+            </div>
+            <div class="search-from-date">
+              &nbsp;
+              <label id="toED" for="to_effective_date">Report Date</label> &nbsp;
+              <p-calendar name="report_date" [(ngModel)]="report_date" placeholder="report date" yearRange="2000:2030" dateFormat="mm/dd/yy"
+                [monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+                [inputStyle]="{'width':'150px'}" [maxDate]="current_date"></p-calendar>
+            </div>
+            <div class="aging-method-div">
+              <label id="fromED" for="from_effective_date">Aging Method</label>&nbsp;&nbsp;
+    
+              <label class="radio-inline" style="font-size: 15px !important;">
+                <input id="checkAll" checked [(ngModel)]="aging_method" type="radio" name="aging_method" value="Current">Current
+              </label>
+              <label class="radio-inline" style="margin-left: 10px; font-size: 15px !important;">
+                <input id="checkDate" [(ngModel)]="aging_method" type="radio" name="aging_method" value="Report_Date">Report Date
+              </label>
+            </div>
+            <div class="search-button-div">
+              <button type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary padding roundhouse" 
+               >Fetch From QuickBooks</button>   
+               <!-- <button type="button" (click)="resetForm(myform)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-cancel padding roundhouse" 
+               >Reset</button>    -->
+
+            </div>
+
+          </div>
+
+      </div>
+    </form>
+        <div class="hscrollbar-tab" style="margin-top: 17px;">
+         
+          <div id="mainGridPannel" class="row gridMainPannel">
+           
+              <cync-grid  [rowSelection]="'single'" [floatingFilter]="true" [cyncGridConfig]="cyncGridConfig"
+                [cyncRowData]="cyncRowData" [cyncColumnDefs]="cyncColumnDefs" (cyncOnGridReady)="cyncGridReady($event)" [pagination] = "true"
+                [paginationPageSize]="10">
+              </cync-grid>
+      </div>
+      <div class="search-button-div" style="width: 100%; text-align: center;">
+        <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary padding roundhouse" 
+         ><i style="color: blanchedalmond;" class="fa fa-cloud-download" aria-hidden="true"></i>&nbsp;Import</button>   
+      </div>
+      </div>
+        </div>
+        </div>
+        

@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ManageInterestRateCodesComponent } from './manage-interest-rate-codes.component';
+
+describe('ManageInterestRateCodesComponent', () => {
+  let component: ManageInterestRateCodesComponent;
+  let fixture: ComponentFixture<ManageInterestRateCodesComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ManageInterestRateCodesComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ManageInterestRateCodesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,32 @@
+<div class="app-body-container bg-white is_summary" id="component_html_wradio">
+    <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+    <div class="pad-inner">
+        <div class="row table-header">
+            <h3>ABL Auto File Uploads</h3>
+        </div>
+        <div class="p-t-16"></div>
+        <div class="ui-datatable-tablewrapper">
+            <!-- DATATABLE STARTS -->
+            <div class="has-scrollbar remo_padding row" id="cync_main_contents_wradio">
+
+                <p-dataTable id="MyDataTable" *ngIf="isGridDataLoaded" tableStyleClass="ui-datatable-resizable" [scrollable]="false" #dt
+                    [value]="ablAutoFileUploadAPIResponse.monarch_uploaded_file" dataKey="id" [lazy]="false">
+
+                    <p-column *ngFor="let col of autoFileUploadModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+                        [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+                        [style]="{'width':'300px'}">
+
+                        <ng-template *ngIf="col.field == 'action' " let-autoFileUploadsModel="rowData" pTemplate="body">
+                            <span class="ui-cell-data">
+                                <i class="fa fa-times-circle uploads_delete hand" (click)="deleteClickedRow(autoFileUploadsModel)"></i>
+                            </span>
+                        </ng-template>
+
+                    </p-column>
+
+                </p-dataTable>
+                <!-- DATATABLE ENDS -->
+            </div>
+        </div>
+    </div>
+</div>

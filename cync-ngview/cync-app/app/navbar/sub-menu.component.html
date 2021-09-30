@@ -1,0 +1,8 @@
+<div *ngIf="isMenuColumnArrayCalculated" >
+	<div *ngFor="let menuColumnModel of menuColumnModelArray">
+		<div  class='menu-col' >
+				<menu-list [menuList] = "menuColumnModel.column" [level]="1"></menu-list>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+</div>

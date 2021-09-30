@@ -1,0 +1,48 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="pad-inner">
+    <h3 class="no-m-bt">Cash Controls - Summary</h3>
+    <div class="p-t-16">
+      <div class="cync-grid-search row no-marg">
+        <div class="col-md-6 col-sm-6 col-xs-12 p_l_1 hidden-xs hidde-sm">
+          <div class="input-group grid-search">
+            <input #searchText (input)="onFilterTextBoxChanged(searchText)" placeholder="Search Here" type="text"  [(ngModel)]="searchTerm"
+              class="form-control search-input-text" aria-describedby="basic-addon3" autocomplete="off" />
+            <span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+              <i *ngIf="globalSearchCloseIcon==true" class="fa fa-close" aria-hidden="true">
+              </i>
+              <i *ngIf="globalSearchIcon==true" class="fa fa-search" aria-hidden="true">
+              </i>
+            </span>
+          </div>
+        </div>
+        <div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right">
+          <i id="New" aria-hidden="true" (click)="goToAdd()" class="hand fa fa-plus fa-1x f_s_20 clr_grey"
+          [style.display]="isAddPermitted ? 'inline' : 'none'"
+            data-toggle="tooltip" data-placement="top" title="Add New">
+          </i>
+          <i id="Edit" aria-hidden="true" (click)="goToEdit()" data-toggle="tooltip" data-placement="top" title="Edit"
+            [style.display]="isEditPermitted ? 'inline' : 'none'"
+            [ngClass]="selectedRows.length === 1 ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':
+             'hand fa fa-pencil fa-1x clr_grey f_s_20 clr_grey icon_disabled operation_disabled'">
+          </i>
+          <i id="Delete" (click)="doDelete()" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+            title="Delete" [style.display]="isDeletePermitted ? 'inline' : 'none'"
+            [ngClass]="selectedRows.length>0 ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'">
+          </i>
+          <i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true"
+            data-toggle="tooltip" data-placement="top" title="Export" (click)="exportData()"
+            *ngIf="isExportButtonDisable()">
+          </i>
+        </div>
+      </div>
+      <div>
+        <ag-grid-angular #cashControlGrid style="width: 100%; height: calc(100vh - 300px); padding: 15px;"
+          class="ag-theme-balham" [columnDefs]="cashControlColumnDefs" [defaultColDef]="cashControlDefaultColDef"
+          [floatingFilter]="true" [rowData]="cashControlRowData" rowSelection="multiple"
+          (rowSelected)="onRowSelected($event)" [gridOptions]="cashControlGridOptions"
+          (gridReady)="cashControlOnGridReady($event)" [excelStyles]="excelStyles">
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>

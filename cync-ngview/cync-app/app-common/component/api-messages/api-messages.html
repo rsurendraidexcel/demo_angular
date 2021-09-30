@@ -1,0 +1,5 @@
+<div class="api-messages" id="api-messages">
+    <div (click)="hide(msg)" id="every-api-message" [ngClass]="msg.type" *ngFor=" let msg of _msgs">
+        {{ msg.message }}
+    </div>
+</div>

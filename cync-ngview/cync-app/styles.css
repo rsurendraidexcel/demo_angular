@@ -1,0 +1,8 @@
+/*@import url("/assets/css/jquery.dataTables.min.css");
+@import url("/assets/css/style.css");
+@import url("/assets/css/custom.css");
+@import url("/assets/css/page_style.css");
+@import url("/assets/css/angular-dev.css");*/
+
+@import "../node_modules/angular-calendar/dist/css/angular-calendar.css";
+@import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";

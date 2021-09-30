@@ -1,0 +1,220 @@
+<div id="particles-js">
+	<div class="app-body-container bg-white report-template" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+		<div class="close-btn-dash pull-right text-right top-action-btns">
+
+		</div>
+		<div class="pad-inner">
+			<i id="Edit" *ngIf="isEditIconEnabled && !showExportReportPage" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="onClickEdit()"
+			 class="icons-right pull-right hand fa fa-pencil fa-1x clr_grey f_s_20 {{hideEdit}}"></i>
+
+			<i id="Edit" *ngIf="!isEditIconEnabled && !showExportReportPage" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" class="icons-right pull-right icon_disabled fa fa-pencil fa-1x clr_grey f_s_20 {{hideEdit}}"></i>
+
+
+			<img *ngIf="!showExportReportPage" src="{{assetsPath}}/images/icons/ico-reset.png" data-toggle="tooltip" data-placement="top" title="Reset" class="icons-right pull-right hand {{hideEdit}}"
+			 (click)="navigateToHomeCancel()">
+			<h3 class="no-m-bt">Report Templates</h3>
+
+			<div class="brder-1 p-t-32">
+				<div class="has-scrollbar" id="main_contents">
+
+					<div class="row no-marg">
+						<input type="hidden" name='group1' [(ngModel)]="selectedContent" value="reportTemplate">
+
+						<div class="p-t-32">
+							<form [formGroup]="editReportTemplates" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveReportTemplates()">
+								<!-- <div class="has-scrollbar" id="main_contents"> -->
+
+								<div>
+
+									<div class="row no-marg">
+										<div class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+											<label class="mandatory">Product Type :</label>
+											<select formControlName="product_Type" [(ngModel)]="productTypeReport" (change)="onChangeProductType(productTypeReport)"
+											 class="form-control">
+												<option value="undefined">Please Select</option>
+												<ng-container *ngFor="let product of productLetterTypeList">
+													<option [ngValue]="product.module_name">{{product.module_name}}</option>
+												</ng-container>
+											</select>
+										</div>
+									</div>
+
+									<div class=" {{hideName}} col-xs-12 col-sm-12 col-md-12 p_b_10 semi_bold">Template Names</div>
+
+
+									<div class="btn-group btn-group-vertical col-xs-12 col-sm-12 col-md-1 p_b_10 " data-toggle="buttons">
+										<label class="btn radio-inline {{hideRadioButton}}" (click)="onClickRadioButton('payoff_quote')">
+											<input type="radio" name='selectedValue' inputId="opt1" checked>
+											<i class="fa fa-circle-o fa-2x"></i>
+											<i class="fa fa-dot-circle-o fa-2x"></i>
+											<span> Payoff Quote</span>
+										</label>
+									</div>
+
+									<div class="btn-group btn-group-vertical col-xs-12 col-sm-12 col-md-2 p_b_10 " data-toggle="buttons">
+										<label class="btn radio-inline {{hideRadioButton}}" (click)="onClickRadioButton('manage-default-template')">
+											<input type="radio" name='selectedValue' inputId="opt2">
+											<i class="fa fa-circle-o fa-2x"></i>
+											<i class="fa fa-dot-circle-o fa-2x"></i>
+											<span> Report Export Default Name</span>
+										</label>
+									</div>
+
+								</div>
+								<hr/>
+								<div class="">
+
+									<div class="col-xs-12 col-sm-12 col-md-12 p_b_10"></div>
+									<div class="col-xs-12 col-sm-12 col-md-12 p_b_10 {{hideEditor}}" *ngIf="!showExportReportPage">
+
+										<app-cync-text-editor [elementId]="'report_Templates_id'" [(contentText)]="content"></app-cync-text-editor>
+									</div>
+								</div>
+
+								<ng-container>
+									<div class="panel-group summernote-detail col-xs-12 col-sm-12 col-md-12 p_b_10 {{hidePlaceHolder}}" *ngIf="!showExportReportPage">
+										<div class="panel panel-default">
+											<div class="panel-heading">
+												<h6 class="panel-title">
+													<a class="accordion-toggle" [ngClass]="!isCollapseOne ? 'collapsed' : ''" data-toggle="collapse" data-parent="#accordion"
+													 (click)="fnCollapseOne()">
+														Place Holders
+
+													</a>
+												</h6>
+											</div>
+											<div id="collapseOne" class="panel-collapse collapse" [ngClass]="isCollapseOne ? 'in' : ''">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-md-6 col-sm-12 col-xs-12">
+															<div class="col-md-6 col-sm-6 text-right m-t-l">
+																%{{ '{' }}client_name{{ '}' }}
+																<br/> %{{ '{' }}lender_logo_and_address{{ '}' }}
+																<br/> %{{ '{' }}current_date{{ '}' }}
+																<br/> %{{ '{' }}payoff_date{{ '}' }}
+																<br/> %{{ '{' }}principal_amount{{ '}' }}
+																<br/> %{{ '{' }}interest{{ '}' }}
+																<br/> %{{ '{' }}other_fees{{ '}' }}
+																<br/> %{{ '{' }}additional_fees{{ '}' }}
+																<br/> %{{ '{' }}total_payoff_amount{{ '}' }}
+																<br/>
+
+															</div>
+
+															<div class="col-md-6 col-sm-6">
+																Client Name
+																<br> Lender Logo and Address
+																<br> Current Date
+																<br> Payoff Date
+																<br> Principal Amount
+																<br> Interest Amount
+																<br> Other Fees
+																<br> Additional Fees
+																<br> Total Payoff Amoun
+																<br>
+
+
+															</div>
+														</div>
+														<div class="col-md-6 col-sm-12 col-xs-12">
+															<div class="col-md-6 col-sm-6 text-right m-t-l">
+																%{{ '{' }}float_days{{ '}' }}
+																<br/> %{{ '{' }}per_diem{{ '}' }}
+																<br/> %{{ '{' }}bank_details{{ '}' }}
+																<br/> %{{ '{' }}lender_name{{ '}' }}
+																<br/> %{{ '{' }}lender_phone_no{{ '}' }}
+																<br/> %{{ '{' }}instructions{{ '}' }}
+																<br/> %{{ '{' }}disclaimer{{ '}' }}
+																<br/> %{{ '{' }}signature{{ '}' }}
+																<br/>
+															</div>
+															<div class="col-md-6 col-sm-6">
+																Float Days
+																<br> Per Diem
+																<br> Bank Details
+																<br> Lender Name
+																<br> Lender Phone Number
+																<br> Instructions
+																<br> Disclaimer
+																<br> Signature
+																<br>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div *ngIf="showExportReportPage" class="col-xs-12 col-sm-12 col-md-12 ">
+										<form [formGroup]="reportTemplateForm" data-parsley-validate novalidate #addform="ngForm">
+											<hr/>
+
+											<ng-container *ngIf="isAPIResponseLoaded" formGroupName="lender_details">
+												<ng-container formGroupName="export_default_value">
+
+													<div class="col-xs-12 col-sm-12 col-md-3 vertical-line" formArrayName="place_holder">
+														<div class="semi_bold">Place Holders</div>
+														<ul class="vertical-line-ul" dragula="PLACEHOLDER" [(dragulaModel)]="place_holder.controls" (dragulaModelChange)="fnCallOnColumnSort(place_holder.controls);">
+															<li *ngFor="let phObj of place_holder.controls; let i=index" [formGroupName]="i" style="cursor: move;">
+																<span>
+																	&nbsp;
+																	<i class="fa fa-arrows" aria-hidden="true"></i>
+																	&nbsp;
+																	<p-checkbox binary="true" value="phObj.controls.name.value" formControlName="selected" (onChange)="placeHolderValueChange($event,phObj.controls.value.value)"></p-checkbox>
+																	&nbsp;
+																	<span>{{phObj.controls.name.value}}</span>
+																</span>
+															</li>
+														</ul>
+													</div>
+
+													<div class="col-xs-12 col-sm-12 col-md-3 vertical-line">
+														<div class="semi_bold ">Seperate Place Holders By</div>
+														<select class="form-control m-t-10" (change)="changeSeperatorPlaceHolder($event.target.value)" formControlName='split_holder'>
+															<option value="NONE">NONE</option>
+															<option value="-">-Hyphen</option>
+															<option value="^">^Caret</option>
+															<option value="~">~Tilde</option>
+															<option value="_">_Underscore</option>
+															<option value="SPACE"> Space </option>
+														</select>
+													</div>
+
+												</ng-container>
+											</ng-container>
+											<div class="col-xs-12 col-sm-12 col-md-6">
+												<div class="semi_bold">File Name</div>
+												<p class="m-t-10">{{ fileName }}</p>
+											</div>
+										</form>
+									</div>
+								</ng-container>
+								<div *ngIf="!showExportReportPage" class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions {{hideSaveCancel}}">
+									<hr>
+									<button [disabled]='isDisable' (click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton="" type="button"
+									 class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+										<span class="ui-button-text ui-clickable no-pad">Cancel</span>
+									</button>
+									<button [disabled]='isDisable' id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+										<span class="ui-button-text ui-clickable no-pad">Save</span>
+									</button>
+								</div>
+
+								<div *ngIf="showExportReportPage" class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+									<button (click)="navigateToHomeFileNameReportTemplate()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+										<span class="ui-button-text ui-clickable no-pad">Cancel</span>
+									</button>
+									<button *ngIf="isEditIconEnabled" [disabled]='isReportDisable' (click)="saveFileNameReportTemplate(reportTemplateForm.getRawValue())"
+									 [disabled]='' id="action_save" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+										<span class="ui-button-text ui-clickable no-pad">Save</span>
+									</button>
+								</div>
+								<!-- </div> -->
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

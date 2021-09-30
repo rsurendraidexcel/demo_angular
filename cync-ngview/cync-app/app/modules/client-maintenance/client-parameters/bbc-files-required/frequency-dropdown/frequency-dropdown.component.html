@@ -1,0 +1,6 @@
+<select class="form-control" (change)="oChangeFrequency($event)"
+  >
+  <option  >Select</option>
+  <option [selected]="list.id == frequency" *ngFor="let list of frequencyValues" [value]='list.id'>
+    {{list.name}}</option>
+</select>

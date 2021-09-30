@@ -1,0 +1,19 @@
+// @supports (-ms-ime-align:auto) {
+//     .ui-datatable-tablewrapper thead {
+//         position: absolute;
+//         z-index: 2000;
+//         width: 100%;
+//     }
+// }
+
+// @supports (-ms-accelerator:auto) {
+//     .ui-datatable-tablewrapper thead {
+//         position: absolute;
+//         z-index: 2000;
+//         width: 100%;
+//     }
+// }
+
+.ui-datatable-tablewrapper thead th {vertical-align:top}
+
+

@@ -1,0 +1,218 @@
+.control-label {
+    vertical-align: initial !important
+}
+
+.grid_fields {
+    width: 200px;
+    border-color: white;
+    border-radius: 3px !important;
+}
+
+#global_search {
+    height: 34px !important; //Changing the height of global search to match the design and fit calendar icon in BBC date
+}
+.fa-file-pdf-o { cursor: pointer; }
+.upload-btn-wrapper {
+    // position: relative;
+    overflow: hidden; // display: inline-block;
+    .confirm {
+        background: #CB3332;
+        color: white;
+        padding: 6px 10px 7px 10px;
+        position: absolute;
+        border-radius: 3px;
+        bottom: 5px;
+        right: 4px;
+        span {
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .divider {
+            padding: 0px 8px;
+            text-decoration: unset !important
+        }
+    }
+    .btn {
+        border: 1px solid gray;
+        color: white;
+        background-color: #4599dd;
+        padding: 5px 0px 5px 0px;
+        width: 130px;
+        border-radius: 3px;
+        font-size: 14px;
+        text-align: center;
+    }
+    .clear-upload {
+        background-color: #d1e8cf !important; //background-image: url('../../../../../assets/images/bbc-clear-uploads.png');
+        background-position: right top;
+        background-repeat: no-repeat;
+        background-size: auto 100%;
+        border-color: #c6c6c6;
+        color: black;
+        text-align: left;
+        padding: 5px 0px 5px 10px;
+    }
+}
+
+.can_cancel_uploads {
+    overflow: visible !important;
+    position: absolute !important;
+    .upload-btn-wrapper {
+        position: unset !important
+    }
+}
+
+.upload-btn-wrapper input[type=file] {
+    font-size: 25px;
+    // position: absolute;
+    display: none;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.collateral_from {
+    width: 170px;
+}
+.clickable-text{
+    color: #4599dd;
+    cursor: pointer;
+}
+
+.row-expanded {
+    background: #f6f6f7;
+    td,
+    tr,
+    table,
+    thead {
+        background: #f6f6f7;
+    }
+    tr {
+        border-top-color: black;
+    }
+}
+
+.row-expanded td table thead tr th {
+    border-top: 0px !important;
+}
+
+.row-expanded {
+    .brder {
+        border-top: double 1px #9199a6;
+        border-bottom: double 1px #9199a6
+    }
+    .no-brder,
+    .no-brder td {
+        border-bottom-width: 0px !important
+    }
+}
+
+.ui-datatable .ui-row-toggler {
+    font-weight: bold;
+    color: black;
+    font-size: 15px;
+}
+
+.uploads_delete {
+    color: #da1a1a;
+    font-size: 18px;
+}
+.uploads_reload {
+    color: #119205;
+    font-size: 16px;
+    margin-left: 10px;
+}
+.clr_blue, .clr_blue a {
+    color: #4599dd !important;
+}
+
+
+
+.ui-datatable table {
+    table-layout: fixed;
+    .ui-datatable-tfoot {
+        border: 0px;
+        .top_marg {
+            margin-top: 10px;
+        }
+        tr {
+            border: 0px;
+            th {
+                border: 0px;
+                font-weight: normal;
+                color: darkgray;
+                span {
+                    color: #0d99fd
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 1199px) {
+    .grid-search {
+        width: 350px
+    }
+}
+
+.badge {
+    font-size: 11px;
+    border-radius: 1px;
+    padding: 11px 12px;
+}
+
+.badge-default-custom {
+    background: #D2E9CF;
+    color: #000;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    width: 70%;
+}
+
+.badge-danger {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    background: #CC3333;
+    color: #fff;
+}
+
+.ellipsify {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100px;
+    display: inline-block;
+}
+
+.sub_radios p-radiobutton {
+    margin-right: 30px;
+}
+
+.required_source_docs {
+    margin-top: 60px;
+}
+
+.row_marg {
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.display_block{ display: inline-flex !important}
+
+.white-pre {white-space: pre;}
+.cust-pad {padding: 5px 10px!important;}
+
+.exchng_reload {height: 34px;
+    vertical-align: middle;
+    display: table-cell;}
+.input_fld {width: 150px; vertical-align: middle}
+.exchng_reload i{padding-left: 10px;}
+.currency_row{width: 200px; vertical-align: middle}
+.reload_row {width: 65px;}
+.ui-dialog-titlebar {border-bottom: solid 1px lightgray!important; border: 1px!important}
+.ui-dialog .ui-dialog-titlebar {border: 1px!important}
+
+.mapping_icon{
+    width: 17px;
+    height: 17px;
+}

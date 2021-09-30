@@ -1,0 +1,82 @@
+<div class="app-body-container bg-white client-loan-terms-custom" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+
+        <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Third Party Guarantors</h3>
+        <div class="p-t-32">
+            <div class="row tab_panel">
+                <div class="inline tabbtn tablinks">
+                    <!-- <input type="radio" name="guarantors"/> -->
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" checked [routerLink]="['/client-maintenance/client-loan-terms/guarantors']">Guarantors</label>
+                </div>
+                <div class="inline tabbtn tablinks">
+                    <!-- <input type="radio" name="loan_free"/>  -->
+
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/loan-fees']">Loan Fees</label>
+                </div>
+                <div class="inline tabbtn tablinks">
+                    <!-- <input type="radio" name="ineligible_advances"/>"  -->
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/ineligible-advances']">Ineligible/Advances</label>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 p_b_10">
+                    <select disabled class="form-control">
+                        <option selected value="Guarantors">Third Party Guarantors</option>
+                    </select>
+                </div>
+            </div>
+            <form [formGroup]="addEditThirdParty" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveData(addEditThirdParty.value,addEditThirdParty.valid)">
+                <div class="has-scrollbar" id="main_contents">
+                    <div class="form-group">
+                        <div class="row no-marg">
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label>Legal Name
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" formControlName="legal_name" class="form-control" id="legalName" [ngClass]="displayFieldCss('legal_name')">
+                                <cync-input-field-error-msg [control]="getFormControl('legal_name')" labelName="Legal Name">
+                                </cync-input-field-error-msg>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label>% Owned
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" formControlName="percent_owned" class="form-control" id="Percentowned" [ngClass]="displayFieldCss('percent_owned')">
+                                <cync-input-field-error-msg [control]="getFormControl('percent_owned')" labelName="% Owned">
+                                </cync-input-field-error-msg>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                                <hr>
+                                <button (click)="navigateToHome()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel">
+                                    <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                                </button>
+
+                                <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" (click)="saveNContinue(addEditThirdParty.value,addEditThirdParty.valid)"
+                                    id="action_savenew" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                                </button>
+
+                                <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+
+    </div>
+</div>

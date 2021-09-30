@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { BbcPreferenceSetupComponent } from './bbc-preference-setup.component';
+
+describe('BbcPreferenceSetupComponent', () => {
+  let component: BbcPreferenceSetupComponent;
+  let fixture: ComponentFixture<BbcPreferenceSetupComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ BbcPreferenceSetupComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BbcPreferenceSetupComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,57 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+
+    <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+    <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+        
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Adjustment Reasons - {{currentAction}}</h3>
+        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="addEditAdjustment" data-parsley-validate novalidate [formGroup]="createAdjustmentForm"  #addform="ngForm" (ngSubmit)="saveData()" >
+                <div class="has-scrollbar" id="main_contents">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label>Name<span class="required">*</span></label>
+                            <input type="text" formControlName="name" [ngClass]="(isNameValid == true)? 'form-control':'form-control has-error'" placeholder="" value="" (focusout)="checkName()">
+                                <!-- <control-messages [control]="form1.controls.reasonCode" [form]="addform"></control-messages> -->
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-4">
+                            <label>Description</label>
+                            <input type="text" formControlName="description" class="form-control" placeholder="" value=""> 
+                                <!-- <control-messages [control]="form1.controls.description" [form]="addform"></control-messages> -->
+                        </div>
+                           <!--  <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                <div class="help mandatory">&nbsp;</div>
+                                <p-checkbox _ngcontent-c2="" formControlName="dilution" label="" inputid="dilution" name="group2" value="dilution" class="ng-untouched ng-pristine ng-valid">
+                                    <div class="ui-chkbox ui-widget">
+                                        <div class="ui-helper-hidden-accessible">
+                                            <input  type="checkbox" id="dilution" name="group2" value="dilution">
+                                        </div>
+                                        <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                                            <span class="ui-chkbox-icon ui-clickable"></span>
+                                        </div>
+                                    </div>
+                                    <label class="ui-chkbox-label" for="dilution">Dilution</label>
+                                </p-checkbox>
+                            </div>    
+
+                            -->
+                        <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                            <div class="help mandatory">&nbsp;</div>
+                            <p-checkbox _ngcontent-c2="" binary="true" formControlName="dilution" inputid="dilution" label="Dilution" name="group2" value="true" class="ng-untouched ng-pristine ng-valid">
+                            </p-checkbox>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <hr>
+                            <button (click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+                            <button *ngIf="currentAction == 'Add'" id="action_save_new" (click)="saveNew()" label="SaveNew" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad" >Save & New</span></button>
+                            <button id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Save</span></button>
+                        </div> 
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div mat-dialog-title>
+  <label class="top-title"> Add New </label>
+  <i style="font-size:20px; cursor: pointer;" class="fa close-btn pull-right" (click)="cancelButtonClick()">&#xf057;</i>
+</div>
+<div mat-dialog-content>
+  <div class="hrline"></div>
+  <div class="pad-inner">
+    <section>
+      <div class="rollForward-AddForm" [formGroup]="rollForwardLogsForm">
+        <div class="ui-g ui-fluid">
+          <div class="ui-g-12 ui-md-3">
+            <label for="name">Activity Date </label>
+            <div style="display: block;">
+              <p-calendar showOn="button" class='cync-png-calendrar' formControlName="activity_date" [monthNavigator]="true"
+                [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true" dateFormat="mm/dd/yy">
+              </p-calendar>
+            </div>
+          </div>
+        </div>
+          <div class="ui-g ui-fluid padding">
+          <div class="ui-g-12 ui-md-3">
+            <label class="drop">Division</label>
+            <select class="form-control" id="division" formControlName="division_code_id" #divName (change)="changeDivision(divName.value)">
+              <option value=''  selected>Select</option>              
+              <option *ngFor="let list of divisonData" [value]='list.id'>{{list.name}}</option>
+            </select>
+          </div>
+          <div class="ui-g-12 ui-md-3">
+            <label class="drop">Collateral</label>
+            <select class="form-control" id="collateral" formControlName="collateral_advance_rate_id" (change)="changecollateral($event)">
+              <option value=''  selected>Select</option>
+              <option *ngFor="let list of collateralData" [value]='list.id'>{{list.name}}</option>
+            </select>
+          </div>
+          <div class="ui-g-12 ui-md-3">
+            <label class="drop">Product Group </label>
+            <select class="form-control" id="collateral" formControlName="product_group_id">
+              <option value=''  selected>Select</option>
+              <option *ngFor="let list of productGroupData" [value]='list.id'>{{list.name}}</option>
+            </select>
+          </div>
+          <div class="ui-g-12 ui-md-3">
+            <label for="new_sale">Purchases</label>
+            <input type="number" class="form-control" formControlName="purchases" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+          </div>
+        </div>
+        <div class="ui-g ui-fluid">
+          <div class="ui-g-12 ui-md-3">
+            <label for="new_credit">Credits</label>
+            <input type="number" class="form-control" formControlName="credits" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+          </div>
+          <div class="ui-g-12 ui-md-3">
+            <label for="identificationNumber">Removals</label>
+            <input type="number" class="form-control" formControlName="removals" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+          </div>
+          <div class="ui-g-12 ui-md-3">
+            <label for="identificationNumber">Adjustment</label>
+            <input type="number" class="form-control" formControlName="new_adjustment" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+          </div>
+          <div class="ui-g-12 ui-md-3">
+            <label for="identificationNumber">BBC Adjustments</label>
+            <input type="number" class="form-control" formControlName="bbc_adjustment" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="hrline"></div>
+    <section class="btnPanel">
+      <div class="row rightAlign">
+        <button label="Cancel" pButton type="button" (click)="cancelButtonClick()" class="cync-png-button">
+        </button>
+        <button pButton  class="cync-png-button" label="Submit" type="button" [disabled]="isvalidform()"
+          (click)="saveRollForwardData(rollForwardLogsForm.getRawValue())">
+        </button>
+      </div>
+    </section>
+  </div>
+</div>

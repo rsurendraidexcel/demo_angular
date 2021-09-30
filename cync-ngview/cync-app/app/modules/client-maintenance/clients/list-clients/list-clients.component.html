@@ -1,0 +1,23 @@
+<div class="app-body-container bg-white is_summary" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Client List</h3>
+        <div class="p-t-16">
+            <div>
+                <div class="ui-datatable-tablewrapper">
+                    <!-- <p-dataTable [value]="apiResponse" sortMode="multiple" (onRowUnselect)="unSelectChkBox()" (onRowSelect)="rowSelect()" (onHeaderCheckboxToggle)="selectAllChkBox()"
+                        dataKey="id" selectionMode="multiple" [(selection)]="selectedRows" (onFilter)="printFilteredData($event)"
+                        >
+                        <p-column selectionMode="multiple" disableSelection="true"></p-column>
+                        <p-column *ngFor="let col of clientCreationModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+                            [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+                            [style]="{'width':'10%'}"></p-column>
+                        <p-footer>
+                            <span>Showing {{apiResponse.length}} of {{totalRecords}} records</span>
+                        </p-footer>
+                    </p-dataTable> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

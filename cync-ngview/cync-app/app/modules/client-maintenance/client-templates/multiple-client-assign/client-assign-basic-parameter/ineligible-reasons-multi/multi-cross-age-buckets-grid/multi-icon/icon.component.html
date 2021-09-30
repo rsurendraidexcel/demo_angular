@@ -1,0 +1,10 @@
+<div class="col-md-8 pull-right icon">
+  <i *ngIf= "params.data.edited == true" id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Save"
+  class="hand fa fa-save fa-1x clr_grey f_s_20 p-right-10" style = "margin-right: 7px;"
+   (click)= "onClickSave();">
+  </i>
+
+<i *ngIf= "params.data.edited == true" style="margin-right: 7px;" id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+  title="Reset"  class="hand fa fa-undo fa-1x clr_grey f_s_20 p-right-10" (click)= "onResetClick();">
+</i>
+</div>

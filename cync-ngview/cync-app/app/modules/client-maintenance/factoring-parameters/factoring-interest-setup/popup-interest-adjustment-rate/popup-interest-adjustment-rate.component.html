@@ -1,0 +1,65 @@
+<div class="mainContainer">
+    <i class="fa close-btn pull-right custom-icon" (click)="doClosed()">&#xf057;</i>
+    <div class="editTemplatePannel">
+        <div class="editPannelHeading">
+            <h5>Interest Adjustment Rate % Details</h5>
+        </div>
+        <div class="tableWarp">
+            <div class="action-Button-Panel">
+                <div class="button-right-allign">
+                    <i id="New" class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" title="Add"
+                        data-toggle="tooltip" data-placement="top" (click)="onClickAddNew()"
+                        style="padding: 5px 10px 5px 5px;"></i>
+
+                    <!-- <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit"
+                        class="hand fa fa-pencil fa-1x f_s_20 clr_grey" (click)="editAdjustmentRate()"
+                        style="padding: 5px 10px 5px 5px;"></i> -->
+
+                    <i id="Delete"  data-toggle="tooltip" data-placement="top" title="Delete"
+                        class="hand fa fa-trash fa-1x f_s_20 clr_grey icon_disabled" (click)="onDeleteRow()"
+                        style="padding: 5px 10px 5px 5px;"></i>
+
+                    <i id="action_save" data-toggle="tooltip" data-placement="top" title="Save"
+                        class="hand fa fa-floppy-o fa-2x icon_disabled clr_grey f_s_20" (click)="postAdjustmentRate()"
+                        style="padding: 5px 10px 5px 5px;"></i>
+                </div>
+            </div>
+
+            <div class="action-Button-Panel floatingDiv" #addPanel>
+                <div class="col1">
+                    <div class="input-wrap">
+                        <span class="date-input">
+                            <input class="form-input text-input-style " [matDatepicker]="picker"
+                                placeholder="MM/DD/YYYY" [(ngModel)]="effectiveDate">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        </span>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+
+                </div>
+                <div class="col2">
+                    <input class="text-input-style text-right-align" type="text" [(ngModel)]="adjustmentRate" (keyup.enter)="postAdjustmentRate()" />
+                    <i class="fa fa-times f-close" (click)="closeAddPanel()" aria-hidden="true"></i>
+
+                </div>
+            </div>
+            <ag-grid-angular style="width: 100%; height:250px;overflow: scroll;" class="ag-theme-balham"
+                [gridOptions]="adjustmentRateGridOptions" [rowData]="cyncRowData" [columnDefs]="cyncColumnDefs"
+                 rowSelection="single" (rowSelected)="onAdjustmentRateRowSelected($event)"
+                (gridReady)="cyncGridReady($event)" (cellValueChanged)="onCellValueChanged($event)"
+                [defaultColDef]="defaultColDef">
+            </ag-grid-angular>
+        </div>
+
+        <!-- <div class="historyPannelHeading">
+            <h5>Interest Code {{rateCodeName}} Rate History</h5>
+        </div>
+        <div class="hrline"></div>
+        <div class="tableWarp">
+            <ag-grid-angular style="width: 100%; height:190px;overflow: scroll;" class="ag-theme-balham"
+                [rowData]="cyncRowDataHistory" [columnDefs]="cyncColumnDefsHistory" [defaultColDef]="defaultColDef">
+            </ag-grid-angular>
+        </div> -->
+
+    </div>
+</div>

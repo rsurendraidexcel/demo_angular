@@ -1,0 +1,23 @@
+.search_row{
+    margin: 0px 15px 10px 15px;
+}
+
+.search-to-date,
+.search-from-date,
+.search-button-div {
+    width: 300px;
+    display: inline-block !important;
+}
+
+.search-button {
+    height: 25px; 
+    cursor: pointer; 
+    background-color: #e1630b;
+    color: #FFF;
+    border: none;
+    text-decoration: none;
+    text-shadow: none !important;
+    white-space: nowrap;
+    font-size: 13px;
+    padding-bottom: 2px;
+}

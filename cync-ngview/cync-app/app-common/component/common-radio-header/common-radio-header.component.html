@@ -1,0 +1,24 @@
+<form [formGroup]="myForm">
+        <label class="radio-inline">    
+        <input type="radio" formControlName="financial_data_files" id="finanical_statements" value="finanical_statements"
+            label="Financial Statements"
+            class="m-r-20 radio" [routerLink]="['/financial/financial-statements/', radioService.projectID]"
+            (click)="fnRedirectSummary()">Financial Statements
+            <span class="checkmark"></span>
+        </label>
+        <label class="radio-inline" [ngClass]="(!radioService.enableFinanceStatementComplete) ? 'disable-radio-for-router' : ''">
+        <input type="radio" ng-disabled="!radioService.enableFinanceStatementComplete" 
+        formControlName="financial_data_files" class="m-r-20 radio"
+         id="financial_ratio"
+        value="financial_ratio"
+        label="Financial Ratios" [routerLink]="['/financial/financial-ratio/', radioService.projectID]">Financial Ratios
+        <span class="checkmark"></span>   
+    </label>
+        <label class="radio-inline"  [ngClass]="(!radioService.enableFinanceStatementComplete) ? 'disable-radio-for-router' : ''">
+        <input type="radio" ng-disabled="!radioService.enableFinanceStatementComplete" 
+        formControlName="financial_data_files"  id="financial_highligths" value="financial_highligths" 
+        label="Financial Highlights" class="m-r-20 radio"
+        [routerLink]="['/financial/financial-highlights/', radioService.projectID]">Financial Highlights
+        <span class="checkmark"></span> 
+    </label>
+    </form>

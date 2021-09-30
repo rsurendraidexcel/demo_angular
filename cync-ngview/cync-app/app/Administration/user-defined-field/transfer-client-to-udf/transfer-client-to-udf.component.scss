@@ -1,0 +1,119 @@
+//colors
+$color_celeste_approx: #ccc;
+$wild_sand: #f4f4f4;
+$white: #fff;
+$color_mercury_approx: #e3e3e3;
+$web_orange: orange;
+$color_silver_approx: #bfbfbf;
+$color_gallery_approx: #ebecee;
+$color_black_haze_approx: #f6f7f9;
+$color_mine_shaft_approx: #333;
+$color_wild_sand_approx: #f3f5f4;
+$color_alto_approx: #ddd;
+
+.udf-transfer {
+    form {
+        margin-top: 15px;
+    }
+    .checkbox {
+        margin-top: inherit;
+    }
+    .input-group-addon {
+        border: 1px solid $color_celeste_approx;
+        border-left: none !important;
+    }
+    .ui-multiselect-header {
+        background: $wild_sand !important;
+        background: $color_gallery_approx !important;
+        .ui-multiselect-filter-container .fa {
+            position: absolute;
+            left: 1.125em;
+        }
+    }
+    .ui-multiselect-panel {
+        background-color: $color_gallery_approx;
+        .ui-multiselect-item {
+            background: $white !important;
+            padding: 0.5em 0.5em;
+            background-color: $white;
+            border: 1px solid $color_alto_approx;
+            //Instead of the line below you could use @include border-top-right-radius($radius)
+            border-top-right-radius: 4px;
+            //Instead of the line below you could use @include border-top-left-radius($radius)
+            border-top-left-radius: 4px;
+            display: block;
+            margin-bottom: 2px;
+            padding: 7px 26px;
+        }
+    }
+    .ui-multiselect-filter-container {
+        border: 1px solid $color_mercury_approx;
+        border-bottom: none;
+    }
+    .ui-multiselect-items-wrapper {
+        border: 1px solid $color_mercury_approx;
+        border-top: none;
+    }
+    .dragable {
+        margin-top: -20px;
+        border-top: 1px solid $color_mercury_approx !important;
+        background: $white;
+        div {
+            max-height: 256px;
+            height: 230px;
+            text-align: center;
+        }
+        i {
+            margin-top: 85px;
+            color: $color_silver_approx;
+        }
+    }
+    .m-t-7 {
+        margin-top: 7px !important;
+    }
+    .m-t-2 {
+        margin-top: 2px !important;
+    }
+    .search-by {
+        background: $color_black_haze_approx;
+        color: $color_mine_shaft_approx;
+    }
+    .list-autocomplete {
+        background: $color_wild_sand_approx !important;
+    }
+    ul.nav-tabs {
+        cursor: pointer;
+    }
+    .fa-info-circle:before {
+        color: $web_orange;
+    }
+    .multiDemo ul {
+        min-height: 42px;
+        padding-left: 0;
+        li {
+            background-color: $white;
+            border: 1px solid $color_alto_approx;
+            //Instead of the line below you could use @include border-top-right-radius($radius)
+            border-top-right-radius: 4px;
+            //Instead of the line below you could use @include border-top-left-radius($radius)
+            border-top-left-radius: 4px;
+            display: block;
+            margin-bottom: 2px;
+            padding: 10px 15px;
+        }
+    }
+}
+.client-mapping {
+    .ui-multiselect-list {
+        background-color: $color_gallery_approx;
+    }
+    .ui-multiselect-header {
+        background-color: $color_gallery_approx;
+    }
+    .ui-inputtext {
+        background-color: $color_gallery_approx;
+    }
+}
+#basic-addon3 {
+    border-left: 1px solid $color_celeste_approx !important;
+}

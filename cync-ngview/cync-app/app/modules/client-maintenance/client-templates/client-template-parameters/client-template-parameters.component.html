@@ -1,0 +1,120 @@
+<div class="app-body-container bg-white is_summary list-credit-queue" id="app-body-container">
+  <div class="pad-inner">
+    <div class="row topHeadingPannel">
+      <div class="col-md-3 headingmain">
+        <a href="#/client-maintenance/client-templates" class="backIndexLink">
+          <span class="backIndexicon glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <h3 class="no-m-bt" id="templateHeading">View Template</h3>
+      </div>
+      <div class="col-md-4 pull-right text-right">
+        <i id="New" i class="hand fa fa-clone fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip"
+          data-placement="top" title="clone" (click)="cloneTemplate()"></i>
+        <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit"
+          class="hand fa fa-pencil fa-1x clr_grey f_s_20" (click)="onEditAction()"></i>
+        <i id="templateViewDelete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete"
+          class="hand fa fa-trash fa-2x f_s_20 clr_grey" (click)="onRemoveAction()"></i>
+      </div>
+    </div>
+    <div class="row templateDetailPannel">
+
+      <form id="creatClientTemplate" [formGroup]="creatClientTemplateForm" class="form-inline" style="display: flex;">
+        <div class="tempNameBlock form-group">
+
+          <label for="templateName">Template Name:</label>
+          <input formControlName="templateName" type="text" class="form-control" id="templateName" name="templateName">
+        </div>
+        <div class="tempDescriptionBlock form-group">
+          <label for="pwd">Template Description:</label>
+          <input formControlName="templateDescription" type="text" class="form-control" id="templateDescription"
+            name="templateDescription">
+        </div>
+        <div class="templateDetailsButtonStyle">
+
+          <div class="templateActivePannel form-group">
+            <label class="switch">
+              <input type="checkbox" formControlName="isActive">
+              <span class="slider round"></span>
+            </label>
+            <span class="buttonspanTemplate">Active</span>
+          </div>
+          <div class="templateDefaultPannel form-group">
+            <label class="switch">
+              <input type="checkbox" formControlName="isDefault">
+              <span class="slider round"></span>
+            </label>
+            <span class="buttonspanTemplate">Default</span>
+          </div>
+
+        </div>
+      </form>
+      <div class="templateDetailBtn form-group">
+        <p-dropdown [style]="{'width':'210px', 'margin-right':'30px'}" scrollHeight="400px"
+          [options]="templateArrayForDropdown" [(ngModel)]="selectedTemplatedropdown"
+          (onChange)="onChangeTemplateDropDown()" filter="label">
+          <ng-template let-item pTemplate="selectedItem">
+            <div class="text-original">{{item.label}}</div>
+          </ng-template>
+          <ng-template let-template pTemplate="item">
+            <mat-divider></mat-divider>
+            <div class="ui-helper-clearfix" style="position: relative;">
+              <div style="font-size: 14px;">{{template.label}}</div>
+            </div>
+            <div class="ui-helper-clearfix" style="position: relative;">
+              <div style="color:#646363; font-size:11px;">{{template.dsc}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <!-- <p-dropdown [(ngModel)]="selectedTemplatedropdown"
+          [options]="templateArrayForDropdown"
+          [style]="{'width':'230px', 'margin-right':'30px'}" scrollHeight="400px" filter="true" filterBy="name"
+          resetFilterOnHide="true" (onChange)="onChangeTemplateDropDown()">
+
+          <ng-template let-item pTemplate="selectedItem">
+              <span>{{item.id}}}</span>
+            </ng-template> 
+            <ng-template let-template  pTemplate="item">
+                <span  style="font-size: 14px;">{{template.name}}</span><br>
+                <span style="color:#646363; font-size:11px;">{{template.description}}</span>
+            </ng-template> -->
+
+        <!-- <ng-template let-template pTemplate="selectedItem">
+            <mat-divider></mat-divider>
+            <mat-list-item class="{{template.id}}">
+            </mat-list-item>
+          </ng-template> -->
+        <!-- </p-dropdown> -->
+
+      </div>
+
+    </div>
+    <hr class="moreMarginhr">
+    <div class="row tabbuttonBar">
+      <ul class="nav nav-pills">
+        <li [className]="btnStyle1"><a (click)="navigatePannel(1)">Basic Parameters</a></li>
+        <li [className]="btnStyle2"><a (click)="navigatePannel(2)">Ineligible Calculations</a></li>
+        <li [className]="btnStyle3"><a (click)="navigatePannel(3)">Bucket Aging</a></li>
+      </ul>
+
+    </div>
+    <div class="hscrollbar-tab">
+
+    <form>
+      <div [className]="flag1" class="baseParameterPannel mainFormPanel">
+        <app-basic-parameters></app-basic-parameters>
+      </div>
+
+      <div [className]="flag2" class="calculationPannel mainFormPanel">
+        <app-ineligible-calculations>
+        </app-ineligible-calculations>
+      </div>
+
+      <div [className]="flag3" class="bucketAgingPannel mainFormPanel">
+        <app-bucket-aging></app-bucket-aging>
+      </div>
+    </form>
+    
+  </div>
+  </div>
+</div>

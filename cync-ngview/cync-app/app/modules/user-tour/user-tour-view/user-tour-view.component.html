@@ -1,0 +1,133 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="row" style="height: 32px;">
+    <h3 style="margin-top: 2px;">Walkthrough Setup</h3>
+  </div>
+  <div class="hline"></div>
+  <div class="pad-inner">
+    <div class="row">
+        <p-dropdown class="auto-dropdown-list" [style]="{'width':'440px'}"  [(ngModel)]="selectedMenu" [options]="menuHierarchy"
+         optionValue="screen_id"  optionLabel="menu_hierarchy_name" [showClear]="true" placeholder="Please Select Menu" filter="true"
+        (onChange)="onChangeMenuSelected($event)"></p-dropdown> 
+    
+      <button *ngIf="addMoreStep" class="cyncbtn-them-style" (click)="onOpenAddMoreStepForm(tour_id)"
+        style="float: right;">Add more Step</button>
+
+    </div>
+    <div class="cync-tour-container">
+      <div class="tour-left-container">
+        <div class="list-title-panel">
+          <div class="tour-add-pane" *ngIf="screen_id">
+            <button class="btn-corner cyncbtn-them-style" (click)="onAddTourHelp()">Add
+              Walkthrough title</button>
+          </div>
+          <div class="hline"></div>
+          <ul class="tour-list">
+            <li *ngFor="let item of tourList; let i = index">
+              <div class="left-tour-icons" *ngIf="item.status==='active'">
+                <i class="fa fa-check tour-active-icon" aria-hidden="true"></i>
+              </div>
+              <div class="left-tour-icons" *ngIf="item.status==='inactive'">
+                <i class="fa fa-check" aria-hidden="true"></i>
+              </div>
+              <div class="tour-lavel tour-lavel-{{item.status}}" *ngIf="item.status==='inactive'">
+                {{item.tour_help_titile}}</div>
+              <div class="tour-lavel tour-lavel-{{item.status}}" *ngIf="item.status==='active'"
+                (click)="showTourStep($event, item.tour_id)">{{item.tour_help_titile}}</div>
+              <div class="right-tour-icons">
+                <span class="add-guidding-step cyncbtn-them-style" *ngIf="item.status==='inactive'"
+                  title="WalkThrough Related add Step" (click)="onOpenTourStepForm(item.tour_id)" aria-hidden="true">
+                  Add
+                  Step</span>
+                <i class="fa fa-trash-o tour-iconsize" *ngIf="item.status==='inactive'"
+                  title="Deleate WalkThrough Title" (click)="onDeleateTourTitle(item.tour_id)" aria-hidden="true"></i>
+
+                <i class="fa fa-pencil-square-o tour-iconsize" *ngIf="item.status==='active'"
+                  title="Edit Walkthought Title" (click)="onOpenEditForm(item.id, item.tour_help_titile)"
+                  aria-hidden="true"></i>
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="tour-right-container">
+        <ag-grid-angular style="width: 100%; height: calc(100vh - 340px);" class="ag-theme-balham"
+          [rowData]="tourStepData" [columnDefs]="tourColumnDefs" [defaultColDef]="tourDefaultColDef"
+          [gridOptions]="tourGridOptions" [frameworkComponents]="tourFrameworkComponents"
+          (gridReady)="onTourGridReady($event)">
+        </ag-grid-angular>
+
+      </div>
+    </div>
+
+    <!--Add New Tour Title Section-->
+    <div class="tourbox-name-box" id="tourbox-section" *ngIf="helpTourPanel">
+      <div class="tourbox-title">{{walkthroughtTitle}} <div class="fa fa-close circle-btn-closed"
+          (click)="onCancleHelpTour()"></div>
+      </div>
+      <div class="hline"></div>
+      <div class="tour-row tour-container">
+        <label class="txt-label" for="tour_name"> Name <span class="required">*</span> </label>
+        <input type="text" [(ngModel)]="tourNameTitle" class="cync-inputStyle name-inputcol-width" id="tour_name"
+          autocomplete="off" name="tour_name" maxlength="45" />
+      </div>
+      <div class="hline"></div>
+      <div class="tour-row tour-button-panel">
+        <button class="cyncbtn-them-style" *ngIf="buttonAction==='edit'" (click)="onEditTourTitle()">Update</button>
+        <button class="cyncbtn-them-style" *ngIf="buttonAction==='add'" (click)="onAddNewTourTitle()">Add</button>
+        <button class="cyncbtn-normal" id="tourCancel" (click)="onCancleHelpTour()"> Cancel</button>
+      </div>
+    </div>
+
+    <!--Add Steping Mode Section-->
+    <div class="tourbox-step-section" *ngIf="tourStepPanel" id="tourbox-step-section">
+      <div class="tourbox-title"> {{stepFormTtile}} <div class="fa fa-close circle-btn-closed" (click)="onCancleStep()">
+        </div>
+      </div>
+      <div class="hline"></div>
+      <div class="tour-container">
+        <form id="tour_guidding_from" [formGroup]="tourStepForm">
+          <div class="tour-row row-style" *ngIf="editStep==='edit'">
+            <label class="txt-label label-colwidth" for="step_no"> Step No. </label>
+            <input type="text" class="cync-inputStyle" formControlName="step_no" name="step_no" autocomplete="off"
+              maxlength="20" />
+          </div>
+          <div class="tour-row row-style">
+            <label class="txt-label label-colwidth" for="step_title"> Title </label>
+            <input type="text" class="cync-inputStyle inputcol-width" autocomplete="off" id="step_title"
+              autocomplete="off" name="step_title" maxlength="40" formControlName="step_title" />
+          </div>
+          <div class="tour-row" style="display: flex; margin:4px 0px;">
+            <label class="txt-label label-colwidth" for="step_intro"> Content Info </label>
+            <div class="inputcol-width">
+              <textarea class="cync-textAreaStyle" id="step_intro" name="step_intro" autocomplete="off"
+                formControlName="step_intro"></textarea>
+            </div>
+          </div>
+          <div class="tour-row row-style">
+            <label class="txt-label label-colwidth" for="step_element"> Element Selection </label>
+            <input type="text" class="cync-inputStyle inputcol-width" name="tour_element_name" id="step_element"
+              autocomplete="off" formControlName="step_element" style="width: 40%;" /> 
+              <label style="font-size: 10px; margin-left: 12px;"> Postion Example: ID =#id_name, &  class = .class_name </label>
+          </div>
+          <div class="tour-row row-style">
+            <label class="txt-label label-colwidth" for="element_position"> Position </label>
+            <select class="dropdown-style" id="element_position" name="element_position" autocomplete="off"
+              formControlName="element_position">
+              <option value="Left"> Left</option>
+              <option value="Right"> Right</option>
+              <option value="Center"> Center</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="hline"></div>
+      <div class="tour-row row-style tour-button-panel">
+        <button class="cyncbtn-them-style" *ngIf="editStep==='edit'" (click)="onUpdateStep()">Update</button>
+        <button class="cyncbtn-them-style" *ngIf="editStep==='No'" (click)="onSubmitStep()">Submit</button>
+        <button class="cyncbtn-normal" id="tourStepCancel" (click)="onCancleStep()"> Cancel</button>
+      </div>
+    </div>
+    <!--Ednd Steping Mode Section-->
+  </div>
+</div>

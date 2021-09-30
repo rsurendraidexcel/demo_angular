@@ -1,0 +1,38 @@
+<div class="app-body-container bg-white is_summary list-credit-queue" id="cync_app-body-container">
+  <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+  <div class="pad-inner">
+    <h3 class="no-m-bt">Client Templates</h3>
+    <div class="p-t-32">
+      <div class="m-l-r-15">
+        <div class="row templateDetailBar">
+          <div class="col-md-4"> </div>
+          <div class="col-md-5 tamplateActionBox pull-right">
+            <i id="addTemplateFaIcon" class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true"
+              data-toggle="tooltip" data-placement="top" title="Add New" (click)="onAddNewTemplate()"></i>
+            <i id="cloneTemplateFaIcon" class="hand fa fa-clone fa-1x f_s_20 clr_grey" aria-hidden="true"
+              data-toggle="tooltip" data-placement="top" title="clone New" (click)="cloneTemplate()"></i>
+
+            <i id="editTemplateFaIcon" aria-hidden="true" (click)="onEditTemplate()" data-toggle="tooltip"
+              data-placement="top" title="Edit" class="hand fa fa-pencil fa-1x clr_grey f_s_20"></i>
+            <i id="deleteTemplateFaIcon" aria-hidden="true" (click)="onRemoveSelected()" data-toggle="tooltip"
+              data-placement="top" title="Delete" class="hand fa fa-trash fa-2x f_s_20 clr_grey"></i>
+              <a><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary padding" 
+                (click)="onClickAssign()" [disabled]='isDisable'>Assign</button></a>
+          </div>
+        </div>
+        <div class="hscrollbar-tab">
+        <div id="mainGridPannel" class="row gridMainPannel" *ngIf="isDataLoaded">
+          <ag-grid-angular style="width: 100%; height: 100%; overflow: scroll;" class="ag-theme-balham"
+            rowSelection="multiple" [groupSelectsChildren]="true" [rowData]="clientTemplaterowData"
+            [columnDefs]="clientTemplatecolumnDefs" [defaultColDef]="defaultColDef" [floatingFilter]="true"
+            suppressRowClickSelection="true" (gridReady)="clienttemplateGridReady($event)"
+            (rowSelected)="onTemplateRowSelected($event)"
+            [gridOptions]="gridOptions">
+          </ag-grid-angular>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<router-outlet></router-outlet>

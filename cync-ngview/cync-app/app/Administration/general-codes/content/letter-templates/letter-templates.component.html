@@ -1,0 +1,463 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+        <div class="pad-inner">
+            <i id="Edit" *ngIf="isEditIconEnabled" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="onClickEdit()"
+            class="icons-right pull-right hand fa fa-pencil fa-1x clr_grey f_s_20 custom-margin-top {{toogleEditIcon}}"></i>
+            <i id="Edit" *ngIf="!isEditIconEnabled" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" class="icons-right pull-right icon_disabled fa fa-pencil fa-1x clr_grey f_s_20 {{toogleEditIcon}}"></i>
+            <img src="{{assetsPath}}/images/icons/ico-reset.png" data-toggle="tooltip" data-placement="top" title="Reset" class="icons-right pull-right hand custom-margin-top"
+                (click)="onClickReset()">
+            <h3 class="no-m-bt">Content</h3>
+            <!-- <i id="Reset" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Reset" (click)="onClickReset()" [ngClass]="(isDisable)? 'fa fa-undo icon_disabled':'hand fa fa-undo'"></i> -->
+            <div class="row no-marg email-header">
+                    <div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10" data-toggle="buttons">
+                                                  <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140">
+                                                      <input type="radio" name='letter-type' checked>
+                                                      <i class="fa fa-circle-o fa-2x"></i>
+                                                      <i class="fa fa-dot-circle-o fa-2x"></i>
+                                                      <span> Letter Templates</span>
+                                                  </label>
+                                                  <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140" [routerLink]="['/generalCodes/content/letter-names']">
+                                                      <input type="radio" name='letter-type'>
+                                                      <i class="fa fa-circle-o fa-2x"></i>
+                                                      <i class="fa fa-dot-circle-o fa-2x"></i>
+                                                      <span> Letter Names</span>
+                                                  </label>
+                                              </div>
+                    </div>
+            
+            
+            <div class="brder-1">
+                <div class="has-scrollbar" id="main_contents">
+                    <div class="p-t-32" style="padding-left: 20px">
+                        <label style=" margin-left: 10px; ">Lender &nbsp;</label>
+                        <select class="form-control" id="affiliatedLenderSelection" [(ngModel)]="affiliatedLenderSelection" style="width:200px;display: inline-block;" (change)="affiliatedLenderContent($event)">
+                        <option value='select' selected> --Select--</option>
+                        <option *ngFor="let affLender of affiliatedLenderContentList" value= {{affLender.id}}> {{affLender.name}} </option>
+                        </select>
+                    </div>
+                    <div class="row no-marg">
+                        <div class="col-md-8 m-t-10" style="margin-left: 20px">
+                            <div class="btn-group btn-group-vertical-email content-header" data-toggle="buttons">
+                                <label class="radio-inline col-xs-4 col-sm-4 col-md-1 w_140" >
+                                <input type="radio" name="group1" value="letterContent" [(ngModel)]="selectedValue" [disabled]="isRadioEnable" (click)="onClickRadioButtonLetterContent('letterContent')" />
+                                <span> Letter Content </span>
+                                </label>
+                                <label class="radio-inline col-xs-4 col-sm-4 col-md-1 w_140" >
+                                <input type="radio" name="group1"  value="legalContent" [(ngModel)]="selectedValue" [disabled]="isRadioEnable" (click)="onClickRadioButtonLegalContent('legalContent')" />
+                                <span> Legal Content </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row no-marg">
+                        <form [formGroup]="editLetterContent" data-parsley-validate novalidate #addform="ngForm">
+                        <!--  <div>Letter content Start</div> -->
+                        <div class="p-t-32 {{isLetterContentShow}}">
+                            <div class="container-fluid">
+                                <div class="row no-marg">
+                                    <div class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+                                        <label>Product Types</label>
+                                        <select formControlName="productTypeForLetterContent" [(ngModel)]="productTypeLetter" (change)="onChangeProductLetterType(productTypeLetter)"
+                                        class="form-control">
+                                        <option value="" disabled>Please Select</option>
+                                        <ng-container *ngFor="let product of productLetterTypeList">
+                                            <option [ngValue]="product.module_name">{{product.module_name}}</option>
+                                        </ng-container>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+                                        <label>Letter Types</label>
+                                        <select formControlName="letter_types" (change)="onClickLetterType($event.target.value)" class="form-control">
+                                            <option value="" disabled>Please Select</option>
+                                            <!-- <option value="general" *ngIf="editLetterContent.controls.productTypeForLetterContent.value != 'FACTORING'">Terms & Conditions - User</option> -->
+                                            <option value="disclaimer" *ngIf="editLetterContent.controls.productTypeForLetterContent.value != 'FACTORING'">Disclaimer</option>
+                                            <option value="verification_letter" *ngIf="editLetterContent.controls.productTypeForLetterContent.value != 'FACTORING' || editLetterContent.controls.productTypeForLetterContent.value == 'ABL' || editLetterContent.controls.productTypeForLetterContent.value == '' ">Verification Letter</option>
+                                            <option value="notice_of_assignment" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'FACTORING' || editLetterContent.controls.productTypeForLetterContent.value == 'ABL' || editLetterContent.controls.productTypeForLetterContent.value == '' ">Notice of Assignment</option>
+                                            <option value="audit_letter" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'FACTORING' || editLetterContent.controls.productTypeForLetterContent.value == 'ABL' || editLetterContent.controls.productTypeForLetterContent.value == '' ">Audit Letter</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+                                        <label>Letter Name</label>
+                                        <select formControlName="letter_names" class="form-control" [(ngModel)]="letterNameId" (change)="onChangeLetterName(letterNameId)">
+                                            <option value="" disabled>Please Select</option>
+                                            <ng-container *ngFor="let letter of letterNameList">
+                                                    <option [ngValue]="letter.id">{{letter.letter_name}}</option>
+                                                </ng-container>
+                                        </select>
+                                    </div>
+                                    <!-- <div *ngIf = "!disableAddPopupIcon"  class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+                                        <label>&nbsp;</label>
+                                        <i (click)="addLetterName()" id="New" i style="margin-top: 30px" class="hand fa fa-plus fa-1x f_s_20 clr_grey"
+                                            title="Add New"></i>
+                                    </div>
+                                    <p-dialog appendTo="body" header="Add Letter Name" [(visible)]="openPopup" [modal]="true" [responsive]="true" 
+                                    [width]="350" >
+                                    <div class="row ">
+                                        <div class="form-group">
+                                            <label>Letter Name</label>
+                                            <input formControlName="new_letter_name" [(ngModel)]="newLetterName" type="text" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <p-footer>
+                                        <button class="btn btn-primary" type="button" pButton icon="fa-check" (click)="saveLetterName()" label="Save">Save</button>
+                                    </p-footer>
+                                    </p-dialog> -->
+                                </div>
+                                <div class="">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 p_b_10 semi_bold">
+                                        Logo
+                                        <!-- <span (click)="onClickEdit()" class="pull-right hand" data-toggle="tooltip" data-placement="left" title="" data-original-title="Edit"><i  class="fa fa-pencil fa-1x clr_grey" aria-hidden="true" ></i><small>Edit</small></span> -->
+                                    </div>
+                                    <div class="letterType-logo col-md-3 col-sm-3 col-xs-12">
+                                        <a>
+                                        <img id="preview" src="{{imgLogoPath}}" />
+                                        </a>
+                                    </div>
+                                    <div class="col-md-9 col-sm-12 col-xs-12 {{show}}">
+                                        <div label="Save" pbutton="" type="button" class="btn-file ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn pull-left">
+                                            <span class="ui-button-text ui-clickable no-pad">Browse Logo
+                                            <input (change)="uploadLogo($event)" type="file">
+                                            </span>
+                                        </div>
+                                        <div class="alert alert-info letterType-alert col-md-9 col-sm-9 col-xs-12">
+                                            <!-- <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
+                                            <strong class="verticalLine">
+                                            <span class="glyphicon glyphicon-info-sign"></span>
+                                            </strong>
+                                            <small>File format should be in JPG and BMP. File size shouldn't be more then 1MB</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 p_b_10 semi_bold">Letter Format</div>
+                                    <div *ngIf="selectedValue == 'letterContent'" class="col-xs-12 col-sm-12 col-md-12 p_b_10">
+                                        <app-cync-text-editor [elementId]="'letter_Content_id'" [(contentText)]="content"></app-cync-text-editor>
+                                    </div>
+                                </div>
+                                <div class="panel-group summernote-detail col-xs-12 col-sm-12 col-md-12 p_b_10" id="accordion">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h6 class="panel-title">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                                Place Holders
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div id="collapseOne" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Current Date
+                                                            <br/> Accounts Payable
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}DATE{{ '}' }}
+                                                            <br> %{{ '{' }}ACCOUNTS_PAYABLE{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Reference
+                                                            <br/> Borrower Name
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}REFERENCE{{ '}' }}
+                                                            <br> %{{ '{' }}BORROWER_NAME{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Primary Contact Address1
+                                                            <br/> Primary Contact Address
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}PRIMARY_CONTACT_ADDRESS1{{ '}' }}
+                                                            <br> %{{ '{' }}PRIMARY_CONTACT_ADDRESS{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Invoice List
+                                                            <br/> Lender Address
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}INVOICE_LIST{{ '}' }}
+                                                            <br> %{{ '{' }}LENDER_ADDRESS{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Primary Contact Address2
+                                                            <br/> Primary Contact City
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}PRIMARY_CONTACT_ADDRESS2{{ '}' }}
+                                                            <br> %{{ '{' }}PRIMARY_CONTACT_CITY{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Lender Name
+                                                            <br/> Lender State
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}LENDER_NAME{{ '}' }}
+                                                            <br> %{{ '{' }}LENDER_STATE{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Primary Contact State
+                                                            <br/> Primary Contact zipcode
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}PRIMARY_CONTACT_STATE{{ '}' }}
+                                                            <br> %{{ '{' }}PRIMARY_CONTACT_ZIPCODE{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Lender City
+                                                            <br/> Lender Zip
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}LENDER_CITY{{ '}' }}
+                                                            <br> %{{ '{' }}LENDER_ZIP{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Primary Contact country name
+                                                            <br/> Primary Contact Pincode
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}PRIMARY_CONTACT_COUNTRY_NAME{{ '}' }}
+                                                            <br> %{{ '{' }}PRIMARY_CONTACT_PINCODE{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                            Account Debtor Name
+                                                            <br/> Lender header addres
+                                                            <br/>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}ACCOUNT_DEBTOR_NAME{{ '}' }}
+                                                            <br> %{{ '{' }}LENDER_HEADER_ADDRESS{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                                    <button [disabled]='isDisable' (click)="cancelLetterContent()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                                    </button>
+                                    <button [disabled]='isDisable' (click)="editedLetterContent()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">Save</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div>Letter content Ends</div> -->
+                        <!-- <div>Legal Content Start</div> -->
+                        <div class="p-t-32 {{isLegalContentShow}}">
+                            <div class="container-fluid" >
+                                <div class="row no-marg">
+                                    <div class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+                                        <label>Product Types</label>
+                                        <!--  <select formControlName = "productTypeForLetterContent" (change) = "onChangeProductLegalType($event.target.value)" class="form-control">
+                                            <option value="abl"[attr.selected]=true>ABL</option>
+                                            <option value="factoring">Factoring</option>
+                                            </select> -->
+                                        <select formControlName="productTypeForLetterContent" [(ngModel)]="productTypeLegal" (change)="onChangeProductLegalType(productTypeLegal)"
+                                        class="form-control">
+                                        <option value="">Please Select</option>
+                                        <ng-container *ngFor="let product of productLetterTypeList">
+                                            <option [ngValue]="product.module_name">{{product.module_name}}</option>
+                                        </ng-container>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-md-3 p_b_10">
+                                        <label>Legal Types</label>
+                                        <select formControlName="legal_types" (change)="onClickLegalType($event.target.value)" class="form-control">
+                                            <option value="">Please Select</option>
+                                            <option value="t_and_c_USER" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'GENERAL'">Terms & Conditions - User</option>
+                                            <option value="disclaimer" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'FACTORING'">Disclaimer</option>
+                                            <option value="bbc" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'ABL' || editLetterContent.controls.productTypeForLetterContent.value == '' ">BBC</option>
+                                            <option value="report" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'ABL' || editLetterContent.controls.productTypeForLetterContent.value == '' ">Report</option>
+                                            <option value="E-signature" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'FACTORING' || editLetterContent.controls.productTypeForLetterContent.value == 'ABL' ||  editLetterContent.controls.productTypeForLetterContent.value == '' ">E-signature</option>
+                                            <option value="Fund-Batch-Report" *ngIf="editLetterContent.controls.productTypeForLetterContent.value == 'FACTORING'">Funding Batch Report</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-4 col-md-2 p_b_10 {{hideTopBottomReset}}">
+                                        <label style="visibility:hidden"> Reset</label>
+                                    <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn" style="width: 200px" (click)="resetUserStatusDialog()" >Reset User T & C Status</button>
+                                    <!-- <span><i class="fa fa-info-circle" aria-hidden="true"></i></span> -->
+                           </div>
+                           <div class="col-xs-12 col-sm-4 col-md-3 p_b_10 {{hideTopBottomReset}}">
+                            <label style="visibility:hidden;display: flex;"> tooltip </label>
+                            <span class="fa fa-info-circle info-fa custom-info-fa" (mouseover)="infoTooltip=true" (mouseout)="infoTooltip=false"></span>
+                            <div class="info-tooltip"  *ngIf="infoTooltip" >
+                              <ul class="info-list">
+                           This button will reset the T & C status from its current status to Pending for all applicable users. Users will need to Accept Terms and Conditions to continue using the application
+                              </ul>
+                            </div>
+                           </div>
+
+
+                                    <div class="col-xs-12 col-sm-4 col-md-2 p_b_10 {{hideTopBottom}}" [class.showprint]="printShow == 'hide' ? true : false">
+                                        <label>Print</label>
+                                        <select [(ngModel)]="legalPrint" formControlName="radiotop" class="form-control" (change)="onCallPrint($event.target.value)">
+                                        <option value="null">Please Select</option>
+                                        >
+                                        <option value="Top">Top</option>
+                                        <option value="Bottom">Bottom</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-8 m-t-10 {{hideTopBottomReset}}" >
+                                        <div class="btn-group btn-group-vertical-email content-header" data-toggle="buttons" >
+                                           <div> <label>Terms & Conditions - User</label></div>
+                                             <label class="radio-inline col-xs-4 col-sm-4 col-md-1 w_140" >
+                                            <input type="radio" name="tcEnable" (click)="termsAndConditionRadioButtonFns(false)" [disabled]='isDisable' [checked]='tcEnableStatus ? false : true' />
+                                            <span> Disabled </span>
+                                            </label>
+                                            <label class="radio-inline col-xs-4 col-sm-4 col-md-1 w_140" >
+                                            <input type="radio" [checked]='tcEnableStatus ? true : false' (click)="termsAndConditionRadioButtonFns(true)" [disabled]='isDisable'/>
+                                            <span> Enabled </span>
+                                            </label> 
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 m-t-10 {{hideTopBottomReset}}" *ngIf="tcEnableStatus" >
+                                        <div class="btn-group btn-group-vertical-email content-header" style="width: 42%" data-toggle="buttons" >
+                                           <div> <label>Header</label>
+                                            <span class="fa fa-info-circle info-fa custom-info-fa" (mouseover)="infoHeaderTooltip=true" (mouseout)="infoHeaderTooltip=false"></span>
+                                            <div class="info-tooltip"  *ngIf="infoHeaderTooltip" >
+                                              <ul class="info-list">
+                                                Value set in this field will appear as a header in the Terms & Conditions window when user logs in.
+                                              </ul>
+                                            </div>
+                                        </div>
+                                           <!-- <label>Header<span class="required">*</span></label> -->
+                                           <input type="text" maxlength="75" class="form-control header" placeholder="Terms & Conditions" formControlName="header" name='headertextbox'[readonly]="isDisable" [disabled]="isDisable" >
+                                        </div>
+                                    </div>
+
+                                    <!-- <span *ngIf="isEditIconEnabled" (click)="onClickEditLegal()" class="pull-right hand edit-btn" data-toggle="tooltip" data-placement="left" title="" data-original-title="Edit"><i  class="fa fa-pencil fa-1x clr_grey pad-r-2" aria-hidden="true" ></i><small> Edit</small></span>
+                                        <span *ngIf="!isEditIconEnabled" class="pull-right hand edit-btn" data-toggle="tooltip" data-placement="left" title="" data-original-title="Edit"><i  class="fa fa-pencil fa-1x clr_grey pad-r-2" aria-hidden="true" ></i><small> Edit</small></span> -->
+                                </div>
+                                <div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12 p_b_10">
+                                        <!-- <span (click)="onClickEditLegal()" class="pull-right hand" data-toggle="tooltip" data-placement="left" title="" data-original-title="Edit"><i  class="fa fa-pencil fa-1x clr_grey" aria-hidden="true" ></i><small> Edit</small></span> -->
+                                    </div>
+                                </div>
+                                <div [hidden]="editLetterContent.controls['legal_types'].value == 't_and_c_USER' ? !tcEnableStatus : false">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 p_b_10 semi_bold">Letter Format</div>
+                                    <div *ngIf="selectedValue == 'legalContent'" class="col-xs-12 col-sm-12 col-md-12 p_b_10">
+                                        <app-cync-text-editor [elementId]="'legal_Content_id'" [(contentText)]="contentlegal"></app-cync-text-editor>
+                                    </div>
+                                </div>
+                                
+                                <div class="panel-group summernote-detail col-xs-12 col-sm-12 col-md-12 p_b_10 {{hideTopBottomReset}}" id="accordion1" *ngIf="tcEnableStatus" >
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h6 class="panel-title">
+                                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion1" href="#collapseOneLegal">
+                                                Place Holders
+                                                </a>
+                                            </h6>
+                                        </div>
+                                        <div id="collapseOneLegal" class="panel-collapse collapse">
+                                            <div class="panel-body">
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                                  User Login Name
+                                                            <br/> User Diplay Name
+                                                            <br/> User Email
+                                                            <br/> Current Date
+                                                            <br/> Last Updated
+                                                            <br/> Lender Name
+                                                            <br/> Lender Address1
+                                                            <br/>
+
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}user_id{{ '}' }}
+                                                            <br> %{{ '{' }}user_display_name{{ '}' }}
+                                                            <br>   %{{ '{' }}user_email{{ '}' }}
+                                                            <br> %{{ '{' }}current_date{{ '}' }}
+                                                            <br>   %{{ '{' }}last_updated{{ '}' }}
+                                                            <br> %{{ '{' }}lender_name{{ '}' }}
+                                                            <br> %{{ '{' }}lender_address1{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                  
+                                                    <div class="col-md-6 col-sm-12 col-xs-12">
+                                                        <div class="col-md-6 col-sm-6 text-right m-t-l">
+                                                                  Lender Address 2
+                                                            <br/> Lender City
+                                                            <br/> Lender State
+                                                            <br/> Lender Zip Code
+                                                            <br/> Lender Country
+                                                            <br/> Lender Phone
+                                                            <br/> Lender Fax
+                                                            <br/>
+
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            %{{ '{' }}lender_address2{{ '}' }}
+                                                            <br> %{{ '{' }}lender_city{{ '}' }}
+                                                            <br> %{{ '{' }}lender_state{{ '}' }}
+                                                            <br> %{{ '{' }}lender_zipcode{{ '}' }}
+                                                            <br> %{{ '{' }}lender_country{{ '}' }}
+                                                            <br> %{{ '{' }}lender_phone{{ '}' }}
+                                                            <br> %{{ '{' }}lender_fax{{ '}' }}
+                                                            <br>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                                    <button [disabled]='isDisable' (click)="cancelLegalContent()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                                    </button>
+                                    <button [disabled]='isDisable' id="action_save" (click)="editLetterContent.controls['legal_types'].value == 't_and_c_USER' ? resetUserStatusDialog('save') : editLegalContent()" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">Save</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        </form>
+                        <!-- <div>Legal Content Ends</div> -->
+                    </div>
+                </div>
+                <!-- <router-outlet></router-outlet> -->
+            </div>
+        </div>
+    </div>

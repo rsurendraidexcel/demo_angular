@@ -1,0 +1,63 @@
+<div *ngIf="cyncGridConfig.topPanel" class="top-pannel row" style="background: white !important;">
+  <div class="col-md-6 m-top">
+    <input *ngIf="cyncGridConfig.exclusiveFilter" type="text" id="filter-text-box" placeholder="Filter..." (input)="onFilterTextBoxChanged($event)"/>
+  </div>
+  <div class="col-md-6 pull-right text-right m-top">
+
+    <i (click)="addButtonFn()" *ngIf="cyncGridConfig.addButton" id="arNew" i class="hand fa fa-plus fa-1x f_s_20 clr_grey p-right-10" aria-hidden="true" data-toggle="tooltip"
+     data-placement="top" title="Add New"></i>
+
+     <i (click)="editButtonFn()" *ngIf="cyncGridConfig.editButton" id="arNew" i class="hand fa fa-edit fa-1x f_s_20 clr_grey p-right-10" aria-hidden="true" data-toggle="tooltip"
+     data-placement="top" title="Edit"></i>
+
+     <i (click)="viewButtonFn()" *ngIf="cyncGridConfig.viewButton" id="arNew" i class="hand fa fa-eye fa-1x f_s_20 clr_grey p-right-10" aria-hidden="true" data-toggle="tooltip"
+     data-placement="top" title="view"></i>
+
+    <i (click)="resetButtonFn()" *ngIf="cyncGridConfig.resetButton" id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset"
+     class="hand fa fa-times fa-1x clr_grey f_s_20 p-right-10">
+    </i>
+
+    <i (click)="deleteButtonFn()" *ngIf="cyncGridConfig.deleteButton" id="deleteArBucket" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete"
+     class="hand fa fa-trash fa-2x f_s_20 clr_grey p-right-10">
+    </i>
+  </div>
+</div>
+<div style="height: 100%; box-sizing: border-box;">
+  <ag-grid-angular
+    #agGrid
+    style="width: 100%; height: 100%;"
+    id="myGrid"
+    class="ag-theme-balham"
+    [pagination] = "pagination"
+    [paginationPageSize]="paginationPageSize"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [defaultColGroupDef]="defaultColGroupDef"
+    [rowData]="rowData"
+    [suppressRowClickSelection] = "suppressRowClickSelection"
+    [floatingFilter]="floatingFilter"
+    [enableSorting]="enableSorting" 
+		[multiSortKey]="multiSortKey" 
+    [enableFilter]="enableFilter"
+    [statusBar]="statusBar"
+    [excelStyles]="excelStyles"
+    [overlayNoRowsTemplate]="overlayNoRowsTemplate"
+    [animateRows]="animateRows"
+    [rowSelection]="rowSelection" 
+    [tooltipShowDelay]="tooltipShowDelay"
+    [gridOptions]="gridOptions" 
+    [singleClickEdit] = "cyncGridConfig.singleClickEdit"
+    [frameworkComponents]="frameworkComponents"
+    (gridReady)="onGridReady($event)"
+    (cellKeyPress)="onCellKeyPress($event)"
+    (rowSelected)="ongridRowSelected($event)"
+    (focusout)="onFocusOut($event)"
+    (columnVisible)="onGridColumnsChanged($event)"
+    (dragStopped)="onGridDragStopped($event)"
+    (selectionChanged)="onSelectionChanged($event)" 
+    (modelUpdated)="onModelUpdated($event)"
+    (cellDoubleClicked)="onCellDoubleClicked($event)"
+    (cellMouseOver)="onCellMouseOver($event)"
+
+  ></ag-grid-angular>
+</div>

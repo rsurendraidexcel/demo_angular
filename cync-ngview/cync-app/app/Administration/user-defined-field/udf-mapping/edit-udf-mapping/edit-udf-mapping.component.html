@@ -1,0 +1,292 @@
+<div class="app-body-container bg-white udf-mapping" id="component_html_wradio" ng-show="yes_visible" ng-controller="app_body_container">
+	<div class="close-btn-dash pull-right text-right top-action-btns">
+		<!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+	</div>
+	<div class="pad-inner">
+		<h3 class="no-m-bt">UDF Mapping - {{currentAction}}</h3>
+		<div class="brder-1 p-t-32">
+			<form [formGroup]="udfMappingForm" (ngSubmit)="saveUdfMapping(udfMappingForm.value,udfMappingForm.valid,false)">
+				<div class="has-scrollbar" id="cync_main_contents_wradio-mapping">
+					<div class="form-group">
+						<div class="row">
+
+							<div class="col-md-5 col-xs-12 col-sm-12 col-lg-5 b-r-1">
+								<div class="row">
+									<h3 class="no-marg p-b-15">User Defined Field</h3>
+								</div>
+
+
+								<div formArrayName="udfs">
+									<div [sortablejs]="udfMappingForm.controls.udfs.value" [sortablejsOptions]="eventOptions">
+										<div *ngFor="let udf of UdfsControl.controls; let i=index" [formGroupName]="i">
+											<div class="row no-marg no-pad">
+												<!-- <input id="sequence_value" type="text" formControlName="sequence" class="form-control" placeholder="" [ngModel]="i+1"> -->
+												<input type="hidden" formControlName="sequence" class="form-control" placeholder="" [value]="i+1" [ngModel]="i+1">
+												<div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-1 no-marg no-pad">
+													<i *ngIf="udfMappingForm.controls.udfs.value.length>1" class="fa fa-arrows"></i>
+												</div>
+												<div class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5 no-pad">
+													<div class="display-inline-flex">
+														<select [attr.disabled]="!isCurrentActionAdd()?true:null" class="mapping-dropdown form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ng-touched ng-submitted"
+														 formControlName="id" (focus)="recordPreviousValue(i,'udfs','id')" (change)="onChangeUdfParam(i,$event)">
+															<option disabled value=''>Select</option>
+															<option *ngFor="let udf_detail of udf_details" [ngValue]="udf_detail.id">{{udf_detail.name}}</option>
+														</select>
+														<label class="mandatory" for="id">
+															<span class="required">*</span>
+														</label>
+													</div>
+													<cync-input-field-error-msg [control]="getFormControl('id','udfs',i)" labelName="UDF Field">
+													</cync-input-field-error-msg>
+												</div>
+												<div *ngIf="(isUDFValueFieldRequiredToShow && !isReportProgram)" class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5 p-r-0">
+													<div class="p-autoComple-align w-100">
+														<div *ngIf="(udf.controls.is_lov.value && udf.controls.udf_param_lovs!=undefined) then lov_template else text_template">here is ignored</div>
+														<ng-template #text_template>
+															<p-autoComplete formControlName="udf_value" [suggestions]="udf.controls.udf_value_options.value" (completeMethod)="searchUdfParam($event,i)"
+															 (onSelect)="onChangeUdfParamValue(i)" placeholder="" (focusout)="onChangeUdfParamValue(i)" class="search-input-text p-autocomplete-mapping"
+															 [dropdown]="true">
+															</p-autoComplete>
+														</ng-template>
+														<ng-template #lov_template>
+															<select class="mapping-dropdown form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ng-touched ng-submitted" formControlName="udf_value"
+															 (change)="onChangeUdfParamValue(i)">
+																<option value=''>Select</option>
+																<option *ngFor="let lov of udf.controls.udf_param_lovs.value" [ngValue]="lov.lov_value">{{lov.lov_value}}</option>
+															</select>
+														</ng-template>
+													</div>
+													<br/>
+													<br/>
+													<div class="udf-mapping-errors" [hidden]="!udf.controls.udf_value.touched">
+														<div *ngIf="udf.controls.udf_value.errors?.required" class="error-text-msg ng-star-inserted m-t-15">
+															<small>Please provide UDF Field Value</small>
+														</div>
+														<div *ngIf="udf.controls.udf_value.errors?.pattern" class="error-text-msg ng-star-inserted m-t-15">
+															<small>Please provide a numeric value</small>
+														</div>
+														<div *ngIf="udf.controls.udf_value.errors?.min" class="error-text-msg ng-star-inserted m-t-15">
+															<small>UDF Value should be more than {{udf.controls.udf_value.errors.min.min}}</small>
+														</div>
+														<div *ngIf="udf.controls.udf_value.errors?.max" class="error-text-msg ng-star-inserted m-t-15">
+															<small>UDF Value should be less than {{udf.controls.udf_value.errors.max.max}}</small>
+														</div>
+														<div *ngIf="udf.controls.udf_value.errors?.minlength" class="error-text-msg ng-star-inserted m-t-15">
+															<small>UDF Value can't be less than {{udf.controls.udf_value.errors.minlength.requiredLength}} characters
+															</small>
+														</div>
+														<div *ngIf="udf.controls.udf_value.errors?.maxlength" class="error-text-msg ng-star-inserted m-t-15">
+															<small>UDF Value can't be more than {{udf.controls.udf_value.errors.maxlength.requiredLength}} characters
+															</small>
+														</div>
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-6 no-marg no-pad user-define-delete" *ngIf="isReportProgram">
+													<div class="wid_35 text-right delete_btn_action">
+														<i [ngClass]="udfMappingForm.controls.udfs.value.length>1 ? '':'icon_disabled operation_disabled'" class="fa fa-minus-square deleterow-icon hand"
+														 (click)="deleteUdfProgramRow(i,'udfs')" aria-hidden="true"></i>
+													</div>
+												</div>
+												<div class="col-xs-12 col-sm-12 col-md-1 ad-bt-pad col-lg-1 no-marg no-pad user-define-delete" *ngIf="isUDFValueFieldRequiredToShow">
+													<div class="wid_35 text-right delete_btn_action">
+														<i [ngClass]="udfMappingForm.controls.udfs.value.length>1 ? '':'icon_disabled operation_disabled'" class="fa fa-minus-square deleterow-icon hand"
+														 (click)="deleteUdfProgramRow(i,'udfs')" aria-hidden="true"></i>
+													</div>
+												</div>
+											</div>
+											<hr/>
+										</div>
+									</div>
+								</div>
+								<div class="row no-marg no-pad">
+									<!--<div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-1 no-marg no-pad">
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5">
+                  </div>
+                  <div class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5">
+                  </div>-->
+									<div class="col-xs-12 col-sm-6 col-md-12 ad-bt-pad col-lg-12 no-marg no-pad text-right">
+										<div *ngIf="isCurrentActionAdd()" class="add_btn_action">
+											<i [ngClass]="!checkAddRowsAllowed(udf_details,udfMappingForm.controls.udfs.value)?'icon_disabled operation_disabled':''"
+											 class="fa fa-plus-square  hand addrow-icon" aria-hidden="true" (click)="addUdfRow()"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+								<!--collapse satrt -->
+								<div class="col-md-12" id="main">
+									<div class="row">
+										<h3 class="no-marg p-b-15">Program</h3>
+									</div>
+									<div formArrayName="programs">
+										<div *ngFor="let program of programsControl.controls; let i=index" [formGroupName]="i">
+											<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+												<div class="panel panel-default">
+													<div class="panel-heading" role="tab" id="headingOne">
+														<h4 class="panel-title">
+															<a role="button" data-toggle="collapse" data-parent="#accordion" [attr.href]="'#collapseOne'+i" aria-expanded="true" aria-controls="collapseOne">
+															</a>
+															<div class="row no-pad">
+																<div class="col-xs-12 col-sm-6 col-md-6 ad-bt-pad col-lg-6">
+																	<div class="display-inline-flex">
+																		<select [attr.disabled]="!isCurrentActionAdd()?true:null" class="mapping-dropdown form-control w-95" formControlName="program_id" (focus)="recordPreviousValue(i,'programs','program_id')"
+																		 (change)="onChangeProgramParam(i)">
+																			<option disabled value=''>Select</option>
+																			<option *ngFor="let program_lov of programs_lovs" [ngValue]="program_lov.id">{{program_lov.column_display}}</option>
+																		</select>
+																		<label class="mandatory" for="program_id">
+																			<span class="required">*</span>
+																		</label>
+																	</div>
+																	<cync-input-field-error-msg [control]="getFormControl('program_id','programs',i)" labelName="Program">
+																	</cync-input-field-error-msg>
+																</div>
+																<div class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5 no-marg no-pad client-detail-delete">
+																	<div *ngIf="isCurrentActionAdd()" class="wid_35 text-right delete_btn_action">
+																		<i [ngClass]="udfMappingForm.controls.programs.value.length>1 ? '':'icon_disabled operation_disabled'" class="fa fa-minus-square deleterow-icon hand"
+																		 (click)="deleteUdfProgramRow(i,'programs')" aria-hidden="true"></i>
+																	</div>
+																</div>
+															</div>
+														</h4>
+													</div>
+													<input type="hidden" formControlName="program_code" class="form-control" placeholder="">
+													<div *ngIf="isParamDefined(program.controls.program_id.value)" [attr.id]="'collapseOne'+i" class="panel-collapse collapse in"
+													 role="tabpanel" aria-labelledby="headingOne">
+														<div *ngIf="getProgrameFormControlValue(i,'reportOrClientSelectionFlag')"class="panel-body p-b-0">
+															<div *ngIf="isReportTemplate(program.controls.program_id.value) then report_program_template else client_program_template">here is ignored</div>
+														
+															<ng-template #client_program_template>
+																<div *ngIf="programsPrefixed==='LS'"></div>
+																<div *ngIf="programsPrefixed==='CL'"></div>
+                                <div *ngIf="programsPrefixed==='default'">
+																<div *ngIf="(program_param_lovs!=undefined) && (program_param_lovs.length>0)" class="row">
+																	<div class="col-xs-12 col-sm-6 col-md-6 ad-bt-pad col-lg-6 display-inline-flex">
+																		<select class="mapping-dropdown form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ng-touched ng-submitted" formControlName="program_param_option"
+																		 (change)="onChangeProgramParamOption(i)">
+																			<option disabled value=null>Select</option>
+																			<option *ngFor="let parameter of program_param_lovs" [ngValue]="parameter.column_value">{{parameter.column_display}}</option>
+																		</select>
+																		<!-- <label *ngIf="isCurrentActionAdd()" class="mandatory" for="program_param_option">
+																			<span class="required">*</span>
+																		</label> -->
+																	</div>
+																	<div class="col-xs-12 col-sm-6 col-md-6 ad-bt-pad col-lg-6 display-inline-flex p-r-0">
+																		<input type="text" [attr.disabled]="isParamDefined(program.controls.program_param_option.value)?null:''" class="form-control"
+																		 name="program_param_value" formControlName="program_param_value" [(ngModel)]="programParamValue"/>
+																		<!-- search icon when user wants to search clients -->
+																		<!--<i (click)="onProgramParamSearch(i)" class="fa fa-search" aria-hidden="true" [ngClass]="isParamDefined(program.controls.program_param_option.value) ? '' : 'disable-search' "></i> -->
+																		<button type="button" (click)="onProgramParamSearch(i)" class="btn btn-sm btn-primary m-l-5" [disabled]="isParamDefined(program.controls.program_param_option.value) && (program.controls.program_param_value.value.length >= 3 ) ? '' : 'disable-search' ">Search</button>
+																	</div>
+																</div>
+
+																<div class="row no-pad">
+																		<div class="col-xs-12 col-sm-6 col-md-6 ad-bt-pad col-lg-6 display-inline-flex" style="visibility: hidden;">
+																		<select class="mapping-dropdown form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ng-touched ng-submitted" formControlName="program_param_option"
+																		 (change)="onChangeProgramParamOption(i)">
+																			<option disabled value=null>Select</option>
+																			<option *ngFor="let parameter of program_param_lovs" [ngValue]="parameter.column_value">{{parameter.column_display}}</option>
+																		</select>
+																		<!-- <label *ngIf="isCurrentActionAdd()" class="mandatory" for="program_param_option">
+																			<span class="required">*</span>
+																		</label> -->
+																	</div>
+																	<div *ngIf="(((allClients!=undefined) && (allClients.length>0)) || showClientListSpinner)" class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-6 ui-g report-scroll-detail no-pad">
+																		<div class="row no-pad">
+																			<!-- below code is to show loader when user scrolls -->
+																			<span [hidden]="!showClientListSpinner" class="center">
+																				<i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+																			</span>
+																			<p-listbox dataKey="id" [hidden]="showClientListSpinner" class="clients_list_box" formControlName="mappings" [options]="allClients" (onChange)="checkUdfValues(allClients, $event,i)"
+																			 [(ngModel)]="selectedClients" multiple="multiple" checkbox="checkbox" optionLabel="name" [style]="{'width':'245px'}">
+																				<p-header class="header-title">Select All</p-header>
+																			</p-listbox>
+																		</div>
+
+																	</div>
+																</div>
+																<div class="row no-pad">
+																	<div class="col-xs-12 col-sm-6 col-md-6 ad-bt-pad col-lg-6">
+																		&nbsp;
+																	</div>
+																	<div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-6">
+																		<!-- <div *ngIf="!showClientListSpinner && selectedClients!=undefined && selectedClients.length==0" class="error-text-msg">
+																			<small>Please Select Clients</small>
+																		</div> -->
+																	</div>
+																</div>
+															</div>
+															</ng-template>
+
+															<ng-template #report_program_template>
+																<div *ngIf="(allManagementReports!=undefined) && (allManagementReports.length>0)" class="row no-pad ">
+																	<div class="col-xs-12 col-sm-6 col-md-6 ad-bt-pad col-lg-6 no-marg">
+																		<div class="display-inline-flex">
+																			<label class="m-b-6">Management Reports</label>
+																			<label class="mandatory">
+																				<span class="required">*</span>
+																			</label>
+																		</div>
+																		<div class="row no-pad">
+																			<div class="ui-g report-scroll">
+																				<div class="ui-g-12">
+																					<p-listbox dataKey="id" class="reports_list_box" formControlName="mappings" [options]="allManagementReports" [(ngModel)]="selectedReports"
+																					 multiple="multiple" checkbox="checkbox" optionLabel="name" [style]="{'width':'100%'}">
+																						<p-header class="header-title">Select All Report</p-header>
+																					</p-listbox>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="row no-pad">
+																			<div *ngIf="selectedReports==undefined || selectedReports.length==0" class="error-text-msg">
+																				<small>Please Select Reports</small>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</ng-template>
+
+														</div>
+
+													</div>
+												</div>
+												<hr/>
+											</div>
+										</div>
+									</div>
+									<div class="row no-marg no-pad">
+										<div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-1 no-marg no-pad">
+										</div>
+										<div class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5">
+										</div>
+										<div class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5">
+										</div>
+										<div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-1 no-marg no-pad">
+											<div *ngIf="isCurrentActionAdd()" class="wid_35 text-right add_btn_action">
+												<i [ngClass]="!checkAddRowsAllowed(programs_lovs,udfMappingForm.controls.programs.value) ? 'icon_disabled operation_disabled':''"
+												 class="fa fa-plus-square  hand addrow-icon" aria-hidden="true" (click)="addProgramRow()"></i>
+											</div>
+										</div>
+									</div>
+
+								</div>
+								<!--collapse end -->
+							</div>
+
+						</div>
+						<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+							<hr>
+							<button (click)="navigateToUdfMappingList()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+								<span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+							</button>
+							<button id="action_save" label="Save" [disabled]="isFormValid()" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+								<span class="ui-button-text ui-clickable no-pad">{{saveButtonText}}</span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

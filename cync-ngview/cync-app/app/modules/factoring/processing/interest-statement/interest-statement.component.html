@@ -1,0 +1,93 @@
+<div class="app-body-container bg-white is_summary interest-statement">
+  <div class="titile-section">
+   <label class="top-title"> Interest Inquiry </label>
+   <span class="fa fa-info-circle info-fa" (mouseover)="infoTooltip=true" (mouseout)="infoTooltip=false"></span>
+   <div class="info-tooltip" *ngIf="infoTooltip" >
+     <ul class="info-list">
+      <li> By changing the "To Date" value, you can see the expected Interest Amount until the end of the current month.</li>
+      <li> Adjustment entries can be backdated up to the 16th of the previous month.</li>
+      <li> Interest is calculated based on the Opening Balance (the previous day's closing balance).</li>
+      <li> Interest Related GL Entries are typically created at the end of the day.</li>
+      <li> Backdated Interest Related GL Entires are created immediately.</li>
+      <li> Interest adjustments (both positive and negative amounts) will have GL entries, but funding adjustments will not.</li>
+      <li> By creating a negative Funding Adjustment Entry, interest accrual for Funding Adjustment Entry can be INDIRECTLY stopped. In the upcoming releases, a better way of handling will be available.</li>
+      <li> All numbers in Interest Inquirys are rounded and shown with 6 decimal precision, but GL Entries are rounded to 2 decimal precision. (Note : Small variation in GL is expected because of this)</li>
+     </ul>
+    </div>
+     
+    <label class="recalculation-msg">{{recalculationMsg}}</label>
+    <div class="pull-right">
+      <button class="btn-style btn ui-button btn-align-right" (click)="onClickAdjustmentEntry()"
+       *ngIf="checkRolsPermission('Create Adjustment Entry') &&  interestSetupAvailability == false && rolesAndPermissionAvailability == false " >Adjustment
+        Entry </button>
+    </div>
+  </div>
+  <div class="hrline" style="margin-bottom: 10px; margin-top: 5px;"></div>
+  <div class="pad-inner">
+    <div class="alert-msg" *ngIf="rolesAndPermissionAvailability == true">
+      <br/>
+      You are not authorized to perform this action.
+    </div>
+    <div class="alert-msg" *ngIf="interestSetupAvailability == true">
+      <br/>
+      Please complete Factoring Interest Setup for this client in order to proceed. 
+    </div>
+    <div class="statement-container" *ngIf="interestSetupAvailability == false && rolesAndPermissionAvailability == false">
+    <div class="row">
+      <div class="interestSetup-AddForm" [formGroup]="interestStatementForm">
+
+        <div class="search_row" >
+          <div class="col-wd">
+            <label class="from-label" for="name">From Date </label>
+            <p-calendar showOn="button" class='cync-png-calendrar' formControlName="from_activity_date"
+              [monthNavigator]="true" [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true"
+              [maxDate]="fmax_date" dateFormat="mm/dd/yy">
+            </p-calendar>
+
+          </div>
+          <div class="col-wd">
+            <label class="from-label" for="name" style="padding-left: 20px;"> To Date </label>
+            <p-calendar showOn="button" class='cync-png-calendrar' formControlName="to_activity_date"
+              [monthNavigator]="true" [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true"
+              [maxDate]="tomax_date" dateFormat="mm/dd/yy">
+            </p-calendar>
+          </div>
+          <div class="pd-resize">
+            <button class="btn-style btn ui-button" (click)="onSearchButtonClickEvent()" title="Search">
+              Filter </button>
+          </div>
+          
+         <div  *ngIf="interestFrequency==2 || interestFrequency==0" style="padding-left: 260px;padding-top: 8px;">
+           <label style="padding-left:8px;float: right;" >Hide Interest Holiday and No Transaction</label>
+           <input id="checkbox" type="checkbox" #checkbox_input (click)="showZeroTransactionrecords($event)" checked/>
+         </div>
+        </div>
+        <div class="pull-right" style="margin-top: -25px;cursor: pointer;" >
+          <span id="Export" aria-hidden="true" data-toggle="tooltip" 
+          data-placement="top" title="Export" class="export-icon hand fa fa-file-excel-o  fa-2x f_s_20 clr_grey" 
+            (click)="exportData()" *ngIf="checkRolsPermission('Export Interest Inquiry')"  >
+        </span>
+          <!-- <span class="fa fa-file-excel-o fa-2x" aria-hidden="true"></span> -->
+        </div>
+      </div>
+    </div>
+    <br />
+    <div class="grid-wrapper" id="two_line_header">
+      <ag-grid-angular 
+      style="width: 100%;  height: calc(100vh - 340px);"
+      class="ag-theme-balham  "
+      [rowData]="cyncRowData"
+      [columnDefs]="cyncColumnDefs"
+      [defaultColDef]="defaultColDef"
+      [excelStyles]="excelStyles"
+      [gridOptions]="interestStatementGridOptions"
+      [frameworkComponents]="frameworkComponents"
+      (gridReady)="cyncGridReady($event)"
+      (columnVisible)="columnGridChanged($event)"
+      >
+
+    </ag-grid-angular>
+    </div>
+    </div>
+  </div>
+</div>

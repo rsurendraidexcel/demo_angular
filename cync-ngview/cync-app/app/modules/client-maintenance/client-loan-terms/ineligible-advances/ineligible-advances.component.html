@@ -1,0 +1,135 @@
+<div class="app-body-container bg-white client-loan-terms-custom" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+	<div class="close-btn-dash pull-right text-right top-action-btns">
+	</div>
+	<div class="pad-inner">
+		<h3 class="no-m-bt">Client Loan terms</h3>
+		<div class="row tab_panel">
+			<div class="inline tabbtn tablinks">
+				<!-- <input type="radio" name="guarantors"/> -->
+				<label class="radio-inline">
+					<input type="radio" name="optradio"  [routerLink]="['/client-maintenance/client-loan-terms/guarantors']">Guarantors</label>
+			</div>
+			<div class="inline tabbtn tablinks">
+				<!-- <input type="radio" name="loan_free"/>  -->
+
+				<label class="radio-inline">
+					<input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/loan-fees']">Loan Fees</label>
+			</div>
+			<div class="inline tabbtn tablinks">
+				<!-- <input type="radio" name="ineligible_advances"/>"  -->
+				<label class="radio-inline">
+					<input type="radio" name="optradio" checked [routerLink]="['/client-maintenance/client-loan-terms/ineligible-advances']">Ineligible/Advances</label>
+
+			</div>
+		</div>
+
+
+		<div class="tabContent_section" #content_section>
+
+			<!-- Tab content -->
+			<div id="ineligible_advances" class="tabcontent">
+
+				<div class="tbl-container">
+					<div class="row mgrone padone">
+						<div class="shadow-edge">
+							<table class="table_elm cync-xtable">
+								<thead>
+									<tr>
+										<th class="col-xs-4"> &nbsp;</th>
+										<th class="col-xs-2"> Past Due Days </th>
+										<th class="col-xs-2"> Concentration%</th>
+										<th class="col-xs-2"> Cap/Exclude</th>
+										<th class="col-xs-2"> Cross Age %</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr *ngIf = "ineligibleadvancesDetail.parameters != undefined">
+										<td class="col-xs-4">
+											<strong> {{ineligibleadvancesDetail.parameters.empty_value}}</strong>
+										</td>
+										<td class="col-xs-2">{{ineligibleadvancesDetail.parameters.past_due_days}}</td>
+										<td class="col-xs-2">{{ineligibleadvancesDetail.parameters.concentration}}</td>
+										<td class="col-xs-2">{{ineligibleadvancesDetail.parameters.cap_or_exclude}}</td>
+										<td class="col-xs-2">{{ineligibleadvancesDetail.parameters.cross_age}}</td>
+									</tr>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="shado-header mgrone">
+						Inelligible Customer Parameters
+					</div>
+					<div class="has-scrollbar tpanel ui-g-12 header_ineligible" id="ineligible_content" (scroll)="onScroll($event)">
+						<div class="ui-datatable-tablewrapper">
+							<p-dataTable [value]="ineligibleadvancesDetail.ineligible_advances" scrollable="true" scrollHeight="150px">
+								<p-column *ngFor="let col of cols" [field]="col.field" [header]="col.header" [sortable]="col.sortable" [filter]="col.filter"
+								 [style]="{'width':'150px'}"></p-column>
+							</p-dataTable>
+						</div>
+
+					</div>
+					<div class="row mgrone padone">
+						<div *ngFor=" let receivable of ineligibleadvancesDetail.divisions">
+							<div class="shado-header mgrone">Advance Rates for {{receivable.division_name}}</div>
+							<div class="col-md-4 left-hline" *ngFor=" let collateral of receivable.collaterals">
+								<table class="table_elm cync-xtable">
+									<thead>
+										<tr>
+											<th class="col-md-7"> {{collateral.source}} </th>
+											<th class="col-md-5"> {{collateral.advance_rate_label}}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let source_data of collateral.source_data">
+											<td class="col-md-7"> {{source_data.name}}</td>
+											<td class="col-md-5"> {{source_data.advance_rate}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mgrone padone">
+
+						<div class="shado-header mgrone">
+							Credit Line / Sub Limits
+						</div>
+
+						<table class="table_elm cync-xtable">
+							<thead>
+								<tr>
+									<th class="col-md-2"> Credit Line</th>
+									<th class="col-md-2"> Receivables </th>
+									<th class="col-md-2"> Inventory </th>
+									<th class="col-md-2"> other Colleterals </th>
+									<th class="col-md-2"> AR Reliance % </th>
+									<th class="col-md-2"> Loan Blance </th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngIf = "ineligibleadvancesDetail.credit_line_or_sub_limits != undefined">
+									<td class="col-md-2">{{ineligibleadvancesDetail.credit_line_or_sub_limits.credit_line}}</td>
+									<td class="col-md-2">{{ineligibleadvancesDetail.credit_line_or_sub_limits.receivables}}</td>
+									<td class="col-md-2">{{ineligibleadvancesDetail.credit_line_or_sub_limits.inventory}}</td>
+									<td class="col-md-2">{{ineligibleadvancesDetail.credit_line_or_sub_limits.other_collaterals}}</td>
+									<td class="col-md-2">{{ineligibleadvancesDetail.credit_line_or_sub_limits.ar_reliance}}</td>
+									<td class="col-md-2">{{ineligibleadvancesDetail.credit_line_or_sub_limits.loan_balance}} </td>
+								</tr>
+
+							</tbody>
+						</table>
+
+					</div>
+
+
+
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

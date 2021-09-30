@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { BankAccountDetailsNewComponent } from './bank-account-details-new.component';
+
+describe('BankAccountDetailsNewComponent', () => {
+  let component: BankAccountDetailsNewComponent;
+  let fixture: ComponentFixture<BankAccountDetailsNewComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ BankAccountDetailsNewComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(BankAccountDetailsNewComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

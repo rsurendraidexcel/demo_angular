@@ -1,0 +1,36 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+	<div class="close-btn-dash pull-right text-right top-action-btns">
+	</div>        
+	<div class="pad-inner">
+		<h3 class="no-m-bt">Other Preferences</h3>
+		<div class="row email-header">
+			<div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10" data-toggle="buttons">
+				<label class="btn radio-inline col-xs-6 col-sm-6 col-md-2 w_140" [routerLink]="['/bbc-preference-setup/other-preferences/activity-tickler']">
+    			<input formcontrolname="selectedValue" name="selectedValue" type="radio" value="" ng-reflect-name="selectedValue" ng-reflect-form-control-name="selectedValue" ng-reflect-value="" ng-reflect-model="text_template" class="ng-untouched ng-pristine ng-valid"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span> Activity Tickler</span>
+    		</label>
+
+    		<label class="btn radio-inline col-xs-6 col-sm-6 col-md-2  active" [routerLink]="['/bbc-preference-setup/other-preferences/comments']">
+      			<input formcontrolname="selectedValue" label="Text Templates" name="selectedValue" type="radio" value="text_template" ng-reflect-name="selectedValue" ng-reflect-form-control-name="selectedValue" ng-reflect-value="" ng-reflect-model="" class="ng-untouched ng-pristine ng-valid"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Comments</span>
+    		</label>
+
+    		<label class="btn radio-inline col-xs-6 col-sm-6 col-md-2  active" [routerLink]="['/bbc-preference-setup/other-preferences/report-comments']">
+      			<input formcontrolname="selectedValue" label="Text Templates" name="selectedValue" type="radio" value="text_template" ng-reflect-name="selectedValue" ng-reflect-form-control-name="selectedValue" ng-reflect-value="" ng-reflect-model="" class="ng-untouched ng-pristine ng-valid"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Report Comments</span>
+   			</label>
+
+   			<label class="btn radio-inline col-xs-6 col-sm-6 col-md-2  active">
+      			<input formcontrolname="selectedValue" label="Text Templates" name="selectedValue" type="radio" value="text_template" ng-reflect-name="selectedValue" ng-reflect-form-control-name="selectedValue" ng-reflect-value="" ng-reflect-model="" class="ng-untouched ng-pristine ng-valid" checked><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Exceptions</span>
+   			</label>
+        		
+			</div>
+		</div>
+		<div class="p-t-16">
+			<div>
+                <div class="ui-datatable-tablewrapper">
+                    <grid [gridModel]="exceptionsModel"></grid>
+                </div>
+              </div>
+			  
+		</div>
+	</div>
+    
+</div>

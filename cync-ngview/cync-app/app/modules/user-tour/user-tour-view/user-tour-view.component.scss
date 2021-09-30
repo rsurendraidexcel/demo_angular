@@ -1,0 +1,233 @@
+.tour-label {
+    display: inline-block;
+    min-width: 90px;
+    margin-right: 5px;
+}
+.btn-corner {
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+}
+.list-title-panel {
+    display: block;
+}
+.tour-add-pane {
+    text-align: right;
+    padding: 5px;
+    bottom: 0px;
+    min-height: 40px;
+}
+
+.tour-dropdwon {
+    height: 32px;
+    width: 19%;
+    margin: 4px;
+    border: 1px solid #cfcfcf;
+    background-color: #fff;
+}
+.cync-tour-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 10px;
+}
+.tour-left-container {
+    min-width: 446px;
+    border: 1px solid #dddd;
+    min-height: 300px;
+    .tour-list {
+        list-style: none;
+        line-height: 30px;
+        margin: 0px;
+        padding: 0px;
+        min-height: 270px;
+        max-height: calc(100vh - 350px);
+        overflow-y: auto;
+        
+        li {
+            height: 32px;
+            display: block;
+            padding-left: 2px;
+            border-bottom: 1px solid #cfcfcf;
+        }
+        li:hover {
+            background-color: #cfcfcf;
+            cursor: pointer;
+        }
+    }
+}
+.tour-right-container {
+    border: 1px solid #dddd;
+    min-height: 300px;
+}
+
+/* User Tours Gouides Style section */
+.tour-row {
+    padding: 0px;
+    margin: 0px;
+}
+.row-style {
+    min-height: 32px;
+}
+.tour-elment-hide {
+    display: none;
+}
+.cync-tour-gusture {
+    position: absolute;
+    z-index: 74;
+    border-radius: 50%;
+    padding: 5px;
+    border: 1px solid #d1d1d1;
+    background: #dbd9d7;
+    cursor: pointer;
+    right: 238px;
+    top: 96px;
+}
+
+.cync-tour-scroll-section {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.tour-groups {
+    margin: 0px;
+    padding: 5px;
+    list-style-type: none;
+    background: #fcfcfc;
+}
+.tour-groups li {
+    display: block;
+    height: 32px;
+}
+.tour-iconsize {
+    font-size:19px;
+    margin-left: 15px;
+}
+.tour-active-icon {
+    color: #2b9103;
+}
+.left-tour-icons,
+.tour-lavel,
+.right-tour-icons {
+    display: inline-block;
+}
+.tour-lavel {
+    width: 65%;
+}
+.left-tour-icons {
+    width: 12px;
+}
+.right-tour-icons {
+    width: 130px;
+    margin-left: 0px;
+}
+.tour-lavel-active {
+    color: #0936eb;
+    text-decoration: underline;
+}
+.tour-lavel-active:hover {
+    cursor: pointer;
+}
+.cync-tour-btn-section {
+    text-align: right;
+    padding: 6px 10px;
+}
+.cync-tour-btn-section .tour-add {
+    border: 1px solid #d1d1d1;
+    border-radius: 15px;
+    padding: 4px 15px;
+    display: inline-block;
+    background: #e0e0e0;
+}
+.cync-tour-btn-section .tour-add:hover {
+    background: #d4d4d4;
+    cursor: pointer;
+}
+.tourbox-name-box {
+    position: absolute;
+    z-index: 91;
+    height: auto;
+    width: 400px;
+    left: calc(50% - 12%);
+    top: 126px;
+    border: 1px solid #d1d1d1;
+    background: #fcfcfc;
+    box-shadow: 0px 2px 8px 2px rgba(159, 149, 149, 0.75);
+    -webkit-box-shadow: 0px 2px 8px 2px rgba(159, 149, 149, 0.75);
+    -moz-box-shadow: 0px 2px 8px 2px rgba(159, 149, 149, 0.75);
+    display: block;
+}
+
+.tourbox-step-section {
+    position: absolute;
+    z-index: 200;
+    height: auto;
+    border: 1px solid #d1d1d1;
+    background: #fcfcfc;
+    box-shadow: 0px 2px 8px 2px rgba(159, 149, 149, 0.75);
+    -webkit-box-shadow: 0px 2px 8px 2px rgba(159, 149, 149, 0.75);
+    -moz-box-shadow: 0px 2px 8px 2px rgba(159, 149, 149, 0.75);
+    display: block;
+}
+.txt-label {
+    font-weight: 600;
+    margin: 2px 8px;
+}
+.tourbox-title {
+    padding: 10px 15px;
+    font-weight: 600;
+    background: #edf0f2;
+}
+.tour-container {
+    padding: 10px 15px;
+}
+.tour-container .row {
+    padding: 2px 0px;
+}
+.tour-button-panel {
+    padding: 6px 8px;
+    text-align: right;
+    background: #edf0f2;
+}
+.cync-inputStyle {
+    height: 30px;
+    border: 1px solid #cfcfcf;
+}
+.cync-textAreaStyle {
+    height: 80px;
+    border: 1px solid #cfcfcf;
+    width: 100%;
+}
+.dropdown-style {
+    height: 30px;
+    border: 1px solid #cfcfcf;
+    background: #fff;
+}
+.label-colwidth {
+    width: 115px;
+}
+.name-inputcol-width {
+    width: 80%;
+}
+.add-guidding-step {
+    cursor: pointer;
+    border-radius:16px;
+}
+
+.circle-btn-closed{ 
+    height: 30px; 
+    width: 30px; 
+    border-radius: 14px;
+    border:1px solid #cfcfcf; 
+    font-size: 16px;
+    padding: 6px;
+    cursor:pointer;
+    text-align: center;
+    float:right;
+    margin-top: -3px;
+    }
+
+.selected-tour-title{
+    background: #cfcfcf;
+}

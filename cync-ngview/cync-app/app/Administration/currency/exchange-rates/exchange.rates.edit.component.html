@@ -1,0 +1,111 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+            <div class="close-btn-dash pull-right text-right top-action-btns">
+
+    <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div>     -->
+        </div>            <div class="pad-inner">
+                <h3 class="no-m-bt">Exchange Rates</h3>             
+                <div class="brder-1 p-t-32">
+                    <div class="has-scrollbar" id="main_contents">
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-4 col-md-4 ad-bt-pad col-lg-3">
+                                <label for="currency_code">Currency Pair<span class="required">*</span></label>
+                                <select *ngIf="!isDisable" [(ngModel)]="currencyPair" [ngClass]="(isSelectedCurrencyPair==true)?  'form-control event_l_cur_rate':'form-control event_l_cur_rate has-error'" [disabled]="isDisable" (change)="setRateTypeValues()" (focusout)="setDisableValues()">
+                                <option disabled [ngValue]="null">Select</option>
+                                    <option *ngFor="let currencypair of currencyDetails" [value]="currencypair.id">{{currencypair.currencyIdBase.currencyCode}} - {{currencypair.currencyIdTo.currencyCode}}</option> 
+                                </select>
+                                <select *ngIf="isDisable && currencyDetails != undefined" [(ngModel)]="currencyDetails.id"  [ngClass]="(isSelectedCurrencyPair==true)?  'form-control event_l_cur_rate':'form-control event_l_cur_rate has-error'" [disabled]="isDisable">
+                                    <option [value]="currencyDetails.id">{{currencyDetails.currencyPair?.currencyIdBase.currencyCode}} - {{currencyDetails.currencyPair?.currencyIdTo.currencyCode}}</option> 
+                                </select>
+
+                                <!-- <label *ngIf="!isSelectedCurrencyPair" class="required">Required</label> -->
+                            </div>
+                        
+                            
+                            <div class="col-xs-12 col-sm-4 col-md-3 ad-bt-pad col-lg-2">
+                                <label class="mandatory" for="currency_code">Date<span class="required">*</span></label>
+                                <input class="cync_date_picker form-control" type="text" value="{{currenctDate | date:'dd-MM-yyyy'}}" disabled>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clr_black">Rate Definition</div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <table class="table table-borderless" id="exchange_rate_new">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <label>Rate Type<span class="required">*</span></label>
+                                            </th>
+                                            <th>
+                                                <label>Mid Rate<span class="required">*</span></label>
+                                            </th>
+                                            <th>
+                                                <label>Buy Spread<span class="required">*</span></label>
+                                            </th>
+                                            <th>
+                                                <label>Sell Spread<span class="required">*</span></label>
+                                            </th>
+                                            <th>
+                                                <label>Buy Rate</label>
+                                            </th>
+                                            <th>
+                                                <label>Sell Rate</label>
+                                            </th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let rtType of rateTypes; let i = index">
+                                            <td>
+                                                <select *ngIf="isDisable" [(ngModel)]="rtType.rateTypeValue" [ngClass]="(!rtType.isRequired)?  'form-control':'form-control has-error'" [disabled]="rtType.isDisabled" (change)="setSelectedRow(rtType.rateTypeValue)">                                                
+                                                   <option *ngFor="let rateType of rateTypeDetails" [ngValue]="rateType.id">{{rateType.rateTypeName}}</option>
+                                                </select>
+
+                                                <select *ngIf="!isDisable" (change)="checkRateTypeVal(rtType.rateType)" [(ngModel)]="rtType.rateType" [ngClass]="(!rtType.isRequired)?  'form-control':'form-control has-error'" [attr.disabled]="disabled?'':null" (change)="setRequired()">    
+                                                   <option *ngFor="let rateType of rateTypeDetails" [ngValue]="rateType">{{rateType.rateTypeName}}</option>
+                                                </select>
+
+                                                <!-- <label *ngIf="!isSelectedRateType" class="required">Required</label> -->
+                                            </td>
+                                            <td>
+                                                <input [(ngModel)]="rtType.midRate" OnlyNumber="true" type="text" value="{{exchangeModel?.midRate}}"  [ngClass]="(!rtType.isRequired)?  'form-control':'form-control has-error'" name="exchangeRtMidrate" #exchangeRtMidrate="ngModel" (focusout)="focusOutFunctionName('midRate')" [attr.disabled]="disabled?'':null"> 
+
+                                                <!-- <label *ngIf="exchangeRtMidrate.errors && (exchangeRtMidrate.dirty || exchangeRtMidrate.touched || !isSelectedMidrate)" class="required">Required</label> -->
+                                            </td>
+                                            <td>
+                                                <input [(ngModel)]="rtType.buySpread" OnlyNumber="true" type="text" value="{{exchangeModel?.buySpread}}"  [ngClass]="(!rtType.isRequired)?  'form-control':'form-control has-error'" name="exchangeRtBuySprd" #exchangeRtBuySprd="ngModel" (focusout)="focusOutFunctionName('buySpread')" [attr.disabled]="disabled?'':null">
+
+                                                <!-- <label *ngIf="exchangeRtBuySprd.errors && (exchangeRtBuySprd.dirty || exchangeRtBuySprd.touched || !isSelectedBuySpread)" class="required">Required</label> -->
+                                            </td>
+                                            <td>
+                                                <input [(ngModel)]="rtType.sellSpread" OnlyNumber="true" type="text" value="{{exchangeModel?.sellSpread}}" [ngClass]="(!rtType.isRequired)?  'form-control':'form-control has-error'" name="exchangeRtSellSprd" #exchangeRtSellSprd="ngModel" (focusout)="focusOutFunctionName('sellSpread')" [attr.disabled]="disabled?'':null">
+
+                                                <!-- <label *ngIf="exchangeRtSellSprd.errors && (exchangeRtSellSprd.dirty || exchangeRtSellSprd.touched || !isSelectedSellspread)" class="required">Required</label> -->
+                                            </td>
+                                            <td>
+                                                <!--     -->
+                                                 {{rtType.buyRate}}
+                                            </td>
+                                            <td>
+                                                <!-- <input disabled [(ngModel)]="rtType.sellRate" type="text" value="{{exchangeModel?.sellRate}}" class="form-control"> -->
+                                                {{rtType.sellRate}}
+                                            </td>
+                                            <td>
+                                               <div *ngIf="i == 0" class="wid_35 pull-left add_btn_action"> <i class="fa fa-plus-circle  addrow-icon hand" aria-hidden="true" (click)="addMoreRows()"></i></div>
+                                                <div *ngIf="!i == 0 || (i==0 && isDisable)"(click)="removeRows(i)" class="wid_35 pull-left delete_btn_action "><i class="fa fa-minus-circle deleterow-icon hand" aria-hidden="true"></i> </div>
+                                            </td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                    <!-- <div class="wid_35 pull-left add_btn_action"> <i class="fa fa-plus-circle  addrow-icon hand" aria-hidden="true" (click)="addMoreRows()"></i></div> -->
+                                             <!-- <div class="wid_35 pull-left delete_btn_action" (click)="removeRows()"><i class="fa fa-minus-circle deleterow-icon hand" aria-hidden="true"></i> </div> -->
+                                </table>
+                                 
+                            </div>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+<hr>
+ <button (click)="navigateToHomeCancel()" id="action_cancel" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+ <button (click)="saveExchangerate()" id="action_save" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Save</span></button>
+    </div>                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

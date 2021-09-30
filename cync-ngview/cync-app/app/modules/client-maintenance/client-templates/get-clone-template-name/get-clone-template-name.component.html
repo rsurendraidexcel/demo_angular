@@ -1,0 +1,11 @@
+<div class="dialogeBoxMainBody">
+  <h3>Pleade enter a Template name </h3>
+  <div class="row mainActionRow" [formGroup]="cloneName">
+    <div class="row form-group" style="display: flex; justify-content: center; align-items: center;">
+      <input class="form-control" type="text" placeholder="Enter Template Name" formControlName="name" />
+    </div>
+    <div class="row" style="display: flex; justify-content: center; align-items: center;">
+      <button class="btn btn-primary" (click)="close()">Close</button>
+      <button class="btn btn-default" (click)="submitTemplateName(cloneName.getRawValue())">Save</button>
+    </div>
+  </div>

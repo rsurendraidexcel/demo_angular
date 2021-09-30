@@ -1,0 +1,14 @@
+.detail_view .ui-datatable tbody *, .ui-datatable, .ui-widget-content{
+	border: none!important;
+}
+
+.checkbox-controle{ 
+     height: 13px; 
+	 margin-left: 10px;
+	 margin-top: 0px;
+	 margin-right: 6px;
+		}  
+			.check-selectionList{
+			padding-left: 4px;
+
+		}

@@ -1,0 +1,102 @@
+
+<div class="basicParameterMainContainer bg-white is_summary">
+
+  <div class="pad-inner">
+    <!-- <h3 class="no-m-bt">Basic Parameters</h3> -->
+    <div class="row topHeadingPannel">
+      <div class="col-md-3">
+        <h3 class="basicParamHead">Basic Parameters</h3>
+      </div>
+      <!-- <div class="col-md-4 pull-right text-right">
+        <button type="button" id="submitBasicParameter" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right"
+          (click)="postBPdata(mainBPform.getRawValue())">Save Basic Parameter</button>
+        <button type="button" id="resetBasicParameter" class="btn btn-light primarycancelbtn"
+          (click)="onClickResetBPform()">Reset</button>
+      </div> -->
+    </div>
+
+      <div class="m-l-r-15">
+        <ul class="list-inline basic-menu hand">
+          <li>
+            <a (click)="onClick('#bbc_Others')"> BBC Others</a>
+          </li>
+          <li>
+            <a (click)="onClick('#rollforwards')"> Rollforwards</a>
+          </li>
+          <li>
+            <a (click)="onClick('#inventory_Parameters')"> Inventory Parameters</a>
+          </li>
+          <li>
+            <a (click)="onClick('#ineligible_Reasons')"> Ineligible Reasons</a>
+          </li>
+          <li>
+            <a (click)="onClick('#over_Advance')"> Over Advance</a>
+          </li>
+          <!-- <li>
+                <a (click)="onClick('#report_Preferences')"> Report Preferences</a>
+              </li> -->
+
+        </ul>
+      </div>
+      <div class="basic_data">
+
+        <!-- form group for borrower api response keys -->
+       
+          <form [formGroup]="mainBPform">
+
+            <!--start of over BBC Others-->
+            <div class="row bpmargin-bottom" id="bbc_Others">
+              <div>
+                <app-bbc-others (formReady)="formInitialized('bbcOthers', $event)"></app-bbc-others>
+
+              </div>
+            </div>
+
+            <!--start of over Rollforwards-->
+            <div class="row bpmargin-bottom" id="rollforwards">
+              <div>
+                <app-rollforwards (formReady)="formInitialized('rollForwards', $event)"></app-rollforwards>
+              </div>
+            </div>
+
+            <!--start of Sub Limits-->
+            <!-- <div class="row bpmargin-bottom" id="sub_Limits">
+              <div class="col-md-12">
+                <app-sub-limits (formReady)="formInitialized('subLimits', $event)"></app-sub-limits>
+              </div>
+            </div> -->
+
+            <!--start of inventory-parameters-->
+            <div class="row bpmargin-bottom" id="inventory_Parameters">
+              <div>
+                <app-inventory-parameters (formReady)="formInitialized('inventoryParameter', $event)">
+                </app-inventory-parameters>
+              </div>
+            </div>
+            <!--start of Ineligible Reasons-->
+            <div class="row bpmargin-bottom" id="ineligible_Reasons">
+              <div>
+                <app-ineligible-reasons-multi (formReady)="formInitialized('ineligibaleReason', $event)">
+                </app-ineligible-reasons-multi>
+              </div>
+            </div>
+
+            <!--start of over advance-->
+            <div class="row bpmargin-bottom" id="over_Advance">
+              <div>
+                <app-over-advance (formReady)="formInitialized('overAdvance', $event)"></app-over-advance>
+              </div>
+            </div>
+            <!--start of over Report Preferences-->
+            <!-- <div class="row bpmargin-bottom" id="report_Preferences">
+              <div class="col-md-12">
+                <app-report-preferences (formReady)="formInitialized('reportPreference', $event)">
+                </app-report-preferences>
+              </div>
+            </div> -->
+          </form>
+    
+      </div>
+
+    
+  </div>

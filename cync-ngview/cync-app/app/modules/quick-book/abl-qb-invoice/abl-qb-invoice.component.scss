@@ -1,0 +1,79 @@
+.quickbook-page{ 
+  display: block;
+  width: 100%;
+  margin: auto;
+}
+.grid-wrapper{ padding: 4px; display: block; margin: auto; height: auto;}
+.mat-expansion-panel-body{padding: 0 8px 8px;}
+.qb-mat-panel{
+  padding: 0 10px 10px;
+  margin-right: 2px;
+}
+.qb-bg-form{
+ // background: #f2eded;
+  width: 100%;
+  padding: 2px 4px;
+}
+.qb-input-style{
+  border: 1px solid #aaa; 
+  border-radius: 4px;
+  -webkit-border-radius:4px;
+  height: 31px;
+}
+.input-sm{
+  width: 70%;
+}
+.input-sm-2{
+  width: 174px;
+}
+.button_align{
+  margin-left: 18px; 
+  width: 100px; 
+  height: 30px;
+}
+.cync-row{
+  width: 100%;
+  min-height: 40px;
+  padding: 4px;
+}
+.bb-panel{
+  text-align: center;
+  margin-top: 10px; 
+  margin-bottom: 10px;
+}
+.hr-line{
+  border-top: 1px solid #dddd;
+}
+.ui-dialog-content{
+  padding-top: 0px !important;
+}
+
+.invoice-number-div{
+  background-color: #f2eded;
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.invoice-name-div{
+  background-color: #f2eded;
+  width: 280px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.color-grey{
+  background-color: #f2eded;
+}
+.wd100{
+  width: 100%;
+}
+.flt-label {
+  .ng-dirty + label{
+    margin-top: -31px;
+  }
+ .ng-dirty:focus + label{
+   margin-top: -8px;
+ }
+}

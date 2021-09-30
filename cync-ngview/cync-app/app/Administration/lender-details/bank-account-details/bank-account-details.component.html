@@ -1,0 +1,224 @@
+<div class="app-body-container bg-white is_summary" id="app-body-container">
+            <div class="close-btn-dash">
+              <div class="close-btn-dash pull-right text-right top-action-btns"></div>       
+            </div>
+            <div class="pad-inner">
+                <h3 class="no-m-bt">Bank Details</h3>
+                <div class="brder-1 p-t-32">
+                   
+                    <div class="has-scrollbar" id="main_contents">
+					 <div class="form-group">
+
+             <!-- <form [formGroup]="bankAccoutdetailsForm" data-parsley-validate novalidate  #bankDetailsForm="ngForm" (ngSubmit)="bankAccoutdetailsSubmit()"> -->
+             <form [formGroup]="bankAccoutdetailsForm" data-parsley-validate novalidate  #bankDetailsForm="ngForm" >
+
+						    <div class="col-lg-6 col-md-6 col-sm-12">
+                                <div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-6">
+						            <label class="mandatory" >Bank<span class="required">*</span></label>
+						            <input type="text" formControlName="bankName" [ngClass]="(isBankNameValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankNameValid()" placeholder="">
+						        </div>
+						        <div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-6">
+						            <label class="mandatory" >Account No.<span class="required">*</span></label>
+						            <input type="text" formControlName="bankaccountNo" [ngClass]="(isBankAccountNoValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankAccountNoValid()" placeholder="">
+						        </div>
+						        <div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-6">
+						            <label class="mandatory" >Account Name<span class="required">*</span></label>
+						            <input type="text"  formControlName="bankaccountName" [ngClass]="(isBankAccountNameValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankAccountNameValid()" placeholder="">
+						        </div>
+						        <div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-6">
+						            <label class="mandatory" >Routing<span class="required">*</span></label>
+						            <input type="text" formControlName="bankRouting"  [ngClass]="(isBankRoutingValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankRoutingValid()" placeholder="" >
+						        </div>
+						    </div>
+						    <div class="col-lg-6 col-md-6 col-sm-12">
+						        <div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-12 form-inline">
+						            <label class="mandatory" for="currency_code">Address<span class="required">*</span></label>
+						            <br>
+						            <textarea formControlName="bankAddress" [ngClass]="(isBankAddressValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankAddressValid()" rows="5" id="comment" value="3505 E. Fontage Road Tampa, FL 33607"></textarea>
+
+                                    <button type="button"  [hidden]="isVisibleAddButton"  
+                                    (click)="addTempBankDetails();saveAllBankDetails();"
+                                    class="lend-p-add-bank-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-bank-details"><span class="ui-button-text ui-clickable no-pad">Add Bank</span></button>
+
+                                    <button type="button" [hidden]="isVisibleEditButton" (click)="bankAccoutdetailsUpdate()" class="lend-p-add-bank-btn ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-bank-details"><span class="ui-button-text ui-clickable no-pad">
+                                     Update</span></button>
+
+                                     <button type="submit" (click)="concelAction()" id="action_back" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+
+						        </div>
+						    </div>
+                        </form>
+
+
+						</div>
+<div class="clearfix"></div>
+        <div *ngIf="tempBankAccountDetails.length > 0">
+        <div *ngFor="let tmpAcc of tempBankAccountDetails">  
+             <div class="col-md-5 border-bank-details">
+                <div class="row bank-detais-card">
+                    <div class="col-md-6 pwd_policy">
+                        <table class="table">
+                            <tr>
+                                <td align="right">Bank </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Account No. </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Account Name</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Routing</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Address</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6 pwd_policy">
+                        <table class="table">
+                            <tr>
+                                <td>{{tmpAcc.bank_detail.bank_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{tmpAcc.bank_detail.bank_account_no}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{tmpAcc.bank_detail.bank_account_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{tmpAcc.bank_detail.bank_routing}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{tmpAcc.bank_detail.bank_address}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <span class="icon-bank-details">
+                     <i class="fa fa-pencil btnAction" aria-hidden="true" (click)="editTempBankDetails(tmpAcc)"></i>
+                     <i class="fa fa-trash btnAction" aria-hidden="true"
+                     (click)="deleteTempBankDetail(tmpAcc)"></i>
+                </span>
+            </div>
+        </div>
+        </div>
+
+             <div *ngFor="let BAD of bankAccoutdetails">  
+             <div class="col-md-5 border-bank-details">
+                <div class="row bank-detais-card">
+                    <div class="col-md-6 pwd_policy">
+                        <table class="table">
+                            <tr>
+                                <td align="right">Bank </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Account No. </td>
+                            </tr>
+                            <tr>
+                                <td align="right">Account Name</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Routing</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Address</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-6 pwd_policy">
+                        <table class="table">
+                            <tr>
+                                <td>{{BAD.bank_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{BAD.bank_account_no}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{BAD.bank_account_name}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{BAD.bank_routing}}</td>
+                            </tr>
+                            <tr>
+                                <td>{{BAD.bank_address}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <span class="icon-bank-details">
+                     <i class="fa fa-pencil btnAction icon_disabled" aria-hidden="true" *ngIf="!isEditIconEnabled"></i>
+                     <i class="fa fa-pencil btnAction" aria-hidden="true" *ngIf="isEditIconEnabled" (click)="editBankAccout(BAD.id)"></i>
+                     <i class="fa fa-trash btnAction icon_disabled" aria-hidden="true" *ngIf="!isDeleteIconEnabled"></i>
+                     <i class="fa fa-trash btnAction" aria-hidden="true" (click)="delateBankAccout(BAD.id)" *ngIf="isDeleteIconEnabled"></i>
+                </span>
+            </div>
+        </div>
+
+
+
+<!-- 
+<div class="col-md-5 border-bank-details">
+    <div class="row bank-detais-card">
+        <div class="col-md-6 pwd_policy">
+            <table class="table">
+                <tr>
+                    <td align="right">Bank </td>
+                </tr>
+                <tr>
+                    <td align="right">Account No. </td>
+                </tr>
+                <tr>
+                    <td align="right">Account Name</td>
+                </tr>
+                <tr>
+                    <td align="right">Routing</td>
+                </tr>
+                <tr>
+                    <td align="right">Address</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6 pwd_policy">
+            <table class="table">
+                <tr>
+                    <td>ICICI Bank Limited</td>
+                </tr>
+                <tr>
+                    <td>984561237</td>
+                </tr>
+                <tr>
+                    <td>West Coast</td>
+                </tr>
+                <tr>
+                    <td>953214</td>
+                </tr>
+                <tr>
+                    <td>3505 E, Fontage Road Tampa, FL 33607.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+  <span class="icon-bank-details">
+    <i class="fa fa-pencil" aria-hidden="true"></i>
+    <i class="fa fa-trash" aria-hidden="true"></i>
+   </span>
+</div>
+-->
+
+<!-- <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+	 <div class="horizontalLine"></div>
+	 <button id="action_back" label="Cancel" pbutton="" (click)="concelAction()" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+
+	 <button id="action_save" label="Save" pbutton="" (click)="saveAllBankDetails()"  type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Save</span></button>
+</div>  -->
+
+</div>
+</div>
+</div>
+</div>

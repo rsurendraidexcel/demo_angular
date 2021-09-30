@@ -1,0 +1,40 @@
+<div class="app-body-container bg-white is_summary ">
+  <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+  <!-- <div class="pad-inner"> -->
+    <div class="template">
+      <div class="col-md-6">
+        <h3 class="no-m-bt">Map Loans to Loan Category</h3>
+      </div>
+      <div class="col-md-6 pull-right text-right">
+        <button type="button"  class="btn-padding ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right" (click)="mapLoanswithCategory()">Save</button>
+        <button type="button"  class="btn-padding ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right" (click)="onParticipationLoanDetailsClick()">Participation Loan Details</button>
+      </div>
+    </div>
+    <div style="width: 80%; align-content: center; margin: auto;">
+    <div class="row" class="loan-category">
+      <label style="padding-left: 118px;">Select Loan Category</label>
+      <select class="broker" (change)="onChangeLoanCategory($event)" >
+        <option value=''>Select</option>
+        <option *ngFor="let category of loanCategories" [value]='category.id'>{{category.name}}</option>
+      </select>
+    </div>
+    <div class="align">
+      <div class="bbc_basic_paramter">
+        <p-pickList id="Ineligible-calculation" [source]="source" [target]="confirmed" dragdrop="true" filterBy="loan_name"
+          metaKeySelection="true" [sourceStyle]="{'height':'300px','border':'1px solid #c8c8c8','padding':'4px'}"
+          [targetStyle]="{'height':'300px','border':'1px solid #c8c8c8','padding':'4px'}" sourceHeader="Unmapped Loans" targetHeader="Mapped Loans" [showSourceControls]="false" [showTargetControls]="false"
+          [responsive]=true (onMoveToTarget)="onMoveToTarget($event)" (onMoveToSource)="onMoveToSource($event)"
+         >
+          <div class="ui-picklist ">
+            <ng-template let-data pTemplate="item">
+              <div class="ui-helper-clearfix ">
+                <div class="list-of-reason">{{data.loan_no + " : " + data.loan_name}}</div>
+              </div>
+            </ng-template>
+          </div>
+        </p-pickList>
+      </div>
+    </div>
+  </div>
+    <!-- </div> -->
+</div>

@@ -1,0 +1,68 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Advance Rate - {{ advanceRateDivisionAction }} Division </h3>
+
+        <!-- Radio button selection code start -->
+        <div class="row brder-1 p-t-32 email-header">
+            <div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active" data-toggle="buttons">
+
+                <label class="btn radio-inline col-xs-6 col-sm-6 col-md-1 w_140" [routerLink]="['/bbc-preference-setup/advance-rate/collateral-advance-rate']">
+                    <input checked formcontrolname="selectedValue" name="selectedValue" type="radio" value="" ng-reflect-name="selectedValue"
+                        ng-reflect-form-control-name="selectedValue" ng-reflect-value="" ng-reflect-model="text_template" class="ng-untouched ng-pristine ng-valid">
+                    <i class="fa fa-circle-o fa-2x"></i>
+                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                    <span>Colleteral</span>
+                </label>
+
+                <label class="btn radio-inline col-xs-6 col-sm-6 col-md-2" [routerLink]="['/bbc-preference-setup/advance-rate/seasonal-advance-rate']">
+                    <input formcontrolname="selectedValue" label="Text Templates" name="selectedValue" type="radio" value="text_template" ng-reflect-name="selectedValue"
+                        ng-reflect-form-control-name="selectedValue" ng-reflect-value="" ng-reflect-model="" class="ng-untouched ng-pristine ng-valid">
+                    <i class="fa fa-circle-o fa-2x"></i>
+                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                    <span> Seasonal</span>
+                </label>
+            </div>
+        </div>
+        <!-- Radio button selection code end -->
+
+        <div class="row p-t-32" style="padding-top:0px;">
+            <form [formGroup]="advanceRateDivisionForm" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveData(advanceRateDivisionForm.value,advanceRateDivisionForm.valid , false)">
+                <div class="has-scrollbar" id="main_contents">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">Division
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" formControlName="name" class="form-control" id="name" [ngClass]="displayFieldCss('name')">
+                            <cync-input-field-error-msg [control]="getFormControl('name')" labelName="Division Name">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 ad-bt-pad ">
+                            <label class="mandatory" for="currency_code"> Description
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" formControlName="description" class="form-control" id="description" [ngClass]="displayFieldCss('description')">
+                            <cync-input-field-error-msg [control]="getFormControl('description')" labelName="Description">
+                            </cync-input-field-error-msg>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                        <hr>
+                        <button (click)="goToListAdvacneRateDivision()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                        </button>
+                        <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd()" id="action_save_new" (click)="saveData(advanceRateDivisionForm.value,advanceRateDivisionForm.valid , true)"
+                            label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                        </button>
+                        <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

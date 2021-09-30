@@ -1,0 +1,335 @@
+<div class="app-body-container bg-white loan-enquiry-main-dev" id="cync_app-body-container">
+  <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+  <div class="pad-inner">
+    <div class="row">
+      <div class="col-md-12 loan-equiry-heading">
+        <h3 style="margin: 0;">Import Quickbooks Invoices</h3>
+        <br />
+      </div>
+      <br />
+    </div>
+    <div>
+      <mat-accordion>
+        <mat-expansion-panel [(expanded)]="isInvoiceData">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+             <b> Filter Invoices&nbsp;<i data-toggle="tooltip" title="You can restrict the invoices that needs to be pulled from your QuickBoooks. Note that, you can enter multiple invoice numbers seperated by comma." class="fa fa-question-circle" aria-hidden="true"></i></b>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-panel-description>
+            <form style="width: 100%;" #myform="ngForm" (ngSubmit)="getGridData(myform)">
+              <div class="row">
+                <div class="col-md-6" style="padding:0;">
+                  <div class="invoice-number-div" style="width: 98%;">
+                    <div class="ui-float-label" style="width: 96%;">
+                      <input type="text" name="invoice_numbers" ngModel id="invoice_department_name" pInputText
+                        style="margin-left: 1.2%; height: 31px; width: 98%; border: 1px solid #aaa;">
+                      <label  style="margin-left: 1.3%; text-transform: none; font-size: 12px !important; font-weight: 600 !important;" for="exampleFormControlInput1">Invoice Number(s)</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="display: flex; margin-top: 10px;">
+
+                <div class="color-grey" style="padding-top: 20px; padding-left: 5px; width: 24%">
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100">
+                      <span class="ui-float-label">
+                      <p-calendar class="wd100" [appendTo]="'body'" name="dueDateFrom" ngModel yearRange="2000:2030"
+                        dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true"
+                        [showIcon]="true" [inputStyle]="{'width':'100%', 'height': '31px', 'border': '1px solid #aaa'}" [maxDate]="current_date"></p-calendar>
+                        <label for="exampleFormControlInput1">Due Date From</label>
+                        </span>
+                
+                    </div>
+                    <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                        <input style="width:95%" ngModel name="dueDateFromTime" [ngxTimepicker]="fullTime1"
+                          [format]="12" pInputText readonly>
+                        <ngx-material-timepicker #fullTime1></ngx-material-timepicker>
+                        <label for="exampleFormControlInput1">Time</label>
+                        <i class="fa fa-clock-o timeIconStyle" aria-hidden="true"></i>
+                      </span>
+                    </div> -->
+                  </div>
+                  <div class="row" style="display: flex;">
+
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label">
+                      <p-calendar class="wd100"  [appendTo]="'body'" name="dueDateTo" ngModel yearRange="2000:2030"
+                        dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true"
+                        [showIcon]="true" [inputStyle]="{'width':'100%',  'height': '31px', 'border': '1px solid #aaa'}" [maxDate]="current_date"></p-calendar>
+                        <label for="exampleFormControlInput1">Due Date To</label>
+                        </span>
+                    </div>
+
+                    <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                        <input style="width:95%" ngModel name="dueDateToTime" [ngxTimepicker]="fullTime2" pInputText
+                          [format]="12" readonly>
+                        <ngx-material-timepicker #fullTime2></ngx-material-timepicker>
+
+                        <label for="exampleFormControlInput1">Time</label>
+                        <i class="fa fa-clock-o timeIconStyle" aria-hidden="true"></i>
+                      </span>
+                    </div> -->
+                  </div>
+                </div>
+
+                <div class="color-grey" style="width: 24%; margin-left: 12px; padding-top: 20px; padding-left: 5px;">
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100">
+                      <span class="ui-float-label">
+                      <p-calendar class="wd100"  [appendTo]="'body'" name="invoiceDateFrom" ngModel yearRange="2000:2030"
+                        dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true"
+                        [showIcon]="true" [inputStyle]="{'width':'100%',  'height': '31px', 'border': '1px solid #aaa'}" [maxDate]="current_date"></p-calendar>
+                        <label for="exampleFormControlInput1">Invoice Date From</label>
+                        </span>
+                    </div>
+                    <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                        
+                        <input style="width:95%" ngModel name="invoiceDateFromTime" [ngxTimepicker]="fullTime3"
+                          [format]="12" pInputText readonly>
+                        <ngx-material-timepicker #fullTime3></ngx-material-timepicker>
+                        <label for="exampleFormControlInput1">Time</label>
+                        <i class="fa fa-clock-o timeIconStyle" aria-hidden="true"></i>
+                      </span>
+                    </div> -->
+                  </div>
+                  <div class="row" style="display: flex;">
+
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label">
+                      <p-calendar class="wd100"  [appendTo]="'body'" ngModel name="invoiceDateTo" yearRange="2000:2030"
+                        dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true"
+                        [showIcon]="true" [inputStyle]="{'width':'100%',  'height': '31px', 'border': '1px solid #aaa'}" [maxDate]="current_date"></p-calendar>
+                        <label for="exampleFormControlInput1">Invoice Date To</label>
+                        </span>
+                    </div>
+                    <!-- &nbsp; &nbsp; &nbsp; &nbsp;
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                        <input style="width:95%" ngModel name="invoiceDateToTime" [ngxTimepicker]="fullTime4"
+                          [format]="12" pInputText readonly>
+                        <ngx-material-timepicker #fullTime4></ngx-material-timepicker>
+                        <label for="exampleFormControlInput1">Time</label>
+                        <i class="fa fa-clock-o timeIconStyle" aria-hidden="true"></i>
+                      </span>
+                    </div> -->
+                  </div>
+                </div>
+
+                <div class="color-grey" style="width: 24%; margin-left: 12px; padding-top: 20px;">
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100">
+                      <span class="ui-float-label">
+                        <input style="width: 100%; border: 1px solid #aaa;" type="number" ngModel name="balanceAmountFrom" pInputText id="exampleFormControlInput1"
+                          class="form-control input-sm-3" >
+                        <label for="exampleFormControlInput1">Invoice Balance Amount From</label>
+                      </span>
+                    </div>
+                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                        <input type="number" ngModel name="totalAmountFrom" pInputText id="exampleFormControlInput1"
+                          class=" form-control input-sm-3" style="border: 1px solid #dddd;">
+                        <label for="exampleFormControlInput1">Total Amount From</label>
+                      </span>
+                    </div> -->
+                  </div>
+
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label">
+                        <input style="width: 100%; border: 1px solid #aaa;" type="number" ngModel name="balanceAmountTo" pInputText id="exampleFormControlInput1"
+                          class="form-control input-sm-3" >
+                        <label for="exampleFormControlInput1">Invoice Balance Amount To</label>
+                      </span>
+                    </div>
+                    <!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="form-group">
+                      <span class="ui-float-label">
+                        <input type="number" ngModel name="totalAmountTo" pInputText id="exampleFormControlInput1"
+                          class=" form-control input-sm-3" style="border: 1px solid #dddd;">
+                        <label for="exampleFormControlInput1">Total Amount To</label>
+                      </span>
+                    </div> -->
+                  </div>
+
+                </div>
+
+                <div class="color-grey" style="width: 24%; margin-left: 12px; padding-top: 20px;">
+                  <div class="row" style="display: flex;">
+                    <!-- <div class="form-group">
+                      <span class="ui-float-label">
+                        <input type="number" ngModel name="balanceAmountFrom" pInputText id="exampleFormControlInput1"
+                          class="form-control input-sm-3" style="border: 1px solid #dddd;">
+                        <label for="exampleFormControlInput1">Balance Amount From</label>
+                      </span>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                    <div class="form-group wd100">
+                      <span class="ui-float-label">
+                        <input style="width: 100%; border: 1px solid #aaa;" type="number" ngModel name="totalAmountFrom" pInputText id="exampleFormControlInput1"
+                          class=" form-control input-sm-3" >
+                        <label for="exampleFormControlInput1">Invoice Total Amount From</label>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="row" style="display: flex;">
+                    <!-- <div class="form-group">
+                      <span class="ui-float-label">
+                        <input type="number" ngModel name="balanceAmountTo" pInputText id="exampleFormControlInput1"
+                          class="form-control input-sm-3" style="border: 1px solid #dddd;">
+                        <label for="exampleFormControlInput1">Balance Amount To</label>
+                      </span>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label">
+                        <input style="width: 100%; border: 1px solid #aaa;" type="number" ngModel name="totalAmountTo" pInputText id="exampleFormControlInput1"
+                          class=" form-control input-sm-3">
+                        <label for="exampleFormControlInput1">Invoice Total Amount To</label>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+
+
+              </div>
+              <div class="row" style="margin-top:10px; display: none">
+                <div class="col-md-6" style="padding:0;">
+                  <div class="invoice-number-div">
+                    <span class="ui-float-label">
+                      <input type="text" ngModel name="invoice[customer_name]" pInputText id="invoice_customer_name"
+                        style="height: 30px; width: 558px; border: 1px solid #aaa">
+                      <label for="exampleFormControlInput1">Customer Name(s)</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="invoice-number-div">
+                    <span class="ui-float-label">
+                      <input type="text" ngModel name="invoice[department_name]" pInputText id="invoice_department_name"
+                        style="height: 30px; width: 558px; border: 1px solid #aaa">
+                      <label for="exampleFormControlInput1">Department Name(s)</label>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="display: flex; margin-top: 10px; display: none">
+                <div class="col-md-6" style="display: flex; padding: 0;">
+                  <div class="invoice-name-div">
+                    <div>
+                      <input type="text" ngModel name="invoice[custom_field1_key_name]"
+                        id="invoice_custom_field1_key_name" placeholder="Custom Field 1- Key Name"
+                        style="height: 30px; width: 258px; border: 1px solid black">
+                    </div>
+                  </div>
+                  <div class="invoice-name-div" style="margin-left: 10px;">
+                    <div>
+                      <input type="text" ngModel name="invoice[custom_field1_key_value]"
+                        id="invoice_custom_field1_key_value" placeholder="Custom Field 1- Key Value"
+                        style="height: 30px; width: 258px; border: 1px solid #aaa">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6" style="display: flex; padding: 0;">
+                  <div class="invoice-name-div" style="margin-left: 15px;">
+                    <div>
+                      <input type="text" ngModel name="invoice[custom_field2_key_name]"
+                        id="invoice_custom_field2_key_name" placeholder="Custom Field 2- Key Name"
+                        style="height: 30px; width: 258px; border: 1px solid #aaa">
+                    </div>
+                  </div>
+                  <div class="invoice-name-div" style="margin-left: 10px;">
+                    <div>
+                      <input type="text" ngModel name="invoice[custom_field2_key_value]"
+                        id="invoice_custom_field2_key_value" placeholder="Custom Field 2- Key Value"
+                        style="height: 30px; width: 258px; border: 1px solid #aaa">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top: 10px;">
+                <input name="datetime" ngModel value="{{lastModifierDateTime}}" *ngIf="lastImportDateShowHide" type="checkbox" style="margin-left: 31px;">
+                <span *ngIf="lastImportDateShowHide" style="margin-left: 3px;">and Records Greater than Last Fetch UTC Date Time  <strong>({{lastImportedDate}} | {{lastImportedTime}})</strong> &nbsp;<i style="color: black;" data-toggle="tooltip" title="On checking this flag, only invoices which are created or updated after the shown date and time will be fetched." class="fa fa-question-circle" aria-hidden="true"></i></span>
+                <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary" name="Fetch From QuickBooks" type="submit" id="fetch_from_qb"
+                  style="padding-left:10px !important; padding-right: 10px !important; margin-right:2%; float:right; height: 30px;">Fetch
+                  From
+                  QuickBooks</button>
+                  <button (click)="resetFilterFields()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel" name="reset button" type="button" 
+                  style="padding-left:10px !important; padding-right: 10px !important; margin-right:1%; float:right; height: 30px;">
+                 Reset</button>
+              </div>
+            </form>
+          </mat-panel-description>
+        </mat-expansion-panel>
+
+      </mat-accordion>
+    </div>
+    <div *ngIf="showGrid" class="hscrollbar-tab" style="margin-top: 17px; height: 19vw;">
+      <div *ngIf="enableGrid" id="mainGridPannel" class="row gridMainPannel">
+        <cync-grid [rowSelection]="'multiple'" [floatingFilter]="true" [cyncGridConfig]="cyncGridConfig"
+          [cyncRowData]="cyncRowData" [cyncColumnDefs]="cyncColumnDefs" (cyncOnGridReady)="cyncGridReady($event)"
+          [pagination]="true" [paginationPageSize]="'100'">
+        </cync-grid>
+      </div>
+    </div>
+    <div *ngIf="showGrid" style="display: none; margin-left: 17px; margin-top: -20px;"><span *ngIf="lastImportedDate"> Imported on &nbsp; {{lastImportedDate}} | {{lastImportedTime}} </span></div>
+    <div *ngIf="showGrid" class="container-fluid">
+      <p-dialog header="Field Mapping" [(visible)]="display" width="500" height="300">
+        <div class="hr-line"></div>
+        <div class="ui-g-12">
+          <form #myform1="ngForm" (ngSubmit)="getPopupData(myform1)">
+          <div class="row cync-row">
+            <label for="po_number">PO Number</label>
+            <p-dropdown [options]="PoNumber" ngModel name="poNumberSelectedOption" placeholder="please select" class="dropdown_adjust"
+              [style]="{'width': '400px'}" id="po_number"></p-dropdown>
+          </div>
+          <div class="row cync-row">
+            <label for="file_ref_number">File Ref Number</label>
+            <p-dropdown [options]="fileRefNumber" ngModel name="fileNumberSelectedOption" placeholder="please select" class="dropdown_adjust"
+              [style]="{'width': '400px'}" id="file_ref_number"></p-dropdown>
+          </div>
+          <div class="row cync-row">
+            <label class="requiredClass" for="fee_name">Fee Name</label>
+            <p-dropdown required="required" [options]="feeName" ngModel name="feeNameSelectedOption" placeholder="please select" class="dropdown_adjust"
+              [style]="{'width': '400px'}" id="fee_name"></p-dropdown>
+    
+          </div>
+          <div class="row bb-panel">
+            <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary" name="import_invoices_to_cync" type="submit" id="import_to_cync"
+              style="padding-left: 10px !important; padding-right:10px !important; height: 30px;"><i style="color: blanchedalmond;" class="fa fa-cloud-download" aria-hidden="true"></i>&nbsp;Import
+              Invoice(s)</button>
+            <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel" (click)="closePopup()" style="padding-left:10px !important; padding-right: 10px !important; height: 30px; margin-left: 10px;" >Cancel</button>
+          </div>
+          </form>
+        </div>
+      </p-dialog>
+      <button *ngIf="rowIsnotEmpty" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary" (click)="showDialog()" name="import_invoices_to_cync" type="submit" id="import_to_cync"
+        style="padding-left:15px !important; padding-right: 15px !important; margin-left: 45%; margin-top: 25px; margin-bottom: 25px; height: 30px;"><i style="color: blanchedalmond;" class="fa fa-cloud-download" aria-hidden="true"></i>&nbsp;Import
+        Invoice(s)</button>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="app-body-container bg-white loan-enquiry-main-dev" id="cync_app-body-container">
+  <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+  <div class="pad-inner">
+    <div class="row">
+      <div class="col-md-12 loan-equiry-heading">
+        <h3 style="margin: 0;">Quickbooks</h3>
+        <br />
+        <div class="hr-line"></div>
+      </div>
+      <br />
+    </div>
+  </div>
+</div> -->

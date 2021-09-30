@@ -1,0 +1,32 @@
+#no_records {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // height: 91%;
+    padding-top: 100px;
+    h5 {
+        margin: 15px 0px;
+    }
+    p {
+        padding-bottom: 15px;
+    }
+    .message {
+        width: 60%;
+        max-width: 500px;
+        -webkit-box-flex: 0;
+        -webkit-flex: none;
+        -ms-flex: none;
+        flex: none;
+        text-align: center;
+    }
+}
+
+#cync_main_contents {
+    .ui-datatable thead th:first-child,
+    .ui-datatable-tablewrapper thead th:first-child {
+        padding-top: 9px !important;
+    }
+    table {
+        width: 100%;
+    }
+}

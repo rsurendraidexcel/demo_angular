@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ListUdfMappingComponent } from './list-udf-mapping.component';
+
+describe('ListUdfMappingComponent', () => {
+  let component: ListUdfMappingComponent;
+  let fixture: ComponentFixture<ListUdfMappingComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ListUdfMappingComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ListUdfMappingComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

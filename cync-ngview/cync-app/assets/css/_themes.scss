@@ -1,0 +1,168 @@
+// Cycn Themes
+
+@import '_variables_cync_global.scss';
+$theme_1_light : $cync_global_bg_color;
+$theme_1_dark : $cync_global_bg_color_hover;
+
+$theme_2_light : #05ab16;
+$theme_2_dark : #0a7214;
+
+
+$theme_3_light : #e1630b;
+$theme_3_dark :#c55b12;
+
+$theme_0_light : #f9f9f9;
+$theme_0_dark :#f9f9f9;
+$theme_0_gray : #727070;
+
+$cync_button_bg : $cync_global_bg_color;
+$cync_button_bg_hover : $cync_global_bg_color_head;
+
+
+
+.theme_2 
+{
+    .cync-header {
+        /*background: $theme_2_light ;*/ background-image: url("../images/theme-verdant.png"); background-repeat: no-repeat ; background-position: left top;
+    }
+
+    .module-sub-menu .active {
+        border-bottom-color :$theme_2_light;
+    }
+
+    .ui-widget-header .ui-button, .ui-widget-content .ui-button, .ui-widget.ui-button, .ui-button { background: $theme_2_light;    border-color: $theme_2_light;} 
+    
+    .ui-widget-header .ui-button:hover, .ui-widget-content .ui-button:hover, .ui-widget.ui-button:hover, .ui-button:hover { background: $theme_2_dark;     border-color: $theme_2_dark;}
+
+    #activationEmailModalID .modal-header, #statusChangeModalId .modal-header{
+        background: linear-gradient(to right, $theme_2_dark , $theme_2_light);
+    }
+    
+    .fa-star{ color:$theme_2_light; font-size: 14px;}
+    .fa-eye { color:$theme_2_light; font-size: 14px;}
+    .fa-minus-circle{ color:$theme_2_light; font-size: 14px;}
+    .fa-map-marker {color:$theme_2_light; font-size: 14px;} 
+    
+    .cyncbtn-them-style{ 
+        background: $theme_2_light;
+        color: #ffffff;
+        border: 1px solid #aaaaaa;
+        border-radius:2px;
+        -webkit-border-radius:2px;
+        -moz-border-radius:2px;
+        padding: 4px 12px;
+        margin:4px;
+    }
+}
+
+
+
+.theme_1 
+{
+    .cync-header {
+        /*background: $theme_1_light ;*/ background-image: url("../images/theme-aquatic.png"); background-repeat: no-repeat ; background-position: left top;
+    }
+
+    .module-sub-menu .active {
+        border-bottom-color :$theme_1_light;
+    }
+
+    .ui-widget-header .ui-button, .ui-widget-content .ui-button, .ui-widget.ui-button, .ui-button { background: $theme_1_light;    border-color: $theme_1_light;} 
+    
+    .ui-widget-header .ui-button:hover, .ui-widget-content .ui-button:hover, .ui-widget.ui-button:hover, .ui-button:hover { background: $theme_1_dark;     border-color: $theme_1_dark;}
+
+    #activationEmailModalID .modal-header, #statusChangeModalId .modal-header{
+        background: linear-gradient(to right, $theme_1_dark , $theme_1_light);
+    }
+    .fa-star{ color:$theme_1_light; font-size: 14px;}
+    .fa-eye { color:$theme_1_light; font-size: 14px;}
+    .fa-minus-circle{ color:$theme_1_light; font-size: 14px;}
+    .fa-map-marker {color:$theme_1_light; font-size: 14px;}
+    .cyncbtn-them-style{ 
+        background: $theme_1_light;
+        color: #ffffff;
+        border: 1px solid #aaaaaa;
+        border-radius:2px;
+        -webkit-border-radius:2px;
+        -moz-border-radius:2px;
+        padding: 4px 12px;
+        margin:4px;
+    }      
+}
+
+
+.theme_3
+{
+    .cync-header {
+        /*background: $theme_3_light ;*/ background-image: url("../images/theme-datlight.png"); background-repeat: no-repeat; background-position: left top;
+    }
+
+    .module-sub-menu .active {
+        border-bottom-color :$theme_3_light;
+    }
+
+    .ui-widget-header .ui-button, .ui-widget-content .ui-button, .ui-widget.ui-button, .ui-button { background: $theme_3_light;    border-color: $theme_3_light;} 
+    
+    .ui-widget-header .ui-button:hover, .ui-widget-content .ui-button:hover, .ui-widget.ui-button:hover, .ui-button:hover { background: $theme_3_dark;     border-color: $theme_3_dark;}
+
+    #activationEmailModalID .modal-header, #statusChangeModalId .modal-header{
+        background: linear-gradient(to right, $theme_3_dark , $theme_3_light);
+    }
+    .fa-star{ color:$theme_3_light; font-size: 14px;}
+    .fa-eye { color:$theme_3_light; font-size: 14px;}
+    .fa-minus-circle{ color:$theme_3_light; font-size: 14px;}
+    .fa-map-marker {color:$theme_3_light; font-size: 14px;}
+    .cyncbtn-them-style{ 
+        background: $theme_3_light;
+        color: #ffffff;
+        border: 1px solid #aaaaaa;
+        border-radius:2px;
+        -webkit-border-radius:2px;
+        -moz-border-radius:2px;
+        padding: 4px 12px;
+        margin:4px;
+    }   
+}
+
+.theme_0
+{
+    .cync-header {
+        /*background: $theme_0_light ;*/ background-image: url("../images/theme-pearl.png"); background-repeat: no-repeat ; background-position: left top;
+    }
+
+    .user-info .notifications.dropdown > a {
+    color: #727070;
+}
+
+    .module-sub-menu .active {
+       border-bottom-color :#fff;
+      background:#e5e5e5;
+          padding-top: 5px;
+    }
+
+    .ui-widget-header .ui-button, .ui-widget-content .ui-button, .ui-widget.ui-button, .ui-button { background: $theme_0_light;    border-color: #999;color:#000000;} 
+    
+    .ui-widget-header .ui-button:hover, .ui-widget-content .ui-button:hover, .ui-widget.ui-button:hover, .ui-button:hover { background: #b2b2b2;     border-color: #ccc;color:#000000;}
+
+    #activationEmailModalID .modal-header, #statusChangeModalId .modal-header{
+        background: linear-gradient(to right, $theme_0_dark , $theme_0_light);
+    }
+
+    .fa-star{ color:$theme_0_gray; font-size: 14px;}
+    .fa-eye { color:$theme_0_gray; font-size: 14px;}
+    .fa-minus-circle{ color:$theme_0_gray; font-size: 14px;}
+    .fa-map-marker {color:$theme_0_gray; font-size: 14px;}
+    .cyncbtn-them-style{ 
+        background: $theme_0_light;
+        color: #111111;
+        border: 1px solid #aaaaaa;
+        border-radius:2px;
+        -webkit-border-radius:2px;
+        -moz-border-radius:2px;
+        padding: 4px 12px;
+        margin:4px;
+    }
+     
+}
+
+ 

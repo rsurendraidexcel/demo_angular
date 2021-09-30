@@ -1,0 +1,43 @@
+<div class="app-body-container bg-white client-loan-terms-custom" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+	<div class="close-btn-dash pull-right text-right top-action-btns">
+	</div>
+	<div class="pad-inner">
+		<h3 class="no-m-bt">Client Loan Terms</h3>
+		<div class="row tab_panel">
+			<div class="inline tabbtn tablinks">
+				<!-- <input type="radio" name="guarantors"/> -->
+				<label class="radio-inline">
+					<input type="radio" name="optradio" checked [routerLink]="['/client-maintenance/client-loan-terms/guarantors']">Guarantors</label>
+			</div>
+			<div class="inline tabbtn tablinks">
+				<!-- <input type="radio" name="loan_free"/>  -->
+
+				<label class="radio-inline">
+					<input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/loan-fees']">Loan Fees</label>
+			</div>
+			<div class="inline tabbtn tablinks">
+				<!-- <input type="radio" name="ineligible_advances"/>"  -->
+				<label class="radio-inline">
+					<input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/ineligible-advances']">Ineligible/Advances</label>
+
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 p_b_10">
+				<select class="form-control" (change)="onChangeDropdown($event.target.value)">
+					<option value="Guarantors">Guarantors</option>
+					<option value="Borrower">Borrower Guarantors</option>
+					<option value="Personal">Personal Guarantors</option>
+					<option value="Third Party">Third Party Guarantors</option>
+					<option value="Insurance Policies">Insurance Policies Guarantors</option>
+				</select>
+			</div>
+		</div>
+
+		<div class="p-t-16">
+			<custom-grid [gridModel]="guarantorsModel"></custom-grid>
+		</div>
+	</div>
+
+</div>

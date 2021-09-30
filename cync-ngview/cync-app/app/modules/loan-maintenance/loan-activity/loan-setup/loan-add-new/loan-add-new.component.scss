@@ -1,0 +1,103 @@
+
+.field-Panel{
+  width: 98%;
+  border: 1px groove #d3d3d3 !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 10px 0px 2px 0px !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+          box-shadow:  0px 0px 0px 0px #000;
+  .legend-title{
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    border:none;
+    width:150px;
+    padding-left: 10px;
+    margin-bottom: 2px;
+    font-size: 12px !important;
+  }
+}
+
+
+:host .mat-dialog-container{
+  overflow: hidden !important;
+ }
+ :host .mat-dialog-title{
+  margin: 0px;
+}
+:host .mat-dialog-content{
+   margin: 0px; 
+   padding: 0px; 
+   overflow: auto;
+}
+.top-title {
+    font-size: 14px;
+    padding-left: 10px;
+    display: inline-block;
+    color:#fff;
+ }
+ .inner-scroll-modal-content{
+   max-height: 65vh;
+   overflow: hidden;
+   overflow-y: auto;
+   padding-right: 4px;
+ }
+
+.bPCommonCardsBlock {
+  padding-left: 0px;
+  margin: 0px;
+}
+.basicParameterWarpbox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+}
+.bpcommonElementBoxMd {
+  width: 20vw;
+}
+.margin-box-common {
+  margin-right: 10px;
+  margin-top:4px;
+}  
+.commonDropdownStyle {
+  width: 100%;
+  height: 31px;
+}
+.bpRightTextAlign {
+  text-align: right;
+}
+.bPCommonTitles {
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.margin-Checkbox-common {
+  margin-right: 1.7vw;
+  margin-top: 1.5vw;
+}
+.mg-ducument-label{ margin: 10px;}
+.upload-section{
+  border: 2px  dashed #d3d3d3;
+  min-height: 80px;
+  width: 60vw;
+  margin: 10px;
+  display: inline-block;
+}
+
+.bpcommonElementCheckBoxMd {
+  display: flex;
+  width: 15vw;
+  align-items: center;
+  justify-content: flex-start;
+}
+.margin-Checkbox-common {
+  margin-right: 1.7vw;
+  margin-top: 1.5vw;
+}
+.checkbox-controle{ display: inline-block; height: 18px; width: 18px; margin-left: 10px;}  
+.form-control[disabled], fieldset[disabled] .form-control {
+  cursor: not-allowed;
+  }
+  .custom-field{
+    display: inline-block;
+  }

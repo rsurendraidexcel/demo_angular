@@ -1,0 +1,21 @@
+{
+    "host": "https://currency-prestaging.cyncsoftware.com",
+    "host_ror": "https://lenderId.cyncsoftware.com/api/v1/",
+    "host_finance": "https://stagingfinservice.cyncsoftware.com/api/v1/",
+    "host_factoring": "https://lenderId.cyncsoftware.com/factoring/api/v1/",
+    "host_notification": "https://prodpentestnotifications.cyncsoftware.com/v1/",
+    "host_abl": "https://lenderId.cyncsoftware.com/abl/api/v1/",
+    "cyncUserCookie": "",
+    "lenderId": "",
+    "lenderId1": "",
+    "notificationAPIKey": "3fFjZffjhxa6F50EecqPa1EVbluIKl269rdCXWxx",
+    "assets_path": "/angular/assets",
+    "cdn_url" : "",
+    "host_mcl": "https://lenderId.cyncsoftware.com/api/mcl/",
+    "host_cash_application": "https://lenderId.cyncsoftware.com/api/cash-application-v2/v1/",
+    "host_webhook": "https://lenderId.cyncsoftware.com/api/webhook/",
+    "host_tableau": "https://ablreporting.cyncsoftware.com",
+    "host_tableau_tiket_token": "https://apilos.cyncsoftware.com",
+    "host_lambda_api": "https://bjjs5w4r5i.execute-api.us-east-1.amazonaws.com/Stage",
+    "host_factoring_node_api":"https://048an02mle.execute-api.us-east-1.amazonaws.com/dev/"
+}

@@ -1,0 +1,18 @@
+<div class="app-body-container bg-white is_summary ">
+  <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+  <div class="pad-inner">
+    <div class="align">
+        <p-pickList id="Ineligible-calculation" [source]="source" [target]="confirmed" sourceHeader="Ineligible Reasons" targetHeader="Selected Ineligible Reasons"  dragdrop="true" filterBy="description"
+          metaKeySelection="true" [sourceStyle]="{'height':'300px','border':'1px solid #c8c8c8','padding':'4px','width':'450px'}"
+          [targetStyle]="{'height':'300px','border':'1px solid #c8c8c8','padding':'4px','width':'450px'}" showSourceControls="true">
+          <div class="ui-picklist ">
+            <ng-template let-data pTemplate="item">
+              <div class="ui-helper-clearfix ">
+                <div class="list-of-reason">{{data.description}}</div>
+              </div>
+            </ng-template>
+          </div>
+        </p-pickList>
+    </div>
+  </div>
+</div>

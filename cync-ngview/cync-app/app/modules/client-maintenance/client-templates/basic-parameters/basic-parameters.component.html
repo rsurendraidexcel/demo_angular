@@ -1,0 +1,106 @@
+<div class="app-body-container bg-white is_summary ">
+  <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+  <div class="pad-inner">
+    <!-- <h3 class="no-m-bt">Basic Parameters</h3> -->
+    <div class="row topHeadingPannel">
+      <div class="col-md-3">
+        <h3 class="no-m-bt" id="templateHeading">Basic Parameters</h3>
+      </div>
+      <div class="col-md-4 pull-right text-right">
+        <button type="button" id="submitBasicParameter" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right"
+          (click)="postBPdata(mainBPform.getRawValue())">Save Basic Parameter</button>
+        <button type="button" id="resetBasicParameter" class="btn btn-light primarycancelbtn"
+          (click)="onClickResetBPform()">Reset</button>
+      </div>
+    </div>
+    <div class="p-t-32">
+      <div class="m-l-r-15">
+        <ul class="list-inline basic-menu hand">
+          <li>
+            <a (click)="onClick('#bbc_Others')"> BBC Others</a>
+          </li>
+          <li>
+            <a (click)="onClick('#rollforwards')"> Rollforwards</a>
+          </li>
+          <!-- <li>
+                  <a (click)="onClick('#sub_Limits')"> Sub Limits</a>
+              </li> -->
+          <li>
+            <a (click)="onClick('#inventory_Parameters')"> Inventory Parameters</a>
+          </li>
+          <li>
+            <a (click)="onClick('#ineligible_Reasons')"> Ineligible Reasons</a>
+          </li>
+          <li>
+            <a (click)="onClick('#over_Advance')"> Over Advance</a>
+          </li>
+          <!-- <li>
+                <a (click)="onClick('#report_Preferences')"> Report Preferences</a>
+              </li> -->
+
+        </ul>
+      </div>
+      <div class="has-scrollbar bbc_basic_paramter" id="main_contents">
+
+        <!-- form group for borrower api response keys -->
+        <div class="pad-inner">
+
+          <form [formGroup]="mainBPform">
+
+            <!--start of over BBC Others-->
+            <div class="row bpmargin-bottom" id="bbc_Others">
+              <div class="col-md-12">
+                <app-bbc-others (formReady)="formInitialized('bbcOthers', $event)"></app-bbc-others>
+
+              </div>
+            </div>
+
+            <!--start of over Rollforwards-->
+            <div class="row bpmargin-bottom" id="rollforwards">
+              <div class="col-md-12">
+                <app-rollforwards (formReady)="formInitialized('rollForwards', $event)"></app-rollforwards>
+              </div>
+            </div>
+
+            <!--start of Sub Limits-->
+            <!-- <div class="row bpmargin-bottom" id="sub_Limits">
+              <div class="col-md-12">
+                <app-sub-limits (formReady)="formInitialized('subLimits', $event)"></app-sub-limits>
+              </div>
+            </div> -->
+
+            <!--start of inventory-parameters-->
+            <div class="row bpmargin-bottom" id="inventory_Parameters">
+              <div class="col-md-12">
+                <app-inventory-parameters (formReady)="formInitialized('inventoryParameter', $event)">
+                </app-inventory-parameters>
+              </div>
+            </div>
+            <!--start of Ineligible Reasons-->
+            <div class="row bpmargin-bottom" id="ineligible_Reasons">
+              <div class="col-md-12">
+                <app-ineligible-reasons (formReady)="formInitialized('ineligibaleReason', $event)">
+                </app-ineligible-reasons>
+              </div>
+            </div>
+
+            <!--start of over advance-->
+            <div class="row bpmargin-bottom" id="over_Advance">
+              <div class="col-md-12">
+                <app-over-advance (formReady)="formInitialized('overAdvance', $event)"></app-over-advance>
+              </div>
+            </div>
+            <!--start of over Report Preferences-->
+            <!-- <div class="row bpmargin-bottom" id="report_Preferences">
+              <div class="col-md-12">
+                <app-report-preferences (formReady)="formInitialized('reportPreference', $event)">
+                </app-report-preferences>
+              </div>
+            </div> -->
+          </form>
+        </div>
+    
+      </div>
+
+    </div>
+  </div>

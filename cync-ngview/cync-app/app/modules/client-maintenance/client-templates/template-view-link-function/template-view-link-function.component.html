@@ -1,0 +1,2 @@
+<a *ngIf="!viewPermissionValue" style="cursor: auto;" id="{{params.value}}">{{params.value}}</a>
+<a *ngIf="viewPermissionValue" style="cursor: pointer;text-decoration-line: underline;" id="{{params.value}}" (click)="onViewTemplate($event)">{{params.value}}</a>

@@ -1,0 +1,17 @@
+.borrowerContentDiv{
+ 
+
+display: flex; justify-content: center; margin-top: 3%;
+}
+
+.borrowerConnectDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 3px -1px 12px 1px rgba(6,5,5,0.4);
+    -webkit-box-shadow: 3px -1px 12px 1px rgba(6,5,5,0.4);
+    -moz-box-shadow: 3px -1px 12px 1px rgba(6,5,5,0.4);
+    border: 1px solid lightslategray;
+    border-radius: 5px;
+    width: 400px; height: 150px;
+}

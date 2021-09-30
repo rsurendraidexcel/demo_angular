@@ -1,0 +1,474 @@
+<div class="app-body-container bg-white" id="app-body-container">
+      <div class="close-btn-dash">
+       <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+     </div> 
+      <div class="pad-inner">
+	    <h3 class="no-m-bt">Basic Details</h3>
+	    <div class="brder-1 p-t-32">
+	    <div class="p-t-20"></div>
+       <div class="has-scrollbar" id="main_contents">				 
+	     <div class="col-lg-6 col-md-6 col-sm-12 ">
+            <div class="panel panel-primary cync-panel">
+            <div class="panel-heading cync-panel-heading">
+            	Lender Basic Details
+            	<span class="panel-icon">
+            	    <label (click)="goToEditLink('lenderBasicDetails',lenderInfoID)" *ngIf="isEditIconEnabled"><i class="fa fa-pencil hand" aria-hidden="true"></i></label>
+                  <label *ngIf="!isEditIconEnabled"><i class="fa fa-pencil hand icon_disabled" aria-hidden="true"></i></label>
+                </span>
+           </div>
+            <div class="panel-body lender-panel">
+                <div class="col-lg-4 col-md-5 col-sm-4 lender-field">
+                    <span>Lender Name :</span>
+                    <br/>
+                    <span>Email ID :</span>
+                    <br/>
+                    <span>Phone No. :</span>
+                    <br>
+                </div>
+                <div class="col-lg-8 col-md-7 col-sm-8" *ngIf = "basicDetailsInformation != undefined ">
+                    <span><b>{{basicDetailsInformation.basic_information.display_name}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.basic_information.email}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.basic_information.phone_no}}</b></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 pad-left0">
+            <div class="panel panel-primary panel-small cync-panel">
+                <div class="panel-heading cync-panel-heading">
+                	Application logo
+                	<span class="panel-icon">
+                	   <label (click)="goToEditLink('applicationLogo',lenderInfoID)" *ngIf="isEditIconEnabled"><i class="fa fa-pencil hand" aria-hidden="true"></i></label>
+                     <label *ngIf="!isEditIconEnabled"><i class="fa fa-pencil  hand icon_disabled" aria-hidden="true"></i></label>
+                  </span>
+                  </div>
+                <div class="panel-body lender-panel" *ngIf = "basicDetailsInformation != undefined ">
+                  
+                    <a>
+                        <img  class="lender-logo img-responsive img-thumbnail" [src]="basicDetailsInformation.basic_information.logo_path" alert="Lender logo" />
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 pad-right0">
+            <div class="panel panel-primary panel-small cync-panel" *ngIf = "basicDetailsInformation != undefined ">
+                <div class="panel-heading cync-panel-heading">Factoring Fee Setup 
+                	<span class="panel-icon">
+                     <label (click)="goToEditLink('factoringSetup',lenderInfoID)" *ngIf="isEditIconEnabled"><i class="fa fa-pencil hand" aria-hidden="true"></i></label>
+                     <label *ngIf="!isEditIconEnabled"><i class="fa fa-pencil  hand icon_disabled" aria-hidden="true"></i></label>
+                  </span>
+
+                </div>
+                <div class="panel-body lender-panel">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <span>Fee Type :</span>
+                        <br/>
+                    </div>
+                    <div class="col-lg-6" *ngIf = "basicDetailsInformation != undefined ">
+                        <span *ngIf="basicDetailsInformation.factoring_fee_setup.factoring_fees_rule_is_accrued== true ">Accrued Fee</span>
+                        <span *ngIf="basicDetailsInformation.factoring_fee_setup.factoring_fees_rule_is_accrued== false ">Earned Fee</span>
+                        <br/>
+                    </div>
+                    <a class="note-fee-setup">Fee setup used by only Factoring Client</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 ">
+        <div class="panel panel-primary cync-panel">
+            <div class="panel-heading cync-panel-heading">Address<span class="panel-icon">
+                <label (click)="goToEditLink('address',lenderInfoID)" *ngIf="isEditIconEnabled"><i class="fa fa-pencil hand" aria-hidden="true"></i></label>
+                <label *ngIf="!isEditIconEnabled"><i class="fa fa-pencil  hand icon_disabled" aria-hidden="true"></i></label>
+            </span></div>
+            <div class="panel-body lender-panel">
+        <div class="col-lg-12 col-md-12 col-sm-12 line-height" *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left  no-pad">
+                        <span>Address Line 1 :</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6  no-pad">
+                    <span ><b>{{basicDetailsInformation.basic_information.street_address}}</b></span>
+                
+               </div>
+                </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 line-height" *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left  no-pad">
+                        <span>Address Line 2:</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <span ><b>{{basicDetailsInformation.basic_information.other_address}}</b></span>
+                
+               </div>
+                </div>
+
+              <div class="col-lg-12 col-md-12 col-sm-12 line-height" *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left  no-pad">
+                        <span>City:</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <span ><b>{{basicDetailsInformation.basic_information.city}}</b></span>
+                
+               </div>
+                </div>
+
+
+                     <div class="col-lg-12 col-md-12 col-sm-12 line-height" *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left  no-pad">
+                        <span>State Province :</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <span ><b>{{stateName}}</b></span>
+                
+               </div>
+                </div>
+
+                     <div class="col-lg-12 col-md-12 col-sm-12 line-height" *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left  no-pad">
+                        <span>Country :</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <!-- <span ><b>{{basicDetailsInformation.basic_information.country}}</b></span> -->
+                    <span ><b>{{countryName}}</b></span>
+               </div>
+                </div>
+
+                     <div class="col-lg-12 col-md-12 col-sm-12 line-height" *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left  no-pad">
+                        <span>Zip/Postal Code :</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <span ><b>{{basicDetailsInformation.basic_information.zip_code}}</b></span>
+                
+               </div>
+                </div>
+
+                     <div class="col-lg-12 col-md-12 col-sm-12 line-height" *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left no-pad">
+                        <span>Fax No.:</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <span ><b>{{basicDetailsInformation.basic_information.fax_no}}</b></span>
+                
+               </div>
+                </div>
+
+                     <div class="col-lg-12 col-md-12 col-sm-12 " *ngIf = "basicDetailsInformation != undefined " >
+               <div class="col-lg-4 col-md-4 col-sm-6 text-left">
+                        <span>Time Zone :</span>
+               </div>
+                  <div class="col-lg-8 col-md-8 col-sm-6">
+                    <span ><b>{{basicDetailsInformation.basic_information.time_zone}}</b></span>
+                
+               </div>
+                </div>
+           
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <div class="panel panel-primary pad14-left-right cync-panel">
+        <div class="panel-heading cync-panel-heading">Password Policy<span class="panel-icon">
+          <label (click)="goToEditLink('passwordPolicy',lenderInfoID)" *ngIf="isEditIconEnabled"><i class="fa fa-pencil hand" aria-hidden="true"></i></label>
+          <label *ngIf="!isEditIconEnabled"><i class="fa fa-pencil  hand icon_disabled" aria-hidden="true"></i></label>
+        </span></div>
+        <div class="panel-body lender-panel">
+            <div class="col-md-6">
+
+           <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+                     <span>Number of Uppercase :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                          <span><b>{{basicDetailsInformation.password_details.no_of_uppercase_in_passwrd}}</b></span>
+                </div>
+        </div>
+
+             <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+                       <span>Number of Lowercase :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                          <span><b>{{basicDetailsInformation.password_details.no_of_lowercase_in_passwrd}}</b></span>
+                </div>
+        </div>
+
+                 <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+                  <span>Number of Numerical Characters :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                      <span><b>{{basicDetailsInformation.password_details.no_of_digit_in_passwrd}}</b></span>
+                </div>
+        </div>
+
+                     <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+             <span>Number of Special Characters :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                   <span><b>{{basicDetailsInformation.password_details.no_of_special_character_for_passwrd}}</b></span>
+                </div>
+        </div>
+
+                     <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+  <span>Number of Failed Login Attempts :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                     <span><b>{{basicDetailsInformation.password_details.no_of_login_attempt}}</b></span>
+                </div>
+        </div>
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+     <span>No of same characters allowed for Repetition :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                       <span><b>{{basicDetailsInformation.password_details.character_repitition_limit}} </b></span>
+                </div>
+        </div>
+
+
+                  <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+         <span>Minimum Password Length :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+               <span><b>{{basicDetailsInformation.password_details.passwrd_minimum_length}}</b></span>
+                </div>
+        </div>
+
+                 <div class="col-lg-12 col-md-12 col-sm-12 "  *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+    <span>Maximum Password Length :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+             <span><b>{{basicDetailsInformation.password_details.passwrd_maximum_length}}</b></span>
+                </div>
+        </div>
+
+
+
+             <!--    <div class="col-lg-9 col-md-9 col-sm-9 lender-field">
+                    <span>Number of Uppercase :</span>
+                    <br/>
+                    <span>Number of Lowercase :</span>
+                    <br/>
+                    <span>Number of Numerical Characters :</span>
+                    <br/>
+                    <span>Number of Special Characters :</span>
+                    <br/>
+                    <span>Number of Failed Login Attempts :</span>
+                    <br/>
+                    <span>No of same characters allowed for Repetition :</span>
+                    <br/>
+                    <span>Minimum Password Length :</span>
+                    <br/>
+                    <span>Maximum Password Length :</span>
+                    <br/>
+                </div>
+                <div class="col-lg-3" *ngIf = "basicDetailsInformation != undefined ">
+                    <span><b>{{basicDetailsInformation.password_details.no_of_uppercase_in_passwrd}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.no_of_lowercase_in_passwrd}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.no_of_digit_in_passwrd}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.no_of_special_character_for_passwrd}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.no_of_login_attempt}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.character_repitition_limit}} </b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.passwrd_minimum_length}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.passwrd_maximum_length}}</b></span>
+                    <br/>
+                </div> -->
+            </div>
+            <div class="col-md-6">
+
+           <div class="col-lg-12 col-md-12 col-sm-12 " *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10  text-left">
+                        <span>Password Expiry Period (Days) :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                    <span ><b>{{basicDetailsInformation.password_details.passwrd_expire_in}}</b></span>
+                </div>
+        </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 " *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+                        <span>Number of Previous Passwords that cannot be Reused :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                    <span ><b>{{basicDetailsInformation.password_details.passwrd_reuse_count}}</b></span>
+                </div>
+        </div>
+
+           <div class="col-lg-12 col-md-12 col-sm-12 " *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+                        <span>Restricted Words (comma separated values) :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                    <span ><b>{{basicDetailsInformation.password_details.restricted_passwrd_words}}</b></span>
+                </div>
+        </div>
+
+
+           <!--      <div class="col-lg-9 col-md-9 col-sm-9 lender-field">
+                    <span>Password Expiry Period (Days) :</span>
+                    <br/>
+                    <span>Number of Previous Passwords that cannot be Reused :</span>
+                    <br/>
+                    <span>Restricted Words (comma separated values) :</span>
+                    <br/>
+                </div>
+                <div class="col-lg-3" *ngIf = "basicDetailsInformation != undefined ">
+                    <span><b>{{basicDetailsInformation.password_details.passwrd_expire_in}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.passwrd_reuse_count}}</b></span>
+                    <br/>
+                    <span><b>{{basicDetailsInformation.password_details.restricted_passwrd_words}}</b></span>
+                    <br/>
+                </div> -->
+                <br/>
+                <div class="textCenter margintop-20">
+                   <strong>User Login Setting</strong>
+                </div>
+                <br/>
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 " *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+                        <span>No of Days To Deactivate :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                    <span *ngIf="basicDetailsInformation.password_details.is_deactivate_user== true && basicDetailsInformation.password_details.no_of_days_to_deactivate != 'null'"><b>{{basicDetailsInformation.password_details.no_of_days_to_deactivate}}</b></span>
+                </div>
+        </div>
+
+            <div class="col-lg-12 col-md-12 col-sm-12 " *ngIf = "basicDetailsInformation != undefined ">
+               <div class="col-lg-10 col-md-10 col-sm-10 text-left">
+                        <span>No of Days To Delete :</span>
+               </div>
+                  <div class="col-lg-2 col-md-2 col-sm-2">
+                            <span *ngIf="basicDetailsInformation.password_details.is_delete_user== true && basicDetailsInformation.password_details.no_of_days_to_delete!='null'"><b>{{basicDetailsInformation.password_details.no_of_days_to_delete}}</b></span>
+                </div>
+        </div>
+
+
+             <!--    <div class="col-lg-9 col-md-9 col-sm-9 lender-field">
+                    <span>No of Days To Deactivate :</span>
+                    <br/>
+                    <span>No of Days To Delete :</span>
+                </div>
+                <div class="col-lg-3" *ngIf = "basicDetailsInformation != undefined ">
+                    <span *ngIf="basicDetailsInformation.password_details.is_deactivate_user== true && basicDetailsInformation.password_details.no_of_days_to_deactivate != 'null'"><b>{{basicDetailsInformation.password_details.no_of_days_to_deactivate}}</b></span>
+                    <br/>
+                    <span *ngIf="basicDetailsInformation.password_details.is_delete_user== true && basicDetailsInformation.password_details.no_of_days_to_delete!='null'"><b>{{basicDetailsInformation.password_details.no_of_days_to_delete}}</b></span>
+                </div> -->
+
+
+
+                
+               <!-- <span> <i class="fa fa-check" aria-hidden="true"></i> 
+               Restrict Repetition of Characters
+              </span> -->
+               
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary panel-small cync-panel">
+            <div class="panel-heading cync-panel-heading">
+            	Display Links
+            	<span class="panel-icon">
+                      <label (click)="goToEditLink('displayLinks',lenderInfoID)" *ngIf="isEditIconEnabled"><i class="fa fa-pencil hand" aria-hidden="true"></i></label>
+                      <label *ngIf="!isEditIconEnabled"><i class="fa fa-pencil  hand icon_disabled" aria-hidden="true"></i></label>
+                </span>
+            </div>
+            <div class="panel-body lender-panel" *ngIf = "basicDetailsInformation != undefined ">
+                <span>Security Policy </span>
+                <br>
+                <a href="{{basicDetailsInformation.display_links.security_link}}" target="_blank">{{basicDetailsInformation.display_links.security_link}}</a>
+                <br> <br>
+                <span>Privacy Policy </span>
+                <br>
+                <a href="{{basicDetailsInformation.display_links.privacy_link}}" target="_blank">{{basicDetailsInformation.display_links.privacy_link}}</a>
+                <br> <br>
+                <span>Terms and Conditions </span>
+                <br>
+                <a href="{{basicDetailsInformation.display_links.termsandconditions_link}}" target="_blank">{{basicDetailsInformation.display_links.termsandconditions_link}}</a>
+                <br> <br>
+                <span>Disclaimers </span>
+                <br>
+                <a href="{{basicDetailsInformation.display_links.disclaimers_link}}" target="_blank">{{basicDetailsInformation.display_links.disclaimers_link}}</a>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-primary panel-small cync-panel">
+            <div class="panel-heading cync-panel-heading">Login Access Limitation
+            	<span class="panel-icon">
+                    <label (click)="goToEditLink('loginAccessLimitation',lenderInfoID)" *ngIf="isEditIconEnabled"><i class="fa fa-pencil hand" aria-hidden="true"></i></label>
+                    <label *ngIf="!isEditIconEnabled"><i class="fa fa-pencil  hand icon_disabled" aria-hidden="true"></i></label>
+                </span>
+            </div>
+            <div class="panel-body lender-panel" *ngIf = "accessLimitations != undefined ">
+                <table class="table table-login-access">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Start Time </th>
+                            <th>End Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Monday</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].mon_access_start_time)}}</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].mon_access_end_time)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Tuesday</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].tue_access_start_time)}}</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].tue_access_end_time)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Wednesday</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].wed_access_start_time)}}</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].wed_access_end_time)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Thursday</td>
+                           <td>{{formatDateToUTC(accessLimitations[0].thur_access_start_time)}}</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].thur_access_end_time)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Friday</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].fri_access_start_time)}}</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].fri_access_end_time)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Saturday</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].sat_access_start_time)}}</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].sat_access_end_time)}}</td>
+                        </tr>
+                        <tr>
+                            <td>Sunday</td>
+                           <td>{{formatDateToUTC(accessLimitations[0].sun_access_start_time)}}</td>
+                            <td>{{formatDateToUTC(accessLimitations[0].sun_access_end_time)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+     						  										     
+    </div>
+    </div>
+</div>
+</div>

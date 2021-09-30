@@ -1,0 +1,43 @@
+<div [formGroup]="reportPreferences">
+    <div class="row bPCommonTitles">
+        <h4>Report Preferences</h4>
+    </div>
+    <div class="row form-group bPCommonCardsBlock">
+
+        <div class="row basicParameterWarpbox">
+            <div class="bpcommonElementBoxMd margin-box-common">
+                <label>Inventory Reliance % </label>
+                <select formControlName="inventory_reliance_based_on" class="form-control commonDropdownStyle">
+                    <option *ngFor="let item of allDropDownData?.default_sublimits_based_on; let i=index"
+                        [value]="item.value">{{item.display}}</option>
+                </select>
+            </div>
+            <div class="bpcommonElementBoxMd margin-box-common">
+                <label>&nbsp; </label>
+                <select formControlName="inventory_reliance_calcaulated_cap_by"
+                    class="form-control commonDropdownStyle">
+                    <option value="">Select</option>
+                    <option value="1"> 1</option>
+                    <option value="??">??</option>
+                </select>
+            </div>
+        </div>
+        <div class="row basicParameterWarpbox">
+            <div class="bpcommonElementBoxMd margin-box-common">
+                <label>Borrowing Base Leverage % </label>
+                <select formControlName="borrower_base_based_on" class="form-control commonDropdownStyle">
+                    <option *ngFor="let item of allDropDownData?.defaul_borrowing_base_leverage; let i=index"
+                        [value]="item.value">{{item.display}}</option>
+                </select>
+            </div>
+            <div class="bpcommonElementBoxMd margin-box-common">
+                <label>&nbsp; </label>
+                <select formControlName="borrower_base_calcaulated_cap_by" class="form-control commonDropdownStyle">
+                    <option value="">Select</option>
+                    <option value="1"> 1</option>
+                    <option value="??">??</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>

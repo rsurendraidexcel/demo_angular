@@ -1,0 +1,22 @@
+<ng-container *ngIf="oopService.errorPopupActivated">
+<div class="ui-widget-overlay ui-dialog-mask" style="z-index: 1000;"></div>
+<div class="ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all ui-shadow theme-modal custom-error">
+    <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top custom-error-title">
+        <!-- <span class="ui-dialog-title">Something went Wrong</span> -->
+
+    </div>
+    <div class="ui-dialog-content ui-widget-content custom-error-content">
+        <div class="text-center">
+            <div *ngIf="oopService.iconRequired"  class="custom-error-icon"></div>
+            <h4>{{oopService.title}}</h4>
+            <div [innerHTML]="oopService.message"></div>
+            <div style="margin-top: 25px;">
+                <button *ngIf="oopService.reloadRequired" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn" label="Reload" pbutton=""
+                    type="button">
+                    <span class="ui-button-text ui-clickable no-pad" (click)="reloadPage()">Retry</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+</ng-container>

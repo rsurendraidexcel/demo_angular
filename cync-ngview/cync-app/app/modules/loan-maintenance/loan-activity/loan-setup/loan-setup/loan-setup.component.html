@@ -1,0 +1,234 @@
+<div class="app-body-container bg-white" id="cync-page-layout">
+    <div class="titile-section">
+        <label class="top-title"> Loan Set up </label>
+        <div class="right-btn-groups">
+            <button *ngIf="isbuttonCreateNew" type="button"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right"
+                (click)="onClickCreateNew()">Create
+                New</button>
+
+            <button type="button"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right"
+                (click)="onClickEdit()" [disabled]="checkRolsPermission('Edit')" *ngIf="isbuttonEdit">
+                Edit</button>
+
+            <button *ngIf="isbuttonActive" type="button" (click)="onClickUpdate()"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right">
+                Update</button>
+
+            <button *ngIf="isDeleteActive" type="button"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right"
+                (click)="onClickDelete()" [disabled]="checkRolsPermission('Delete')">Delete </button>
+
+            <button *ngIf="isbuttonActive" type="button"
+                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarycancelbtn"
+                (click)="onClickCancel()">Cancel
+            </button>
+
+        </div>
+    </div>
+    <div class="pad-inner">
+
+
+        <div class="row zpd row-buton-mg">
+            <div class="col-md-1 col-sm-2 zpd" style="width:80px;"> <label> Loan ID</label></div>
+            <div class="col-md-3 col-sm-3 zpd">
+                <select class="form-control commonDropdownStyle" [(ngModel)]="loan_id"
+                    (change)="onChangeLoanIds($event)" style="width: 180px;">
+                    <option *ngFor="let loanItem of loanIds" [attr.data-category-type]="loanItem.loan_type" value="{{loanItem.id}}"> {{loanItem.loan_no}} </option>
+                </select>
+            </div>
+        </div>
+        <div [formGroup]="loanSetUpForm">
+            <div class="form-group">
+                <div class="hrline"></div>
+
+                <div class="has-scrollbar" id="innerDiv-scroll">
+                    <div class="row form-group bPCommonCardsBlock">
+                        <div class="row basicParameterWarpbox row-space">
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Loan Number<span class="required">*</span></label>
+                                <input type="text" class="form-control commonDropdownStyle" formControlName="loan_no" />
+                            </div>
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Loan Name<span class="required">*</span></label>
+                                <input type="text" class="form-control commonDropdownStyle"
+                                    formControlName="loan_name" />
+                            </div>
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Loan Type </label>
+                                <select class="form-control commonDropdownStyle" formControlName="loan_type">
+                                    <option [hidden]="hideabl && loanItem.loan_type == 'ABL' ? true : false "
+                                        *ngFor="let loanItem of loanTypes" id="{{loanItem.loan_type}}"
+                                        value="{{loanItem.id}}"> {{loanItem.loan_type}} </option>
+                                </select>
+                            </div>
+
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Credit Line </label>
+                                <input type="text" class="form-control commonDropdownStyle"
+                                    formControlName="credit_line_amt" />
+                            </div>
+                        </div>
+                        <div class="row basicParameterWarpbox row-space">
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Interest Rate Code </label>
+                                <select class="form-control commonDropdownStyle"
+                                    formControlName="interest_rate_code_id">
+                                    <option value="null">Please Select</option>
+                                    <option *ngFor="let interestRateItem of interestRateCodeDropDown"
+                                        value="{{interestRateItem.id}}"> {{interestRateItem.rate_name}} </option>
+                                </select>
+                            </div>
+
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label style="margin-right: 10px;"> Rate Adjustment </label>
+                                <span *ngIf="!linkHide" id="interestDetails" (click)="openInterestDetailsDialog()"
+                                    style="color: blue;">Interest Details</span>
+                                <span *ngIf="linkHide" style="color: grey; cursor:not-allowed;">Interest Details</span>
+                                <input type="text" class="form-control commonDropdownStyle"
+                                    formControlName="rate_adjustment" />
+                            </div>
+
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Min. Interest Rate </label>
+                                <input type="text" class="form-control commonDropdownStyle"
+                                    formControlName="min_interest_rt" />
+                            </div>
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Max. Interest Rate </label>
+                                <input type="text" class="form-control commonDropdownStyle"
+                                    formControlName="max_interest_rt" />
+                            </div>
+                        </div>
+                        <div class="row basicParameterWarpbox row-space">
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label>Loan Status</label>
+                                <select class="form-control commonDropdownStyle" formControlName="active">
+                                    <option value="true" selected>Active</option>
+                                    <option value="false">Inactive</option>
+                                </select>
+                            </div>
+
+                            <div formArrayName="custom_fields">
+                                <!-- <fieldset class="field-Panel">
+                                    <legend class="legend-title">UDF Mapping Field:</legend> -->
+                                <div class="custom-field"
+                                    *ngFor="let customAttributes of custom_fields_attributes; let idx=index">
+                                    <div [formGroupName]="idx" class="bpcommonElementBoxMd margin-box-common">
+                                        <div *ngIf="customAttributes.validation_type !== 'LOV'">
+                                            <label>{{customAttributes.udf_name}}</label>
+                                            <input type="text" class="form-control commonDropdownStyle"
+                                                formControlName="udf_value" />
+                                        </div>
+                                        <div *ngIf="customAttributes.validation_type === 'LOV'">
+                                            <label>{{customAttributes.udf_name}}</label>
+                                            <select type="text" class="form-control commonDropdownStyle"
+                                                formControlName="udf_value">
+                                                <option selected
+                                                    *ngFor="let lvOpt of customAttributes.lov_values; let lvIdx=index"
+                                                    [value]="lvOpt.lov_value"> {{lvOpt.lov_value}} </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- </fieldset> -->
+                            </div>
+
+                        </div>
+                       
+                        <!-- <div class="hrline row-buton-mg"></div> -->
+                        <div class="row basicParameterWarpbox row-space">
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Loan Signed</label>
+                                <br>
+                                <p-calendar yearRange="2000:2030" [(ngModel)]="loanSignedDate"
+                                    formControlName="loan_signed_on_dt" dateFormat="mm/dd/yy" [monthNavigator]="true"
+                                    [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+                                    [inputStyle]="{'width':'260px'}"></p-calendar>
+                            </div>
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Loan Origination<span class="required" *ngIf="hideAstrik">*</span></label>
+                                <br>
+                                <p-calendar yearRange="2000:2030" [(ngModel)]="loanOriginationDate"
+                                    formControlName="loan_origination_dt" dateFormat="mm/dd/yy" [monthNavigator]="true"
+                                    [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+                                    [inputStyle]="{'width':'260px'}"></p-calendar>
+                            </div>
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Loan Maturity </label>
+                                <br>
+                                <p-calendar yearRange="2000:2030" [(ngModel)]="loanMaturityDate"
+                                    formControlName="loan_maturity_dt" dateFormat="mm/dd/yy" [monthNavigator]="true"
+                                    [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+                                    [inputStyle]="{'width':'260px'}"></p-calendar>
+
+                            </div>
+                            <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Loan Paid Off </label>
+                                <p-calendar yearRange="2000:2030" [(ngModel)]="loanPaidOffDate"
+                                    formControlName="loan_paid_off_dt" dateFormat="mm/dd/yy" [monthNavigator]="true"
+                                    [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+                                    [inputStyle]="{'width':'260px'}"></p-calendar>
+
+                            </div>
+                        </div>
+                        <div class="row basicParameterWarpbox row-space">
+
+                            <label class="mg-ducument-label"> Loan Documents</label>
+                            <div class="loan_document_download_link" style="margin-top: 6px;">
+                                <ul class="doc-files-list">
+                                    <li *ngFor="let item of documentFile; let i =index;" value="item.id">
+                                        <a [href]="item.doc_url" style="cursor: pointer;"
+                                            download>{{ item.filename}}</a>
+                                        <span class="loan_document_delete_link" *ngIf="isDocumentCloseActive">
+                                            <i class="fa fa-close delte_link_styling"
+                                                (click)="onClickDocumentFileDelete(i)"></i>
+                                        </span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="upload-section" id="isUploadSection">
+                                <div class="file-Uplaod">
+                                    <label
+                                        class="file-upload-label ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                        <i class="fa fa-upload" aria-hidden="true"></i> Upload Loan Documents </label>
+                                    <input type="file" name="documents" multiple (change)="onFileSelect($event)"
+                                        formControlName="documents" />
+                                </div>
+
+                                <div class="fileList">
+                                    <span *ngFor="let item of listFile; let i =index;">
+                                        {{item.name}} <i class="fa fa-window-close remove-file" (click)="removeFile(i)"
+                                            aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row basicParameterWarpbox row-space">
+                            <div class="bpcommonElementCheckBoxMd margin-Checkbox-common">
+                                <label style="display: inline-block;">Add To BBC </label>
+                                <input type="checkbox" class="checkbox-controle" formControlName="add_to_bbc" />
+                                <span>
+                                  <span *ngIf="isLoanMapped">
+                                    &nbsp;&nbsp;<i data-toggle="tooltip" data-placement="top" title="This loan is mapped to a Loan Category in Participation and hence Add to BBC flag cannot be modified. To modify, please remove the mapping" class="fa fa-info-circle" aria-hidden="true"></i>
+                                  </span>
+                                </span>
+                            </div>
+                            <div class="bpcommonElementCheckBoxMd margin-Checkbox-common" *ngIf="loanTypeValue=='ABL'">
+                                <label style="display: inline-block;">Ignore Cash App Payments </label>
+                                <input type="checkbox" class="checkbox-controle"
+                                    formControlName="ignore_cash_app_payments" />
+
+                            </div>
+                            <br />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

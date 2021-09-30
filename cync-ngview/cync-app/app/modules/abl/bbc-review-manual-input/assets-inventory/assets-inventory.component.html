@@ -1,0 +1,155 @@
+<div class="app-body-container bg-white is_summary" id="app-body-container" >
+  <div class="pad-inner">
+  <div class="top-action-btns top-title text-left m-left"><h5 style="margin-left: 20px;">Assets/Inventory</h5></div>
+  <div class="hscrollbar-tab">
+    <div class="row" style="display: flex;">
+      <div class="collatral-drop-down" style="display: flex;">
+        <label>Collateral Name</label> &nbsp;
+        <select class="collatral-name-select" (change)="collateralDropDownSelect($event)">
+          <option value="all" selected="selected" >All</option>
+          <option *ngFor="let items of collateralDropDownVal.collaterals" value="{{items.id}}">{{items.name}}</option>
+        </select>&nbsp;&nbsp;
+        <span>{{colateralName}}</span>
+      </div>
+      <div class="bbc_date_div">
+        <label>BBC Date</label>&nbsp;
+        <span>{{bbc_date}}</span>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div style="width: 100%;">
+      	<div [hidden]="hideWhileAll" class="col-md-6 col-sm-6 col-xs-12 pull-right text-right m-top">
+
+          <i id="arNew"   [ngClass]="gridAddOn ? 'hand fa fa-plus fa-1x f_s_20 clr_grey p-right-10':'hand fa fa-plus fa-1x f_s_20 clr_grey p-right-10 icon_disabled operation_disabled'" aria-hidden="true" data-toggle="tooltip"
+           data-placement="top" title="Add New" (click)="addNewRow()"></i>
+
+           <i id="arSave"  [ngClass]="gridSaveOn ? 'hand fa fa-save fa-1x f_s_20 clr_grey p-right-10':'hand fa fa-save fa-1x f_s_20 clr_grey p-right-10 icon_disabled operation_disabled'" aria-hidden="true" data-toggle="tooltip"
+           data-placement="top" title="Add New" (click)="saveGrid()"></i>
+    
+          <i id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset" (click)="cancelData()"
+           [ngClass]="gridResetOn ? 'hand fa fa-times fa-1x clr_grey f_s_20 p-right-10':'hand fa fa-times fa-1x clr_grey f_s_20 p-right-10 icon_disabled operation_disabled'">
+          </i>
+    
+          <i id="deleteArBucket" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteGrid()"
+           [ngClass]="gridDeleteOn ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'">
+          </i>
+    
+        </div>
+      </div>
+      <ag-grid-angular
+     
+      style="width: 100%; overflow: scroll;" class="ag-theme-balham"
+      domLayout='autoHeight'
+      [gridOptions]="gridOptions"
+      rowSelection="multiple" 
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      (focusout)="onFocusOut()"
+      [rowData]="rowData"
+      [pinnedBottomRowData]="pinnedBottomRowData"
+      [paginationPageSize]="7"
+      [pagination] = "true"
+      [getRowStyle]="getRowStyle"
+      (gridReady)="onGridReady($event)"
+      (cellKeyPress)="onCellKeyPress($event)"
+      (rowSelected)="ongridRowSelected($event)"
+      (cellDoubleClicked)="onCellClicked($event)"
+    ></ag-grid-angular>
+    </div>
+    <div class="row">
+      <ag-grid-angular
+     
+      style="width: 100%; overflow: scroll;" class="ag-theme-balham"
+      domLayout='autoHeight'
+      [gridOptions]="gridOptions1"
+      rowSelection="single" 
+      [columnDefs]="columnDefs1"
+      [defaultColDef]="defaultColDef1"
+      
+      [rowData]="rowData1"
+      
+    ></ag-grid-angular>
+    </div>
+    <div class="row" style="margin-top: 5px;">
+      <div *ngIf="inventoryDayBoxShow" class="inventory_turn_maindiv">
+        <div class="labelTunDay"><h5>Inventory Turn days</h5></div>
+        <div class="inboxTurnDay" style="padding: 5px;"><input style="width: 120px;" [disabled]="inv_turn_inputenable" type="text" value="{{this.inventory_turn_days}}"></div>
+        <!-- <div class="col-md-3 pull-right"  style="padding: 5px; display: flex">
+          <button class="btn btn-primary" [style.display]="tdEdit" (click)="turnEdit()">Edit</button>
+          <button class="btn btn-primary" [style.display]="tdOK" (click)="turnSave()">Save</button>
+          <button class="btn btn-danger" [style.display]="tdOK" (click)="turnCancel()">Cancel</button>
+        </div> -->
+      </div>
+      <div *ngIf="productDropDownShow" class="col-md-4 product_dropdown">
+        <label>Product Group</label> &nbsp;
+        <select class="collatral-name-select" (change)="productDropDownSelect($event)">
+          <option value="" selected="selected" >Select Product Group</option>
+          <option *ngFor="let i of productGroupArray" value="{{i.id}}">{{i.description}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
+      <div style="width: 100%;">
+      	<div [hidden]="hideWhileAll || !unlockProduct" class="col-md-6 col-sm-6 col-xs-12 pull-right text-right m-top">
+
+          <i id="arNew" i [ngClass]="gridAddOn1 ? 'hand fa fa-plus fa-1x f_s_20 clr_grey p-right-10':'hand fa fa-plus fa-1x f_s_20 clr_grey p-right-10 icon_disabled operation_disabled'" aria-hidden="true" data-toggle="tooltip"
+           data-placement="top" title="Add New" (click)="addNewRow1()"></i>
+
+           <i id="arSave" i [ngClass]="gridSaveOn1 ? 'hand fa fa-save fa-1x f_s_20 clr_grey p-right-10':'hand fa fa-save fa-1x f_s_20 clr_grey p-right-10 icon_disabled operation_disabled'"  aria-hidden="true" data-toggle="tooltip"
+           data-placement="top" title="Add New" (click)="saveGrid1()"></i>
+    
+          <i id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset" (click)="cancelData1()"
+          [ngClass]="gridResetOn1 ? 'hand fa fa-times fa-1x clr_grey f_s_20 p-right-10':'hand fa fa-times fa-1x clr_grey f_s_20 p-right-10 icon_disabled operation_disabled'">
+          </i>
+    
+          <i id="deleteArBucket" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteGrid1()"
+           [ngClass]="gridDeleteOn1 ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'">
+          </i>
+    
+        </div>
+      </div>
+      <ag-grid-angular
+     
+      style="width: 100%; overflow: scroll;" class="ag-theme-balham"
+      domLayout='autoHeight'
+      [gridOptions]="gridOptions2"
+      rowSelection="multiple" 
+      [columnDefs]="columnDefs2"
+      [defaultColDef]="defaultColDef2"
+      (focusout)="onFocusOut()"
+      [rowData]="rowData2"
+      (rowSelected)="ongridRowSelected2($event)"
+      (cellKeyPress)="onCellKeyPress1($event)"
+      [pinnedBottomRowData]="pinnedBottomRowData1"
+      [pagination] = "true"
+      [paginationPageSize]="7"
+      [getRowStyle]="getRowStyle1"
+      (gridReady)="onGridReady2($event)"
+      (cellDoubleClicked)="onCellClicked2($event)"
+    ></ag-grid-angular>
+    </div>
+    <div class="downTableDiv">
+      <table class="downTable">
+        <tr>
+          <td>EOM Totals</td>
+          <td>{{EOM_Totals}}</td>
+        </tr>
+        <tr>
+          <td>Eligible Accounts Inventories</td>
+          <td>{{eligible_accounts_inventories}}</td>
+        </tr>
+        <tr>
+          <td>Advance Rate</td>
+          <td>{{eligible_accounts_inventories}}</td>
+        </tr>
+        	
+        <tr>
+          <td>Accounts Inventories Collateral</td>
+          <td>{{accounts_inventories_collateral}}</td>
+        </tr>
+  
+      </table>
+    </div>
+  </div>
+  </div>
+</div>

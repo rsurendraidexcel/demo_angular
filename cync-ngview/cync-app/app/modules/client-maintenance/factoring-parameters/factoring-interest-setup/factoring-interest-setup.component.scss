@@ -1,0 +1,37 @@
+.y-scrollbar{
+    height: 58vh;
+    overflow: hidden;
+    // overflow-y: auto;
+}
+.hrline {
+    border-top: 1px solid #aaaa;
+    height: 2px;
+    width: 95%;
+    margin-left: 32px;
+}
+.ui-g {
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.customwidth {
+    width: 65%;
+}
+
+.ng-valid[required], .ng-valid.required  {
+    border: 1px solid #42A948; /* green */
+  }
+  
+  .alert-msg{
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color:#F73718;
+  height: 65vh;
+}
+
+.validation-msg{ display: none; font-style: italic; font-size: 11px; color:#ff450d;} 
+.validation-notify{ border: 1px solid #ff450d;}
+.link-label{text-decoration: underline; color: blue; cursor: pointer;}

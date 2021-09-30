@@ -1,0 +1,305 @@
+<div [formGroup]="ineligibleReasonForm">
+  <div class="row bPCommonTitles">
+    <h4>Ineligible Reasons</h4>
+  </div>
+  <div class="row form-group bPCommonCardsBlock">
+    <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>CONCENTRATION</h5>
+      </div>
+      <div class="row basicParameterWarpbox">
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Concentration %</label>
+          <input formControlName="concentration_pct" type="number"
+            class="form-control commonDropdownStyle bpRightTextAlign">
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Debtor (Numerator)</label>
+          <select formControlName="concentration_on" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.debtor_numerator; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Total (Denominator)</label>
+          <select formControlName="concentration_denominator" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.total_denominator; let i=index" [value]="item[1]">{{item[0]}}
+            </option>
+        
+          </select>
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Concentration % Type</label>
+
+          <select formControlName="conc_pct_type" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.conc_pct_type; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+
+        </div>
+      </div>
+
+      <div class="row basicParameterWarpbox">
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Manually Enter Client Ineligible</label>
+          <select (change)="mannualyclientineligbl($event)" formControlName="is_manual_ineligible_amt_by_client"
+            class="form-control commonDropdownStyle">
+            <option value="true"> Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div [hidden]="manualHidden" class="bpcommonElementBoxMd margin-box-common">
+          <label>Receivable Aging</label>
+          <select formControlName="ineligible_amt_base_on" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.client_ineligble_amount_based_on; let i=index"
+              value="{{item.value}}"> {{item.display}}</option>
+
+          </select>
+        </div>
+
+        <div [hidden]="manualHidden" class="bpcommonElementBoxMd margin-box-common">
+          <label>Asset/Inventory</label>
+          <select formControlName="inventory_ineligible_amt_base_on" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.client_ineligble_amount_based_on; let i=index"
+              value="{{item.value}}"> {{item.display}}</option>
+
+          </select>
+        </div>
+        <div [hidden]="manualHidden" class="bpcommonElementBoxMd margin-box-common">
+          <label>Other Collateral</label>
+          <select formControlName="other_ineligible_amt_base_on" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.client_ineligble_amount_based_on; let i=index"
+              value="{{item.value}}"> {{item.display}}</option>
+
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>CROSS AGING</h5>
+      </div>
+      <div class="row basicParameterWarpbox">
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Cross Aging %</label>
+          <input formControlName="cross_aging_pct" type="number"
+            class="form-control commonDropdownStyle bpRightTextAlign">
+        </div>
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Cross Age by Project</label>
+          <select (change)="crossagebyprojct($event)" formControlName="cross_aging_by_project"
+            class="form-control commonDropdownStyle">
+
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div id="calculatedOn" class="bpcommonElementBoxSm margin-box-common">
+          <label>Calculated On</label>
+          <select (change)="calculatedon($event)" formControlName="pastdue_type" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.past_due_type; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+          </select>
+        </div>
+        <div id="crossAgeBucket" class="bpcommonElementCheckBoxMd margin-box-common">
+          <a  (click)="openConsiderCrossAgeBucketsDialog()">Consider Cross Age Buckets</a>
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Cross Age Calculation</label>
+
+          <select formControlName="crossage_formula" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.cross_age_formula; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+
+        </div>
+      </div>
+    </div>
+    <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>PAST DUE & AGED CREDITS</h5>
+      </div>
+      <div class="row basicParameterWarpbox">
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Past Due AR Days</label>
+          <input formControlName="ar_aging_days" type="number"
+            class="form-control commonDropdownStyle bpRightTextAlign">
+        </div>
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Allow Past Due > Debtor Balance</label>
+          <select (change)="allowpastdue($event)" formControlName="allow_pastdue_over_balance"
+            class="form-control commonDropdownStyle">
+
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Past Due Amount</label>
+          <select (change)="pastDueAmountChangeFn($event)" formControlName="ineligible_past_due_flag" class="form-control commonDropdownStyle"
+            placeholder="select">
+            <option *ngFor="let item of allDropDownData?.past_due_flags; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+        </div>
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Age Credit Amount</label>
+          <select (change)="ageCreditAmountFn($event)" formControlName="ineligible_aged_credit_flag" class="form-control commonDropdownStyle"
+            placeholder="select">
+            <option *ngFor="let item of allDropDownData?.aged_credit_flags; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+        </div>
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Age Credit Ineligible</label>
+
+          <select formControlName="aged_credit_ineligible" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.aged_credit_selection; let i=index" value="{{item.value}}">
+              {{item.display}} </option>
+
+          </select>
+
+        </div>
+      </div>
+    </div>
+    <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>OTHER INELIGIBLE PARAMETERS</h5>
+      </div>
+      <div class="row basicParameterWarpbox">
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Include Negative Ineligibles in Total</label>
+          <select (change)="includenegetive($event)" formControlName="include_negative_ineligibles"
+            class="form-control commonDropdownStyle">
+
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Calculate Aging</label>
+          <select (change)="calcaging($event)" formControlName="calculate_aging"
+            class="form-control commonDropdownStyle">
+
+            <option value="false">No</option>
+            <option value="true">Yes</option>
+          </select>
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Invoice Aging Start On</label>
+          <select formControlName="invoice_agings_start_on" class="form-control commonDropdownStyle"
+            (change)="invoiceagingstart($event)">
+            <option *ngFor="let item of allDropDownData?.invoice_aging_option; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+        </div>
+        <div [hidden]="termdayHidden" class="bpcommonElementBoxSm margin-box-common">
+          <label>Term Days</label>
+          <input formControlName="eligible_period_term_days" type="number"
+            class="form-control commonDropdownStyle bpRightTextAlign">
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Move Future Aging Into Current</label>
+
+          <select (change)="movefurther($event)" formControlName="current_bucket_is_0_or_less"
+            class="form-control commonDropdownStyle">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Payment Term Overdays</label>
+          <input formControlName="over_invoice_days" type="number"
+            class="form-control commonDropdownStyle bpRightTextAlign">
+
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Ineligible Calculation At</label>
+
+          <select formControlName="ineligible_calculate_by" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.ineligible_calculate_by; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+          </select>
+
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>Bring Forward Manual Ineligible</label>
+
+          <select formControlName="clone_manual_ineligibles" class="form-control commonDropdownStyle">
+            <option *ngFor="let item of allDropDownData?.clone_manual_ineligble; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+
+        </div>
+      </div>
+    </div>
+    <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>EXCLUDE PARAMETERS</h5>
+      </div>
+      <div class="row basicParameterWarpbox">
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <div class="MulticheckBoxMainLabel">
+            <label>Ignore Negative Availability</label>
+            <div class="bpcommonElementCheckBoxMd margintopforcheckbox">
+              <label class="container">Inventory
+                <input type="checkbox" formControlName="ignore_negative_inventory_available" class="form-control"
+                  name="IgnoreNegativeAvailability">
+                <span class="checkmark"></span>
+              </label>
+              <label class="container">Other Collateral
+                <input type="checkbox" formControlName="ignore_negative_other_available" class="form-control"
+                  name="IgnoreOtherAvailability">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>AP Required</label>
+          <select (change)="aprequired($event)" formControlName="ap_required_flag"
+            class="form-control commonDropdownStyle">
+
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+        <div class="bpcommonElementBoxMd margin-box-common">
+          <label>AR Exclude</label>
+          <select formControlName="ar_exclude_on" class="form-control commonDropdownStyle" >
+            <option *ngFor="let item of allDropDownData?.ar_exclude_on; let i=index" value="{{item.value}}">
+              {{item.display}}</option>
+
+          </select>
+        </div>
+
+      </div>
+    </div>
+    <!-- <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>INVENTORY INELIGIBLE PARAMETERS</h5>
+      </div>
+      <div class="row basicParameterWarpbox">
+        <div class="bpcommonElementBoxSm margin-box-common">
+          <label>Display Inventory Ineligibles</label>
+          <select (change)="displayinventory($event)" formControlName="display_inventory_ineligibles"
+            class="form-control commonDropdownStyle">
+
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+</div>

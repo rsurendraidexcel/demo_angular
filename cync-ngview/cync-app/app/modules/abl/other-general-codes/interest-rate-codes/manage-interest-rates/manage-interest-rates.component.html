@@ -1,0 +1,41 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+    <div class="pad-inner">
+        <h3 *ngIf="interestRateCodeResult != undefined " class="no-m-bt"> {{ interestRateAction }} - Interest Rate - {{interestRateCodeResult.rate_code}}</h3>
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="interestRatesForm" (ngSubmit)="saveData(interestRatesForm.value,interestRatesForm.valid)">
+                <div class="has-scrollbar" id="cync_main_contents">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">Interest Rate Date
+                                <span class="required">*</span>
+                            </label>
+                            <p-calendar *ngIf="calendarYearRange != ''" [showIcon]="true" class="interest-rate-date" [yearRange]="calendarYearRange" formControlName="rate_date" [monthNavigator]="true" [yearNavigator]="true"
+                                [ngClass]="displayFieldCss('rate_date')" readonlyInput="true"></p-calendar>
+                            <cync-input-field-error-msg [control]="getFormControl('rate_date')" labelName="Interest Rate Date">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2  ad-bt-pad ">
+                            <label class="mandatory" for="currency_code"> Interest Rate Value
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" formControlName="rate_value" class="form-control" id="rate_value" [ngClass]="displayFieldCss('rate_value')">
+                            <cync-input-field-error-msg [control]="getFormControl('rate_value')" labelName="Interest Rate Value">
+                            </cync-input-field-error-msg>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                        <hr>
+                        <button (click)="navigateToHome()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                        </button>
+                        <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit"
+                            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

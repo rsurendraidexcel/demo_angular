@@ -1,0 +1,30 @@
+.api-messages {
+    height: auto;
+    border-top: #0a0;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.35);
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    font-size: 14px;
+    color: #fff;
+    z-index: 2010;
+    margin: 0;
+    left: 0;
+    right: 0;
+    top:0;
+    div {
+      padding: 8px;
+    }
+    .success, .finished {
+      background: #6abd45;
+    }
+    .delete, .danger {
+      background: red;
+    }
+    .warning {
+      background: #ff6600;
+    }
+    .info {
+      background: #4dbbf8;
+    }
+  }

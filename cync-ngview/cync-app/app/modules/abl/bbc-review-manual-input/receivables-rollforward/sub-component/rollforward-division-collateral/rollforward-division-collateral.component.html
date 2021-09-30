@@ -1,0 +1,46 @@
+<div class="row height groove margin-0" style="width: 99.1%;">
+	<div class="col-xs-6 col-md-9 pull-left">
+		<label>{{priorBalanceTotalAccountsReceivable}}</label>
+	</div>
+	<div class="col-xs-6 col-md-3 pull-right text-right">{{balanceAmount}}</div>
+</div>
+<div class="h8"></div>
+<!-- Rollforward division collateral ag grid start -->
+<div class="roll-forwoad-division-collateral">
+	<ag-grid-angular #rollForwardCollateral style="width:100%; height: 231px;" class="ag-theme-balham"
+		[columnDefs]="rollForwardColDef" 
+		[rowData]="rollForwardDivisionCollateralRowData"
+		[gridOptions]="rollForwardDivisionCollateralGridOptions"
+		(gridReady)="rollForwardDivisionCollateralOnGridReady($event)" 
+		[defaultColDef]="rollForwardDivisionCollateralDefaultColDef"
+		(modelUpdated)="onModelUpdated($event)">
+	</ag-grid-angular>
+</div>
+<!-- Rollforward division collateral ag grid end -->
+<div class="h8"></div>
+<div class="row margin-box" >
+	<div class="col-sm-4 b-l" id="arturnday">
+		<div class="col-sm-8 h-100">
+			<label class="margin">AR Turn days</label>
+		</div>
+		<div class="col-sm-4 ar-turn-days-value">
+			<!-- <input type="text" style="width: 100%;" [(ngModel)]= "arturnday"> -->
+			{{arturnday}}
+		</div>
+	</div>
+	<div *ngIf="rollforward_to_adjust_collateral" class="col-sm-4 b-l pull-right">
+		<div class="col-sm-7 h-100">
+			<label class="margin">Receivable Aging Total</label>
+		</div>
+		<div class="col-sm-5 ar-turn-days-value value-right-align">
+			{{receivable_aging_total}}
+		</div>
+		<div class="col-sm-7 h-100">
+			<label class="margin">Unreconciled</label>
+		</div>
+		<div class="col-sm-5 ar-turn-days-value value-right-align">
+			{{unreconciled}}
+		</div>
+	</div>
+	
+</div>

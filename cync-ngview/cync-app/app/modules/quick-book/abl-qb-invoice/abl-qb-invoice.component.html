@@ -1,0 +1,227 @@
+<div class="app-body-container bg-white quick-book" id="cync_app-body-container">
+  <div class="row" style="height: 32px;">
+    <h3 style="margin-top: 8px;">Import Quickbooks Invoices</h3>
+  </div>
+  <div class="pad-inner">
+    <div class="quickbook-page">
+      <mat-accordion>
+        <mat-expansion-panel [(expanded)]="isInvoiceData">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <b> Filter Invoices&nbsp;<i data-toggle="tooltip"
+                  title="You can restrict the invoices that needs to be pulled from your QuickBoooks. Note that, you can enter multiple invoice numbers seperated by comma."
+                  class="fa fa-question-circle" aria-hidden="true"></i></b>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-panel-description class="qb-mat-panel">
+            <form class="qb-bg-form" [formGroup]="qbInvoiceForm">
+              <div class="row">
+                <div class="col-md-6" style="padding:0;">
+                  <div class="invoice-number-div" style="width: 98%;">
+                    <div class="ui-float-label flt-label" style="width: 96%;">
+                      <input type="text" formControlName="invoice_numbers" class="form-control qb-input-style"
+                         style="margin-left: 1.2%;width: 98%;">
+                      <label
+                        style="margin-left: 1.3%; text-transform: none; font-size: 12px !important; font-weight: 600 !important;"
+                        for="invoice_numbers">Invoice Number(s)</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row" style="display: flex; margin-top: 10px;">
+                <div class="color-grey" style="padding-top: 20px; padding-left: 5px; width: 24%">
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100">
+                      <span class="ui-float-label">
+                        <p-calendar class="wd100" [appendTo]="'body'" formControlName="due_date_from"
+                          yearRange="2000:2030" dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true"
+                          [readonlyInput]="true" [showIcon]="true"
+                          [inputStyle]="{'width':'100%', 'height': '31px', 'border': '1px solid #aaa'}"
+                          [maxDate]="current_date"></p-calendar>
+                        <label for="due_date_from">Due Date From</label>
+                      </span>
+
+                    </div>
+
+                  </div>
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label">
+                        <p-calendar class="wd100" [appendTo]="'body'" formControlName="due_date_to" 
+                          yearRange="2000:2030" dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true"
+                          [readonlyInput]="true" [showIcon]="true"
+                          [inputStyle]="{'width':'100%',  'height': '31px', 'border': '1px solid #aaa'}"
+                          [maxDate]="current_date"></p-calendar>
+                        <label for="due_date_to">Due Date To</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="color-grey" style="width: 24%; margin-left: 12px; padding-top: 20px; padding-left: 5px;">
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100">
+                      <span class="ui-float-label">
+                        <p-calendar class="wd100" [defaultDate]="" [appendTo]="'body'" formControlName="invoice_date_from"
+                          yearRange="2000:2030" dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true"
+                          [readonlyInput]="true" [showIcon]="true"
+                          [inputStyle]="{'width':'100%',  'height': '31px', 'border': '1px solid #aaa'}"
+                          [maxDate]="current_date"></p-calendar>
+                        <label for="invoice_date_from">Invoice Date From</label>
+                      </span>
+                    </div>
+
+                  </div>
+                  <div class="row" style="display: flex;">
+
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label">
+                        <p-calendar class="wd100" [appendTo]="'body'" formControlName="invoice_date_to"
+                          yearRange="2000:2030" dateFormat="mm/dd/yy" [monthNavigator]="true" [yearNavigator]="true"
+                          [readonlyInput]="true" [showIcon]="true"
+                          [inputStyle]="{'width':'100%',  'height': '31px', 'border': '1px solid #aaa'}"
+                          [maxDate]="current_date"></p-calendar>
+                        <label for="invoice_date_to">Invoice Date To</label>
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
+
+                <div class="color-grey" style="width: 24%; margin-left: 12px; padding-top: 20px;">
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100">
+                      <span class="ui-float-label flt-label">
+                        <input style="width: 100%;" matInput type="number" formControlName="balance_amount_from"
+                          class="form-control qb-input-style input-sm-3">
+                        <label for="balance_amount_from">Invoice Balance Amount From</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label flt-label">
+                        <input style="width: 100%"  matInput type="number" formControlName="balance_amount_to"
+                          class="form-control qb-input-style input-sm-3">
+                        <label for="balance_amount_to">Invoice Balance Amount To</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="color-grey" style="width: 24%; margin-left: 12px; padding-top: 20px;">
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100">
+                      <span class="ui-float-label flt-label">
+                        <input style="width: 100%;"  matInput type="number" formControlName="total_amount_from"
+                          class="form-control qb-input-style input-sm-3">
+                        <label for="total_amount_from">Invoice Total Amount From</label>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row" style="display: flex;">
+                    <div class="form-group wd100" style="margin-top: 7px;">
+                      <span class="ui-float-label flt-label">
+                        <input style="width: 100%;"  matInput type="number"
+                          formControlName="total_amount_to" class="form-control qb-input-style input-sm-3">
+                        <label for="total_amount_to">Invoice Total Amount To</label>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- <div class="row" style="margin-top:10px; display: none">
+                <div class="col-md-6" style="padding:0;">
+                  <div class="invoice-number-div">
+                    <span class="ui-float-label">
+                      <input type="text" class="qb-input-style" formControlName="invoice_customer_name"
+                        style="height: 30px; width: 558px">
+                      <label for="invoice_customer_name">Customer Name(s)</label>
+                    </span>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="invoice-number-div">
+                    <span class="ui-float-label">
+                      <input type="text" class="qb-input-style" formControlName="invoice_department_name"
+                         style="height: 30px; width: 558px;">
+                      <label for="invoice_department_name">Department Name(s)</label>
+                    </span>
+                  </div>
+                </div>
+              </div> -->
+              <!-- 
+              <div class="row" style="display: flex; margin-top: 10px; display: none">
+                <div class="col-md-6" style="display: flex; padding: 0;">
+                  <div class="invoice-name-div">
+                    <div>
+                      <input type="text" class="qb-input-style" formControlName="invoice_custom_field1"
+                        id="invoice_custom_field1" placeholder="Custom Field 1- Key Name"
+                        style="height: 30px; width: 258px">
+                    </div>
+                  </div>
+                  <div class="invoice-name-div" style="margin-left: 10px;">
+                    <div>
+                      <input type="text" class="qb-input-style" formControlName="invoice_custom_field1_value"
+                        placeholder="Custom Field 1- Key Value"
+                        style="height: 30px; width: 258px">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6" style="display: flex; padding: 0;">
+                  <div class="invoice-name-div" style="margin-left: 15px;">
+                    <div>
+                      <input type="text" class="qb-input-style" formControlName="invoice_custom_field2"
+                        placeholder="Custom Field 2- Key Name"
+                        style="height: 30px; width: 258px;">
+                    </div>
+                  </div>
+                  <div class="invoice-name-div" style="margin-left: 10px;">
+                    <div>
+                      <input type="text" class="qb-input-style" formControlName="invoice_custom_field2_value"
+                        placeholder="Custom Field 2- Key Value"
+                        style="height: 30px; width: 258px;">
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+
+              <div style="margin-top: 10px;">
+                
+                  <input name="datetime" formControlName="last_imported_time" value="{{lastModifierDateTime}}" *ngIf="lastImportDateShowHide" type="checkbox" style="margin-left: 31px;"/>
+                  <span *ngIf="lastImportDateShowHide" style="margin-left: 3px;">and Records Greater than Last Fetch UTC Date Time
+                   <strong>({{lastImportedDate}} | {{lastImportedTime}})</strong> &nbsp;<i style="color: black;"
+                    data-toggle="tooltip"
+                    title="On checking this flag, only invoices which are created or updated after the shown date and time will be fetched."
+                    class="fa fa-question-circle" aria-hidden="true"></i>
+                  </span>
+               
+                  <button
+                  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary"
+                  name="Fetch From QuickBooks" type="submit" id="fetch_from_qb"
+                  (click)="getQbInvoice()"
+                  style="padding-left:10px !important; padding-right: 10px !important; margin-right:2%; float:right; height: 34px;">Fetch
+                  From
+                  QuickBooks</button>
+                <button (click)="clearFormAction()"
+                  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel"
+                  name="reset button" type="button"
+                  style="padding-left:10px !important; padding-right: 10px !important; margin-right:1%; float:right; height: 34px;">
+                  Reset</button>
+              </div>
+            </form>
+          </mat-panel-description>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+
+    <div *ngIf="showGrid" class="grid-wrapper"  style="height: 300px; width: 100%; margin-top: 17px;"  > 
+      <cync-grid [rowSelection]="'multiple'" [floatingFilter]="true" [cyncGridConfig]="cyncGridConfig"
+          [cyncRowData]="cyncRowData" [cyncColumnDefs]="cyncColumnDefs" (cyncOnGridReady)="cyncGridReady($event)"
+          [pagination]="true" [paginationPageSize]="paginationPageSize">
+        </cync-grid>
+    </div>
+    <button disabled type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary" name="import_invoices_to_cync" type="submit" id="import_to_cync"
+        style="padding-left:15px !important; padding-right: 15px !important; padding-top: 4px !important; margin-left: 45%; margin-top: 25px; margin-bottom: 25px; height: 30px;"><i style="color: blanchedalmond;" class="fa fa-cloud-download" aria-hidden="true"></i>&nbsp;Import
+        Invoice(s)</button>
+  </div>
+</div>

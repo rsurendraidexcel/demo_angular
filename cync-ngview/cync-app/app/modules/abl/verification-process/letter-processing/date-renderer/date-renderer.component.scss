@@ -1,0 +1,23 @@
+:host /deep/ .mat-datepicker-toggle {
+    margin-left: -21px;
+    margin-top: -5px;
+}
+
+:host /deep/ .mat-icon-button {
+    width: 20px !important;
+    height: 20px !important;
+    line-height: 20px !important;
+}
+
+:host /deep/ .mat-datepicker-toggle-default-icon {
+    width: 16px !important;
+}
+:host /deep/ .ag-root-wrapper *{
+    width: 64px;
+}
+:host /deep/ .flatpickr-input{
+    width: 45px !important;
+}
+.date-input{
+margin-top: 5px !important;
+}

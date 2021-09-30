@@ -1,0 +1,317 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+	<div class="pad-inner">
+		<h3 class="no-m-bt">Client Transaction Summary</h3>
+		<div class="p-t-16">
+			<!-- <div class="cync-grid-search row no-marg">
+				<div class="col-md-6 col-sm-6 col-xs-12 p_l_1 hidden-xs hidde-sm">
+					<div class="input-group grid-search" id="global_search">
+						<input #gb (keyup)="onKey($event)" placeholder="Search Here" [(ngModel)]="searchValues" type="text" class="form-control search-input-text"
+						 aria-describedby="basic-addon3" autocomplete="off">
+						<span (click)="clearSearchBox()" (click)="onKey($event)" class="input-group-addon icon-input-field border-right-none">
+							<i *ngIf="toogleGlobalSearchBoxCancelIcon==true" class="fa fa-close" aria-hidden="true">
+							</i>
+							<i *ngIf="toogleGlobalSearchBoxSearchIcon==true" class="fa fa-search" aria-hidden="true">
+							</i>
+						</span>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-12 pull-right top-action-btns text-right">
+					<i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_24" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+					 title="Export" (click)="showDialogForExport()"></i>
+				</div>
+			</div> -->
+			<!-- <div class="form-group">
+				<p-dialog header="Client Summary" [(visible)]="visibleExportDialogBox" appendTo="body" [modal]="true" width="500" height="auto"
+				 [responsive]="true">
+					<div *ngFor="let col of exportColArray; let i = index; ">
+						<div *ngFor=" let selectedValue of checked; let index = index; trackBy:trackByIndex; ">
+							<div *ngIf="i == index">
+								<p-checkbox binary="true" [(ngModel)]="checked[index]" label={{col}} (onChange)="selectColForExport($event,checked)"></p-checkbox>
+								<br>
+								<br>
+							</div>
+						</div>
+					</div>
+					<p-footer>
+						<button id="Export" type="button" pButton icon="fa-check" label="Export" (click)="exportToCsv(exportSelectedCol)">Export</button>
+					</p-footer>
+				</p-dialog>
+			</div> -->
+			<!-- <div class="form-group">
+				<p-dialog header="Error" [(visible)]="visibleSelectColumnDialogBox" appendTo="body" [modal]="true" width="300" height="auto"
+				 [responsive]="true">
+					<p style="color:red;">Select columns to export.</p>
+				</p-dialog>
+			</div> -->
+			<!-- <div class="has-scrollbar" id="main_contents" (scroll)="onScroll($event)">
+				<div class="ui-datatable-tablewrapper" *ngIf="productType == 'Client_Transaction_Abl' ">
+
+					<p-dataTable *ngIf="clientTransactionResponse.length > 0" [value]="clientTransactionResponse" sortMode="multiple" (onRowUnselect)="unSelectChkBox()"
+					 (onRowSelect)="rowSelect()" (onHeaderCheckboxToggle)="selectAllChkBox()" dataKey="id" selectionMode="multiple" [(selection)]="selectedRows"
+					 (onFilter)="printFilteredData($event)" [globalFilter]="gb">
+						<p-column selectionMode="multiple" disableSelection="true"></p-column>
+						<p-column *ngFor="let col of clientTransactionModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+						 [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+						 [style]="{'width':'10%'}">
+
+							<ng-template *ngIf="col.header == 'Manager'" let-file="rowData" pTemplate="body">
+								<span class="ui-cell-data">
+									<span>
+										<div class="popover__wrapper">
+											<a>
+												<span class="popover__title" *ngIf="file.manager">{{file.manager}} &nbsp; &nbsp;
+													<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+												</span>
+											</a>
+											<div class="push popover__content">
+												<span>{{file.manager}}</span>
+											</div>
+										</div>
+									</span>
+								</span>
+							</ng-template>
+
+							<ng-template *ngIf="col.header == 'Client Name'" let-file="rowData" pTemplate="body">
+								<span class="ui-cell-data">
+									<span>
+										<div class="popover__wrapper">
+											<a>
+												<span class="popover__title">{{file.client_name}}</span>
+											</a>
+										</div>
+									</span>
+								</span>
+							</ng-template>
+
+						</p-column>
+						<p-footer>
+							<span>Total</span>
+							<span>{{clientTransactionObject.avg_monthly_loan_balance_total}}</span>
+							<span>{{clientTransactionObject.limit_amount_total}}</span>
+							<span>{{clientTransactionObject.collateral_value_total}}</span>
+							<span>{{clientTransactionObject.current_bal_total}}</span>
+							<span>{{clientTransactionObject.available_to_loan_total}}</span>
+							<span>{{clientTransactionObject.letter_of_credit_total}}</span>
+							<span>Showing {{clientTransactionResponse.length}} of {{totalRecords}} records</span>
+						</p-footer>
+					</p-dataTable>
+
+				</div>
+
+				<div class="ui-datatable-tablewrapper" *ngIf="productType == 'Client_Transaction_Factoring' ">
+
+					<p-dataTable *ngIf=" clientTransactionResponse.length> 0" [value]="clientTransactionResponse" sortMode="multiple" (onRowUnselect)="unSelectChkBox()"
+					 (onRowSelect)="rowSelect()" (onHeaderCheckboxToggle)="selectAllChkBox()" dataKey="id" selectionMode="multiple" [(selection)]="selectedRows"
+					 (onFilter)="printFilteredData($event)" [globalFilter]="gb">
+						<p-column selectionMode="multiple" disableSelection="true"></p-column>
+						<p-column *ngFor="let col of clientTransactionFactModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+						 [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+						 [style]="{'width':'10%'}">
+
+							<ng-template *ngIf="col.header == 'Manager'" let-file="rowData" pTemplate="body">
+								<span class="ui-cell-data">
+									<span>
+										<div class="popover__wrapper">
+											<a>
+												<span class="popover__title" *ngIf="file.manager">{{file.manager}} &nbsp; &nbsp;
+													<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+												</span>
+											</a>
+											<div class="push popover__content">
+												<span>{{file.manager}}</span>
+											</div>
+										</div>
+									</span>
+								</span>
+							</ng-template>
+
+							<ng-template *ngIf="col.header == 'Client Name'" let-file="rowData" pTemplate="body">
+								<span class="ui-cell-data">
+									<span>
+										<div class="popover__wrapper">
+											<a>
+												<span class="popover__title">{{file.client_name}}</span>
+											</a>
+										</div>
+									</span>
+								</span>
+							</ng-template>
+
+						</p-column>
+						<p-footer>
+							<span>Total</span>
+							<span>{{clientTransactionObject.total_advance_amount}}</span>
+							<span>{{clientTransactionObject.total_escrow_reserve}}</span>
+							<span>{{clientTransactionObject.total_cash_reserve}}</span>
+							<span>{{clientTransactionObject.total_accured_factoring_fee}}</span>
+							<span>{{clientTransactionObject.total_net_fund_employed}}</span>
+							<span>{{clientTransactionObject.total_total_dilution}}</span>
+							<span>Showing {{clientTransactionResponse.length}} of {{totalRecords}} records</span>
+						</p-footer>
+					</p-dataTable>
+
+				</div>
+			</div> -->
+
+			<div class="ui-datatable-tablewrapper">
+				<!-- HEADER WITH SEARCH BOX, ADD,EDIT,DELETE ICONS STARTS -->
+				<div class="cync-grid-search row no-marg">
+
+					<!-- SEARCH INPUT FIELD STARTS -->
+					<div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+						<div *ngIf="clientTransactionModel.isSearchAvailable" class="input-group grid-search">
+							<input (keyup)="onKeyUp($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+							 aria-describedby="basic-addon3" autocomplete="off">
+							<span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+								<i *ngIf="toogleCloseBox" class="fa fa-close" aria-hidden="true">
+								</i>
+								<i *ngIf="toogleSearchBox" class="fa fa-search" aria-hidden="true">
+								</i>
+							</span>
+						</div>
+					</div>
+					<!-- SEARCH INPUT FIELD ENDS -->
+
+					<!-- ADD,EDIT,DELETE,EXPORT ICONS STARTS -->
+					<div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right" *ngIf="!clientTransactionModel.onlyListingComponent">
+
+						<i id="New" [ngClass]="(isAddPermitted)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"
+						 aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Add New" *ngIf="clientTransactionModel.isAddFunctionalityRequired"
+						 (click)="goToAdd()"></i>
+
+						<i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" *ngIf="clientTransactionModel.isEditFunctionalityRequired"
+						 (click)="goToEdit()" [ngClass]="(toggleEditIcon) ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+
+						<i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" *ngIf="clientTransactionModel.isDeleteFunctionalityRequired"
+						 (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+
+						<i *ngIf="clientTransactionModel.isExportFunctionalityRequired" id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20"
+						 aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Export" (click)="showDialogForExport()"></i>
+						<!-- EXPORT & SETTINGS ICON STARTS  -->
+						<button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true" *ngIf="clientTransactionModel.isMoreIconsRequired">
+							<i id="more" class="hand fa fa-ellipsis-v fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+							 title="More">
+							</i>
+						</button>
+						<ul *ngIf="clientTransactionModel.isMoreIconsRequired" class="dropdown-menu no-t-pad grid-menu-dropdown">
+							<li>
+								<a class="hand">Settings</a>
+							</li>
+						</ul>
+						<!-- EXPORT & SETTINGS ICON ENDS -->
+
+					</div>
+					<!-- ADD,EDIT,DELETE,EXPORT ICONS ENDS -->
+
+				</div>
+				<!-- HEADER WITH SEARCH BOX, ADD,EDIT,DELETE ICONS ENDS -->
+
+				<!-- DATATABLE STARTS -->
+				<div class="has-scrollbar row" id="main_contents" (scroll)="onScroll($event)">
+					<p-dataTable *ngIf="isDataLoading" [scrollable]="false" #dt [value]="gridData" (onRowUnselect)="unSelectChkBox()" (onHeaderCheckboxToggle)="selectAllChkBox()"
+					 (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple" [(selection)]="selectedRows" [lazy]="false" (onFilter)="printFilteredData($event)">
+
+						<p-column *ngIf="!clientTransactionModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+						<p-column *ngFor="let col of clientTransactionModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+						 [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+						 [style]="{'width':'300px'}">
+
+
+							<ng-template *ngIf="col.header == 'Client Name'" let-file="rowData" pTemplate="body">
+								<span class="ui-cell-data">
+									<i class="fa fa-list" aria-hidden="true"></i>
+									<a href="">{{file.client_name}}</a>
+									&nbsp;
+								</span>
+							</ng-template>
+
+							<ng-template *ngIf="col.header == 'Manager'" let-file="rowData" pTemplate="body">
+								<span *ngIf="file.manager_name.length == 1">{{file.manager_name}}</span>
+								<span *ngIf="file.manager_name.length > 1">
+									<a class="tip list-clients-manager-hover">
+										<i class="fa fa-ellipsis-h tooltip-custom"></i>
+										<span>
+											<ul>
+												<li *ngFor="let mngrName of file.manager_name; let idx = index"> {{mngrName}} </li>
+											</ul>
+										</span>
+									</a> &nbsp;
+									<span>{{file.manager_name[0]}}</span>
+								</span>
+							</ng-template>
+
+
+						</p-column>
+
+						<p-footer>
+							<span>Total</span>
+							<span>{{totalClientTransactionDetail.avg_monthly_loan_balance_total}}</span>
+							<span>{{totalClientTransactionDetail.limit_amount_total}}</span>
+							<span>{{totalClientTransactionDetail.collateral_value_total}}</span>
+							<span>{{totalClientTransactionDetail.current_bal_total}}</span>
+							<span>{{totalClientTransactionDetail.available_to_loan_total}}</span>
+							<span>{{totalClientTransactionDetail.letter_of_credit_total}}</span>
+						</p-footer>
+
+					</p-dataTable>
+
+				</div>
+				<!-- DATATABLE ENDS -->
+
+				<!-- RECORD COUNT INFORMATION STARTS  -->
+				<div *ngIf="isDataLoading" class="grid-loader">
+					<div *ngIf="recordCount == -1;then grid_count_template else record_count_template"></div>
+					<!-- Below code will be shown on load of the page or on scroll event -->
+					<ng-template #grid_count_template>
+						<p class="recordcount">
+							<b>Showing {{gridData.length}} of {{showTotalrecords}} records</b>
+						</p>
+					</ng-template>
+
+					<!-- below code is to show loader when user scrolls -->
+					<span [hidden]="!showSpinner" class="center">
+						<i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+					</span>
+
+					<!-- Below code will be shown on Column Search -->
+					<ng-template #record_count_template>
+						<p *ngIf="recordCount != -1 && recordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+							<b>Showing {{recordCount}} of {{showTotalrecords}} records</b>
+						</p>
+					</ng-template>
+				</div>
+				<!-- RECORD COUNT INFORMATION ENDS -->
+
+				<!-- EXPORT CONFIRMATION POP UP STARTS -->
+				<div class="form-group">
+					<p-dialog header={{clientTransactionModel.type}} [(visible)]="toogleExportConfirmPoupup" appendTo="body" [modal]="true" width="500"
+					 height="auto" [responsive]="true">
+						<div *ngFor="let col of exportColumns">
+							<p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+							<br>
+							<br>
+						</div>
+
+						<p-footer>
+							<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary"
+							 pButton icon="fa-check" label="Export" (click)="exportSelectedColumns(exportColumns)">
+								<span>Export</span>
+							</button>
+						</p-footer>
+					</p-dialog>
+				</div>
+				<!-- EXPORT CONFIRMATION POP UP ENDS -->
+
+				<!-- EXPORT WARNING POP UP STARTS -->
+				<div class="form-group">
+					<p-dialog header="Error" [(visible)]="isExportWarningPopupVisible" appendTo="body" [modal]="true" width="300" height="auto"
+					 [responsive]="true">
+						<p style="color:red;">Select columns to export.</p>
+					</p-dialog>
+				</div>
+				<!-- EXPORT WARNING POP UP ENDS -->
+
+			</div>
+		</div>
+	</div>
+</div>

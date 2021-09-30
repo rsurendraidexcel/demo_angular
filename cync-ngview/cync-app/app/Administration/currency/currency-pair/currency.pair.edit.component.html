@@ -1,0 +1,101 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+            <div class="close-btn-dash pull-right text-right top-action-btns">
+
+    <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+    <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+        </div>            <div class="pad-inner">
+                <h3 class="no-m-bt">Currency Pair - Edit</h3>
+                <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+                <div class="brder-1 p-t-32">
+                    <div class="has-scrollbar" id="main_contents">
+                        <div class="form-group">
+                            <div class="col-xs-12 col-sm-4 col-md-3 ad-bt-pad col-lg-2">
+                                <label class="mandatory" for="currency_code">Currency 1<span class="required">*</span></label>
+                                <select class="form-control" disabled>
+                                   <option *ngIf="currencyPairModel.currencyIdBase != undefined" [ngValue]="currencyPairModel.currencyIdBase.id">{{currencyPairModel.currencyIdBase.currencyName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-3 ad-bt-pad col-lg-2">
+                                <label class="mandatory" for="currency_code">Currency 2<span class="required">*</span></label>
+                                <select class="form-control" disabled>
+                                    <option *ngIf="currencyPairModel.currencyIdBase != undefined" [ngValue]="currencyPairModel.currencyIdBase.id">{{currencyPairModel.currencyIdTo.currencyName}}</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-3 ad-bt-pad col-lg-2 pad-20">
+                                <p-checkbox [disabled]="true" binary="true" [(ngModel)]="currencyPairModel.thruCurrency" value="true" _ngcontent-c1="" inputid="Through Currency" label="Through Currency" name="group0" class="ng-untouched ng-pristine ng-valid">
+                                    
+                                </p-checkbox>
+                            </div>
+                            <div [hidden]="!isShow" class="col-xs-12 col-sm-4 col-md-3 ad-bt-pad col-lg-2">
+                                <label class="mandatory" for="currency_code">Currency 3<span class="required">*</span></label>
+                                <select class="form-control" disabled>
+                                    <option selected="" value='select' *ngIf="currencyPairModel.currencyIdThru == undefined" disabled="">Select</option>
+                                    <option selected="" *ngIf="currencyPairModel.currencyIdThru != undefined" [ngValue]="currencyPairModel.currencyIdThru.id">{{currencyPairModel.currencyIdThru.currencyName}}</option>
+                                </select>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+                                <h5>Quatation Method</h5>
+                                <div _ngcontent-c2="" class="ui-g">
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        <p-radioButton [(ngModel)]="currencyPairModel.quotationMethod" _ngcontent-c2="" inputid="opt1" label="Direct" name="group1" value="Direct" class="ng-untouched ng-pristine ng-valid">
+                                            
+                                        </p-radioButton>
+                                    </div>
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        <p-radioButton [(ngModel)]="currencyPairModel.quotationMethod" _ngcontent-c2="" inputid="opt2" label="Indirect" name="group1" value="Indirect" class="ng-untouched ng-pristine ng-valid">
+                                      
+                                        </p-radioButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-3  col-lg-2">
+                                <h5>No. of Units</h5>
+                                <div _ngcontent-c2="" class="ui-g">
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        <p-radioButton [(ngModel)]="currencyPairModel.noOfUnits" _ngcontent-c2="" inputid="opt1" label="One" name="group2" value="1" class="ng-untouched ng-pristine ng-valid">
+                                         
+                                        </p-radioButton>
+                                    </div>
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        <p-radioButton [(ngModel)]="currencyPairModel.noOfUnits" _ngcontent-c2="" inputid="opt1" label="Hundred" name="group2" value="100" class="ng-untouched ng-pristine ng-valid">
+                                            
+                                        </p-radioButton>
+                                    </div>
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        <p-radioButton [(ngModel)]="currencyPairModel.noOfUnits" _ngcontent-c2="" inputid="opt2" label="Thousand" name="group2" value="1000" class="ng-untouched ng-pristine ng-valid">
+                                  
+                                        </p-radioButton>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-4 col-md-3  col-lg-2">
+                                <h5>Spread Definition</h5>
+                                <div _ngcontent-c2="" class="ui-g">
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        <p-radioButton [(ngModel)]="currencyPairModel.spreadDefinition" (onClick)="isHidden = false" _ngcontent-c2="" inputid="Percentage" label="Percentage" name="group3" value="Percentage" class="ng-untouched ng-pristine ng-valid">
+                                
+                                        </p-radioButton>
+                                    </div>
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        <p-radioButton [(ngModel)]="currencyPairModel.spreadDefinition" (onClick)="isHidden = false" _ngcontent-c2="" inputid="Points" label="Points" name="group3" value="Points" class="ng-untouched ng-pristine ng-valid">
+                                            
+                                        </p-radioButton>
+                                    </div>
+                                    <div _ngcontent-c2="" class="ui-g-12">
+                                        
+                                       <label *ngIf="currencyPairModel.spreadDefinition == 'Points'" class="mandatory" for="currency_code">Points Multiplier</label>
+                                       
+                                        <input type="text" *ngIf="currencyPairModel.spreadDefinition == 'Points'" OnlyNumber="true" maxlength="10" name="pointsMultiplier" [(ngModel)]="currencyPairModel.pointsMultiplier">
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+<hr>
+ <button (click)="navigateToHomeCancel()" id="action_cancel" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+ <button (click)="editCurrencyPair()" id="action_save" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Save</span></button>
+    </div>                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

@@ -1,0 +1,32 @@
+.reset-title{
+    background: #3466b3;
+    border: 1px solid #3466b3;
+    margin-top: 0px;
+    text-align: center;
+    color: #fff;
+    padding: 5px;
+}
+
+.main-body{
+    width: 46vw;
+    height: 25vh;
+}
+
+.reset-status-body{
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    padding-top: 1px;
+}
+
+.button-pannel{
+    float: right;
+    margin-top: 10px;
+    padding-right: 10px;
+}
+
+/* Large screens ----------- */ 
+@media only screen  and (min-width : 1824px)
+    {
+         .button-pannel{ float: right; margin-top: 20px; padding-right: 10px; }
+    }

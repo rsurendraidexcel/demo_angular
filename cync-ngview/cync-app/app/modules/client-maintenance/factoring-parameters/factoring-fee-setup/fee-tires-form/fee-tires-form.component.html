@@ -1,0 +1,82 @@
+<div *ngIf="showFeeTier" class="container-fluid">
+  <div style="width: 70%;">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-11">
+          <strong class="caption-text">Fee Tiers</strong>
+          <!-- <div class="error-messge"> Messaoge </div> -->
+        </div>
+
+        <div class="btn-groups">
+          <button
+            type="button"
+            [disabled]="isEditable"
+            class="btn add-new padding-add"
+            (click)="onAddTier()"
+          >
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+          
+          <button
+          type="button"
+          [disabled]="isEditable"
+          class="delete padding-delete"
+          (click)="onDeleteTier()"
+          title="Delete" data-toggle="tooltip"
+          id="deleteTemplateFaIcon"
+          style="display: contents;"
+        >
+         <span class="glyphicon glyphicon-trash"></span>
+        </button>
+
+        </div>
+      </div>
+    </div>
+    <table class="table data-table table-bordered">
+      <thead>
+        <tr>
+          <th class="title">Days From</th>
+          <th class="title">Days To</th>
+          <th class="title">Total Fee %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let list of fee_tiers; let id = index">
+          <td>
+            <input
+              type="number"
+              class="form-control"
+              disabled="true"
+              [value]="list.days_from"
+              (focusout)="daysFromvalue($event)"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control"
+              [disabled]="isEditable"
+              [value]="list.tier_days"
+              (focusout)="toDaysValue($event, id)"
+              id="tierDay_{{ id }}"
+              (input)="onEnterTireDays($event, id)"
+            />
+          </td>
+          <td>
+            <input
+              type="number"
+              class="form-control"
+              [disabled]="isEditable"
+              [value]="list.tier_percent"
+              (focusout)="tierPercentValue($event, id)"
+              id="tierPercent_{{ id }}"
+              (input)="onEnterTierPercent($event, id)"
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <br />
+  </div>
+</div>

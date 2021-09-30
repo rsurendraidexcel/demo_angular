@@ -1,0 +1,35 @@
+/* Include Bootsrap css (Including in this css since if we use in index.html its overriding some PrimeNG and custom styles)*/
+@import "../vendors/bootstrap/css/bootstrap.css";
+
+/* The following css includes the global variables for SCSS implementation like background colors, themes, etc.*/
+@import "_variables_cync_global.scss";
+
+/*Global CSS that includes most styles*/
+@import "cync_base_styles";
+
+/* The following css includes Material Design Deep Purple theme used for dialogues, popups, etc.*/
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+// @import "~ag-grid/dist/styles/ag-grid.css";
+// @import "~ag-grid/dist/styles/ag-theme-balham.css";
+
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-balham.css";
+
+//@import "~@ag-grid-enterprise/all-modules/dist/styles/ag-grid.css";
+//@import "~@ag-grid-enterprise/all-modules/dist/styles/ag-theme-balham.css";
+
+/* Configurations for Custom themes.*/
+@import "_themes";
+
+/* The following css includes css for Animation.*/
+@import "_cync_animations";
+
+/* The following are custom css for Cync Application.*/
+@import "page_style";
+@import "inTel-Phone-InputStyle";
+
+@import "angular-dev";
+
+@import "custom";
+@import "~flatpickr/dist/flatpickr.min.css";

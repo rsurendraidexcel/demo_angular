@@ -1,0 +1,70 @@
+<i style="font-size:20px; cursor: pointer;" class="fa close-btn pull-right" (click)="CloseClick()">&#xf057;</i>
+
+<div class="mainContainer">
+    <div class="editPannelHeading">
+        <h5>{{data.mode}}</h5>
+
+    </div>
+    <div class="editTemplatePannel">
+
+        <form class="form-inline" #myform="ngForm" (ngSubmit)="saveForm(myform)">
+            <div class="form-group">
+                <label for="email">Template Name:</label>
+                <input name="name" type="text" class="form-control" id="email" ngModel placeholder="Template Name" >
+            </div>
+            <div class="form-group">
+                <label for="pwd">Template Description:</label>
+                <input name="description" type="text" class="form-control" id="pwd" ngModel placeholder="Template Description">
+            </div>
+            <button *ngIf="viewMode === 'edit'" type="submit" class="btn btn-primary">Save</button>
+            <button *ngIf="viewMode === 'edit'" type="button" class="btn btn-info" (click)="onClickSaveAs(myform)">Save As</button>
+            <button *ngIf="viewMode === 'edit'" type="button" class="btn btn-danger" (click)="CloseClick()">Cancel</button>
+            <div class="editPannelHeading">
+                <h5>Parameters</h5>
+            </div>
+            <div class="tableWarp">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>
+                            <input [(ngModel)]="selectAll" name="selectAll" type="checkbox" id="selectAll" (change)="selectAllCheckBox($event)" />
+                        </th>
+                        <th>Parameters</th>
+                        <th>Default Value</th>
+                        <th>Override Allowed</th>
+                    </tr>
+                    <tr *ngFor="let params of validationParams let i = index" ngModelGroup="{{params.name}}">
+                        
+                        <td>
+                            <input  name="checkbox" class="checkBoxClass" [(ngModel)]="checkBoxSelection[i]" (change)="checkBoxSelectionFn($event, i)" [checked]="checkBoxSelection[i]" type="checkbox" id="checkBoxSelection{{i}}" />
+                        </td>
+                        <td>
+                         {{params.name}}
+                        </td>
+                        <td *ngIf="params.default_value_type === 'textbox'">
+                            <input name="input{{params.name}}" *ngIf="params.text_value_in === 'percentage'" type="text" /><span *ngIf="params.text_value_in === 'percentage'">(%)</span>
+                            <input name="input{{params.name}}" *ngIf="params.text_value_in === 'days'" type="text" /><span *ngIf="params.text_value_in === 'days'">(days)</span>
+                            <input name="input{{params.name}}" *ngIf="params.text_value_in === 'amount'" type="text" /><span *ngIf="params.text_value_in === 'amount'">(amt)</span>
+    
+                        </td>
+                        <td *ngIf="params.default_value_type === 'dropdown'">
+                            <select name="input_{{params.name}}">
+                                <option>True</option>
+                                <option>False</option>
+                            </select>
+    
+                        </td>
+                        <td>
+                            <input  name="override_allowed" class="checkBoxClass" [(ngModel)]="allowOverride[i]" [attr.disabled]="allowOverrideDisable[i]" [checked]="allowOverride[i]"  type="checkbox" id="override_{{params.name}}" />
+                        </td>
+      
+                    </tr>
+                
+             
+                </table>
+            </div>
+ 
+
+        </form>
+
+    </div>
+</div>

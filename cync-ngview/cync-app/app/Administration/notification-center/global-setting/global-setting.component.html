@@ -1,0 +1,121 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+            <div class="close-btn-dash pull-right text-right top-action-btns">
+            </div>            
+<div class="pad-inner">
+  <h3 class="no-m-bt">Notification Settings</h3>
+    <div class="brder-1">
+    <div class="has-scrollbar" id="main_contents">
+    <div class="row no-marg email-header">
+  <div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10" data-toggle="buttons">
+                                <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140">
+                                    <input type="radio" name='letter-type' checked>
+                                    <i class="fa fa-circle-o fa-2x"></i>
+                                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                                    <span>Global Settings</span>
+                                </label>
+                                <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140" [routerLink]="['/notificationCenter/role-setting']">
+                                    <input type="radio" name='letter-type'>
+                                    <i class="fa fa-circle-o fa-2x"></i>
+                                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                                    <span>Role Settings</span>
+                                </label>
+                                <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140" [routerLink]="['/notificationCenter/user-setting']">
+                                    <input type="radio" name='letter-type'>
+                                    <i class="fa fa-circle-o fa-2x"></i>
+                                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                                    <span>User Settings</span>
+                                </label>
+
+                            </div>
+  </div>
+<div class="panel-group summernote-detail lender-accordion" id="accordion1" *ngIf="ablArray.length > 0">
+<div class="panel panel-default">
+    <div class="panel-heading">
+     <h4 class="panel-title">
+    <a class="accordion-toggle collapsed" id="ablID" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo">ABL</a></h4>
+    </div>
+<div id="collapseTwo" class="panel-collapse collapse">
+  <div class="panel-body no-pad no-bg">
+    <div class="col-md-10"></div>
+    <div class="col-md-12 text-right pane-btm-brder">         
+         <!-- <p-checkbox binary="true" name="abl_notification" label="Select All" value="val1" [(ngModel)]="changedValueABL" (onChange) = "selectAllForAbl($event)"></p-checkbox> --> 
+         <label style="vertical-align: middle;">Select All&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+        <select label="Select All" class="form-control wid_100 pull-right p-3px"  [(ngModel)]="changedValueABL" (change) = "selectAllForAbl($event.target.value)" placeholder="abl_notification">
+           <!--  <option value="">Select For All</option> -->
+            <option value="S">Select</option>
+            <option value="B">Both</option>
+            <option value="E">Email</option>
+            <option value="T">Text</option>
+        </select>        
+    </div>
+        <div class="clearfix"></div>
+        <div class="row panel-btm-brder" *ngFor = "let c of ablArray; let i = index; ">
+        <div class="col-md-10">
+    <span>{{c.name}}</span>
+       </div>
+        <div class="col-md-2 text-right" *ngFor = " let selectedValue of selectedAblValue; let index = index; trackBy:trackByIndex; ">
+     <select *ngIf = "i == index" [(ngModel)]="selectedAblValue[index]" (change)= "onChangeForAbl($event.target.value)" placeholder="selectedValue" id="typeValueABL{{i}}" class="form-control wid_100 pull-right p-3px">
+            <option value="S">Select</option>
+            <option value="B">Both</option> 
+            <option value="E">Email</option>
+            <option value="T">Text</option>
+        </select>
+        </div>
+        </div>
+   </div>
+  </div>
+</div>
+</div>
+
+<div class="panel-group summernote-detail lender-accordion" id="accordion2" *ngIf="factoringArray.length > 0">
+    <div class="panel panel-default">
+    <div class="panel-heading">
+        <h4 class="panel-title">
+        <a class="accordion-toggle collapsed" id="factID" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
+                    Factoring
+                </a>
+</h4>
+</div>
+<div id="collapseThree" class="panel-collapse collapse">
+    <div class="panel-body no-pad no-bg">
+    <div class="col-md-10"></div>
+    <div class="col-md-12 text-right pane-btm-brder">
+    <!-- <p-checkbox binary="true" name="factoring_notification" label="Select All" value="factoring" [(ngModel)]="changedValueFACT" (onChange) = "selectAllForFactoring($event)"></p-checkbox> -->
+    <label style="vertical-align: middle;">Select All&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+    <select class="form-control wid_100 pull-right p-3px" [(ngModel)]="changedValueFACT" (change) = "selectAllForFactoring($event.target.value)" placeholder="factoring_notification">
+           <!--  <option value="">Select For All</option> -->
+            <option value="S">Select</option> 
+            <option value="B">Both</option>
+            <option value="E">Email</option>
+            <option value="T">Text</option>
+    </select>
+    </div>
+    <div class="clearfix"></div>
+    <div class="row panel-btm-brder" *ngFor = "let c of factoringArray; let i = index; ">
+        <div class="col-md-10 ">
+            <span>{{c.name}}</span>
+        </div>
+        <div class="col-md-2 text-right" *ngFor = " let selectedValue of selectedFactoringValue; let index = index; trackBy:trackByIndex; ">
+     <select *ngIf = "i == index" [(ngModel)]="selectedFactoringValue[index]" (change)="onChangeForFactoring($event.target.value)" placeholder="selectedValue" id="typeValueFACT{{index}}" class="form-control wid_100 pull-right p-3px">
+            <option value="S">Select</option>
+            <option value="B">Both</option> 
+            <option value="E">Email</option>
+            <option value="T">Text</option>
+        </select>
+        </div>
+    </div>
+</div>
+  </div>
+    </div>
+     </div>
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+    <hr>
+    <button [disabled] = 'isDisable' (click)="cancelGlobalSetting()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+    <button [disabled] = 'isDisable' (click)="saveData()" id="action_save" label="Save" pbutton="" 
+    type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Save</span></button>
+    </div>
+      </div>
+        </div>
+       </div>
+       </div>
+

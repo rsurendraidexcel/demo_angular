@@ -1,0 +1,214 @@
+<div class="app-body-container bg-white p-1" id="cync_app-body-container">
+  <div class="titile-section">
+    <label class="top-title"> Factoring Interest Setup </label>
+    <div class="alert-msg" *ngIf="rolesAndPermissionAvailability == true">
+      <br/>
+      You are not authorized to perform this action.
+      <!-- {{errorMessage_400}} -->
+    </div>
+    <div class="right-btn-groups" *ngIf="rolesAndPermissionAvailability == false" >
+      <button [disabled]="validationRoles()" (click)='saveActionInterestSetup()'
+        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad">
+        Save
+      </button>
+      <button *ngIf="isAllowedToEdit" [disabled]="!checkRolsPermission('Edit')" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad"
+      (click)="updateInterestSetup()">
+      Edit
+      </button>
+      <button [disabled]="validationRolesForCancel() || initialLoad" (click)="actionCancel($event)" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad">
+        Cancel
+      </button>
+    </div>
+  </div>
+  <div class="pad-inner" *ngIf="rolesAndPermissionAvailability == false" >
+    <div class="y-scrollbar" >
+      <div class="rollForward-AddForm"  [formGroup]="factoringInterestSetupForm">
+        <section>
+          <div class="ui-g ui-fluid">
+            <div class="ui-md-6">
+              <div class="ui-g">
+                <label for="interest_to_be_charged" class="ui-md-5">Interest to be Charged</label>
+                <div class="ui-md-7">
+                  <input type="checkbox" [disabled]="isNewInterestSetup" (click)="onIterestTobeChecked($event)" formControlName="interest_to_be_charged"/>
+                </div>
+              </div>
+              <!-- <div class="ui-g">
+                <label for="select_create_setting" class="ui-md-5">Select/Create Settings</label>
+                <div class="ui-md-7">
+                  <select required class="form-control customwidth" formControlName='select_create_setting'
+                    (change)="settingCreated($event)">
+                    <option *ngFor="let interest of select_create_setting" [value]="interest.value">
+                      {{interest.description}}
+                    </option>
+                  </select>
+                </div>
+              </div> -->
+            </div>
+
+            <!-- <div class="ui-md-6">
+              <div class="ui-g">
+                <label for="minimum_interest_rate" class="ui-md-5">Save Settings as
+                  <br> <span>New Template Name(Optional)</span>
+                </label>
+                <div class="ui-md-7">
+                  <input class="form-control customwidth" formControlName='new_template_name'
+                    (change)="onNewTemplateName($event)" />
+                </div>
+              </div>
+            </div> -->
+
+          </div>
+          <div class="hrline"></div>
+          <div class="ui-g ui-fluid">
+            <div class="ui-md-6">
+              <div class="ui-g">
+                <label for="rate_code" class="ui-md-5">
+                  Interest Rate Code<span class="required">*</span></label>
+                <div class="ui-md-7">
+                 
+                  <p-dropdown formControlName='rate_code'  [options]="interestRateCodeDrowdown" placeholder="Please Select" 
+                  (onChange)="onInterestRateCodeChange($event)" [(ngModel)]= "selectedRateCode" filter="true" styleClass ="form-control-dropdown" required>         
+                  </p-dropdown>
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="adjustment_rate" *ngIf="isAdjustmentRate == true" (click)='popupFunction()' class="ui-md-5 link-label">Adjustment Rate %</label>
+                <label for="adjustment_rate" *ngIf="isAdjustmentRate == false" class="ui-md-5">Adjustment Rate %</label> 
+                <div class="ui-md-7">
+                <input formControlName='adjustment_rate'  *ngIf="isNewInterestSetup===true" class="form-control customwidth" type="number"  (input)="onAdjustmentRate($event)"/>
+                <span class="validation-msg">{{errorMsg}}</span>
+                  </div>
+                </div>
+              <div class="ui-g">
+                <label for="minimum_interest_rate" class="ui-md-5">Minimum Interest %</label>
+                <div class="ui-md-7">
+                  <input class="form-control customwidth" type="number" formControlName='minimum_interest_rate'
+                    (input)="onMinimumInterestRate($event)" />
+                    <span class="validation-msg">{{errorMsg}}</span>
+                </div>
+              </div>
+
+              <div class="ui-g">
+                <label for="maximum_interest_rate" class="ui-md-5">Maximum Interest %</label>
+                <div class="ui-md-7">
+                  <input class="form-control customwidth" type="number" formControlName='maximum_interest_rate'
+                    (input)="onMaximumInterestRate($event)" />
+                    <span class="validation-msg">{{errorMsg}}</span>
+                </div>
+              </div>
+           
+              <!-- <div class="ui-g">
+                <label for="interest_compounding" class="ui-md-5">
+                  Interest Compounding?<span class="required">*</span></label>
+                <div class="ui-md-7">
+                  <select class="form-control customwidth" formControlName='interest_compounding'
+                    (change)="onInterestCompounding($event)">
+                    <option value=''>--Select--</option>
+                    <option *ngFor="let interest of interestCompounding" [value]="interest.value">
+                      {{interest.description}}
+                    </option>
+                  </select>
+                </div>
+              </div> -->
+            </div>
+            <div class="ui-md-6">
+              <section class="hide-control" id="hide-control">
+                <div class="ui-g">
+                  <label for="interest_calculated_for" class="ui-md-5">
+                    Interest Calculated On<span class="required">*</span></label>
+                  <div class="ui-md-7">
+                    <select class="form-control customwidth" formControlName='interest_calculated_for'
+                      (change)="onInterestCalculatedFor($event)" required>
+                      <option value=''>Please Select</option>
+                      <option *ngFor="let interest of interestCalculatedFor" [value]="interest.value">
+                        {{interest.description}}
+                      </option>
+                    </select>
+                    <div *ngIf="showError1" style="color:red">You must make a selection</div>
+                  </div>
+                </div>
+                <div class="ui-g">
+                  <label for="interest_frequency" class="ui-md-5">Interest Frequency<span class="required">*</span></label>
+                  <div class="ui-md-7">
+                    <select class="form-control customwidth" formControlName='interest_frequency' (change)="onInterestFrequency($event)">
+                      <option value=''>Please Select</option>
+                      <option *ngFor="let interest of interestFrequency" [value]="interest.value">
+                        {{interest.description}}
+                      </option>
+                    </select>
+
+                  </div>
+                </div>
+
+                <div class="ui-g">
+                  <label for="interest_charged_on" class="ui-md-5">Interest Based On <span class="required">*</span> </label>
+                  <div class="ui-md-7">
+                    <select class="form-control customwidth" formControlName='interest_charged_on' (change)="onInterestChargedOn($event)">
+                      <option value=''>Please Select</option>
+                      <option *ngFor="let interest of interestChargedOn" [value]="interest.value">
+                        {{interest.description}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- <div class="ui-g">
+                  <label for="interest_starts" class="ui-md-5">Interest Starts<span class="required">*</span>
+                  </label>
+                  <div class="ui-md-7" style="display: flex;">
+                    <input class="form-control " style="width: 20%;" formControlName='interest_starts_days'
+                     (input)="onInterestStartDays($event)" />
+                     <label for="interest_starts_from"style="width: 15%;padding-left: 2%;padding-right: 2%;"> days from </label>
+                    
+                     <select class="form-control customwidth" formControlName='interest_starts_from'
+                      (change)="onInterestStartsFrom($event)" style="width: 30%;">
+                      <option *ngFor="let interest of interestStartsFrom" [value]="interest.value">
+                        {{interest.description}}
+                      </option>
+                     </select>
+                     <div>
+                    </div>                                                                                                                                                                                                                                                                                              
+                  </div>                                                                                                                                                                                              
+                </div> -->
+
+                <!-- <div class="ui-g">
+                  <label for="interest_to_be_charged" class="ui-md-5">Consider Cash Receipt Float Days</label>
+                  <div class="ui-md-7">
+                    <input type="checkbox" (click)="onCashReceiptCheck($event)" formControlName="cash_receipt_float_days"/>
+                  </div>
+                </div> -->
+                <!-- <div class="ui-g">
+                  <label for="interest_deducted_from_reserve" class="ui-md-5">Interest deducted from Reserve<span
+                      class="required">*</span></label>
+                  <div class="ui-md-7">
+                    <select class="form-control customwidth" formControlName='interest_deducted_from_reserve'
+                      (change)="onInterestDeductedFromReserve($event)">
+                      <option value=''>Please Select</option>
+                      <option *ngFor="let interest of interestDeductedFromReserve" [value]="interest.value" >
+                        {{interest.description}}
+                      </option>
+                    </select>
+                  </div>
+                </div> -->
+                <div class="ui-g">
+                  <label for="interest_accumulated_to" class="ui-md-5">Interest Posted To <span class="required">*</span></label>
+                  <div class="ui-md-7">
+                    <select required class="form-control customwidth" formControlName='interest_accumulated_to'
+                     
+                      (change)="onInterestAccumulated($event)">
+                      <option value=''>Please Select</option>
+                      <option *ngFor="let interest of interestAccumulated" [value]="interest.value">
+                        {{interest.description}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+  </div>
+</div>  

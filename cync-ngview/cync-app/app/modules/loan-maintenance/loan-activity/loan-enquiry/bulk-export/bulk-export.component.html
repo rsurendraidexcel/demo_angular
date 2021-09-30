@@ -1,0 +1,75 @@
+<div class="app-body-container bg-white loan-enquiry-main-dev" id="cync_app-body-container">
+	<div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+	<div class="pad-inner">
+		<div class="row">
+			<div class="col-md-12 loan-equiry-heading">
+        <h3 style="margin: 0;">Loan Inquiry Bulk Export
+
+        </h3>
+        </div>
+        <div style="color: 10px; font-style: italic;" class="col-md-12 notificationIcon"><i style="color:blue;" class="fa fa-info-circle" aria-hidden="true"></i> The loan inquiry bulk export feature facilitates exporting large data, between long data ranges. Since a request can take considerable time,  on completion of the request, the user shall be notified via the bell icon. The user can resume Cync activities after placing the request</div>
+
+        </div>
+        <div class="row" style="margin-top: 24px;">
+          <form style="margin: 0 0 0 20px;">
+            <label class="radio-inline" style="font-size: 15px !important;">
+              <input id="checkAll" type="radio" name="optradio" value="All" (change)="changeRange($event)" [checked]="roleObjAll">Generate All
+            </label>
+            <label class="radio-inline" style="margin-left: 130px; font-size: 15px !important;">
+              <input id="checkDate" type="radio" name="optradio" value="daterange" (change)="changeRange($event)" [checked]="roleObjDate">Generate Between Date Range
+            </label>
+
+          </form>
+        </div>
+        <div [hidden]="!showDateRangeApp" class="row" style="margin-top: 20px;">
+          <div class="search_row">
+            <div class="search-from-date" style="display: flex;">
+              <label id="fromED" for="from_effective_date">From Effective Date</label>&nbsp;&nbsp;
+              <p-calendar [(ngModel)]="from_date" placeholder="From Date" yearRange="2000:2030" dateFormat="mm/dd/yy"
+                [monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+                (onSelect)="fromDateSelectMethod($event)" [inputStyle]="{'width':'150px'}" [maxDate]="current_date"></p-calendar>
+            </div>
+            <div class="search-from-date">
+              &nbsp;
+              <label id="toED" for="to_effective_date">To Effective Date</label> &nbsp;
+              <p-calendar [(ngModel)]="to_date" placeholder="To Date" yearRange="2000:2030" dateFormat="mm/dd/yy"
+                [monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+                (onSelect)="toDateSelectMethod($event)" [inputStyle]="{'width':'150px'}" [maxDate]="current_date"></p-calendar>
+            </div>
+            <div class="search-button-div">
+              <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary padding roundhouse" 
+              (click)="onClickAssignGenerateDate()" >Place Request</button>   
+
+            </div>
+            <i class="fa fa-refresh pull-right" (click)="gridRefresh()" aria-hidden="true" style="margin-top: 10px; margin-right: 40px; font-size: 20px; display: inline-block; cursor: pointer;"></i>
+
+          </div>
+
+      </div>
+        <div [hidden]="showDateRangeApp" class="row roundRow">
+        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary padding roundhouse" 
+            (click)="onClickAssignGenerateAll()" >Place Request</button>
+            <i class="fa fa-refresh pull-right" (click)="gridRefresh()" aria-hidden="true" style="margin-right: 50px; margin-top: 10px; font-size: 20px; display: inline-block; cursor: pointer;"></i>
+
+        </div>
+        <div id="successDiv">
+        <div id="successMsg" class="alert alert-success" role="alert" style="margin: 3px 3px;">
+          <a class="close" (click)="closeSuccessPOP()">&times;</a>
+          {{myMessege}}
+        </div>
+	      </div>
+        <div class="hscrollbar-tab" style="margin-top: 17px;">
+         
+          <div id="mainGridPannel" class="row gridMainPannel">
+        <ag-grid-angular style="margin-left: 2.5%; width: 95%; height: 100%; overflow: scroll;" class="ag-theme-balham"
+        rowSelection="multiple" [groupSelectsChildren]="true" [rowData]="bulkexportrowData"
+        [columnDefs]="bulkExportcolumnDefs" [defaultColDef]="defaultColDef" [floatingFilter]="false"
+        suppressRowClickSelection="true" (gridReady)="bulkExportGridReady($event)"
+        [gridOptions]="gridOptions"
+         >
+      </ag-grid-angular>
+      </div>
+      </div>
+        </div>
+        </div>
+        

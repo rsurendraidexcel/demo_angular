@@ -1,0 +1,98 @@
+<div [formGroup]="bbcOthers">
+  <div class="row bPCommonTitles">
+    <h4>BBC Others</h4>
+  </div>
+  <div class="row form-group bPCommonCardsBlock">
+    <div class="row basicParameterWarpbox">
+
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label> Concentration Report Threshold %</label>
+        <input type="number" formControlName="concentration_report_threshold"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label> Maximum Invoice Amount </label>
+        <input type="text" formControlName="invoice_max_amt"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Collateral Change %</label>
+        <input type="number" formControlName="collateral_change_pct"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label> Audit Letter Days </label>
+        <input type="number" formControlName="send_audit_letter_in_days"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label> Default Invoice Status </label>
+        <select class="form-control commonDropdownStyle" formControlName="default_invoice_status">
+
+          <option *ngFor="let item of allDropDownData?.default_invoice_status; let i=index" value="{{item.value}}">
+            {{item.display}}</option>
+        </select>
+      </div>
+      <div class="bpcommonElementCheckBoxMd margin-Checkbox-common">
+
+        <label class="container">Accept Duplicate
+          <input type="checkbox" formControlName="accept_duplicate" class="form-control">
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="bpcommonElementCheckBoxMd margin-Checkbox-common">
+        <!-- <label>Processing Type </label> -->
+        <!-- <select class="form-control commonDropdownStyle" formControlName="combine_summ_det_ar_yn"
+          (change)="processType($event)">
+          <option value="true">Summary Aging</option>
+          <option value="false">Detail Aging</option> -->
+
+          <label class="container">Process Summary Aging?
+            <input [attr.disabled]="isProcessDisable" (change)="processType($event)" type="checkbox" formControlName="combine_summ_det_ar_yn" class="form-control">
+            <span class="checkmark"></span>
+          </label>
+         
+        <!-- </select> -->
+      </div>
+
+      <div class="bpcommonElementCheckBoxMd margin-Checkbox-common">
+
+        <label class="container">Maintain Current AR
+          <input [attr.disabled]="isMaintainArDisable" (change)="maintainCurrent($event)" type="checkbox" formControlName="maintain_current_ar" class="form-control">
+          <span class="checkmark"></span>
+        </label>
+
+      </div>
+
+      <div class="bpcommonElementCheckBoxMd margin-Checkbox-common">
+        <label class="container">Post Repayment to Loan Activity
+          <input type="checkbox" formControlName="post_to_loan_activity" class="form-control">
+          <span class="checkmark"></span>
+        </label>
+
+      </div>
+
+      <div class="bpcommonElementCheckBoxMd margin-Checkbox-common">
+
+        <label class="container">Statement Balance Before Loan Balance
+          <input type="checkbox" formControlName="statement_balance_before_loan_balance" class="form-control">
+          <span class="checkmark"></span>
+        </label>
+
+      </div>
+
+      <div class="bpcommonElementCheckBoxMd margin-Checkbox-common">
+
+        <label class="container">Disbursement To Loan Activity
+          <input type="checkbox" formControlName="post_advance_to_loan_activity" class="form-control">
+          <span class="checkmark"></span>
+        </label>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

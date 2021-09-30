@@ -1,0 +1,69 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Interest Rate Codes - {{ interestRateCodeAction }} </h3>
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="interestRateCodeForm" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveData(interestRateCodeForm.value,interestRateCodeForm.valid , false)">
+                <div class="has-scrollbar" id="cync_main_contents">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">Rate Code
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" formControlName="rate_code" class="form-control" id="rate_code" [ngClass]="displayFieldCss('rate_code')">
+                            <cync-input-field-error-msg [control]="getFormControl('rate_code')" labelName="Rate Code">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2  ad-bt-pad ">
+                            <label class="mandatory" for="currency_code"> Rate Name
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" formControlName="rate_name" class="form-control" id="rate_name" [ngClass]="displayFieldCss('rate_name')">
+                            <cync-input-field-error-msg [control]="getFormControl('rate_name')" labelName="Rate Name">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4  ad-bt-pad ">
+                            <label>Description</label>
+                            <!-- <textarea class="form-control" rows="5" formControlName="rate_description" id="rate_description" [ngClass]="displayFieldCss('rate_description')"></textarea> -->
+                            <input type="text" formControlName="rate_description" class="form-control" id="rate_description" [ngClass]="displayFieldCss('rate_description')">
+                            <cync-input-field-error-msg [control]="getFormControl('rate_description')" labelName="Rate Description">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Daily Divisor
+                                <span class="required">*</span>
+                            </label>
+                            <input type="number" formControlName="rate_divisor" class="form-control" id="rate_divisor" value="0" [ngClass]="displayFieldCss('rate_divisor')">
+                            <cync-input-field-error-msg [control]="getFormControl('rate_divisor')" labelName="Daily Divisor">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2  ad-bt-pad ">
+                            <label>Daily Precision
+                                <span class="required">*</span>
+                            </label>
+                            <input type="number" formControlName="rate_precision" class="form-control" id="rate_precision" value="0" [ngClass]="displayFieldCss('rate_precision')">
+                            <cync-input-field-error-msg [control]="getFormControl('rate_precision')" labelName="Daily Precision">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                        <hr>
+                        <button (click)="goToListInterestRateCodes()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                        </button>
+                        <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd()" id="action_save_new" (click)="saveData(interestRateCodeForm.value,interestRateCodeForm.valid , true)"
+                            label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                        </button>
+                        <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit"
+                            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

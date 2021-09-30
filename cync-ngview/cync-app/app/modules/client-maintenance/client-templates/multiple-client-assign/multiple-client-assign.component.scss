@@ -1,0 +1,115 @@
+.ui-picklist.ui-picklist-responsive .ui-picklist-buttons button {
+  width: 72% !important;
+  height: 40px !important;
+}
+.template {
+  padding-bottom: 15px;
+}
+.align {
+  text-align: -webkit-left;
+  text-align: -moz-center;
+  padding-left: 40px;
+}
+.list-of-reason {
+  font-size: 14px;
+  float: left;
+  color: black;
+}
+.headingMainDiv{
+  padding-top: 10px;
+  margin-left: 10px;
+}
+#templateHeading{
+  margin:0;
+}
+.m-right {
+  margin-right: 10px;
+}
+.ui-picklist .ui-picklist-buttons{
+  height: 12.5em !important;
+  padding: 0px .75em !important;
+  padding-left: 43px !important;
+}
+.backIndexLink {
+    margin-top: 7px;
+  }
+
+  .headingmain {
+    display: flex;
+  }
+
+  .m-top{
+    margin-top: 10px !important; 
+    margin-bottom: 20px !important;
+  }
+  
+  .b-top
+  {
+      border-top: 2px solid #cac3c3;
+  }
+  .tabbuttonBar {
+    border-bottom: 1px solid lightgrey;
+  }
+  .linkBtnActive {
+    background-color: #f4f1f1;
+  }
+  
+  .linkBtninActive {
+    background-color: white;
+  }
+  .fixedPannel{
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    width: 98%;
+    height: 38px;
+    background-color: #f4f1f1;
+    margin-left: -20px;
+    margin-top: -2px;
+    z-index: 1000;
+    padding-top: 3px;
+    padding-bottom: 3px;
+  }
+  #app-body-container{
+    overflow:scroll !important;
+  
+  }
+
+  .active {
+    display: block;
+  }
+  .inactive {
+    display: none;
+  }
+
+  
+  .form-group {
+    margin-bottom: 0px;
+}
+
+.templateContainer {
+  margin-top: 15px;
+  border-radius: 3px;
+  z-index: 1;
+  position: relative;
+}
+
+.templateContainer h3 {margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 600;}
+
+     .options-btn {
+      padding: 5px 4px;
+      margin-top: 3px;
+  }
+  
+
+.primarycancelbtn {
+padding: 4px 8px !important;
+margin-top: 2px;
+}
+
+.text-original{
+  text-transform: none;
+}

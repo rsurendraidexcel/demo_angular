@@ -1,0 +1,83 @@
+<form [formGroup]="creditQueueForm" (ngSubmit)="saveCQCode(creditQueueForm.getRawValue(),creditQueueForm.valid)">
+    <div class="form-group">
+        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2" *ngIf="!isNew">
+            <label>Request No</label>
+            <input type="text" placeholder="" value="" class="form-control" formControlName="request_no" [attr.disabled]="true">
+            <input type="hidden" placeholder="" value="" class="form-control" formControlName="id">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-3">
+            <label>Client Name </label>
+            <select class="form-control" formControlName="borrower_id" (change)="fnChangeClient();">
+                <option selected>--select--</option>
+                <option *ngFor="let client of getClientDropdown" [ngValue]="client.id">{{client.client_name}}</option>
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+            <label>Debtor Name </label>
+            <select class="form-control" formControlName="customer_id" (change)="fnChangeDebtor()">
+                <option selected>--select--</option>
+                <option *ngFor="let debtor of getDebtorDropdown" [ngValue]="debtor.id">{{debtor.account_name}}</option>
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+            <label>Current Credit Limit </label>
+            <input type="text" placeholder="" value="" class="form-control" formControlName="current_limit" [attr.disabled]="true">
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+            <label>Requested Credit Limit </label>
+            <input type="text" placeholder="" value="" class="form-control" formControlName="requested_limit" 
+                [ngClass]="displayCssField('requested_limit')">
+            <cync-input-field-error-msg [control]="getFormControl('requested_limit')" labelName="Requested Credit Limit">
+            </cync-input-field-error-msg>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2" *ngIf="!isNew">
+            <label>Approved Limit</label>
+            <input type="text" placeholder="" value="" class="form-control" formControlName="approved_limit" [ngClass]="displayCssField('approved_limit')"
+                (focusout)="focusOutFunction();" (keyup)="onKeyApprovedValidation($event)">
+            <cync-input-field-error-msg [control]="getFormControl('approved_limit')" labelName="Requested Approval Limit">
+            </cync-input-field-error-msg>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2" *ngIf="!isNew">
+            <label>Status</label>
+            <select class="form-control" formControlName="status_lookup_id" (change)="fnChangeStatus()">
+                <option>--select--</option>
+                <option *ngFor="let status of getStatusDropdown" [ngValue]="status.id">{{status.name}}</option>
+            </select>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-5 ad-bt-pad col-lg-5">
+            <label>Comment</label>
+            <textarea class="form-control" rows="4" cols="50" formControlName="comment"></textarea>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-12 ad-bt-pad col-lg-12" *ngIf="getCommentHistory.length>0">
+            <label>Edit History</label>
+            <div class="comment col-lg-12" *ngFor="let comment of getCommentHistory">
+                <div *ngIf="comment.status">
+                    <a class="avatar">
+                        <img src="{{assetPath}}/images/profile-pic.jpg">
+                    </a>
+                    <div class="content">
+                        <a class="author">
+                            <span class="author-name"> {{comment.user_name}}</span> &nbsp;
+                            <span class="metadata">
+                                <span class="date">{{comment.created_at}}</span>
+                                <span class="status">{{comment.status}}</span>
+                            </span>
+                        </a>
+                        <div class="text">
+                            {{comment.comment}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+            <hr>
+            <button id="action_back" (click)="onClose()" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+            </button>
+            <button id="action_save" label="Save" pbutton="" type="submit" [disabled]="!creditQueueForm.valid || withdrawDisable" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                <span class="ui-button-text ui-clickable no-pad">Save</span>
+            </button>
+        </div>
+    </div>
+</form>

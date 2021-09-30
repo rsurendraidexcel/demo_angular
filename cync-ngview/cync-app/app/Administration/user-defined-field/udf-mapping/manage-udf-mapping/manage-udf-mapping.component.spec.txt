@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ManageUdfMappingComponent } from './manage-udf-mapping.component';
+
+describe('ManageUdfMappingComponent', () => {
+  let component: ManageUdfMappingComponent;
+  let fixture: ComponentFixture<ManageUdfMappingComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ManageUdfMappingComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ManageUdfMappingComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

@@ -1,0 +1,48 @@
+<div class="app-body-container bg-white is_summary" id="cync_app-body-container">
+  <h3 class="no-m-bt"> WebHooks </h3>
+  <div class="pad-inner">
+    <div class="p-t-32">
+      <div [formGroup]="createWebhookForm">
+        <div class="row">
+          <div class="col-md-6">
+            <label class="text-label">Target URL<span class="required">*</span></label> &nbsp;
+            <div class="webhooks-https">https://</div>
+            <input type="text" formControlName="target_url" id="target_url" class="form-control textBox text-url-box"
+              (focusout)="onCourserOut($event)" />
+          </div>
+          <div class="col-md-6">
+            <label class="text-label"> Events <span class="required">*</span></label>&nbsp;
+            <select class="web-hooks-dropdown" formControlName="events">
+              <option value=''>--Select--</option>
+              <option *ngFor="let list of dropdownList" [value]="list.value"> {{list.display}} </option>
+            </select>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-md-6">
+            <label class="text-label">Auth Key</label>&nbsp;
+            <input type="text" formControlName="auth_key" id="auth_key" class="form-control textBox">
+          </div>
+          <div class="col-md-5">
+            <label class="text-label">Auth Value</label>&nbsp;
+            <input type="text" formControlName="auth_value" id="auth_value" class="form-control text-auth-box">
+          </div>
+          <div class="col-md-2" class="submit-button-class">
+            <button (click)="webHooksSubmit()" label="Submit" pbutton="" [disabled]="isValidForm" type="button"
+              class="ui-button ui-widget ui-button-text-only options-btn"><span
+                class="ui-button-text ui-clickable">Submit</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="webhook-cotainer">
+          <ag-grid-angular style="width: 100%; height: calc(100vh - 360px)" class="ag-theme-balham"
+            [gridOptions]="gridOptions" [defaultColDef]="defaultColDef" [columnDefs]="columnDefs"
+            [floatingFilter]="true" [rowData]="rowData" rowSelection='multiple' (gridReady)="onGridReady($event)">
+          </ag-grid-angular>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

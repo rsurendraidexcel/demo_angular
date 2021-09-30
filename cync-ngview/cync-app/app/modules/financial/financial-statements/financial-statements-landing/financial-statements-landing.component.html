@@ -1,0 +1,106 @@
+<div class="app-body-container bg-white is_summary financial-statment-landing" id="component_html_financial_wradio" ng-show="yes_visible"
+    ng-controller="app_body_container">
+    <div class="pad-inner">
+        <div class="row">
+                <h3 class="no-m-bt">{{ projectName }}</h3>
+                <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+                <div class="brder-1 p-t-32">
+                        <div class="row btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0"
+                        data-toggle="buttons">
+                        <common-radio-header></common-radio-header>
+                    </div>
+                </div>
+        </div>
+
+        <div class="p-t-16">
+            <div class="has-scrollbar aligin-center-main dynamic-height-dropcontainer">
+                <br/>
+                <br/>
+                <div class=" col-lg-4 col-lg-offset-4 text-center aligin-center-div" style="min-height: 200px;">
+                    <!-- Upload & Drag Drop file block start -->
+                    <p-fileUpload name="file" url='' customUpload="true" (uploadHandler)="myCustomUploader($event)" (onSelect)="fileSelectDragDrop($event)"
+                        (onRemove)="fileRemovedDragDrop()" accept=".xls,.xlsx" maxFileSize="10000000">
+                        <!-- max file size 10MB -->
+
+                        <ng-template pTemplate="content">
+                            <br/>
+                            <!-- Drag & Drop File upload start -->
+                            <div class="row">
+                                <img src="{{assetsPath}}/images/icons/icon-upload.png">
+                            </div>
+                            <div class="row text-center">
+                                <span>Drag & Drop Files Here</span>
+                            </div>
+                            <!-- Drag & Drop File upload end -->
+
+                            <br/>
+
+                            <!-- File upload using upload file button start -->
+                            <div class="row">
+                                <span class="ui-fileupload-choose ui-button ui-widget ui-state-default ui-corner-all  ui-button-text-only options-btn" icon="fa-plus"
+                                    pbutton="">
+                                    <input #myInput name="file" type="file" accept=".xls,.xlsx" (change)="uploadFileUsingButton($event)" [disabled]="isFileDragDropped">
+                                    <span class="ui-button-text ui-clickable">Upload File</span>
+                                </span>
+                            </div>
+                            <!-- File upload using upload file button end -->
+
+                            <!-- Display Upload file using upload by button start -->
+                            <div class="row text-center">
+                                <span>{{fileNameUploadedByButton}}</span>
+                                <button  *ngIf="fileNameUploadedByButton" icon="fa-close" type="button" 
+                                 class="no-pad ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" (click)="resetUploadFiles();">
+                                    <span class="ui-button-icon-left ui-clickable fa fa-fw fa-close"></span>
+                                    <span class="ui-button-text ui-clickable">ui-btn</span>
+                                </button>
+                            </div>
+                            <!-- Display Upload file using upload by button end -->
+
+                            <br/>
+                        </ng-template>
+                    </p-fileUpload>
+                    <!-- Upload & Drag Drop file block end -->
+
+                    <!-- Download Excel Template Start-->
+                    <div class="row hand">
+                        <br>
+                        <!-- Download file using API  -->
+                        <a (click)="downloadExcelTemplate()">
+                            Download Excel Template
+                        </a>
+                        <!-- Static file download -->
+                        <!-- <a href="{{assetsPath}}/files/Fin_Statments_Excel_Model.xlsx" download>
+                            Download Excel Template
+                        </a> -->
+                    </div>
+                    <!-- Download Excel Template end-->
+
+                    <div class="row p-t-b-10">
+                        <span>OR</span>
+                    </div>
+
+                    <!-- Finance Statement Setup redirect block start -->
+                    <div class="row">
+                        <button id="action_save_new" (click)="navigateToSetup()" label="Enter your data" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">Enter Your Data</span>
+                        </button>
+                    </div>
+                    <!-- Finance Statement Secontenttup redirect block end -->
+
+                </div>
+            </div>
+            <!-- save and cancel button block start -->
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                <hr>
+                <button id="action_back" (click)="backToSummary();" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                    <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                </button>
+                <button id="action_save" [disabled]="!saveButtonValidation()" (click)="saveUploadedFiles();" label="Save" pbutton="" type="button"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                    <span class="ui-button-text ui-clickable no-pad">Save</span>
+                </button>
+            </div>
+            <!-- save and cancel button block end -->
+        </div>
+    </div>
+</div>

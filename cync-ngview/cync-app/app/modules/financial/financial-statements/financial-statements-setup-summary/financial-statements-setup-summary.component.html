@@ -1,0 +1,1468 @@
+<div class="app-body-container bg-white statement-summary" id="component_html_financial_wradio">
+
+	<!--  Radio button section start -->
+	<div class="row m-b-15">
+		<h3 class="no-m-bt">{{ projectName }}</h3>
+		<!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+		<div class="brder-1 p-t-32">
+			<div class="row btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0 pad-inner" data-toggle="buttons">
+				<common-radio-header></common-radio-header>
+			</div>
+		</div>
+	</div>
+	<!--  Radio button section end -->
+
+	<!-- Financial grid dropdown and button section start -->
+	<div class="row no-marg cync-grid-search strip_marg">
+
+		<!-- Finance type dropdown start -->
+		<div class="col-md-3 col-lg-2 pad-left0">
+			<select class="form-control" [(ngModel)]="selectedFinanceType" (ngModelChange)="onChangeFinanceType($event)">
+				<option value="balance-sheet">Balance Sheet</option>
+				<option value="income-statement">Income Statement</option>
+				<option value="cash-flow">Cash Flow Statement</option>
+			</select>
+		</div>
+		<!-- Finance type dropdown end -->
+
+		<!-- Edit and export button section start -->
+		<div class="col-md-3 col-lg-2 pull-right top_8px_pad">
+			<i aria-hidden="true" data-placement="top" data-toggle="tooltip" id="Edit" title="Edit" class="hand fa fa-pencil fa-1x clr_grey f_s_20"
+			 (click)="editButtonClick();"></i>
+			<i aria-hidden="true" class="hand fa fa-share-square-o fa-2x clr_grey f_s_20" data-placement="top" data-toggle="tooltip"
+			 id="Export" title="Export" (click)="exportPdf();"></i>
+		</div>
+		<!-- Edit and export button section end -->
+
+	</div>
+	<!-- Financial grid dropdown and button section end -->
+
+	<div *ngIf="isFormLoaded" class="pad-inner">
+		<form>
+			<div class="has-scrollbar m_r_15" id="cync_main_contents_wradio-list">
+
+				<!-- Balance sheet section start -->
+				<div class="form-group row" *ngIf="selectedFinanceType === 'balance-sheet'">
+					<div class="col-md-12">
+						<div class="ui-datatable ui-widget">
+							<div class="ui-datatable-tablewrapper ui-datatable-resizable">
+									<table>
+											<thead>
+											<tr class="ui-datatable-odd ui-widget-content master_head">
+													<td class="" [attr.colspan]="timeLineList+1">
+														<div> 
+															<h3 class="ui-cell-data">Financial Statements in Summary </h3>
+														</div>
+													</td>
+												</tr>
+											</thead>
+										</table>
+
+								<table id="balance-table-first">
+									<thead class="ui-datatable-thead">
+
+											<!-- <tr class="ui-datatable-odd ui-widget-content master_head">
+													<td class="" [attr.colspan]="timeLineList+1">
+														<div> 
+															<span class="ui-cell-data">Financial Statements in Summary  </span>
+														</div>
+													</td>
+												</tr> -->
+
+										<!-- Balance sheet heading section start -->
+										
+										<!-- Balance sheet heading section end -->
+
+										<!-- Timeline heading section start -->
+										<tr class="ui-state-default">
+											<th class="ui-state-default ui-unselectable-text ui-resizable-column text-right" scope="col">
+												<!-- <span class="ui-column-title font-normal">Period</span> -->
+												<span class="ui-column-title font-normal" style="color:gray; font-style: italic">
+													<em>$ in '000</em>
+												</span>
+											</th>
+											<th *ngFor="let timelineObj of financialStatementAPIResponse.balancesheet.timeLines" class="ui-state-default ui-unselectable-text ui-resizable-column text-center"
+											 scope="col">
+												<span class="ui-column-title">{{timelineObj}}</span>
+											</th>
+											<!-- <th class="ui-state-default ui-unselectable-text ui-resizable-column text-center" scope="col">
+                        <span class="ui-column-title"></span>
+                      </th> -->
+										</tr>
+										<!-- Timeline heading section end -->
+
+									</thead>
+									<tbody class="ui-datatable-data ui-widget-content">
+
+										<!-- Financial value heading $ and yoy % section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label has-border">
+
+											</td>
+											<td *ngFor="let timelineObj of financialStatementAPIResponse.balancesheet.timeLines" class="report_values has-border">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right">
+														<em>$</em>
+													</div>
+													<div class="col-md-4  text-right">
+														<em class="delta">^</em> <span>&nbsp; %</span> 
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td>
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4 text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Financial value heading $ and yoy % section end -->
+
+										<!-- Assets Section start -->
+										<!-- Total Assets value section start -->
+										<!-- <tr class="ui-datatable-even ui-widget-content">
+                      <td class="report_values_label">
+                        <span class="ui-cell-data">
+                          <strong>Total Assets</strong>
+                        </span>
+                      </td>
+                      <td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values"></td>
+                      <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td>
+                    </tr> -->
+										<!-- Total Assets value section end -->
+
+										<!-- Total Current Assets value section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Current Assets</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalCurrent.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalCurrent.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalCurrent.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalCurrent.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Current Assets value section end -->
+
+										<!-- Current Assets parameter values section start -->
+										<tr *ngFor="let currentObj of financialStatementAPIResponse.balancesheet.assets.currentData" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{currentObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,currentObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,currentObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,currentObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,currentObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Current Assets parameter values section end -->
+
+										<!-- Total Non Current Assets value section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Non-current Assets</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalNonCurrent.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalNonCurrent.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalNonCurrent.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.totalNonCurrent.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Non Current Assets value section end -->
+
+										<!-- Non Current Assets parameter values section start -->
+										<tr *ngFor="let nonCurrentObj of financialStatementAPIResponse.balancesheet.assets.nonCurrentData" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{nonCurrentObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,nonCurrentObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,nonCurrentObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,nonCurrentObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,nonCurrentObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Non Current Assets parameter values section end -->
+										<!-- Assets Section end -->
+
+										<!-- Total Assets value section start -->
+										<tr class="ui-datatable-even ui-widget-content finance-statement-totals">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Total Assets</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.total.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.total.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.total.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.assets.total.yoys,'yoy') }}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Assets value section end -->
+									</tbody>
+								<!-- </table> -->
+
+								<!-- <table id="balance-table-second"> -->
+									<tbody class="ui-datatable-data ui-widget-content">
+										<!-- Equity & Liabilities section start -->
+										<!-- Total Equity and liabilities value section start -->
+										<tr class="ui-datatable-even ui-widget-content equity_summary_section">
+											<td class="report_values_label frow">
+												<span class="ui-cell-data">
+													<strong>Equity And Liabilities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values frow"></td>
+											<!-- <td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.paramValues)}">
+                            <strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.paramValues,'total')
+                              }}
+                            </strong>
+                          </div>
+                          <div class="col-md-6  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.yoys)}">
+                            <strong>
+                              <em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.yoys,'yoy')
+                                }}
+                              </em>
+                            </strong>
+                          </div>
+                        </span>
+                      </td> -->
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Equity and liabilities value section end -->
+
+										<!-- Total Liabilities value section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Total Liabilities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.total.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.total.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.total.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.total.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Liabilities value section end -->
+
+										<!-- Total current liabilities value section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Total Current Liabilities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalCurrent.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalCurrent.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalCurrent.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalCurrent.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total current liabilities value section end -->
+
+										<!-- Current Liabilities parameter values section start -->
+										<tr *ngFor="let currentLibObj of financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.currentData"
+										 class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{currentLibObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,currentLibObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,currentLibObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,currentLibObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,currentLibObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Current Liabilities parameter values section end -->
+
+										<!-- Total Non-current liabilities value section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Total Non-current Liabilities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalNonCurrent.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalNonCurrent.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalNonCurrent.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.totalNonCurrent.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Non-current liabilities value section end -->
+
+										<!-- Non-current Liabilities parameter values section start -->
+										<tr *ngFor="let nonCurrentLibObj of financialStatementAPIResponse.balancesheet.equityAndLiabilities.liabilities.nonCurrentData"
+										 class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{nonCurrentLibObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,nonCurrentLibObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,nonCurrentLibObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,nonCurrentLibObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,nonCurrentLibObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Non-current Liabilities parameter values section end -->
+
+										<!-- Total Equity value section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Total Equity</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.equity.totalEquity.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.equity.totalEquity.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.equity.totalEquity.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.equity.totalEquity.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Equity value section end -->
+
+										<!-- Equity parameter values section start -->
+										<tr *ngFor="let equityObj of financialStatementAPIResponse.balancesheet.equityAndLiabilities.equity.equityData" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{equityObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,equityObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,equityObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,equityObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,equityObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Equity parameter values section end -->
+
+										<!-- Equity & Liabilities section start -->
+										<!-- Total Equity and liabilities value section start -->
+										<tr class="ui-datatable-even ui-widget-content equity_summary_section finance-statement-totals">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Equity And Liabilities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.balancesheet.equityAndLiabilities.total.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+											<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+										</tr>
+										<!-- Total Equity and liabilities value section end -->
+
+										<!-- Equity & Liabilities section end -->
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Balance sheet section end -->
+
+				<!-- Income statement section start -->
+				<div>
+					<div class="form-group row" *ngIf="selectedFinanceType === 'income-statement'">
+						<div class="col-md-12">
+							<div class="ui-datatable ui-widget">
+								<div class="ui-datatable-tablewrapper ui-datatable-resizable">
+											<table>
+												<thead>
+												<tr class="ui-datatable-odd ui-widget-content master_head">
+														<td class="" [attr.colspan]="timeLineList+1">
+															<div> 
+																<h3 class="ui-cell-data">Financial Statements in Summary </h3>
+															</div>
+														</td>
+													</tr>
+												</thead>
+											</table>
+									<table id="income-content">
+										<thead class="ui-datatable-thead">
+												<!-- <tr class="ui-datatable-odd ui-widget-content master_head">
+														<td class="" [attr.colspan]="timeLineList+1">
+															<div> 
+																<span class="ui-cell-data">Financial Statements in Summary  </span>
+															</div>
+														</td>
+													</tr> -->
+											
+											
+											<!-- Timeline heading section start -->
+											<tr class="ui-state-default">
+												<th class="ui-state-default ui-unselectable-text ui-resizable-column text-right" scope="col">
+													<!-- <span class="ui-column-title font-normal">Period</span> -->
+													<span class="ui-column-title font-normal" style="color:gray; font-style: italic">
+														<em>$ in '000</em>
+													</span>
+												</th>
+												<th *ngFor="let timelineObj of financialStatementAPIResponse.balancesheet.timeLines" class="ui-state-default ui-unselectable-text ui-resizable-column text-center"
+												 scope="col">
+													<span class="ui-column-title">{{timelineObj}}</span>
+												</th>
+												<!-- <th class="ui-state-default ui-unselectable-text ui-resizable-column text-center" scope="col">
+													<span class="ui-column-title"></span>
+												</th> -->
+											</tr>
+											<!-- Timeline heading section end -->
+										</thead>
+										<tbody class="ui-datatable-data ui-widget-content">
+
+											<!-- Financial value heading $ and yoy % section start -->
+											<tr class="ui-datatable-even ui-widget-content">
+												<td class="report_values_label has-border">
+													<!-- <span class="ui-cell-data">
+                      <strong><em>$ in '000</em></strong>    
+                        </span> -->
+												</td>
+												<td *ngFor="let timelineObj of financialStatementAPIResponse.balancesheet.timeLines" class="report_values has-border">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right">
+															<em>$</em>
+														</div>
+														<div class="col-md-4  text-right">
+															<em class="delta">^</em> <span>&nbsp; %</span> 
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td>
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Financial value heading $ and yoy % section end -->
+
+											<!-- Gross Profit parameter values section start -->
+											<tr *ngFor="let grossProfitObj of financialStatementAPIResponse.incomeStatement.grossProfitParams" class="ui-datatable-even ui-widget-content">
+												<td class="report_values_label">
+													<span class="ui-cell-data">
+														{{grossProfitObj.paramName}}
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,grossProfitObj.paramValues)}">
+															{{ getTimelineValue(timelineValue,grossProfitObj.paramValues,'total') }}
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,grossProfitObj.yoys)}">
+															<em>{{ getTimelineValue(timelineValue,grossProfitObj.yoys,'yoy') }}</em>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Gross Profit parameter values section end -->
+
+											<!-- Gross Profit Total value section start -->
+											<tr class="ui-datatable-even ui-widget-content incomestmt_summary_border finance-statement-totals">
+												<td class="report_values_label hrow">
+													<span class="ui-cell-data">
+														<strong>Gross Profit</strong>
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.grossProfit.paramValues)}">
+															<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.grossProfit.paramValues,'total')
+																}}
+															</strong>
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.grossProfit.yoys)}">
+															<strong>
+																<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.grossProfit.yoys,'yoy') }}
+																</em>
+															</strong>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Gross Profit Total value section end -->
+
+											<!-- Operating Profit parameter values section start -->
+											<tr *ngFor="let opProfitObj of financialStatementAPIResponse.incomeStatement.opProfitParams" class="ui-datatable-even ui-widget-content">
+												<td class="report_values_label">
+													<span class="ui-cell-data">
+														{{opProfitObj.paramName}}
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,opProfitObj.paramValues)}">
+															{{ getTimelineValue(timelineValue,opProfitObj.paramValues,'total') }}
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,opProfitObj.yoys)}">
+															<em>{{ getTimelineValue(timelineValue,opProfitObj.yoys,'yoy') }}</em>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Operating Profit parameter values section end -->
+
+											<!-- Operating Profit Total value section start -->
+											<tr class="ui-datatable-even ui-widget-content incomestmt_summary_border finance-statement-totals">
+												<td class="report_values_label hrow">
+													<span class="ui-cell-data">
+														<strong>Operating Profit (Loss) or [EBIT]</strong>
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.opProfit.paramValues)}">
+															<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.opProfit.paramValues,'total')
+																}}
+															</strong>
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.opProfit.yoys)}">
+															<strong>
+																<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.opProfit.yoys,'yoy') }}
+																</em>
+															</strong>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Operating Profit Total value section end -->
+
+											<!-- Profit before Tax parameter values section start -->
+											<tr *ngFor="let profitBeforeTaxObj of financialStatementAPIResponse.incomeStatement.profitBeforeTaxParams" class="ui-datatable-even ui-widget-content">
+												<td class="report_values_label">
+													<span class="ui-cell-data">
+														{{profitBeforeTaxObj.paramName}}
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,profitBeforeTaxObj.paramValues)}">
+															{{ getTimelineValue(timelineValue,profitBeforeTaxObj.paramValues,'total') }}
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,profitBeforeTaxObj.yoys)}">
+															<em>{{ getTimelineValue(timelineValue,profitBeforeTaxObj.yoys,'yoy') }}</em>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Profit before Tax parameter values section end -->
+
+											<!-- Profit before Tax Total value section start -->
+											<tr class="ui-datatable-even ui-widget-content incomestmt_summary_border finance-statement-totals">
+												<td class="report_values_label hrow">
+													<span class="ui-cell-data">
+														<strong>Profit (Loss) before Tax [EBT]</strong>
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.profitBeforeTax.paramValues)}">
+															<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.profitBeforeTax.paramValues,'total')
+																}}
+															</strong>
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.profitBeforeTax.yoys)}">
+															<strong>
+																<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.profitBeforeTax.yoys,'yoy')
+																	}}
+																</em>
+															</strong>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Profit before Tax Total value section end -->
+
+											<!-- Income continuing operations parameter values section start -->
+											<tr *ngFor="let incomeCountObj of financialStatementAPIResponse.incomeStatement.incomeLossContParams" class="ui-datatable-even ui-widget-content">
+												<td class="report_values_label">
+													<span class="ui-cell-data">
+														{{incomeCountObj.paramName}}
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,incomeCountObj.paramValues)}">
+															{{ getTimelineValue(timelineValue,incomeCountObj.paramValues,'total') }}
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,incomeCountObj.yoys)}">
+															<em>{{ getTimelineValue(timelineValue,incomeCountObj.yoys,'yoy') }}</em>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!--Income continuing operations parameter values section end -->
+
+											<!-- Income continuing operations Total value section start -->
+											<tr class="ui-datatable-even ui-widget-content incomestmt_summary_border finance-statement-totals">
+												<td class="report_values_label hrow">
+													<span class="ui-cell-data">
+														<strong>Income (Loss) from continuing operations</strong>
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.incomeLossCont.paramValues)}">
+															<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.incomeLossCont.paramValues,'total')
+																}}
+															</strong>
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.incomeLossCont.yoys)}">
+															<strong>
+																<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.incomeLossCont.yoys,'yoy')
+																	}}
+																</em>
+															</strong>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Income continuing operations Total value section end -->
+
+											<!-- Comprehensive income parameter values section start -->
+											<tr *ngFor="let compIncomeObj of financialStatementAPIResponse.incomeStatement.compIncomeParams" class="ui-datatable-even ui-widget-content">
+												<td class="report_values_label">
+													<span class="ui-cell-data">
+														{{compIncomeObj.paramName}}
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,compIncomeObj.paramValues)}">
+															{{ getTimelineValue(timelineValue,compIncomeObj.paramValues,'total') }}
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,compIncomeObj.yoys)}">
+															<em>{{ getTimelineValue(timelineValue,compIncomeObj.yoys,'yoy') }}</em>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Comprehensive income parameter values section end -->
+
+											<!-- Comprehensive income Total value section start -->
+											<tr class="ui-datatable-even ui-widget-content incomestmt_summary_border finance-statement-totals">
+												<td class="report_values_label hrow">
+													<span class="ui-cell-data">
+														<strong>Comprehensive income (loss), net of tax, attributable to parent</strong>
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.compIncomeLoss.paramValues)}">
+															<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.compIncomeLoss.paramValues,'total')
+																}}
+															</strong>
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.compIncomeLoss.yoys)}">
+															<strong>
+																<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.compIncomeLoss.yoys,'yoy')
+																	}}
+																</em>
+															</strong>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Comprehensive income Total value section end -->
+
+											<!-- Total Income value section start -->
+											<tr class="ui-datatable-even ui-widget-content finance-statement-totals">
+												<td class="report_values_label hrow">
+													<span class="ui-cell-data">
+														<strong>Total Income</strong>
+													</span>
+												</td>
+												<td *ngFor="let timelineValue of financialStatementAPIResponse.balancesheet.timeLines" class="report_values hrow">
+													<span class="ui-cell-data">
+														<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.totalIncome.paramValues)}">
+															<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.totalIncome.paramValues,'total')
+																}}
+															</strong>
+														</div>
+														<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.incomeStatement.totalIncome.yoys)}">
+															<strong>
+																<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.incomeStatement.totalIncome.yoys,'yoy') }}
+																</em>
+															</strong>
+														</div>
+													</span>
+												</td>
+												<!-- One Additional td to maintain the automatic space as in the design -->
+												<!-- <td class="report_values">
+                        <span class="ui-cell-data">
+                          <div class="col-md-6 text-right">
+                          </div>
+                          <div class="col-md-4  text-right">
+                          </div>
+                        </span>
+                      </td> -->
+											</tr>
+											<!-- Total Income value section end -->
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Income statement section end -->
+
+				<!-- Cash Flow section start -->
+				<div class="form-group row" *ngIf="selectedFinanceType === 'cash-flow'">
+					<div class="col-md-12">
+						<div class="ui-datatable ui-widget">
+							<div class="ui-datatable-tablewrapper ui-datatable-resizable">
+								<!-- Cash Flow heading section start -->
+								<table>
+										<thead>
+										<tr class="ui-datatable-odd ui-widget-content master_head">
+												<td class="" [attr.colspan]="timeLineList+1">
+													<div> 
+														<h3 class="ui-cell-data">Financial Statements in Summary </h3>
+													</div>
+												</td>
+											</tr>
+										</thead>
+									</table>
+								<table id="cashflow-table-first">
+									<thead class="ui-datatable-thead">
+
+											<!-- <tr class="ui-datatable-odd ui-widget-content master_head">
+													<td class="" [attr.colspan]="timeLineList+1">
+														<div> 
+															<span class="ui-cell-data">Financial Statements in Summary  </span>
+														</div>
+													</td>
+												</tr> -->
+										<!-- Balance sheet heading section end -->
+
+										<!-- Timeline heading section start -->
+										<tr class="ui-state-default">
+											<th class="ui-state-default ui-unselectable-text ui-resizable-column text-right cash-flow-min-width"
+											 scope="col">
+												<!-- <span class="ui-column-title font-normal">Period</span> -->
+												<span class="ui-column-title font-normal" style="color:gray; font-style: italic">
+													<em>$ in '000</em>
+												</span>
+											</th>
+											<th *ngFor="let timelineObj of financialStatementAPIResponse.cashFlow.timeLines"
+											 class="ui-state-default ui-unselectable-text ui-resizable-column text-center"
+											 scope="col">
+												<span class="ui-column-title">{{timelineObj}}</span>
+											</th>
+										</tr>
+										<!-- Timeline heading section end -->
+
+									</thead>
+									<tbody class="ui-datatable-data ui-widget-content">
+
+										<!-- Financial value heading $ and yoy % section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label has-border">
+
+											</td>
+											<td *ngFor="let timelineObj of financialStatementAPIResponse.cashFlow.timeLines" class="report_values has-border">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right">
+														<em>$</em>
+													</div>
+													<div class="col-md-4  text-right">
+														<em class="delta">^</em> <span>&nbsp; %</span> 
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Financial value heading $ and yoy % section end -->
+
+										<!-- Cash Flows From Operating Activities heading section start -->
+										<tr class="ui-datatable-even ui-widget-content equity_summary_section">
+											<td class="report_values_label frow">
+												<span class="ui-cell-data">
+													<strong>Cash Flows From Operating Activities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values frow"></td>
+										</tr>
+										<!-- Cash Flows From Operating Activities heading section end -->
+
+										<!-- Cash Flows From Operating Activities parameter values section start -->
+										<tr *ngFor="let operatingActObj of financialStatementAPIResponse.cashFlow.cashProvidedByOpActParams" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{operatingActObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,operatingActObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,operatingActObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,operatingActObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,operatingActObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!--Cash Flows From Operating Activities parameter values section end -->
+
+										<!-- Changes in working capital heading section start -->
+										<tr class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label frow">
+												<span class="ui-cell-data">
+													<strong>Changes in working capital</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values frow"></td>
+										</tr>
+										<!-- Changes in working capital heading section end -->
+
+										<!-- Changes in working capital parameter values section start -->
+										<tr *ngFor="let workingCapitalObj of financialStatementAPIResponse.cashFlow.changesInWorkingCapitalParams" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{workingCapitalObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,workingCapitalObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,workingCapitalObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,workingCapitalObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,workingCapitalObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Changes in working capital parameter values section end -->
+
+										<!-- Total Cash Flows From Operating Activities value section start -->
+										<tr class="ui-datatable-even ui-widget-content finance-statement-totals">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Cash provided by Operating Activities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashProvidedByOperatingActivitiesTotal.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashProvidedByOperatingActivitiesTotal.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashProvidedByOperatingActivitiesTotal.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashProvidedByOperatingActivitiesTotal.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Total Cash Flows From Operating Activities value section end -->
+									</tbody>
+								<!-- </table> -->
+
+								<!-- <table id="cashflow-table-second"> -->
+									<tbody class="ui-datatable-data ui-widget-content">
+
+										<!-- Cash Flows from Investing Activities heading section start -->
+										<tr class="ui-datatable-even ui-widget-content equity_summary_section">
+											<td class="report_values_label frow">
+												<span class="ui-cell-data">
+													<strong>Cash Flows from Investing Activities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values frow"></td>
+										</tr>
+										<!-- Cash Flows from Investing Activities heading section end -->
+
+										<!-- Cash Flows from Investing Activities parameter values section start -->
+										<tr *ngFor="let investingActObj of financialStatementAPIResponse.cashFlow.cashUsedForInvestActParams" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{investingActObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,investingActObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,investingActObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,investingActObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,investingActObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Cash Flows from Investing Activities parameter values section end -->
+
+										<!-- Total Cash Flows from Investing Activities value section start -->
+										<tr class="ui-datatable-even ui-widget-content finance-statement-totals">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Cash Used for Investing Activities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForInvestingActivitiesTotal.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForInvestingActivitiesTotal.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForInvestingActivitiesTotal.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForInvestingActivitiesTotal.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Total Cash Flows from Investing Activities value section end -->
+
+										<!-- Cash Flows from Financing Activities heading section start -->
+										<tr class="ui-datatable-even ui-widget-content equity_summary_section">
+											<td class="report_values_label frow">
+												<span class="ui-cell-data">
+													<strong>Cash Flows from Financing Activities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values frow"></td>
+										</tr>
+										<!-- Cash Flows from Financing Activities heading section end -->
+
+										<!-- Cash Flows from Financing Activities parameter values section start -->
+										<tr *ngFor="let financingActObj of financialStatementAPIResponse.cashFlow.cashUsedForFinActParams" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{financingActObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financingActObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,financingActObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financingActObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,financingActObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Cash Flows from Financing Activities parameter values section end -->
+
+										<!-- Total Cash Flows from Financing Activities value section start -->
+										<tr class="ui-datatable-even ui-widget-content finance-statement-totals">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Cash Used for Financing Activities</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForFinancingActivitiesTotal.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForFinancingActivitiesTotal.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForFinancingActivitiesTotal.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashUsedForFinancingActivitiesTotal.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Total Cash Flows from Financing Activities value section end -->
+
+										<!-- Increase (Decrease) in Cash and Cash Equivalents parameter values section start -->
+										<tr *ngFor="let cashEquivalentObj of financialStatementAPIResponse.cashFlow.incrOrDecrInCashAndCashEquiParams" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{cashEquivalentObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,cashEquivalentObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,cashEquivalentObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,cashEquivalentObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,cashEquivalentObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Increase (Decrease) in Cash and Cash Equivalents parameter values section end -->
+
+										<!-- Total Increase (Decrease) in Cash and Cash Equivalents value section start -->
+										<tr class="ui-datatable-even ui-widget-content finance-statement-totals">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Increase (Decrease) in Cash and Cash Equivalents</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.incrOrDecrInCashAndCashEquivalentsTotal.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.incrOrDecrInCashAndCashEquivalentsTotal.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.incrOrDecrInCashAndCashEquivalentsTotal.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.incrOrDecrInCashAndCashEquivalentsTotal.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Total Increase (Decrease) in Cash and Cash Equivalents value section end -->
+
+										<!-- Cash and Cash Equivalents at End of Year parameter values section start -->
+										<tr *ngFor="let cashEquivalentEndYearObj of financialStatementAPIResponse.cashFlow.cashAndCashEquiAtYearEndParams" class="ui-datatable-even ui-widget-content">
+											<td class="report_values_label">
+												<span class="ui-cell-data">
+													{{cashEquivalentEndYearObj.paramName}}
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,cashEquivalentEndYearObj.paramValues)}">
+														{{ getTimelineValue(timelineValue,cashEquivalentEndYearObj.paramValues,'total') }}
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,cashEquivalentEndYearObj.yoys)}">
+														<em>{{ getTimelineValue(timelineValue,cashEquivalentEndYearObj.yoys,'yoy') }}</em>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Cash and Cash Equivalents at End of Year parameter values section end -->
+
+										<!-- Total Cash and Cash Equivalents at End of Year value section start -->
+										<tr class="ui-datatable-even ui-widget-content finance-statement-totals">
+											<td class="report_values_label hrow">
+												<span class="ui-cell-data">
+													<strong>Cash and Cash Equivalents at End of Year</strong>
+												</span>
+											</td>
+											<td *ngFor="let timelineValue of financialStatementAPIResponse.cashFlow.timeLines" class="report_values hrow">
+												<span class="ui-cell-data">
+													<div class="col-md-6 text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashAndCashEquiAtYearEndTotal.paramValues)}">
+														<strong> {{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashAndCashEquiAtYearEndTotal.paramValues,'total')
+															}}
+														</strong>
+													</div>
+													<div class="col-md-4  text-right" [ngStyle]="{'color':getTimelineCSSValue(timelineValue,financialStatementAPIResponse.cashFlow.cashAndCashEquiAtYearEndTotal.yoys)}">
+														<strong>
+															<em>{{ getTimelineValue(timelineValue,financialStatementAPIResponse.cashFlow.cashAndCashEquiAtYearEndTotal.yoys,'yoy')
+																}}
+															</em>
+														</strong>
+													</div>
+												</span>
+											</td>
+											<!-- One Additional td to maintain the automatic space as in the design -->
+										</tr>
+										<!-- Total Cash and Cash Equivalents at End of Year value section end -->
+
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Cash Flow section end -->
+
+				<!-- Back to summary section starts -->
+				<div class="row sticky_btn_actions left_0">
+					<hr>
+					<div class="col-md-7">
+						<!-- <span>
+              					<i class="fa fa-1x fa-info-circle clr_orange"></i>
+            				</span>
+							<span>To View Financial Highlights, please add Financial Ratio too.</span> 
+						-->
+					</div>
+					<div class="col-md-5 text-right">
+						<button id="action_save" (click)="backSummaryPage()" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+							<span class="ui-button-text ui-clickable no-pad">Back to Summary</span>
+						</button>
+					</div>
+				</div>
+				<!-- Back to summary section ends -->
+
+			</div>
+		</form>
+	</div>
+</div>

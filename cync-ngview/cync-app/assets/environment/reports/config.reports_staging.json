@@ -1,0 +1,11 @@
+{
+  "fact_open_invoice": "https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/open-invoice",
+  "fact_portfolio_arbalance": "https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/portfolio-arbalance",
+  "fact_processing_status": "https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/processing-status",
+  "fact_purchase_summary": "https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/purchase-summary",
+  "fact_reserve_activity": "https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/reserve-activity",
+  "fact_broker_outstanding":"https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/broker-outstanding",
+  "fact_broker_paid_commission": "https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/broker-paid-commission",
+  "fact_eom_client_analysis": "https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/eom-client-analysis",
+  "fact_payment_history":"https://td4mst15j8.execute-api.us-east-1.amazonaws.com/Stage/payment-history"
+  }

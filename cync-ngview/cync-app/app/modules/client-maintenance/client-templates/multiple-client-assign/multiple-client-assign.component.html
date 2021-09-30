@@ -1,0 +1,73 @@
+<div class="templateContainer bg-white is_summary list-credit-queue" id="app-body-container">
+	<div class="row" style = "padding: 2px;">
+		<div class="row fixedPannel">
+			<div class="col-md-3 headingmain">
+				<div style="font-size: 25px;">
+					<a href="#/client-maintenance/client-templates" class="backIndexLink">
+						<span class="backIndexicon glyphicon glyphicon-chevron-left" style="font-size: 18px;
+					color: darkgray;
+					cursor: pointer;"></span>
+					</a>
+				</div>
+				<div class="headingMainDiv">
+					<h3 class="no-m-bt" id="templateHeading">Assign Template</h3>
+				</div>
+			</div>
+			<div class="col-md-4 pull-right text-right">
+				<button id="cancel" type="button" class="btn btn-light primarycancelbtn" (click)="cancelOperationFn()" style="margin-right: 8px;">Cancel</button>
+				<button id="confirm" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+					(click)="openAssignClientDialog()" [disabled]="enableAssignbtn">Assign to Client</button>
+			</div>
+		</div>
+    <div class="align" style="margin-top:5%">
+      <p-pickList id="Ineligible-calculation" [source]="source" [target]="confirmed" sourceHeader="Clients" targetHeader="Selected Clients" [dragdrop]=false filterBy="client_name"
+        metaKeySelection="true" [sourceStyle]="{'height':'250px','border':'1px solid #c8c8c8','padding':'4px','width':'450px'}"
+        [targetStyle]="{'height':'250px','border':'1px solid #c8c8c8','padding':'4px','width':'450px'}"
+       [showSourceControls]=false [showTargetControls]=false  (onMoveToTarget)="onMoveToTarget($event)" (onMoveAllToTarget)=onMoveAllToTarget($event) (onMoveToSource)=onMoveToSource($event)>
+        <div class="ui-picklist">
+          <ng-template let-data pTemplate="item">
+            <div class="ui-helper-clearfix ">
+              <div class="list-of-reason">{{data.client_name}}</div>
+            </div>
+          </ng-template>
+        </div>
+      </p-pickList>
+    </div>
+		<div class="row">
+			<hr class="b-top">
+		</div>
+		<div class="templateDetailBtn form-group" style="display: flex; ">
+			<p-dropdown [style]="{'width':'210px', 'margin-right':'30px'}" [options]="templateArrayForDropdown"
+				[(ngModel)]="selectedTemplatedropdown" (onChange)="onChangeTemplateDropDown()" filter="label">
+				<ng-template let-item pTemplate="selectedItem">
+					<span class="text-original">{{item.label}}</span>
+				</ng-template>
+			</p-dropdown>
+
+			<div>
+				<span style="font-size: 15px;">{{descValue}}</span>
+			</div>
+		  </div>
+			<hr class="b-top">
+  </div>
+  <div class="row tabbuttonBar">
+    <ul class="nav nav-pills">
+      <li  id="bpPill" [className]="btnStyle1"><a [routerLink]="basicparameter" (click)="navigatePannel(1)">Basic Parameters</a></li>
+      <li id="ineligiblePill" [className]="btnStyle2"><a [routerLink]="ineligiblecalculation" (click)="navigatePannel(2)">Ineligible Calculations</a></li>
+      <li id="bucketAgePill" [className]="btnStyle3"><a [routerLink]="bucketageing" (click)="navigatePannel(3)">Bucket Aging</a></li>
+    </ul>
+  </div>
+  <form>
+	<div [className]="flag1" class="baseParameterPannel mainFormPanel">
+		<app-client-assign-basic-parameter></app-client-assign-basic-parameter>
+	</div>
+
+	<div [className]="flag2" class="calculationPannel mainFormPanel">
+		<app-client-assign-ineligible-calculation></app-client-assign-ineligible-calculation>
+	</div>
+		<div [className]="flag3" class="bucketAgingPannel mainFormPanel">
+			<app-client-assign-bucket-aging></app-client-assign-bucket-aging>
+		</div>
+	</form>
+</div>
+

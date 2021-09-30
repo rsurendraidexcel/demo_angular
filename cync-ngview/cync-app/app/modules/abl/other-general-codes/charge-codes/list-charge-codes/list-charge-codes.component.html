@@ -1,0 +1,144 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <!-- <div class="close-btn-dash pull-right text-right top-action-btns">
+        <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i>
+        </div>
+    </div>             -->
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Charge Codes</h3>
+        <div class="p-t-16">
+            <div class="ui-datatable-tablewrapper">
+                <div class="cync-grid-search row no-marg">
+                    <div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+                        <div class="input-group grid-search">
+                            <input (keyup)="onKey($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+                                aria-describedby="basic-addon3" autocomplete="off" id="globalSearch">
+                            <span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+                                <i *ngIf="globalSearchCloseIcon==true" class="fa fa-close" aria-hidden="true">
+                                </i>
+                                <i *ngIf="globalSearchIcon==true" class="fa fa-search" aria-hidden="true">
+                                </i>
+                            </span>
+                            <a  class="m-l-10 adv_search" style="cursor: pointer;" (click)='openAdvanceSearchPoup()'>Advanced Search</a>
+                        </div>
+                    </div>
+                    <div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right no-pad">
+                        <i id="New" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Add New" (click)="goToAdd()" [ngClass]="(isAddPermitted)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+                        <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="goToEdit()" [ngClass]="(toggleEditIcon) ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+                        <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+                        <i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                            title="Export" (click)="showDialogForExport()"></i>
+                        <!-- EXPORT & SETTINGS ICON STARTS  -->
+                        <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true" *ngIf="listChargeCodesModel.isMoreIconsRequired">
+                            <i id="more" class="hand fa fa-ellipsis-v fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+                                title="More">
+                            </i>
+                        </button>
+                        <ul *ngIf="listChargeCodesModel.isMoreIconsRequired" class="dropdown-menu no-t-pad grid-menu-dropdown">
+                            <li>
+                                <a class="hand">Settings</a>
+                            </li>
+                        </ul>
+                        <!-- EXPORT & SETTINGS ICON ENDS -->
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <p-dialog header={{listChargeCodesModel.type}} [(visible)]="toggleExportModal" appendTo="body" [modal]="true" width="500"
+                        height="auto" [responsive]="true" styleClass="charge-codes-export-modal">
+
+                        <div *ngFor="let col of exportColumns">
+                            <p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+                            <br>
+                            <br>
+                        </div>
+                        <p-footer>
+                            <button type="button" id="exportDataConfirmButton" pButton icon="fa-check" label="Export" (click)="exportSelectedColumns(exportColumns)"></button>
+                        </p-footer>
+                    </p-dialog>
+                </div>
+
+                <div class="form-group">
+                    <p-dialog header="Error" [(visible)]="toggleExportErrorModal" appendTo="body" [modal]="true" width="300" height="auto" [responsive]="true">
+                        <p style="color:red;">Select columns to export.</p>
+                        <!-- <button type="button" pButton icon="fa-check" label="Close" (click)="closeDialogBox()"></button> -->
+                    </p-dialog>
+                </div>
+
+
+                <div class="has-scrollbar" id="cync_main_contents" (scroll)="onScroll($event)">
+                    <p-dataTable id="charge_codes_table" *ngIf="isGridDataLoaded" class='charge_codes_list' [scrollable]="false" [value]="gridData" (onRowUnselect)="unSelectChkBox()"
+                        (onHeaderCheckboxToggle)="selectAllChkBox()" (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple"
+                        [(selection)]="selectedRows" [globalFilter]="sf" (onFilter)="printFilteredData($event)" #dt>
+                        <p-column *ngIf="!listChargeCodesModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+                        <p-column *ngFor="let col of listChargeCodesModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+                            [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" [style]="{'width':'10%'}">
+
+                            <!-- grid data will come here -->
+
+                            <!-- Checkbox Icon for Auto New Client Column starts -->
+                            <ng-template *ngIf="col.header == autoNewClient" let-file="rowData" pTemplate="body">
+                                <span class="ui-cell-data f-s-15">
+                                    <i [ngClass]="file.add_to_borrower? 'fa fa-check-square':'fa fa-square'" style="color:#a2a3a7">
+                                    </i>
+                                </span>
+                            </ng-template>
+
+                             <ng-template  *ngIf="col.header == 'Charge Codes'" let-file="rowData" pTemplate="body"><div class="w-200">{{file.description}}</div>
+                            </ng-template>
+
+                            <ng-template  *ngIf="col.header == 'Nat Sign'" let-file="rowData" pTemplate="body"><div class="f-s-15">{{file.natural_sign}}</div>
+                            </ng-template>
+
+                            <ng-template  *ngIf="col.header == 'Source Type'" let-file="rowData" pTemplate="body"><div class="p-r-6">{{ ((file.source_type == 'hyphen' || file.source_type == '' || file.source_type == null) ? '' : file.source_type) | titlecase}}</div>
+                            </ng-template>
+
+                             <ng-template  *ngIf="col.header == 'Transcation Code'" let-file="rowData" pTemplate="body"><div class="text-right p-r-6">{{file.trans_code}}</div>
+                            </ng-template>
+
+                              <ng-template  *ngIf="col.header == 'Sequence'" let-file="rowData" pTemplate="body"><div class="text-right p-r-6">{{file.sequence}}</div>
+                            </ng-template>
+
+                              <ng-template  *ngIf="col.header == 'Value'" let-file="rowData" pTemplate="body"><div class="text-right p-r-6">{{file.charge_value}}</div>
+                            </ng-template>
+                            <!-- Checkbox Icon for Auto New Client Column ends -->
+                        </p-column>
+
+
+                    </p-dataTable>
+
+                    <!-- <p-dialog header="Message" appendTo="body" [modal]="true" [(visible)]="showNotificationMsgPopup" showEffect="fade" [width]="600"
+                        [responsive]="true">
+                        <span [innerHTML]="notificationMessage"></span>
+                    </p-dialog> -->
+
+
+                </div>
+                <!-- <p *ngIf="listChargeCodesModel.showTotalRecords" class="recordcount">
+                    <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+                </p> -->
+                <div class="grid-loader">
+
+                    <!-- below code is to show loader when user scrolls -->
+                    <span [hidden]="!showSpinner" class="center">
+                        <i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+                    </span>
+
+                    <div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+                    <ng-template #grid_count_template>
+                        <p class="recordcount">
+                            <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+                        </p>
+                    </ng-template>
+                    <ng-template #record_count_template>
+                        <p *ngIf="filterRecordCount != -1 && filterRecordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+                            <b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+                        </p>
+                    </ng-template>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

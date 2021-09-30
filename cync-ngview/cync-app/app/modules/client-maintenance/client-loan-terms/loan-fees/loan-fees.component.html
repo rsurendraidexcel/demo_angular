@@ -1,0 +1,144 @@
+<div class="pad-inner client-loan-terms-custom">
+
+	<h3 class="no-m-bt">Client Loan terms</h3>
+	<div class="row tab_panel">
+		<div class="inline tabbtn tablinks">
+
+			<label class="radio-inline">
+				<input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/guarantors']">Guarantors</label>
+		</div>
+		<div class="inline tabbtn tablinks">
+			<!-- <input type="radio" name="loan_free"/>  -->
+
+			<label class="radio-inline">
+				<input type="radio" name="optradio" checked [routerLink]="['/client-maintenance/client-loan-terms/loan-fees']"> Loan Fees</label>
+		</div>
+		<div class="inline tabbtn tablinks">
+			<!-- <input type="radio" name="ineligible_advances"/>"  -->
+
+			<label class="radio-inline">
+				<input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/ineligible-advances']">Ineligible/Advances</label>
+		</div>
+	</div>
+	<div class="tabContent_section" #content_section>
+		<!-- Tab content -->
+
+		<div id="loan_fees" class="tabcontent">
+			<div class="tbl-container">
+				<div class="tpanel-header">
+					<strong>Loan Details</strong>
+				</div>
+				<div class="tpanel">
+					<table class="table tdataone">
+						<thead>
+							<tr>
+								<th scope="col">Loan Origination</th>
+								<th scope="col">Contract Term</th>
+								<th scope="col">Origination Date</th>
+								<th scope="col">Expirations Date</th>
+								<th scope="col">Interest Rate Code</th>
+								<th scope="col">%Rate Adjustment</th>
+								<th scope="col">Interest add To Balance</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngIf="loanFeeDetails.loan_details != undefined">
+								<td> {{loanFeeDetails.loan_details.loan_origination}}</td>
+								<td> {{loanFeeDetails.loan_details.contract_term}}</td>
+								<td> {{loanFeeDetails.loan_details.origination_date}}</td>
+								<td> {{loanFeeDetails.loan_details.expiration_date}} </td>
+								<td>{{loanFeeDetails.loan_details.interest_rate_code}}</td>
+								<td> {{loanFeeDetails.loan_details.rate_adjustment}} </td>
+								<td> {{loanFeeDetails.loan_details.interest_add_to_balance}} </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="row mgrone">
+				<div class="tbl-container">
+					<div class="tpanel-header">
+						<strong> Loan Charge /Fees </strong>
+					</div>
+					<div class="tpanel">
+						<table class="table_elm cync-table-fixed">
+							<thead>
+								<tr>
+									<th class="col-xs-4"> Charge Code</th>
+									<th class="col-xs-2"> Charge Value</th>
+									<th class="col-xs-2"> Frequency</th>
+									<th class="col-xs-2"> Charge Type</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let loanData of loanFeeDetails.loan_charges_or_fees">
+									<td class="col-xs-4">{{loanData.charge_code}} </td>
+									<td class="col-amount col-xs-2">{{loanData.charge_value}}</td>
+									<td class="col-status col-xs-2"> {{loanData.frequency}} </td>
+									<td class="col-status col-xs-2"> {{loanData.charge_type}} </td>
+								</tr>
+							</tbody>
+						</table>
+
+
+					</div>
+				</div>
+
+			</div>
+			<div class="row mgrone">
+				<div class="col-md-4 padone">
+					<div class="tbl-container">
+						<div class="tpanel-header">
+							<strong>BBC Data Files</strong>
+						</div>
+						<div class="tpanel">
+							<table class="table_elm cync-table-fixed">
+								<tbody>
+									<tr *ngFor="let bbcFile of loanFeeDetails.bbc_data_files">
+										<td class="col-xs-8">{{bbcFile.source_documents_name}}</td>
+										<td class="col-xs-4">{{bbcFile.frequency}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 padone">
+					<div class="tbl-container">
+						<div class="tpanel-header">
+							<strong>Reporting Requirements</strong>
+						</div>
+						<div class="tpanel">
+							<table class="table_elm cync-table-fixed">
+								<tbody>
+									<tr *ngFor="let reporting of loanFeeDetails.reporting_requirements">
+										<td class="col-xs-8">{{reporting.source_documents_name}}</td>
+										<td class="col-xs-4">{{reporting.frequency}} </td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 padone">
+					<div class="tbl-container">
+						<div class="tpanel-header">
+							<strong>Lender Ticklers</strong>
+						</div>
+						<div class="tpanel">
+							<table class="table_elm cync-table-fixed">
+								<tbody>
+									<tr *ngFor="let tickler of loanFeeDetails.lender_ticklers">
+										<td class="col-xs-8">{{tickler.source_documents_name}} </td>
+										<td class="col-xs-4"> {{tickler.frequency}} </td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

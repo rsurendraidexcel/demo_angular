@@ -1,0 +1,9 @@
+
+<div class="input-wrap">
+  <span class="date-input">
+      <input style="width:120px" class="form-input"  [matDatepicker]="picker" [value]="dateValue" (dateChange)="addEvent('change', $event)">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  </span>
+  <mat-datepicker #picker></mat-datepicker>
+</div>
+

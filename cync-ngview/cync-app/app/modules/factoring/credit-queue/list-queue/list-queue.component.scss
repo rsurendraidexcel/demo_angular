@@ -1,0 +1,48 @@
+.dynamic-scroll{
+    height: calc(100vh - 313px);
+    margin-top: 10px;
+}
+.addbtn {
+    position: fixed;
+    bottom: 47px;
+    right: 30px;
+
+  }
+  :focus {
+    outline: none !important;
+}
+.addbtn button{
+    border-radius: 50%;
+}
+.app-body-container{
+    height: calc(100vh - 215px) !important;
+}
+
+.ag-layout-normal.ag-root {
+    height: calc(100vh - 293px) !important;
+    display: flex;
+    flex-direction: column;
+}
+.filter-class{
+    margin-bottom: 15px;
+    padding-left: 0px;
+}
+.m-t-27{
+    margin-top: 27px;
+}
+.fa{
+    cursor: pointer;
+}
+.cancel-button{
+    padding-right: 0px;
+    margin-right: -35px;
+}
+
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    p-calendar.form-control{
+       width: 85% !important;
+    }
+  }
+.m-l-20{
+    margin-left: 7px;
+}

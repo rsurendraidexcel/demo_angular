@@ -1,0 +1,1558 @@
+.ui-datatable .ui-datatable-thead > tr > th, .ui-datatable .ui-datatable-tfoot > tr > td, .ui-datatable .ui-datatable-data > tr > td {
+  border-width: 1px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  }
+
+  .detail_view .ui-datatable .ui-datatable-thead > tr > th, .detail_view .ui-datatable .ui-datatable-tfoot > tr > td, .detail_view .ui-datatable .ui-datatable-data > tr > td {
+  border-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+  }
+
+  /*Summary Table*/
+
+  .ui-datatable th.ui-state-default {background: white; color: black;
+  }
+
+  .ui-datatable tbody > tr.ui-widget-content.ui-state-highlight{
+    background-color: #eeeeee !important;
+    color: #222222 !important;
+  }
+
+  .ui-datatable th.ui-state-active {color: black; }
+
+  .ui-datatable .ui-datatable-thead > tr > th, .ui-datatable .ui-datatable-tfoot > tr > td {padding: 8px; text-align: left;padding-left: 3px;}
+
+  .ui-datatable th.ui-sortable-column:not(.ui-state-active):hover {background: #fafafb!important}
+
+  .ui-datatable .ui-datatable-data>tr>td {padding: 4px!important}
+
+
+  .loading-modal-initial {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba( 255, 255, 255, .8 ) 50% -500% no-repeat;
+  }
+  /* When the body has the loading class, we turn
+  the scrollbar off with overflow:hidden */
+  body.loading {
+  overflow: hidden;
+  }
+  /* Anytime the body has the loading class, our
+  modal element will be visible */
+  body.loading .loading-modal {
+  display: block;
+  }
+  .subnav_nav_links_active{
+  /*font-weight: 600;*/
+  text-decoration:none;color:#888;font-size:13px;font-family:inherit;display:-webkit-inline-box;display:-ms-inline-flexbox;display:inline-flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;min-height:auto;border:0px solid transparent;padding:0px
+  }
+
+
+   /*currency-defination*/
+  .currency-defination-custom .ui-inputtext {
+      width: 100% !important;
+      padding-bottom: 10px;
+          padding-left: 6px;
+  }
+
+  .currency-defination-custom .ui-datepicker
+  {  width:100% !important; }
+
+
+
+  .currency-holiday-summary-custom .ui-widget.ui-button:enabled:hover, .currency-holiday-summary-custom  .ui-button:enabled:hover{
+
+      color: #373a3c !important;
+  }
+
+  .currency-summary-btns{
+        border: 1px solid #ccc !important;
+      outline: 0 none;
+      color: #373a3c !important;
+  }
+
+
+  .currency-holiday-summary-custom .ui-datatable-scrollable-header {
+      overflow: visible !important;
+  }
+
+
+  .currency-holiday-custom .from-date,.to-date{
+        padding: 1px !important;
+      border: none;
+  }
+  .currency-holiday-custom p-calendar input,.audit-log-custom p-calendar input,.automated-custom p-calendar input{
+
+
+      display: block;
+      width: 100%;
+      padding: 6px 8px;
+      font-size: 12px;
+      border-radius: 3px;
+      box-shadow: 0px;
+      text-shadow: 0px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      box-shadow: inset 0 0px 0px rgba(0, 0, 0, 0.075);
+      -webkit-transition: border-color ease-in-out .0s,-webkit-box-shadow ease-in-out .0s;
+      -o-transition: border-color ease-in-out .0s,box-shadow ease-in-out .0s;
+      border-color: #c7c7c7;
+
+  }
+
+
+  .audit-log-custom p-calendar, .automated-custom p-calendar {
+      padding: 1px !important;
+      border: none;
+      box-shadow: none;
+  }
+
+  .ui-datepicker{
+        padding: 0;
+      width: 230px;
+  }
+
+  .audit-log-custom .right-btn,.automated-custom .right-btn {
+      float: right;
+      padding-right: 16px;
+      padding-bottom: 15px;
+  }
+  .input-group .form-control{
+    float: none;
+  }
+
+  .icon_disabled{
+    color: #d6d3d3 !important;
+  }
+  /* Checkbox styles added - 16-11-2017*/
+  .ui-datatable .ui-datatable-thead > tr > th.ui-state-default.ui-unselectable-text.ui-selection-column, .ui-datatable .ui-datatable-data > tr > td.ui-selection-column{
+      width:1%;
+  }
+
+  .p-dialog .ui-dialog {
+    overflow: scroll;
+    max-height: 70%;
+  }
+
+  .animate-opacity{animation:opac 1.5s}@keyframes opac{from{opacity:0} to{opacity:1}}
+
+  .animate-opacity{animation:opac 1.5s}@keyframes opac{from{opacity:0} to{opacity:1}}
+
+  .select-all .ui-chkbox-label{
+  padding: 0 !important;
+  }
+
+
+    .client-assginment-custom-style .ui-inputtext {
+      width: 100% !important;
+      padding: 0.44em !important;
+      padding-left: 18px !important;
+      background-color: #fff;
+      padding: 0.44em !important;
+      padding-left: 24px !important;
+      padding-bottom: 6px !important;
+          border-left: none;
+      border-right: none;
+  }
+
+    .client-assginment-custom-style .ui-multiselect-header .ui-multiselect-filter-container .fa {
+      position: absolute;
+      left: .125em;
+      top: 0.8em;
+          padding-left: 4px;
+  }
+
+    .client-assginment-custom-style .ui-helper-hidden-accessible {
+      overflow: visible;
+      padding: 0px;
+      position: static;
+      margin-top: -4px;
+      display: block;
+      margin-left: 0px;
+  }
+
+  .search-input-text-style{
+    background-color: #f4f4f4 !important;
+  }
+
+  .client-assginment .ui-inputtext{
+      padding: 0.44em !important;
+  }
+  .client-assginment .search-input-text-style{
+      padding: 0.44em !important;
+      padding-left: 26px !important;
+  }
+
+
+  .client-assginment .empty-feild{
+  margin-top: 46px !important;
+  }
+  .form-currency-holiday .holiday-calander-input{border:1px solid #ddd;width:100% !important;}
+  .form-currency-holiday .ui-inputtext{width: 100% !important;padding: 5px;height: 34px;}
+  .holiday-recurring{position: relative;top: 10px;}
+
+  .exchange-rate-history-custom{
+      z-index: auto !important;
+  }
+
+  .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus{outline: none!important}
+
+
+  #modal_content .description{
+      display: inline-block;
+  }
+
+  .theme-check span{
+       font-size: 1em !important;
+  }
+
+  .ui-datatable .ui-sortable-column-icon{
+      float: inherit;
+  }
+
+  .f_n{
+      float: none !important;
+  }
+
+  .notifications_btns{
+      z-index: 9999 !important;
+  }
+
+  .w-100-style span{
+      width: 100% !important;
+  }
+
+  .summernote-detail .row .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';
+    /* essential for enabling glyphicon */
+    content: "\2212";
+    /* adjust as needed, taken from bootstrap.css */
+    float: right;
+    /* adjust as needed */
+    color: grey;
+    /* adjust as needed */
+    float: left;
+    padding-right: 9px;
+  }
+
+  /* line 1292, C:/xampp/htdocs/cync/app/saas_css/cync_styles/style.scss */
+  .summernote-detail .row .accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\2b";
+    /* adjust as needed, taken from bootstrap.css */
+  }
+
+  .create-user-start span,.create-user-start input{
+  width: 100% !important;
+  }
+  .create-user-stop span,.create-user-stop input{
+  width: 100% !important;
+  }
+
+  .create-user-start input,.create-user-stop input{
+      padding: 6px 8px;
+  }
+
+  .panel-heading {
+      cursor: default;
+  }
+
+  .currency-defination-custom .ui-datepicker
+  { width: 140px !important; }
+  #exchange_rate_new td:nth-child(1)
+  { padding-left: 0px !important; width: 233px; }
+
+  .w_60 {width: 60px; }
+
+  .particles-js-canvas-el{
+    height: 0 !important;
+  }
+
+  .basic_details #main_contents .sticky_btn_actions{
+    width: 50%;
+  }
+  .basic_details #main_contents hr{
+    display: none;
+  }
+
+  .auto-dropdown-list label{
+    text-align: left;
+  }
+
+
+  .m_l-10{
+    margin-left: -10px !important;
+    width: 95% !important;
+  }
+  /*.interest-calendar-custom .ui-datepicker.ui-widget{
+      width: 38% !important;
+  }
+  */
+  .interest-calendar-custom  .ui-datepicker-inline{
+      width: 97% !important;
+  }
+  .interest-calendar-custom .ui-datepicker td span, .ui-datepicker td a {
+        padding: 0.6em !important;
+      text-align: center !important;
+  }
+
+  .interest-calendar-custom .ui-datepicker td span, .ui-datepicker td {
+      word-break: normal !important;
+  }
+
+  .interest-calendar-custom .ui-datepicker.ui-widget .ui-datepicker-header {
+      width: 103%;
+  }
+
+  .fa-sort-desc:before,.fa-sort-down:before
+  {content:"\F0DD"}
+  .fa-sort-asc:before,.fa-sort-up:before
+  {content:"\F0DE"}
+
+  .create-user-custom .from-date-custom input, .create-user-custom .to-date-custom input{padding: 6px 8px;}
+
+  .line-height{
+    line-height: 2.40em;
+  }
+
+  .fa-sort-desc,.fa-sort-asc,.fa-sort{cursor: default;display: inline-block;}
+
+  .right-align{
+    padding-left: 87%;
+  }
+
+  .client-assignment-icon-right{
+    margin-left: 89%;
+  }
+
+  ng2-auto-complete div{
+    max-height: 250px;
+    overflow-y: auto;
+    /*border-bottom: 1px solid #ccc;*/
+  }
+
+  .is_user_settings .fa-search
+  { margin-left: 5px; margin-top: 2px; }
+  .letterType-alert
+  { margin-bottom: 10px; }
+
+  ::-ms-clear
+  { display: none; }
+
+  ::-ms-reveal {
+      display: none;
+  }
+
+  .fa-sort-asc , .fa-sort-desc,.fa-sort{ pointer-events:none; }
+
+  /*For Message Popup in Notification Logs*/
+  #convertToHtmlId table th{
+    min-width: 200px !important;
+  }
+
+  #convertToHtmlId table{
+      width: 100% !important;
+      min-width: 100% !important;
+      table-layout: fixed;
+      overflow: scroll;
+  }
+
+  a.tip
+  { text-decoration: none }
+  a.tip:hover
+  { position: relative }
+  a.tip span
+  { display: none }
+  a.tip:hover span
+  { border: #c0c0c0 1px dotted; padding: 5px 20px 5px 5px; display: block; z-index: 100;
+    // background: url(../images/status-info.png) #000000 no-repeat 100% 5%;
+    left: 0px; margin: 10px; width: 150px; position: absolute; top: 10px; text-decoration: none; color: #ffffff; }
+
+  .module-sub-menu
+  { padding: 8px 32px 0px 16px; }
+
+  /*breadcrumb alignment*/
+  .b-c-area
+  { padding:0px !important; }
+
+  .help-support{padding: 8px 15px 0px 11px !important;}
+  /*breadcrumb alignment*/
+
+  .sm-back
+  { padding: 1em 1em 0.5em 2.5em; }
+
+  .search-right{
+    position:absolute;
+    right:0px !important;
+    left:auto !important;
+  }
+
+  .search-right:focus{
+    font-family:FontAwesome !important;
+  }
+
+  .basic_details input[type="time"].form-control
+  { width: 130px; }
+
+
+  .popover__title {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    line-height: 36px;
+    text-decoration: none;
+    text-align: center;
+    padding: 15px 0;
+  }
+
+  .popover__wrapper {
+      position: relative;
+      margin-top: 1.5rem;
+      display: inline-block;
+  }
+  .popover__content {
+      opacity: 0;
+      visibility: hidden;
+      position: absolute;
+          left: -43px;
+      transform: translate(0,32px);
+      background-color: #ffffff;
+      padding: 1.5rem;
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.26);
+      width: auto;
+      display: inline-flex;
+  }
+  .popover__content:before {
+      position: absolute;
+      z-index: -1;
+      content: '';
+      right: calc(50% - 10px);
+      top: -8px;
+      border-style: solid;
+      border-width: 0 10px 10px 10px;
+      border-color: transparent transparent #ffffff transparent;
+      transition-duration: 0.3s;
+      transition-property: transform;
+  }
+  .popover__wrapper:hover .popover__content {
+      z-index: 10 !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translate(0,30px);
+      transition: all 0.5s cubic-bezier(0.75, -0.02, 0.2, 0.97);
+  }
+  .popover__message {
+    text-align: center;
+  }
+
+  .label-default-custom{
+    background: #eaebef;
+    color: #ccc;
+    border: 1px solid #eaebef;
+  }
+  .label-custom{
+     color: #ccc;
+     font-size: 12px;
+  }
+
+  .resendInfo{
+  color: #000;
+  padding-top: 5px;
+  margin-left: 12px;
+  }
+
+  .btn-default-custom{
+        color: #333;
+  background-color: #d4d4d4;
+  border-color: #8c8c8c;
+  }
+
+  .recordcount{
+    float: right;
+    padding-right: 15px;
+  }
+
+  app-roles-and-permissions .checkbox-inline {
+    margin-left: 0px !important;
+  }
+
+  .roleClose
+  { padding-left: 0 !important; }
+
+  /*Code Changes done for CYNCUXT-2901 begin*/
+  /* In IE left:unset property set for pos-right does not work*/
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    .calculate-negbal-checkbox{
+  display:block;
+margin-right:165px !important;
+}
+    .basic-detail-time .form-control{
+      width:100px !important;
+    }
+  .roleClose
+  { left: auto !important; }
+  }
+  /*Code Changes done for CYNCUXT-2901 ends*/
+
+
+  // Fixes for GRID alignment issue CYNCUXT-2841 removing the below styles
+
+  // div.ui-widget-header.ui-datatable-scrollable-header {
+  //   position: sticky;
+  //   position: -webkit-sticky;
+  //   position: -moz-sticky;
+  //   position: -ms-sticky;
+  //   position: -o-sticky;
+  //   top: 0;
+  //   z-index: 100;
+  // }
+
+  // div.ui-datatable-scrollable-body{
+  //   overflow: hidden;
+  // }
+
+  .search-right{
+    pointer-events: none !important;
+  }
+
+  .icons-right{
+    padding-right:20px;
+  }
+
+
+  /*For Audit Logs Summary Page, Table Header fix in IE */
+   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+  /*
+  table
+  { border-collapse: collapse; background: #fff !important; }
+
+  thead, tfoot, tbody
+  { display: block; }
+
+  tbody
+  { overflow-y: scroll; max-height: 80vh; }*/
+
+  /*Commenting this code as these classes are common for all the screens and facing bug CYNCUXT-2870 due to this css*/
+  /*.is_summary #main_contents
+  { overflow: hidden; }
+  */
+  }
+
+  .ng2-auto-complete-wrapper
+  {z-index:101 !important;}
+
+  .icons-right{
+
+    padding-right:20px;
+
+  }
+
+  .m-t-7{
+    margin-top: -7px;
+  }
+
+  /*For Select Manager and Select Client DropDown*/
+  .select-client-custom .ui-dropdown-filter
+  { border: 1px solid #aaa; border-radius: 4px 4px 4px 4px; -moz-border-radius: 4px 4px 4px 4px; -webkit-border-radius: 4px 4px 4px 4px; }
+
+
+  /*IE Fix for Admin logs Advance search dropdowns*/
+  .task-name
+  { z-index:101; }
+
+  /**** User list Modal View****/
+  #activationEmailModalID, #statusChangeModalId{
+    width: 50% !important;
+    margin:0 auto !important;
+  }
+  .activation-title{
+    width: 50px;
+      margin-top: 25px;
+  }
+
+  #activationEmailModalID .modal-header, #statusChangeModalId .modal-header{
+        background: linear-gradient(to right, #2f6dba , #73bdfa);
+            padding: 15px;
+      border-bottom: 1px solid #e5e5e5;
+      padding-left: 0px !important;
+      padding-bottom: 0px !important;
+  }
+
+  #activationEmailModalID .modal-title{
+        color: #fff;
+      font-weight: bold;
+      margin-left: 21px;
+  }
+  /**** End of User list Modal View****/
+
+      .title-border{border-bottom:1px solid #ddd;padding-bottom:10px;}
+      #upload_link{text-decoration:none;}
+      #upload{display:none}
+      .browse-applogo{position: relative;top:-27px;    left: 85px;color: #999 !important;font-size: 10px;}
+      .basic-menu{background-color: #eaebee;}
+      .basic-menu li{ padding:10px 5px;}
+          .basic-menu li:first-child{    margin-left: 20px;}
+      .basic-menu li a{color:#00368e;border-right: 2px solid #00368e;padding-right: 10px;border-color: #777;}
+      .m-l-15{margin-left: 15px;}
+      .m-l-r-15{margin-left: 15px; margin-right: 15px;}
+
+
+  /*@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+
+  ::-webkit-input-placeholder {
+      color: #d9d9d9;
+  }
+
+
+  div.ui-widget-header.ui-datatable-scrollable-header
+  { position:fixed; top:264px; z-index:100; width:81% }
+  }*/
+
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+
+  :-ms-input-placeholder {
+      color: #d9d9d9 !important;
+  }
+  }
+  .card > .arrow,
+  .card > .arrow:after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  }
+  .card > .arrow {
+  border-width: 11px;
+  }
+  .card > .arrow:after {
+  border-width: 10px;
+  content: "";
+  }
+
+  .card.bottom > .arrow {
+  left: 50%;
+  margin-left: -11px;
+  border-top-width: 0;
+  border-bottom-color: #999999;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+  top: -1px;
+  }
+  .card.bottom > .arrow:after {
+  content: " ";
+  top: 1px;
+  margin-left: -10px;
+  border-top-width: 0;
+  border-bottom-color: #fff;
+  }
+
+  .disable-card{
+  background: #F9F9F9;
+  color: #c6c6c6;
+  }
+  .disable-card i{
+  color: #c6c6c6;
+  pointer-events: none;
+    // padding-right:20px;
+  }
+
+  .icons-right{
+    padding-right:20px;
+  }
+
+
+  /*For Audit Logs Summary Page, Table Header fix in IE */
+   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+    .notification-custom p-calendar{
+        width:80% !important;
+    }
+
+    .notification-custom p-calendar .ui-inputtext {
+        width:89% !important;
+    }
+
+      .notification-custom .fa-close {
+        float: right !important;
+        margin-top:-24px !important;
+      }
+  /*.ui-datatable-scrollable-header
+  { position:fixed; top:267px; width:82%; }
+
+  .ui-datatable-scrollable-body
+  { margin-top:35px; }*/
+
+  td {
+    word-break: break-all !important;
+  }
+
+  .calendar td{
+    word-break: keep-all !important;
+  }
+
+  .fa-search
+  { pointer-events: none !important; }
+
+  .pos_right
+  { right: 0; left: auto !important; }
+
+  /*.pos_right
+  { right: 0; left: auto !important; pointer-events: none !important; }*/
+
+  /*Commenting this code as these classes are common for all the screens and facing bug CYNCUXT-2871 due to this css*/
+  /*.ui-datatable-scrollable-body{ overflow: auto !important;height: 400px !important; }*/
+
+
+  }
+
+  .icons-right{
+
+    padding-right:20px;
+
+  }
+
+  .m-t-7{
+    margin-top: -7px;
+  }
+
+  /*For Select Manager and Select Client DropDown*/
+  .select-client-custom .ui-dropdown-filter
+  { border: 1px solid #aaa; border-radius: 4px 4px 4px 4px; -moz-border-radius: 4px 4px 4px 4px; -webkit-border-radius: 4px 4px 4px 4px; }
+      .title-border{border-bottom:1px solid #ddd;padding-bottom:10px;}
+      #upload_link{text-decoration:none;}
+      #upload{display:none}
+      .browse-applogo{position: relative;top:-27px;    left: 85px;color: #999 !important;font-size: 10px;}
+      .basic-menu{background-color: #ddd;}
+      .basic-menu li{ padding:10px 5px;}
+      .basic-menu li a{color:#00368e;padding-right: 10px;}
+      .basic-menu li:last-child a{border-right: none; border-color:none;}
+      .m-l-15{margin-left: 15px;}
+      .m-l-r-15{margin-left: 15px; margin-right: 15px;}
+      .basic-menu ul li:last-child{border:0px !important;}
+
+      .basic_details_edit_icon
+      {
+       position: absolute;
+      right: 25px;
+      font-size: 16px;
+      margin-top: 7px;
+      }
+
+     .basic_details_plus_icon
+      {
+      position: absolute;
+      right: 85px;
+      font-size: 16px;
+      margin-top: 7px;
+      }
+      .basic_details_trash
+      {
+      position: absolute;
+      right: 60px;
+      font-size: 16px;
+      margin-top: 7px;
+      }
+
+
+   .bankspacebaar{
+    padding-left: 9px;
+  }
+  .plain
+  { background: none; border: none; }
+
+   .containerspan {
+    margin-left:-2px;
+   }
+
+
+   .login-to-continue{
+        width: 40%;
+      display: none;
+      left: 30%;
+      top: 193px;
+      z-index: 1011;
+      opacity: 1;
+      margin: 0 auto;
+   }
+
+   .login-to-continue .ui-dialog-titlebar {
+      background: #3366b3 !important;
+      padding: 10px;
+      color: #fff !important;
+  }
+
+
+   p-calendar {display: inline-grid!important}
+   .client-search-text .ui-inputtext{
+    padding: .125em 1.5em .125em 0.2em;
+   }
+
+  .search_breadcrumb .highlight{
+    color: #0096D6;
+  }
+
+  /*Changes for CYNCUXT-2811 begin*/
+  .email_disabled_user{
+    cursor:pointer;
+  }
+
+  label.user_status{
+    margin-bottom:-3px;
+  }
+  /*Changes for CYNCUXT-2811 ends*/
+
+
+  // Fixes for CYNCUXT-2864 Begin
+  .overflow-hide {overflow: hidden!important}
+  // Fixes for CYNCUXT-2864 Ends
+
+  /*Changes for CYNCUXT-2811 begins*/
+  #activationEmailModalID .modal-header{
+    min-height : 96px !important;
+  }
+
+  #statusChangeModalId .modal-header{
+    min-height : 41px !important;
+  }
+
+  /*Changes for CYNCUXT-2811 ends*/
+
+  .select-client-custom {margin-right: 15px;}
+  .login-to-continue{ width: 30%; display: none; left: 36%; /* top: 193px; */ z-index: 1011; margin: 0 auto !important; opacity: 1; margin: 0 auto; }
+
+  .login-to-continue .logo-portion{
+    margin-left:10%
+    }
+
+
+    // Data Table Checkbox width adjusting
+    .ui-datatable .ui-datatable-thead > tr > th.ui-state-default.ui-unselectable-text.ui-selection-column, .ui-datatable .ui-datatable-data > tr > td.ui-selection-column {width: .1%;}
+
+
+
+    /*edge related css*/
+  @supports (-ms-ime-align:auto) {
+  td{
+   word-break:break-all;
+  }
+
+  ::-webkit-input-placeholder {
+      /* WebKit, Blink, Edge */
+      color: #d9d9d9;
+  }
+  }
+
+  .emailStyle{
+    width:20% !important;
+  }
+
+  a.tip:hover span {
+      color: #ccc;
+      background: #000;
+  }
+
+  .create-user-start .ui-datepicker ,.create-user-stop .ui-datepicker{
+      padding: 0;
+      width: 202px !important;
+  }
+
+  .interest-calendar-custom .ui-datepicker td span, .ui-datepicker td a {
+      padding: 5px !important;
+      text-align: center !important;
+  }
+
+  .ui-datepicker td span, .ui-datepicker td a {
+      padding: 5px !important;
+      text-align: center !important;
+  }
+
+
+
+  .ui-datepicker.ui-widget .ui-datepicker-calendar thead th {
+    padding: 5px !important;
+  }
+
+  .logoFormat{
+    color:red;
+    margin-bottom: 8px;
+  }
+
+  /*mozilla*/
+  @-moz-document url-prefix() {
+  td{
+   word-break:break-all;
+  }
+
+.calculate-negbal-checkbox{
+  margin-right: auto !important;
+}
+
+
+  }
+
+  .ui-datatable, .ui-datatable-tablewrapper {
+    thead th:first-child {padding-top: 29px;}
+  }
+
+  .align-radio-custom{
+    vertical-align:top;
+  }
+
+  .calendar table td, .calendar table th {width: unset!important}
+
+  .auto-dropdown-list .ui-dropdown{
+    width:auto;
+  }
+
+  .list-theme li {
+      margin: 0;
+      padding: 41px;
+      width: 236px ;
+  }
+
+  label {
+    text-transform: capitalize;
+  }
+
+  /* css for 5 column abl and 3 column factoring menu*/
+  .menu-col {float:left; padding:0px 10px}
+  .report-align-left{
+    padding-left:5%;
+  }
+
+  .app-body-container{
+    width:100%;
+  }
+  .m-t-15{
+    margin-top:15px;
+  }
+
+  .adv_search_data{
+       position: absolute;
+      width: 98%;
+      background: #F5F5F7;
+      margin-top: 0px;
+      padding-top: 15px;
+  }
+
+  /*edge related css*/
+@supports (-ms-ime-align:auto) {
+td{
+ word-break:break-all;
+}
+
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #d9d9d9;
+}
+}
+
+.emailStyle{
+  width:20% !important;
+}
+
+a.tip:hover span {
+    color: #ccc;
+    background: #000;
+}
+
+.create-user-start .ui-datepicker ,.create-user-stop .ui-datepicker{
+    padding: 0;
+    width: 202px !important;
+}
+
+.interest-calendar-custom .ui-datepicker td span, .ui-datepicker td a {
+    padding: 5px !important;
+    text-align: center !important;
+}
+
+.ui-datepicker td span, .ui-datepicker td a {
+    padding: 5px !important;
+    text-align: center !important;
+}
+
+
+
+.ui-datepicker.ui-widget .ui-datepicker-calendar thead th {
+  padding: 5px !important;
+}
+
+.logoFormat{
+  color:red;
+  margin-bottom: 8px;
+}
+
+/*mozilla*/
+@-moz-document url-prefix() {
+td{
+ word-break:break-all;
+}
+}
+
+.ui-datatable, .ui-datatable-tablewrapper {
+  thead th:first-child {padding-top: 29px;}
+}
+
+.align-radio-custom{
+  vertical-align:top;
+}
+
+.calendar table td, .calendar table th {width: unset!important}
+
+.auto-dropdown-list .ui-dropdown{
+  width:auto;
+  border:1px solid #e1e5ec;
+}
+
+.select-client div.ui-dropdown{ margin-right:6px;}
+.list-theme li {
+    margin: 0;
+    padding: 41px;
+    width: 236px ;
+}
+
+label {
+  text-transform: capitalize;
+}
+
+/* css for 5 column abl and 3 column factoring menu*/
+.menu-col {float:left; padding:0px 10px}
+.report-align-left{
+  padding-left:5%;
+}
+
+
+.m-t-15{
+  margin-top:15px;
+}
+
+.adv_search_data{
+     position: absolute;
+    width: 98%;
+    background: #F5F5F7;
+    margin-top: 0px;
+    padding-top: 15px;
+    border: 1px solid #e3e3e3;
+}
+
+.p-t-3{
+padding-top:3px;
+}
+.black-color{
+color:black;
+}
+.sticky-btn-custom{
+    position: absolute;
+    right: 0;
+    background: #FFF;
+    padding-bottom: 25px;
+    padding-top: 20px;
+    /* bottom: 0; */
+    border: 1px solid #e3e3e3;
+}
+.global-account-radio{
+      padding: 10px 0px;
+}
+
+.b-t-1{
+  border-top:1px solid #e3e3e3;
+}
+.manDivContent .card{
+  min-height:240px;
+  padding-bottom: 20px;
+}
+
+.b-t-1{
+  border-top: 1px solid #e3e3e3;
+}
+.display_block{
+  display:block;
+}
+.m-b-100{
+  margin-bottom:100px !important;
+}
+.ui-shadow-custom{
+      border: 1px solid #e3e3e3;
+  }
+
+  .p-t-3{
+  padding-top:3px;
+  }
+  .black-color{
+  color:black;
+  }
+  .sticky-btn-custom{
+      position: absolute;
+      right: 0;
+      background: #FFF;
+      padding-bottom: 25px;
+      padding-top: 20px;
+      /* bottom: 0; */
+      border: 1px solid #e3e3e3;
+  }
+  .global-account-radio{
+        padding: 10px 0px;
+  }
+
+  .b-t-1{
+    border-top:1px solid #e3e3e3;
+  }
+  .manDivContent .card{
+    min-height:240px;
+    padding-bottom: 20px;
+  }
+
+  .b-t-1{
+    border-top: 1px solid #e3e3e3;
+  }
+  .display_block{
+    display:block;
+  }
+  .m-b-100{
+    margin-bottom:100px !important;
+  }
+  .ui-shadow-custom{
+        border: 1px solid #e3e3e3;
+      padding: 5px;
+      box-shadow: 1px 1px #e3e3e3;
+     min-height: 180px !important;
+  }
+
+  // client creation css starts
+  .b-t-1{
+    border-top: 1px solid #e3e3e3;
+  }
+
+  // client creation css starts
+  .b-t-1{
+    border-top: 1px solid #e3e3e3;
+  }
+  .display_block{
+    display:block;
+  }
+  .m-b-100{
+    margin-bottom:100px !important;
+  }
+  .ui-shadow-custom{
+        border: 1px solid #e3e3e3;
+      padding: 5px;
+      box-shadow: 1px 1px #e3e3e3;
+     min-height: 180px !important;
+  }
+  /*
+  .email-info{
+        left: 16px;
+      position: relative;
+  } */
+
+  .colleteral-loan-select-custom .alert .glyphicon{
+      display:table-cell;
+  }
+
+  .colleteral-loan-select-custom .alert div,
+  .colleteral-loan-select-custom .alert span{
+      padding-left: 12px !important;
+      display:table-cell;
+  }
+
+  .bbc_basic_paramter input:checked + .slider {
+      background-color: #4CD164 !important;
+  }
+
+  .bbc_basic_paramter .slider:before {
+      top: 4px !important;
+      }
+
+      .bbc_basic_paramter .switch {
+      height: 27px !important;
+  }
+  .m-t-40{
+    margin-top:40px !important;
+  }
+    .basic-menu ul li:last-child a {border:0px !important;}
+
+    .no-border{
+      border:0px !important;
+    }
+
+  .create-user-custom .scrollable-menu{
+    width: 193px !important;
+  }
+
+  .toggle-icon-custom{
+    width:20px;
+  }
+
+  .expandStyle{
+        width: 45%;
+      left: 30%;
+  }
+  .border-bottom-custom{
+    border:1px solid #afafafc2;
+  }
+  .cal-picker{
+      padding:0px;
+
+      input[type='text'] {
+        width:100%;
+        height:34px;
+      }
+  }
+
+
+
+  #search_results_list li:hover, #search_results_list li a:hover {
+      background: white;
+      text-decoration: underline;
+      font-weight: bold !important;
+  }
+
+  /* client loan term style */
+
+  .tab_panel {
+    overflow: hidden;
+    border-bottom: 1px solid #ebebed;
+    div.tabbtn {
+      background-color: inherit;
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 8px 16px;
+      transition: 0.3s;
+      color: #003e9c;
+    }
+    div.tabbtn:hover{
+      background-color:#ffffff;
+      color: 333333;
+    }
+    div.tabbtn.active{ border:1px solid #ebebed; border-bottom: none; border-top: none; color: #333333; }
+  }
+  .tabContent_section{
+    padding: 0px 0px;
+    margin: auto;
+    overflow:hidden;
+    overflow-y:auto;
+    .tabcontent {
+      padding: 6px 12px;
+      border-bottom: 1px solid #ccc;
+      border-top: none;
+    }
+
+  }
+  /*table container */
+  .left-hline { border-left: 1px solid #e3e8ea;}
+  .hline { 
+    height: 1px; margin: 4px 0px;
+    outline-style: none;
+    border:1px solid #dddd;
+  }
+  .mgr5{ margin-top: 5px;}
+  .mgrzero { margin: 0px;}
+  .mgrone { margin: 10px 0px;}
+  .padone { padding-left: 1px; padding-right: 1px; }
+  .mgrgap { margin-top:8px; margin-bottom:8px;}
+  .shado-header{ padding:8px; line-height:18px; background:#ebebed;}
+  .tdataone {  margin-bottom:5px;
+               thead { tr { th { font-size:13px; }}}
+               tbody { tr { box-shadow: inset 0 -1px #e3e8ea; min-height:32px;
+                            td { font-size:13px;   }
+                          }
+                     }
+          }
+  .cync-xtable {
+          width: 100%;
+          background: #fff;
+          tbody{ width: 100%; }
+          thead,tbody,tr,td,th{ display:block;}
+          tbody{
+            tr {
+                 box-shadow: inset 0 -1px #e3e8ea; min-height:32px;
+                 td { float:left; padding: 4px; color: #333333; text-align:left; }
+                 td.col-amount { text-align:center; }
+               }
+            tr:hover { background-color: #f5f5f5; }
+          }
+          thead {
+            tr{
+                box-shadow: inset 0 -1px #e3e8ea; min-height:32px;
+                border-bottom:1px solid #e3e8ea;
+                th{ font-size:13px; float:left; padding:4px; font-weight: bold; color: #000;  text-align:left; white-space: nowrap; }
+              }
+          }
+   }
+  .tbl-container {
+    padding-right: 5px;
+    padding-left: 5px;
+    .shadow-edge {
+      width:100%;
+      padding:14px;
+      background:#ebebed;
+     }
+    .tpanel{
+      padding:6px;
+      background:#ffffff;
+     .cync-table-fixed {
+          width: 100%;
+          background: #fff;
+          tbody{
+            overflow:hidden;
+            overflow-y:auto;
+            width: 100%;
+            height:200px;
+            }
+          thead,tbody,tr,td,th{
+            display:block;
+          }
+          tbody{
+            tr {
+               box-shadow: inset 0 -1px #e3e8ea; min-height:32px;
+               td { float:left; padding: 4px; color: #333333; text-align:left}
+               td.col-amount { text-align:center; }
+             }
+           tr:hover { background-color: #f5f5f5; }
+          }
+          thead {
+            tr{
+              box-shadow: inset 0 -1px #e3e8ea; min-height:32px;
+              border-bottom:1px solid #e3e8ea;
+              th{ font-size:13px; float:left; padding:4px; font-weight: bold; color: #000;  text-align:left; white-space: nowrap;}
+            }
+          }
+        }
+     }
+     .tpanel-header{
+       padding:8px;
+       line-height:18px;
+       background:#ebebed;
+     }
+  }
+
+  .w_200 {
+      width: 200px;
+  }
+  .top-action-btns {
+      right: 20px !important;
+  }
+
+  .spinner-color{
+    color: blue;
+  }
+
+  .tbl-container .tpanel .cync-table-fixed tbody tr td.col-amount{
+    text-align: center;
+      margin-left: 11px;
+}
+
+.disableToggle{
+  pointer-events:none;
+  color: grey;
+  cursor:not-allowed;
+  opacity: 0.5;
+}
+.clearNotification{
+      width: 50px;
+    margin-left: 46%;
+    margin-top: 100px;
+}
+
+
+
+.select_client_manager .ui-state-default {
+    border: 1px solid #e1e5ec !important;
+    border-left: none !important;
+}
+.ui-dropdown .ui-dropdown-label
+{
+    border: 1px solid #e1e5ec !important;
+}
+
+.remo_padding .ui-datatable, .remo_padding .ui-datatable-tablewrapper {
+  thead th:first-child {padding-top: 8px!important;}
+}
+
+.ui-datatable-thead th {vertical-align: top}
+
+.charge_codes_list th{
+  vertical-align: top;
+}
+
+
+.no_column_search .ui-datatable, .no_column_search .ui-datatable-tablewrapper {
+  thead th:first-child {padding-top: 8px!important;}
+}
+
+.ui-datatable-thead th {vertical-align: top}
+
+.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button {font-family:"Open Sans", Arial, Helvetica, sans-serif !important;}
+
+
+// Changing the background color of calendar icon in p-Calendar to black
+#bbc_date .ui-calendar .ui-calendar-button {
+  border: none!important;
+  background: transparent!important;
+  color: #2d2d2d!important;
+  span {
+    font-size: 18px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+.grid-search {width: 200px}
+}
+
+.export-modalbox {
+  .mat-dialog-container {
+    overflow-y: hidden;
+  }
+}
+
+.mat-dialog-container{
+  padding: 0 !important;
+  border-radius: 7px;
+  overflow: hidden !important;
+}
+.grid-loader{
+  text-align: center;
+  margin-left: 100px;
+}
+
+.grid-loader span{
+  border: 1px solid #ddd;
+    padding: 2px;
+    border-radius: 5px;
+}
+.modal-body-textwrap{
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+  .client-loan-terms-custom .tab_panel {
+    overflow: hidden;
+    border-top: 1px solid #ebebed !important;
+    border-bottom: none !important;
+}
+
+
+
+
+.grid-loader{ text-align: center; margin-left: 100px; }
+.grid-loader span{ border: 1px solid #ddd; padding: 2px; border-radius: 5px; }
+
+
+.p-t-4{
+  padding-top:4px !important;
+}
+
+
+.search_breadcrumb{
+    font-weight: 500 !important;
+}
+.breadcrumb>li+li:before {
+    padding: 0px 7px 0px 7px;
+    color: #ccc;
+    content: "/\A0";
+    padding-right: 0!important;
+}
+
+
+.ui-datatable-tablewrapper th:first-child {
+    vertical-align: middle !important;
+}
+
+.ui-datatable-tablewrapper td, .ui-datatable-tablewrapper th {
+    font-size: 13px;
+}
+.interest-rate-date input{
+  padding:7px !important;
+}
+
+#statusChangeModalId button span ,#activationEmailModalID button span, #statusChangeModalId .modal-header{
+  color:#fff !important;
+}
+
+.theme_0 #statusChangeModalId button span ,.theme_0 #activationEmailModalID button span, .theme_0 #statusChangeModalId .modal-header,.theme_0 #activationEmailModalID .modal-title{
+  color:#999 !important;
+}
+
+#statusChangeModalId .modal-content{
+  border-radius: 0 !important;
+}
+
+
+/* Interest Rates Data table background color updated start */
+.interest_rates_main_div {
+  .ui-datatable tbody > tr.ui-widget-content.ui-datatable-odd {
+    background: aliceblue;
+  }
+
+  .ui-datatable tbody > tr.ui-widget-content.ui-datatable-even {
+    background: aliceblue;
+  }
+
+  .ui-datatable thead > tr > th.ui-state-default{
+    background: aliceblue !important;
+  }
+}
+/* Interest Rates Data table background color updated end */
+
+/* Interest Rates Data table Date picker width adjust start*/
+#interest_rate_date_picker .interest_rate_date_picker-pcal .ui-calendar .ui-inputtext{
+  width: 97% !important;
+}
+/* Interest Rates Data table Date picker width adjust  end */
+
+p-checkbox label {margin-bottom: 0px!important }
+
+.f-s-15{
+  font-size:15px;
+}
+.p-r-6{
+  padding-right:6px;
+}
+.w-200{
+  width:200px;
+}
+.error-text-msg small{
+  color:red !important;
+  font-size:85%;
+}
+
+
+/**
+* Added below css for udf definition summary page as suggested by Anoop
+*/
+
+#udf_definition{
+  .ui-datatable-emptymessage {
+      display:none !important;
+  }
+}
+
+.basic-details-p-checkbox{position: relative;}
+
+
+.cync-cell-date-picker-input-style{
+  border: 1px solid #ddd;
+  padding: 4px;
+  border-radius: 4px;
+  height: 24px;
+  width: 96%;
+}
+.ag-input-text-wrapper{
+   .ag-cell-edit-input{
+    border: 1px solid #ddd;
+    padding: 4px;
+    border-radius: 4px;
+    height: 24px;
+    width: 98%;
+  }
+}

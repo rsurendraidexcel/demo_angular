@@ -1,0 +1,30 @@
+.commonDropdownStyle {
+  display: inline-block;
+  width: 60%;
+  margin: 1vw;
+  height: 2.2vw;
+}
+.commoncheckboxStyle {
+  display: inline-block;
+  margin-left: 1vw;
+}
+.checkboxRow {
+  display: flex;
+  height: 4vw;
+}
+
+//BBC others CSS
+.bPCommonCards {
+  border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+.bPCommonCardsTitles {
+  box-shadow: 0px 0 1px rgba(0, 0, 0, 0.8);
+  padding-top: 0.3vw;
+
+  height: 3.3vw;
+  background: #f8f8f8;
+}
+.bPCommonCardsBlock {
+  padding-left: 0.8vw;
+}

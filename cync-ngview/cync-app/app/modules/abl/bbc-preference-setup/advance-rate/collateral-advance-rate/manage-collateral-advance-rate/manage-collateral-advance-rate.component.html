@@ -1,0 +1,188 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="close-btn-dash pull-right text-right top-action-btns">
+  </div>
+  <div class="pad-inner">
+    <!-- Heading of advance rate -->
+    <h3 class="no-m-bt">Advance Rate - Add Collateral</h3>
+
+    <!-- Radio button selection code start -->
+    <div class="row brder-1 p-t-32 p_b_10">
+
+      <div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0 disable_" data-toggle="buttons">
+
+        <label class="btn radio-inline col-xs-6 col-sm-6 col-md-1 w_140">
+          <input checked formcontrolname="selectedValue" name="selectedValue" disabled type="radio" id="collateral" value="Colleteral">
+          <i class="fa fa-circle-o fa-2x"></i>
+          <i class="fa fa-dot-circle-o fa-2x"></i>
+          <span>Colleteral</span>
+        </label>
+
+        <label class="btn radio-inline col-xs-6 col-sm-6 col-md-2">
+          <input formcontrolname="selectedValue" disabled label="Seasonal" id="seasonal" name="selectedValue" type="radio" value="Seasonal">
+          <i class="fa fa-circle-o fa-2x"></i>
+          <i class="fa fa-dot-circle-o fa-2x"></i>
+          <span style="color:gray"> Seasonal</span>
+        </label>
+      </div>
+
+
+
+    </div>
+    <!-- Radio button selection code end -->
+
+
+    <div class="row">
+      <div class="p-t-16" id="seasonal_advance_rate_main_div">
+        <!-- Add Seasonal FORM STARTS -->
+        <form>
+          <div class="has-scrollbar" id="cync_main_contents">
+
+            <div class="form-group">
+              <div class="row no-marg m-t-15">
+
+
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Division</label>
+                  <input type="text" formControlName="division" disabled id="division" name="division" class="form-control" placeholder=""
+                    value="">
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Data File Type</label>
+                  <select class="form-control" id="data_file_type" name="data_file_type" formControlName="data_file_type">
+                    <option>Inventory</option>
+                  </select>
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Collateral Type</label>
+                  <input type="text" formControlName="collateral_type" id="collateral_type" name="collateral_type" class="form-control" placeholder=""
+                    value="">
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Sub Limit
+
+                  </label>
+                  <input type="text" formControlName="sub_limit" id="sub_limit" name="sub_limit" class="form-control" placeholder="" value="">
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>NOLV Value
+
+                  </label>
+                  <input type="text" formControlName="nolv_value" id="nolv_value" name="nolv_value" class="form-control" placeholder="" value="">
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>LTV/ Advance</label>
+                  <input type="text" formControlName="ltv_advance" id="ltv_advance" name="ltv_advance" class="form-control" placeholder=""
+                    value="">
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Adjusted Advance Rate</label>
+                  <input type="text" disabled formControlName="adjusted_advance_rate" id="adjusted_advance_rate" name="adjusted_advance_rate"
+                    class="form-control" placeholder="" value="">
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Low Value</label>
+                  <input type="text" formControlName="low_value" id="low_value" name="low_value" class="form-control" placeholder="" value="">
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>High Value</label>
+                  <input type="text" formControlName="high_value" id="high_value" name="high_value" class="form-control" placeholder="" value="">
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-1">
+                  <div>
+                    <label class="not-visible">Ineligible</label>
+                  </div>
+                  <div class="chckbox-center">
+                    <p-checkbox formcontrolname="ineligible" inputid="ineligible" label="Ineligible" name="ineligible" value="Ineligible">
+                      <div class="ui-chkbox ui-widget">
+                        <div class="ui-helper-hidden-accessible">
+                          <input type="checkbox" name="ineligible" value="Ineligible">
+                        </div>
+                        <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                          <span class="ui-chkbox-icon ui-clickable"></span>
+                        </div>
+                      </div>
+                      <label class="ui-chkbox-label ng-star-inserted">Ineligible</label>
+                    </p-checkbox>
+                  </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Ineligible Reason</label>
+                  <select class="form-control" name="ineligible_reason" formControlName="ineligible_reason" id="ineligible_reason">
+                    <option>Empty</option>
+
+                  </select>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Currency</label>
+                  <select class="form-control" id="currency" name="currency" formControlName="currency">
+                    <option>Empty</option>
+                  </select>
+
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Based on</label>
+                  <select class="form-control" id="based_on" name="based_on" formControlName="based_on">
+                    <option>Empty</option>
+                  </select>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Calculated Cap By</label>
+                  <select class="form-control" id="calculated_cap_by" name="calculated_cap_by" formControlName="calculated_cap_by">
+                    <option>Empty</option>
+                    <option>Receivables</option>
+                    <option>Inventory</option>
+                    <option>Other Collaterals</option>
+                  </select>
+
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                  <label>Max Cap %</label>
+                  <select class="form-control" id="max_cap_percentage" name="max_cap_percentage" formControlName="max_cap_percentage">
+                    <option>Empty</option>
+                  </select>
+
+                </div>
+
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                  <hr>
+
+                  <button (click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel">
+                    <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                  </button>
+
+                  <button label="SaveNew" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                    <span class="ui-button-text ui-clickable no-pad">Save & New</span>
+                  </button>
+
+                  <button id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                    <span class="ui-button-text ui-clickable no-pad">Save</span>
+                  </button>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+        <!-- Add Seasonal FORM ENDS -->
+      </div>
+    </div>
+
+  </div>
+
+</div>

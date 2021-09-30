@@ -1,0 +1,132 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+
+        <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Charge Codes - {{ currentAction }}</h3>
+        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="chargeCodesForm" (ngSubmit)="saveChargeCode(chargeCodesForm.getRawValue(),chargeCodesForm.valid,false)">
+                <div class="has-scrollbar" id="cync_main_contents">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">Charge Codes
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="charge_code_desc" formControlName="description" class="form-control" placeholder="" [ngClass]="displayCssField('description')">
+                            <cync-input-field-error-msg [control]="getFormControl('description')" labelName="Charge Codes">
+                            </cync-input-field-error-msg>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2  ad-bt-pad ">
+                            <label>Transaction Code</label>
+                            <input type="text" formControlName="trans_code" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                placeholder="">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Nat Sign
+                                <span class="required">*</span>
+                            </label>
+                            <select [ngClass]="displayCssField('natural_sign')" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted"
+                                formControlName="natural_sign">
+                                <option disabled value=null>Select</option>
+                                <option *ngFor="let nat of nat_signs" [ngValue]="nat.value">{{nat.display}}</option>
+                            </select>
+                            <cync-input-field-error-msg [control]="getFormControl('natural_sign')" labelName="Nat Sign">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2  ad-bt-pad ">
+                            <label>Sequence</label>
+                            <input type="text" formControlName="sequence" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                placeholder="">
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Frequency
+                                <span class="required">*</span>
+                            </label>
+                            <select [ngClass]="displayCssField('frequency')" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted"
+                                formControlName="frequency">
+                                <option disabled value=null>Select</option>
+                                <option *ngFor="let frequency of frequencies" [ngValue]="frequency.value">{{frequency.display}}</option>
+                            </select>
+                            <cync-input-field-error-msg [control]="getFormControl('frequency')" labelName="Frequency">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Charge Type
+                                <span class="required">*</span>
+                            </label>
+                            <select [ngClass]="displayCssField('charge_type')" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted"
+                                formControlName="charge_type">
+                                <option value=null>Select</option>
+                                <option *ngFor="let chargeType of charge_types" [ngValue]="chargeType.value">{{chargeType.display}}</option>
+                            </select>
+                            <cync-input-field-error-msg [control]="getFormControl('charge_type')" labelName="Charge Type">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 col-md-4 col-lg-2  ad-bt-pad ">
+                            <label>Value</label>
+                            <input type="number" placeholder="" name="charge_value" formControlName="charge_value" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched">
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Posting Type
+                                <span class="required">*</span>
+                            </label>
+                            <select [ngClass]="displayCssField('posting_type')" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted"
+                                formControlName="posting_type" id="posting_type" [attr.disabled]="!postingTypeValidation() ? '' : null" (change)="onChangePostingValue($event.target.value)">
+                                <option disabled value=null>Select</option>
+                                <option *ngFor="let postingType of posting_types" [ngValue]="postingType.value">{{postingType.display}}</option>
+                            </select>
+                            <cync-input-field-error-msg [control]="getFormControl('posting_type')" labelName="Posting Type">
+                            </cync-input-field-error-msg>
+                        </div>
+                        
+                        <!-- CYNCS-6785  start --> 
+                        <div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Source Type
+                            </label>
+                            <select class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted"
+                                formControlName="source_type" id="source_type" [attr.disabled]="!sourceTypeValidation() ? '' : null">
+                                <option disabled value=null>Select</option>
+                                <option *ngFor="let sourceType of source_types" [ngValue]="sourceType.value">{{sourceType.display}}</option>
+                            </select>
+                        </div>
+                        <!-- CYNCS-6785  end --> 
+
+                        <div class="col-xs-12 col-sm-3 col-md-6 ad-bt-pad col-lg-2 pad-20 m-t-10">
+                            <p-checkbox binary="true" formControlName="add_to_borrower" _ngcontent-c1="" inputid="add_to_borrower" label="Auto New Client"
+                                name="group2" value="Auto New Client" class="ng-untouched ng-pristine ng-valid">
+                                <div class="ui-chkbox ui-widget">
+                                    <div class="ui-helper-hidden-accessible">
+                                        <input type="checkbox" id="auto_new_client" name="group2" value="Auto New Client">
+                                    </div>
+                                    <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default ui-state-active">
+                                        <span class="ui-chkbox-icon ui-clickable fa fa-check"></span>
+                                    </div>
+                                </div>
+                                <!---->
+                                <label class="ui-chkbox-label ui-label-active" for="sports">Auto New Client</label>
+                            </p-checkbox>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <hr>
+                            <button (click)="navigateToChargeCodesList()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" id="action_save_new" (click)="saveChargeCode(chargeCodesForm.getRawValue(),chargeCodesForm.valid,true)"
+                                label="SaveNew" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad"> {{currentActionBtnText}} </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

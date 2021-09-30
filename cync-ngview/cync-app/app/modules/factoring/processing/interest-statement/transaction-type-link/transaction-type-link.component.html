@@ -1,0 +1,5 @@
+<div class="link" *ngIf="showInterestStatementDetails() else  secondResult"
+  (click)="openDialogInvoice(dataParams.data.transactionType, dataParams.data.transactionDate)">
+  {{dataParams.value}}
+</div>
+<ng-template #secondResult> {{dataParams.value}}</ng-template>

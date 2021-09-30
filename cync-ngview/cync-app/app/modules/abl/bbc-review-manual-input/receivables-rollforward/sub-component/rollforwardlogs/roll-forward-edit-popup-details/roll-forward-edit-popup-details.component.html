@@ -1,0 +1,85 @@
+<div mat-dialog-title>
+  <label class="top-title">Edit RollForward Logs </label>
+  <i style="font-size:20px; cursor: pointer;" class="fa close-btn pull-right" (click)="cancelButtonClick()">&#xf057;</i>
+</div>
+<div mat-dialog-content>
+  <div class="hrline"></div>
+  <div class="pad-inner">
+    <section>
+      <div class="rollForward-EditForm" [formGroup]="rollForwardLogsForm">
+        <div class="has-scrollbar">
+          <ng-container formArrayName="rollforward_log_lists">
+            <div *ngFor="let currentObj of getParameterDataFormArray('rollforward_log_lists'); let i=index"
+              [formGroupName]="i">
+              <fieldset>
+                <legend> Edit Row :{{i}}</legend>
+                <div class="ui-g ui-fluid">
+                  <div class="ui-g-12 ui-md-3">
+                    <label for="name">Activity Date </label>
+                    <div style="display: block;">
+                      <p-calendar showOn="button" class='p-calenderList cync-png-calendrar-relative' formControlName="activity_date"
+                        [monthNavigator]="true" [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true"
+                        dateFormat="mm/dd/yy">
+                      </p-calendar>
+                    </div>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label class="drop">Division</label>
+                    <select class="form-control" id="division" formControlName="division_code_id"
+                      (change)="getCollateralData(getFormControlValue('division_code_id', i), 'collateralList', i)">
+                      <option value='-1' *ngIf="!onChangeAdjustCollateral || data.selectedRollForwardlog[i].division_code_id == -1" selected>All</option>
+                      <option value='-1' *ngIf="onChangeAdjustCollateral && data.selectedRollForwardlog[i].division_code_id != -1" selected>Select</option>
+                      <option *ngFor="let list of divisionData" [value]='list.id'>{{list.name}}</option>
+                    </select>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label class="drop">Collateral <span *ngIf="onChangeAdjustCollateral" style="color: red;">*</span> </label>
+                    <select class="form-control" id="collateral" formControlName="collateral_advance_rate_id" (change)="changecollateral()">
+                      <option  value='-1' *ngIf="!onChangeAdjustCollateral || data.selectedRollForwardlog[i].collateral_advance_rate_id == -1" selected>All</option>
+                      <option  value='-1' *ngIf="onChangeAdjustCollateral && data.selectedRollForwardlog[i].collateral_advance_rate_id != -1" selected>Select</option>
+                      <option *ngFor="let list of getFormControlValue('collateralList', i)" [value]='list.id'>
+                        {{list.name}}</option>
+                    </select>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label for="new_sale">New Sales</label>
+                    <input type="number" class="form-control" formControlName="new_sale" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+                  </div>
+                </div>
+                <div class="ui-g ui-fluid">
+                  <div class="ui-g-12 ui-md-3">
+                    <label for="new_credit">New Credits</label>
+                    <input type="number" class="form-control" formControlName="new_credit" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label for="identificationNumber">New Cash Collected</label>
+                    <input type="number" class="form-control" formControlName="cash_collected" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label for="identificationNumber">New Adjustments</label>
+                    <input type="number" class="form-control" formControlName="new_adjustment" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+                  </div>
+                  <div class="ui-g-12 ui-md-3">
+                    <label for="identificationNumber">BBC Adjustment</label>
+                    <input type="number" class="form-control" formControlName="bbc_adjustment" autocomplete="off" (keypress)='onKeyPressEvent($event)' (focusout)='toValidateNumber($event)'>
+                  </div>
+                </div>
+              </fieldset>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </section>
+    <div class="hrline"></div>
+    <section class="btnPanel">
+      <div class="row rightAlign">
+        <button label="Cancel" pButton type="button" (click)="cancelButtonClick()" class="cync-png-button">
+        </button>
+        <button pButton class="cync-png-button" label="Update" type="button"
+          [disabled]="isFormValid()"
+          (click)="updateRollForwardData(rollForwardLogsForm.getRawValue())">
+        </button>
+      </div>
+    </section>
+  </div>
+</div>

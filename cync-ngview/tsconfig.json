@@ -1,0 +1,63 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "importHelpers": true,
+    "outDir": "./dist/out-tsc",
+    "baseUrl": "cync-app",
+    "sourceMap": true,
+    "declaration": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "paths": {
+      "@app/*": [
+        "app/*"
+      ],
+      "@cyncCommon/*": [
+        "app-common/*"
+      ],
+      "@cyncModules/*": [
+        "app/modules/*"
+      ],
+      "@fsBalanceModule/*": [
+        "app/modules/financial/financial-statements/financial-statements-setup-balance-sheet/*"
+      ],
+      "@fsIncomeModule/*": [
+        "app/modules/financial/financial-statements/financial-statements-setup-income-statement/*"
+      ],
+      "@fsCashflowModule/*": [
+        "app/modules/financial/financial-statements/financial-statements-setup-cashflow/*"
+      ],
+      "@fsSummaryModule/*": [
+        "app/modules/financial/financial-statements/financial-statements-setup-summary/*"
+      ]
+    },
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2016",
+      "es6",
+      "dom",
+      "es2015.core",
+      "es2015.collection",
+      "es2015.generator",
+      "es2015.iterable",
+      "es2015.promise",
+      "es2015.proxy",
+      "es2015.reflect",
+      "es2015.symbol",
+      "es2015.symbol.wellknown",
+      "esnext.asynciterable"
+    ],
+    "module": "es2015"
+  },
+  "include": [
+    "cync-app/**/*"
+  ],
+  "emitDecoratorMetadata": true,
+  "flatpickr": [ "node_modules/flatpickr/dist/flatpickr.min.js" ]
+}

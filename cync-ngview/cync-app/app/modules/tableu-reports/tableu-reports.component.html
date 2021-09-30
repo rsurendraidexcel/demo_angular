@@ -1,0 +1,31 @@
+<div class="cync-reports" id="factoring-tableau-dashboard">
+  <div class="title-text">Factoring Dashboard</div>
+  <div class="tablist">
+    <ul class="tabNav">
+      <li (click)="gotoFactoringDashbord()">Portfolio Dashboard</li>
+      <li (click)="gotoFactoringDashbord('processing_dashboard')">Processing Dashboard</li>
+      <li class="active">
+        <a
+          routerLink="/tableau-reports/client-overview"
+          routerLinkActive="active"
+        >
+          Client Overview
+        </a>
+      </li>
+       <li (click)="gotoFactoringDashbord('debtor_overview')"> Debtor Overview</li> 
+    </ul>
+    <button *ngIf="borrowerId" (click)="openPreviewDialog()" title="Preview" class="preview-btn"> 
+      <i class="fa fa-print" aria-hidden="true"></i>
+      Preview</button>
+  </div>
+  <div class="ui-g">
+    <div class="ui-g-12">
+        <div *ngIf="!borrowerId" class="showText">
+          Please select client
+        </div>
+        <div *ngIf="borrowerId" class="tableu-report-dashboard">
+        <div id="tableuViz" #tableuViz class="tableuViz"></div>
+       </div> 
+    </div>
+  </div>
+</div>

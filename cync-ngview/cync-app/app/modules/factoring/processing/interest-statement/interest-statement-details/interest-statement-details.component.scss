@@ -1,0 +1,22 @@
+.mat-dialog-content {
+  margin: 0px;
+  padding: 4px;
+  overflow: hidden;
+  height: auto;
+}
+.top-title {
+  color: #ffffff;
+  padding: 4px;
+  margin-left: 10px;
+}
+.grid-wrapper {
+  height: auto;
+  margin: auto;
+  width: 100%;
+}
+::ng-deep .g-floating-bottom-container {
+  .ag-cell{
+    font-size: 12px;
+    font-weight: bold;
+  }
+}

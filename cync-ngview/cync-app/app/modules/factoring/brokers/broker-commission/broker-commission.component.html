@@ -1,0 +1,28 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="top-action-btns top-title text-left">Broker Commission</div>
+  <div class="row cync-container-pannel">
+    <div class="col-md-4 col-sm-5 col-xs-12">
+      <label>Broker</label>
+      <select class="broker" (change)="onChangeBroker($event)">
+        <option value=''>select</option>
+        <option *ngFor="let list of brokerList" [value]='list.id'>{{list.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-8 col-sm-6 col-xs-12 p-right">
+      <label class="input-label" for="batchDate">Release Date</label>
+      <input class="cync-inputstyle margin-left" disabled="disabled" name="releaseDate" ng-model="releaseDate" value="{{releaseDate}}">
+      <button class="primary btn" (click)="onReleaseCheck()">Release & Print Commission</button>
+      <i style="font-size:20px; cursor: pointer;" class="pull-right p-top fa margin-left" title="Refresh" (click)="redrawAllRows()">&#xf021;</i>
+      <div class="pull-right p-top">
+        <i id="Export" aria-hidden="true" data-toggle="tooltip" title="Export" class="margin-left export-icon hand fa fa-external-link fa-2x f_s_20 clr_grey'"
+          (click)="exportData()"></i>
+      </div>
+    </div>
+  </div>
+  <div>
+    <ag-grid-angular style="width: 100%; height: calc(100vh - 350px)" class="ag-theme-balham" [gridOptions]="gridOptions"
+      [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" [floatingFilter]="true" [rowData]="rowData"
+      rowSelection='multiple' (gridReady)="onGridReady($event)" (rowSelected)="onRowSelected($event)" [excelStyles]="excelStyles" (modelUpdated)="onModelUpdated($event)">
+    </ag-grid-angular>
+  </div>
+</div>

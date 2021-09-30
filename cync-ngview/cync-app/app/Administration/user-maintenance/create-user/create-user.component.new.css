@@ -1,0 +1,4 @@
+:host ::ng-deep .ui-multiselect .ui-multiselect-label{
+  padding : .40em 2em .25em .25em !important;
+  height: 28px;
+}

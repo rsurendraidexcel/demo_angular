@@ -1,0 +1,13 @@
+import { LetterContentModule } from './letter-content.module';
+
+describe('LetterContentModule', () => {
+  let letterContentModule: LetterContentModule;
+
+  beforeEach(() => {
+    letterContentModule = new LetterContentModule();
+  });
+
+  it('should create an instance', () => {
+    expect(letterContentModule).toBeTruthy();
+  });
+});

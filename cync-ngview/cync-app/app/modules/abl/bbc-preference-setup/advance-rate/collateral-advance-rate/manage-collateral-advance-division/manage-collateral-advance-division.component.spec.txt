@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ManageCollateralAdvanceDivisionComponent } from './manage-collateral-advance-division.component';
+
+describe('ManageCollateralAdvanceDivisionComponent', () => {
+  let component: ManageCollateralAdvanceDivisionComponent;
+  let fixture: ComponentFixture<ManageCollateralAdvanceDivisionComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ManageCollateralAdvanceDivisionComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ManageCollateralAdvanceDivisionComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

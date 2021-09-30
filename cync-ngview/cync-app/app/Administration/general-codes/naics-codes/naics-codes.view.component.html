@@ -1,0 +1,63 @@
+<div class="app-body-container bg-white detail_view" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+        <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+
+        <div id="Edit" class="pull-right hand"><i (click)="edit()" class="hand fa fa-pencil fa-1x clr_grey f_s_20"
+                aria-hidden="true"></i></div>
+        <div id="Delete" class="pull-right hand"><i (click)="delete()" class="hand fa fa-trash fa-2x f_s_20 clr_grey"
+                aria-hidden="true"></i></div>
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">NAICS Code - View</h3>
+        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+        <div class="brder-1 p-t-32">
+            <div class="has-scrollbar" id="main_contents">
+                <div class="ui-datatable ui-widget ui-datatable-reflow exchange-rate-gridbg">
+                    <!---->
+                    <!---->
+                    <div class="ui-datatable-tablewrapper exchange-rate-view">
+                        <table>
+                            <thead class="ui-datatable-thead">
+                                <tr class="ui-state-default">
+                                    <th>
+                                        Code
+                                    </th>
+                                    <th>
+                                        Description
+                                    </th>
+                                </tr>
+                                <!---->
+                            </thead>
+                            <!---->
+                            <tbody class="ui-datatable-data ui-widget-content">
+                                <tr class="ui-datatable-even ui-widget-content">
+
+                                    <td>
+                                        <span class="ui-column-title">
+                                            Code</span>
+                                        <span *ngIf="viewDetails != undefined" class="ui-cell-data ui-cell-data-view">{{viewDetails.code}}</span>
+                                    </td>
+                                    <td>
+                                        <span class="ui-column-title">Description</span>
+                                        <span *ngIf="viewDetails != undefined" class="ui-cell-data ui-cell-data-view">{{viewDetails.description}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="ui-column-resizer-helper ui-state-highlight" style="display:none"></div>
+                    <span class="fa fa-arrow-down ui-datatable-reorder-indicator-up" style="position: absolute; display: none;"></span>
+                    <span class="fa fa-arrow-up ui-datatable-reorder-indicator-down" style="position: absolute; display: none;"></span>
+                </div>
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                    <hr>
+                    <button (click)="navigateToHome()" id="action_cancel" label="Back" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span
+                            class="ui-button-text ui-clickable no-pad">Back</span></button>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,703 @@
+<div class="app-body-container bg-white is_summary has-submenu" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash" style="padding-top:0px;">
+        <div class="close-btn-dash pull-right text-right top-action-btns">
+        </div>
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Basic Details</h3>
+
+        <div class="p-t-32">
+            <div class="m-l-r-15">
+                <ul class="list-inline basic-menu hand">
+                    <li>
+                        <a (click)="onClick('#lender_details')">Lender Basic Details</a>
+                    </li>
+                    <li>
+                        <a (click)="onClick('#adrs')">Address</a>
+                    </li>
+                    <li>
+                        <a (click)="onClick('#app_logo')">Application Logo</a>
+                    </li>
+                    <li *ngIf="subNavigation">
+                        <a (click)="onClick('#fact_setup')">Factoring Fee Setup</a>
+                    </li>
+                    <li *ngIf="subNavigation">
+                        <a (click)="onClick('#pwd')">Password Policy</a>
+                    </li>
+                    <li *ngIf="subNavigation">
+                        <a (click)="onClick('#foot_link')">Footer Links</a>
+                    </li>
+                    <li *ngIf="subNavigation">
+                        <a (click)="onClick('#acs_lim')">Login Access Limitation</a>
+                    </li>
+                    <span class="basic_details_trash" *ngIf="isDelateIconEnabled">
+                        <i class="hand fa fa-trash fa-1x clr_gray f_s_20" (click)="delatedAffiliateLender()"></i>
+                    </span>
+                    <span class="basic_details_trash" *ngIf="!isDelateIconEnabled">
+                        <i class="hand fa fa-trash fa-1x icon_disabled f_s_20"></i>
+                    </span>
+
+                    <span *ngIf="isaddIconEnabled" class="basic_details_plus_icon" title="Add New Affiliated Lender">
+                        <i class="hand fa fa-plus fa-1x clr_gray f_s_20" (click)="addAffiliateLender()"></i>
+                    </span>
+                    <span *ngIf="!isaddIconEnabled" class="basic_details_plus_icon" title="Add New Affiliated Lender">
+                        <i class="hand fa fa-plus fa-1x icon_disabled f_s_20" (click)="addAffiliateLender()"></i>
+                    </span>
+
+                    <span *ngIf="isEditIconEnabled" class="basic_details_edit_icon" (click)="enableFormFields()">
+                        <i class="fa fa-pencil clr_gray hand f_s_20" aria-hidden="true"></i>
+                    </span>
+                    <span *ngIf="!isEditIconEnabled" class="basic_details_edit_icon">
+                        <i class="fa fa-pencil hand icon_disabled f_s_20" aria-hidden="true"></i>
+                    </span>
+
+                </ul>
+
+            </div>
+            <div class="has-scrollbar" id="main_contents">
+                <div class="p-t-32">
+                    <select class="form-control" id="affiliatedElement" [(ngModel)]="affiliatedElement" style="width:200px; margin-left: 10px;"
+                        (change)="onChange_affileatedLender($event)">
+
+                        <option *ngFor="let affLender of affiliatedLenderList" value={{affLender.id}}>
+                            {{affLender.name}}
+                        </option>
+                    </select>
+                    <br/>
+
+                </div>
+                <!-- main lender -->
+                <ng-template [ngIf]="lenderBasic">
+                    <form [formGroup]="basicDetailsEditInfoForm" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="updateLenderBasicDetails()">
+                        <div class="pad-inner">
+                            <h4 class="panel-title title-border m-l-15" id="lender_details"> Lender Basic Details</h4>
+
+                            <div class="form-group" *ngIf="basicDetailsEditInfo != undefined ">
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory" for="currency_code">Lender Name
+                                        <span class="required">*</span>
+                                    </label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.display_name" formControlName="display_name" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="" [ngClass]="(isLenderNameValid == true)? 'form-control':'form-control has-error'"
+                                        placeholder="" value="" (focusout)="checkLenderName()">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Email ID</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.email" formControlName="email" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Email Sender Name</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.email_sender_name" formControlName="email_sender_name" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="currency_code">Phone No.</label> &nbsp;<i data-toggle="tooltip" data-placement="top" title="You can use (  ) + - along with numeric values.  Maximum characters allowed 30" class="fa fa-info-circle" aria-hidden="true"></i>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.phone_no" formControlName="phone_no" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="currency_code">Currency</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.currency" formControlName="currency" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label for="lender_code">Lender Code</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.lender_code" formControlName="lender_code" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                           
+                            </div>
+                            
+                            <div class="clearfix"></div>
+                            <hr>
+                            <h4 class="panel-title title-border m-l-15" id="adrs">Address</h4>
+                            <div class="form-group" *ngIf="basicDetailsEditInfo != undefined ">
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory" for="currency_code">Address Line 1 </label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.street_address" formControlName="street_address" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value=" ">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3" style="margin-bottom:10px;">
+                                    <label>Address Line 2 </label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.other_address" formControlName="other_address" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory">City</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.city" formControlName="city" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory">Country </label>
+                                    <select [(ngModel)]="basicDetailsEditInfo.basic_information.country" formControlName="country" (change)="onChangeCountry($event.target.value)"
+                                        class="form-control">
+                                        <option value=null>Select</option>
+                                        <option *ngFor="let x of countryListInfo" value={{x.id}}>{{x.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory">State Province</label>
+                                    <select [(ngModel)]="basicDetailsEditInfo.basic_information.state_province" formControlName="state_province" class="form-control">
+                                        <option value=null>Select</option>
+                                        <option [ngClass]="stateListInfo.length == 0?'disabled':''" *ngFor="let state of stateListInfo" value={{state.id}}>{{state.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory" for="currency_code">Zip/Postal Code </label> &nbsp; <i data-toggle="tooltip" data-placement="top" title="Characters allowed hyphen, spaces and alphanumeric values. Maximum characters allowed 10" class="fa fa-info-circle" aria-hidden="true"></i>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.zip_code" formControlName="zip_code" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory" for="currency_code">Fax No. </label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.fax_no" formControlName="fax_no" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" style="margin-bottom:10px;">
+                                    <label class="mandatory" for="currency_code">Time Zone</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.basic_information.time_zone" formControlName="time_zone" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched">
+                                    <!--  disabled="disabled" -->
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <h4 class="panel-title title-border m-l-15" id="app_logo">Application Logo
+                                <span class="required">*</span>
+                            </h4>
+                            <br>
+
+                            <div class="logoFormat col-lg-12">
+                                <small>Logo should be transparent with minimum height of 120 pixel
+                                    <br/>
+                                </small>
+                                <br/>
+                            </div>
+                            <br>
+                            <div class="letterType-logo col-md-3 col-sm-3 col-xs-12" *ngIf="basicDetailsEditInfo != undefined ">
+                                <a (click)="upload_logo();">
+                                    <img id="preview" src="{{imgLogoPath}}">
+                                </a>
+                                <input id="upload" (change)="uploadLogo($event)" type="file" formControlName="logo_path" />
+                                <span id="upload_link" class="browse-applogo">Click to change</span>
+                            </div>
+
+
+                            <div class="clearfix"></div>
+                            <hr>
+                            <h4 class="panel-title title-border m-l-15" id="fact_setup">Factoring Fee Setup</h4>
+                            <br>
+                            <div _ngcontent-c2="" class="col-md-3">
+                                <label class="btn radio-inline col-xs-12 col-sm-12 col-md-3">
+                                    <input type="radio" name="factoring_fees_rule_is_accrued" [checked]="factoringIsAccrued == false || factoringIsAccrued == null"
+                                        [value]=false styleClass="f_s_16" inputId="opt1" formControlName="factoring_fees_rule_is_accrued">Earned Fee
+                                </label>
+                            </div>
+                            <div _ngcontent-c2="" class="col-md-3">
+                                <label class="btn radio-inline col-xs-12 col-sm-12 col-md-3">
+                                    <input type="radio" [checked]="factoringIsAccrued == true" name="factoring_fees_rule_is_accrued" [value]=true styleClass="f_s_16"
+                                        inputId="opt2" formControlName="factoring_fees_rule_is_accrued">Accrued
+
+                                </label>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <h4 class="panel-title title-border m-l-15" id="pwd">Password Policy</h4>
+                            <div class="form-group" *ngIf="basicDetailsEditInfo != undefined ">
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="currency_code">Number of Uppercase</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.no_of_uppercase_in_passwrd" formControlName="no_of_uppercase_in_passwrd"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Number of Lowercase</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.no_of_lowercase_in_passwrd" formControlName="no_of_lowercase_in_passwrd"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Number of Numerical Characters</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.no_of_digit_in_passwrd" formControlName="no_of_digit_in_passwrd"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Number of special Characters</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.no_of_special_character_for_passwrd" formControlName="no_of_special_character_for_passwrd"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Number of failed Login Attempts</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.no_of_login_attempt" formControlName="no_of_login_attempt"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Same Characters allowed for Repetition</label>
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        formControlName="character_repitition_limit">
+                                    <input type="hidden" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        formControlName="disallow_repeated_letters">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Minimum Password Length</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.passwrd_minimum_length" formControlName="passwrd_minimum_length"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Maximum password Length</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.passwrd_maximum_length" formControlName="passwrd_maximum_length"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Password Expiry Period (Days)</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.passwrd_expire_in" formControlName="passwrd_expire_in"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Password Expiry Notification (Days)</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.password_expire_notification_days" formControlName="password_expire_notification_days"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Previous Passwords that cannot be reused</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.passwrd_reuse_count" formControlName="passwrd_reuse_count"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Restricted Words(Seperated by Comma)</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.restricted_passwrd_words" formControlName="restricted_passwrd_words"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label class="mandatory">Automatic Emails</label>
+                                    <select class="form-control" [(ngModel)]="basicDetailsEditInfo.password_details.automatic_emails" formControlName="automatic_emails"
+                                        (change)="onChangeAutomaticEmails($event.target.value)">
+                                        <option selected value="E">Enable</option>
+                                        <option value="D">Disable</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Message To User(Auto email disabled)</label>
+                                    <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.message_to_user" formControlName="message_to_user"
+                                        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <h4 class="panel-title title-border m-l-15">User Login Setting</h4>
+                            <br>
+                            <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                <label>No of Days To Deactivate</label>
+                                <input type="text" formControlName="no_of_days_to_deactivate" (input)="valueChange($event)" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                    placeholder="">
+                                <input type="hidden" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                    formControlName="is_deactivate_user">
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3" *ngIf="basicDetailsEditInfo != undefined ">
+                                <label>No of Days To Delete</label>
+                                <input type="text" [(ngModel)]="basicDetailsEditInfo.password_details.no_of_days_to_delete" formControlName="no_of_days_to_delete"
+                                    class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                    placeholder="">
+                                <!-- disabled="disabled" -->
+                                <input type="hidden" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                    formControlName="is_delete_user">
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <h4 class="panel-title title-border m-l-15" id="foot_link">Footer Links</h4>
+                            <br>
+                            <div *ngIf="basicDetailsEditInfo != undefined ">
+                                <p-checkbox binary="true" class="ng-untouched ng-pristine ng-valid m-l-15 basic-details-p-checkbox" name="abl_notification" label="Display links on footer"
+                                    value="val1" [(ngModel)]="basicDetailsEditInfo.display_links.enable_links_footer" formControlName="enable_links_footer"></p-checkbox>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-5 col-lg-5 col-sm-6" *ngIf="basicDetailsEditInfo != undefined ">
+                                    <label for="inpuFname">Security Policy</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                            <button disabled class="button-links btn btn-default dropdown-toggle as-is bs-dropdown-to-select bank-btn-group" data-toggle="dropdown"
+                                                type="button" aria-expanded="false">
+                                                <span data-bind="bs-drp-sel-label">{{displayLinkProtocols.securityProtocol}}</span>
+                                                <input data-bind="bs-drp-sel-value" name="selected_value" type="hidden" value="">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" style="">
+                                                <li data-value="1">
+                                                    <a>https://</a>
+                                                </li>
+                                                <li data-value="2">
+                                                    <a>http://</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Code Changes for CYNCUXT-3540 begin - focusout functionality added -->
+                                        <input class="form-control ng-pristine ng-valid ng-touched" (focusout)="toggleFooterLink()" [(ngModel)]="basicDetailsEditInfo.display_links.security_link"
+                                            formControlName="security_link" name="text" type="text">
+                                        <!-- Code Changes for CYNCUXT-3540 ends -->
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-lg-5 col-sm-6" *ngIf="basicDetailsEditInfo != undefined ">
+                                    <label for="inpuFname">Privacy Policy</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                            <button disabled class="button-links btn btn-default dropdown-toggle as-is bs-dropdown-to-select bank-btn-group" data-toggle="dropdown"
+                                                type="button">
+                                                <span data-bind="bs-drp-sel-label">{{displayLinkProtocols.privacyProtocol}}</span>
+                                                <input data-bind="bs-drp-sel-value" name="selected_value" type="hidden" value="">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" style="">
+                                                <li data-value="1">
+                                                    <a>https://</a>
+                                                </li>
+                                                <li data-value="2">
+                                                    <a>http://</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Code Changes for CYNCUXT-3540 begin - focusout functionality added -->
+                                        <input class="form-control ng-untouched ng-pristine ng-valid" (focusout)="toggleFooterLink()" [(ngModel)]="basicDetailsEditInfo.display_links.privacy_link"
+                                            formControlName="privacy_link" type="text">
+                                        <!-- Code Changes for CYNCUXT-3540 ends -->
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-md-5 col-lg-5 col-sm-6" *ngIf="basicDetailsEditInfo != undefined ">
+                                    <label for="inpuFname">Terms and Conditions</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                            <button disabled class="button-links btn btn-default dropdown-toggle as-is bs-dropdown-to-select bank-btn-group" data-toggle="dropdown"
+                                                type="button">
+                                                <span data-bind="bs-drp-sel-label">{{displayLinkProtocols.termsConditionsProtocol}}</span>
+                                                <input data-bind="bs-drp-sel-value" name="selected_value" type="hidden" value="">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" style="">
+                                                <li data-value="1">
+                                                    <a>https://</a>
+                                                </li>
+                                                <li data-value="2">
+                                                    <a>http://</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <!-- Code Changes for CYNCUXT-3540 begin - focusout functionality added -->
+                                        <input class="form-control ng-untouched ng-pristine ng-valid" (focusout)="toggleFooterLink()" [(ngModel)]="basicDetailsEditInfo.display_links.termsandconditions_link"
+                                            formControlName="termsandconditions_link" type="text">
+                                        <!-- Code Changes for CYNCUXT-3540 ends -->
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-lg-5 col-sm-6" *ngIf="basicDetailsEditInfo != undefined ">
+                                    <label for="inpuFname">Disclaimers</label>
+                                    <div class="input-group">
+                                        <div class="input-group-btn bs-dropdown-to-select-group">
+                                            <button disabled class="button-links btn btn-default dropdown-toggle as-is bs-dropdown-to-select bank-btn-group" data-toggle="dropdown"
+                                                type="button">
+                                                <span data-bind="bs-drp-sel-label">{{displayLinkProtocols.disclaimersProtocol}}</span>
+                                                <input data-bind="bs-drp-sel-value" name="selected_value" type="hidden" value="">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu" style="">
+                                                <li data-value="1">
+                                                    <a>https://</a>
+                                                </li>
+                                                <li data-value="2">
+                                                    <a>http://</a>
+                                                </li>
+
+                                            </ul>
+                                        </div>
+                                        <!-- Code Changes for CYNCUXT-3540 begin - focusout functionality added -->
+                                        <input class="form-control ng-untouched ng-pristine ng-valid" (focusout)="toggleFooterLink()" [(ngModel)]="basicDetailsEditInfo.display_links.disclaimers_link"
+                                            formControlName="disclaimers_link" type="text">
+                                        <!-- Code Changes for CYNCUXT-3540 ends -->
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr>
+                                <h5 class="panel-title title-border m-l-15" id="acs_lim">Login Access Limitation</h5>
+                                <br>
+                                <div *ngIf="accessLimitationsEdit != undefined ">
+                                    <p-checkbox *ngIf="accessLimitationsEdit.length>0" binary="true" (onChange)="checkedAccessLimitation($event)" class="ng-untouched ng-pristine ng-valid m-l-15 basic-details-p-checkbox"
+                                        name="abl_notification" label="Access Limitation" value="val1" [(ngModel)]="accessLimitationsEdit[0].limitation_status"
+                                        formControlName="limitation_status"></p-checkbox>
+
+                                    <p-checkbox *ngIf="!accessLimitationsEdit.length>0" binary="true" (onChange)="checkedAccessLimitation($event)" class="ng-untouched ng-pristine ng-valid m-l-15 basic-details-p-checkbox"
+                                        name="abl_notification" label="Access Limitation" value="false" formControlName="limitation_status"></p-checkbox>
+
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="row no-marg" style="display: inline-flex;">
+                                    <div class="form-group m-l-15 inline-table">
+                                        <label>
+                                            <b>
+                                                <br>Start Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                                        </label>
+                                    </div>
+                                    <div class="form-inline basic-detail-time">
+                                        <div class="form-group">
+                                            <label>Monday</label>
+                                            <br>
+                                            <input type="time" name="time" class="form-control" formControlName="mon_access_start_time">
+                                            <input type="hidden" id="timezone" name="timezone" value="-08:00">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Tuesday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="tue_access_start_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Wednesday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="wed_access_start_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Thursday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="thur_access_start_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Friday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="fri_access_start_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Saturday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="sat_access_start_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Sunday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="sun_access_start_time">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row no-marg" style="display: inline-flex;">
+                                    <div class="form-group m-l-15 inline-table">
+                                        <label>
+                                            <b>
+                                                <br>End Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
+                                        </label>
+                                    </div>
+                                    <div class="form-inline basic-detail-time">
+                                        <div class="form-group">
+                                            <label>Monday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="mon_access_end_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Tuesday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="tue_access_end_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Wednesday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="wed_access_end_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Thursday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="thur_access_end_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Friday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="fri_access_end_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Saturday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="sat_access_end_time">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Sunday</label>
+                                            <br>
+                                            <input type="time" class="form-control" formControlName="sun_access_end_time">
+                                        </div>
+                                        <br>
+                                    </div>
+                                    <br>
+                                    <br>
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr>
+                                <div class="row no-marg">
+                                    <div class="form-inline">
+                                        <div class="form-group" *ngIf="basicDetailsEditInfo != undefined ">
+                                            <div class="text-right ui-chkbox ui-widget">
+                                                <p-checkbox binary="true" name="abl_notification" label="Multi Factor Authentication(OTP)" value="val1" [(ngModel)]="basicDetailsEditInfo.basic_information.multi_factor_auth"
+                                                    formControlName="multi_factor_auth" class="m-l-15 basic-details-p-checkbox"></p-checkbox>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-xs-12 col-sm-4 col-md-4 ad-bt-pad col-lg-4 pad-20">
+                                    <div class="text-right ui-chkbox ui-widget">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                                    <hr/>
+                                    <button (click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton="" type="button" [disabled]='isDisable'
+                                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                        <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                                    </button>
+                                    <button id="action_save" [disabled]='isDisable' label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                        <span class="ui-button-text ui-clickable no-pad">Save</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </ng-template>
+                <!-- above template is for main lender -->
+
+                <ng-template [ngIf]="affilited_lender">
+                    <form [formGroup]="affiliatedLenderForm" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="submitAffiliatedLender()">
+                        <div class="pad-inner">
+                            <h4 class="panel-title title-border m-l-15" id="lender_details"> Affiliate Lender Basic Details </h4>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="currency_code">Affiliate Lender Name
+                                        <span class="required">*</span>
+                                    </label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.name" formControlName="name" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="" [ngClass]="(isLenderNameValid == true)? 'form-control':'form-control has-error'"
+                                        placeholder="" value="" (focusout)="checkLenderName()">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label for="email">Email ID</label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.email" formControlName="email" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="phone_no">Phone No.</label> &nbsp;<i data-toggle="tooltip" data-placement="top" title="You can use (  ) + - along with numeric values.  Maximum characters allowed 30" class="fa fa-info-circle" aria-hidden="true"></i>
+                                    <input type="text" [(ngModel)]="affiliatedLender.phone_no" formControlName="phone_no" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="currency">Currency</label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.currency" formControlName="currency" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label for="affiliate_lender_code">Affiliate Lender Code</label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.affiliate_lender_code" formControlName="affiliate_lender_code" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+
+                            <h4 class="panel-title title-border m-l-15" id="adrs">Address</h4>
+                            <div class="form-group">
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="currency_code">Address Line 1 </label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.address_1" formControlName="address_1" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value=" ">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-3">
+                                    <label>Address Line 2 </label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.address_2" formControlName="address_2" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory">City</label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.city" formControlName="city" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="" value="">
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory">Country </label>
+                                    <select [(ngModel)]="affiliatedLender.country_id" formControlName="country" (change)="onChangeCountry($event.target.value)"
+                                        class="form-control">
+                                        <option value="null">Select</option>
+                                        <option *ngFor="let x of countryListInfo" value={{x.id}}>{{x.name}}</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory">State Province</label>
+                                    <select [(ngModel)]="affiliatedLender.state_province_id" formControlName="state_province_id" class="form-control">
+                                        <option value="null" selected>Select</option>
+                                        <option *ngFor="let state of stateListInfo" value={{state.id}}>{{state.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="zip_code">Zip/Postal Code </label> &nbsp; <i data-toggle="tooltip" data-placement="top" title="Characters allowed hyphen, spaces and alphanumeric values. Maximum characters allowed 10" class="fa fa-info-circle" aria-hidden="true"></i>
+                                    <input type="text" [(ngModel)]="affiliatedLender.zip_code" formControlName="zip_code" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="fax_no">Fax No. </label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.fax_no" formControlName="fax_no" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                        placeholder="">
+                                </div>
+
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                                    <label class="mandatory" for="time_zone">Time Zone</label>
+                                    <input type="text" [(ngModel)]="affiliatedLender.time_zone" formControlName="time_zone" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched">
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                            <h4 class="panel-title title-border m-l-15" id="app_logo">Application Logo
+                                <span class="required">*</span>
+                            </h4>
+                            <br>
+                            <div class="logoFormat col-lg-12">
+                                <small>Logo should be transparent with minimum height of 120 pixel
+                                    <br> </small>
+                            </div>
+                            <br>
+
+                            <div class="letterType-logo col-md-3 col-sm-3 col-xs-12">
+                                <a (click)="upload_logo();">
+                                    <img id="preview" src="{{imgLogoPathAffiliteLender}}">
+                                </a>
+                                <input id="upload" (change)="uploadLogo($event)" type="file" formControlName="logo_path" />
+                                <span id="upload_link" class="browse-applogo">Click to change</span>
+                            </div>
+                            <div class="clearfix"></div>
+                            <hr>
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                                <hr/>
+                                <button (click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton="" type="button" [disabled]='isDisable'
+                                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                                </button>
+                                <button id="action_save" [disabled]='isDisable' label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">Save</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </ng-template>
+
+            </div>
+        </div>
+    </div>
+</div>

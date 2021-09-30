@@ -1,0 +1,65 @@
+.roll-forwoad-division-collateral {
+  width: 100%;
+  margin: auto;
+  text-align: left;
+  display: block;
+}
+.height {
+  height: 24px;
+  margin-left: 0px;
+  background-color: #b9b9b957;
+}
+.h8 {
+  height: 8px;
+}
+.groove {
+  border-color: #c0c0c057;
+  border: 1px solid #a9a9a9;
+}
+
+.margin-box {
+  margin: 0px !important;
+}
+
+.text-right {
+  text-align: right;
+}
+
+:host /deep/ .b-l {
+  background-color: #c0c0c057;
+  // height: 82%;
+  padding: 0 !important;
+}
+:host /deep/ .h-100 {
+  border: 1px solid #a9a9a9;
+  height: 27px;
+  text-align: left;
+  // padding: top;
+  // padding-top: 5px;
+  // padding-left: 3px;
+}
+.p-5 {
+  padding: 14px;
+  border: 1px solid #a9a9a9;
+  // height: 84%;
+  justify-content: right;
+  display: flex;
+}
+:host /deep/ .ar-turn-days-value {
+  padding: 5px;
+  border: 1px solid #a9a9a9;
+  justify-content: right;
+  display: flex; 
+  height: 27px;
+  padding-left: 17px;
+  padding-top: 4px;
+  }
+.margin{
+  margin-left:-8px;
+  margin-top: 2px;
+  }
+ :host /deep/ .value-right-align {
+  display: block; 
+  text-align: right;
+  padding: 4px 15px 4px 4px;
+  }

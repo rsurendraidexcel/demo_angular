@@ -1,0 +1,873 @@
+<div id="loading_overlay_init" *ngIf="showLoading">
+    <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+    </div>
+</div>
+<div>
+    <div class="cync-header">
+        <div class="container-fluid">
+            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-4 no-pad m-top" style="width: 25%;" (click)="getMenuHide($event)">
+                <div class="logo_top">
+                    <a class="logoh" href="../../?home_source=logo">
+                         <img src="{{headerLogo}}" id="logoImageId" />
+                        <!-- <img src="{{headerLogo}}" id="logoImageId" (click)="homeTrackAction('cync_logo')" /> -->
+                    </a>
+                </div>
+
+            </div>
+            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-8 pull-right p-header text-right no-rl-pad-xs p-r-0" style="width: 75%;" >
+                <message-comp></message-comp>
+                <!-- below is for showing api messages -->
+                <api-messages></api-messages>
+
+                <div class="pull-right">
+                    <!-- User alerts -->
+                    <ul class="user-info">
+                        <li class="hidden-xs">
+                            <div class="select_client_manager">
+                                <p-dropdown *ngIf="userInfo?.role_type == 'Administrator'" [style]="{'width':'229px'}"
+                                    class="auto-dropdown-list select-client-custom" [options]="managerListArray"
+                                    [(ngModel)]="selectedManager" placeholder="Select Manager" filter="true"
+                                    (onChange)="setManager()">
+
+                                    <ng-template let-man pTemplate="item">
+                                        <div class="ui-helper-clearfix" style="position: relative;">
+                                            <div class="header-dropdown">{{man.label}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+
+                                <p-dropdown *ngIf="showClientStatus" class="auto-dropdown-list client-status" [style]="{'width':'158px'}"
+                                    [options]="clientStatusArray" [(ngModel)]="selectedClientStatus"
+                                    (onChange)="onChangeClientStatus($event)"
+                                    [placeholder]="selectClientStatusPlaceholder">
+
+                                    <ng-template let-st pTemplate="item">
+                                        <div class="ui-helper-clearfix" style="position: relative;">
+                                            <div class="header-dropdown">{{st.label}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+
+
+                                <p-dropdown class="auto-dropdown-list select-client-custom select-client"
+                                    [style]="{'width':'333px'}" [options]="clientListArray" [(ngModel)]="selectedClient"
+                                    [placeholder]="selectClientPlaceHolder" (focusout)="handlePanelHide()" filter="true"
+                                    (onChange)="onChangeevent($event)" (keydown)="clientKeydown($event)">
+
+                                    <ng-template let-cl pTemplate="item">
+                                        <div class="ui-helper-clearfix" style="position: relative;">
+                                            <div class="header-dropdown">{{cl.label}}</div>
+                                        </div>
+                                    </ng-template>
+                                </p-dropdown>
+
+                            </div>
+                        </li>
+                        <li class="notifications dropdown adjmrg_chc">
+                            <a data-close-others="true" data-hover="dropdown" data-toggle="dropdown"
+                                class="dropdown-toggle hand" aria-expanded="false" style="margin-right:10px;">
+                                <i class="fa fa-bell" aria-hidden="true"></i>
+                                <span class="badge badge-info">{{notifictionCount}}</span>
+                            </a>
+                            <ul class="dropdown-menu pull-right">
+                                <li class="first hand">
+                                    <div class="small">
+                                        <a *ngIf="notifictionCount>0" (click)="markAllRead()"
+                                            class="pull-right danger">Mark all Read</a> You have
+                                        <strong>{{notifictionCount}}</strong> new notifications.</div>
+                                </li>
+                                <li>
+                                    <ul class="dropdown-list has-scrollbar">
+                                        <li class="unread notification-success"
+                                            *ngFor="let notificationItem of notificationItems">
+                                            <a>
+                                                <span class="block-line strong notification-msg"
+                                                    [innerHtml]="notificationItem.message"></span>
+                                                <span
+                                                    class="block-line small ago">{{notificationItem.createdate}}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="external-last hand">
+                                    <a (click)="displayAllNotifications()" class="danger">View all notifications</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <!-- /user alerts -->
+                    <!-- User info -->
+                    <ul class="user-info adjmrg_cvd">
+                        <li class="profile-info dropdown">
+                            <!--  <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="true">
+                                <img width="44" class="img-circle avatar" alt="" src="/assets/images/profile-pic.jpg">
+                            </a> -->
+                            <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true"
+                                style="padding-right: 5px;">
+                                <img width="44" class="img-circle avatar" alt=""
+                                    src="{{assetsPath}}/images/profile-pic.jpg">
+                            </button>
+                            <!-- User action menu -->
+                            <ul class="dropdown-menu no-t-pad">
+                                <li class="other-info">
+                                    <b>{{userInfo?.user_name}}</b>
+                                    <br />
+                                    <small>{{userInfo?.email}}</small>
+                                </li>
+                                <!-- <li><a href="#/">My profile</a></li> -->
+                                <!-- <li><a href="#/">Messages</a></li> -->
+                                <li class="divider"></li>
+                                <li>
+                                    <a class="hand" (click)="displayThemeSettings()">Theme settings</a>
+                                </li>
+                                <!-- <form action="https://rorapi.cyncsoftware.com/users/sign_out" method="delete"> -->
+                                <li>
+                                    <a (click)="cyncLogout()" class="hand">Logout</a>
+                                </li>
+                                <!-- </form> -->
+                            </ul>
+                            <!-- /user action menu -->
+                        </li>
+                    </ul>
+                    <!-- /user info -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="container-fluid new-margin" id="app_body">
+            <!-- Code for Menu v 1.0 Starts -->
+            <nav>
+                <div class="b-c-area" id="b_c_area">
+                    <div class="col-md-7 col-lg-7 col-sm-12 col-xs-12">
+
+                        <!-- HOME ICON STARTS -->
+                        <div class="home_icon">
+                            <a href="../../?home_source=icon">
+                                <img class="grayscale" src="{{assetsPath}}/images/icons/home.png" />
+                                <!-- <img class="grayscale" (click)="homeTrackAction('cync_home')" src="{{assetsPath}}/images/icons/home.png" /> -->
+                            </a>
+                        </div>
+                        <!--  HOME ICON ENDS  -->
+
+                        <!-- MENU LABEL AND ICON STARTS -->
+                        <div class="hamburger_icon" id="hamburger_icon" [ngClass]="(showPrimaryMenu)? 'menu_on':''"
+                            (click)="showMenu($event);">
+                            <img src="{{assetsPath}}/images/icons/humburger.png" class="hand" *ngIf="!isNavActive"
+                                (click)="fnExpand();" />
+                            <span class="fa fa-times hand" aria-hidden="true" *ngIf="isNavActive" (click)="fnExpand();"
+                                [ngStyle]="setMenuStyles()"></span>
+                            <span class="menu_label">Menu</span>
+                        </div>
+                        <!-- MENU LABEL AND ICON ENDS -->
+
+                        <!-- MENU BREADRUMB STARTS -->
+                        <div class="breadcrumb_container">
+                            <ul class="breadcrumb">
+                                <span class="breadcrumbslashcolor">/ &nbsp;</span>
+                                <li class="active" *ngFor="let cyncBreadcrumb of cyncBreadCrumb; index as i">
+                                    <span *ngIf="i!=cyncBreadCrumb.length-1"> {{cyncBreadcrumb}}</span>
+                                    <strong class="breadcrumbtextbold" *ngIf="i==cyncBreadCrumb.length-1">
+                                        {{cyncBreadcrumb}}  <i *ngIf="bookMarkIconToggle==true" class="fa fa-star cptr mark-icon-format" (click)="openAddBookMarkedBox($event)" title="Add to Bookmarked Menu" ></i> <i *ngIf="bookMarkIconToggle==false" class="fa fa-minus-circle cptr mark-icon-format" (click)="deleteBookMark($event)" title="Delete From Bookmarked Menu" ></i>
+                                    </strong>
+                                </li>                            
+                            </ul>
+
+                            <div class="add-bookmark-panel" id="add-bookmark-panel">
+                                <div class="bookmark-title"> Add to Bookmarked Menu</div>
+                                 <div class="row bm-container">
+                                    <label class="bk-label" for="bookmarkedName"> Name </label>
+                                    <input type="text" class="bk-custom-input" id="bookmarkedName" name="bookmarkedName" maxlength="40"/>
+                                </div>
+                                <div class="row bookmark-button-panel">
+                                   <button class="cyncbtn-them-style" (click)="addbookMark($event)">Add</button> <button class="cyncbtn-normal" (click)="cancelBookMarkedBox()"> Cancel</button>
+                                 </div>
+                             </div>
+
+                        </div>
+                        <!-- MENU BREADRUMB ENDS -->
+
+                    </div>
+
+                    <!-- HELP AND SUPPORT LINKS STARTS -->
+                    <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12  text-right help-support">
+                        <ul class="right-menu">
+                            <li class="fused"><span (click)="viewBookMark($event)" class="fused-label">Frequently Used</span></li>
+                            <li>
+                                <a class="hand" target="_blank" href="/help?ref={{routePath}}//hs//{{_router.url}}">Help</a>
+                            </li>
+                            <li *ngIf="guideFeature"><span class="tour-guide" (click)="showTourTitile()">Guide <sup class="tour-nw gde" *ngIf="newTag">New</sup></span></li>
+                            <li *ngIf="supportlinkViewPermission">
+                                <a class="hand" href="../angular/#/cssp-support">Support</a>
+                            </li>
+                        </ul>
+                        <!-- BookMarked Section -->
+                        <div class="bookmark-box" id="bookmark-box">
+                            <strong class="bm-heading"> <i class="fa fa-star"></i> Bookmarked Menus </strong>
+                            <div class="hscroll-panel scroll-ystyle">
+                                <ul class="bokmark-list"> 
+                                    <li *ngFor="let item of bookMarkedList"><a (click)="bookMarkedRouteLink($event)" href="javascript:void(0)" [attr.data-href]="item.url" [attr.data-process_type]="item.processing_type" [attr.title]="item.menu_hierarchy">{{item.custom_name}}</a></li>
+                                </ul>
+                           </div>
+                           <div class="recent-bg">
+                            <strong class="bm-heading"> <i class="fa fa-eye"></i> Recently Visited Menus </strong>
+                            <div class="recent-panel">
+                                <ul class="recent-list"> 
+                                    <li *ngFor="let item of recentVisitedList"><a (click)="bookMarkedRouteLink($event)" href="javascript:void(0)" [attr.data-href]="item.url" [attr.data-process_type]="item.processing_type" [attr.title]="item.menu_hierarchy">{{item.name}}</a></li>
+                                </ul>
+                           </div>
+                          </div>
+                        </div>
+                        <!--Tour Guide Section-->
+                        <div class="cync-tour-panel" id="cync-tour-panel" (mouseleave)="onleaveTourPannel($event)">
+                            <div class="cync-tour-title"> Walkthrough Title <a href="javascript:void(0)" (click)="tourSetup()" class="tour-setup">Set Up</a></div>
+                            <div class="hline"></div>
+                            <div class="cync-tour-scroll-section">
+                                <ul class="tour-groups" *ngIf="walkThroughTitle.length > 0">
+                                    <li *ngFor="let tourItem of walkThroughTitle" >  
+                                        <div class="left-tour-icons"><i class="fa fa-check tour-iconsize tour-active-icon" aria-hidden="true"></i></div>
+                                        <div *ngIf="tourItem.status==='active'" class="tour-lavel tour-lavel-{{tourItem.status}}" [attr.data-tour_id]="tourItem.tour_id" [attr.data-tag]="tourItem.tag"  (click)="showStep(tourItem.tour_id, tourItem.tag)"> {{tourItem.tour_help_titile}}<sup class="tour-nw" *ngIf="tourItem.tag===false">New</sup></div>
+                                        <div *ngIf="tourItem.status==='inactive'" class="tour-lavel tour-lavel-{{tourItem.status}}" [attr.data-tour_id]="tourItem.tour_id" [attr.data-tag]="tourItem.tag">{{tourItem.tour_help_titile}}</div>
+                                    </li>
+                                </ul>
+                                <ul class="tour-groups" *ngIf="walkThroughTitle.length==0">
+                                    <li style="text-align: center;"> Not Available</li>
+                                </ul> 
+                            </div>
+                        </div>
+                
+                    </div>
+                    <!-- HELP AND SUPPORT LINKS ENDS -->
+
+                </div>
+                <div id="primary_menu_container" *ngIf="showPrimaryMenu"
+                    [ngClass]="(showPrimaryMenu)? 'animated fadeIn':''">
+                    <!-- MENU SEARCH INPUT STARTS -->
+                    <div class="search_bar input-group" id="search_bar">
+
+                        <input aria-describedby="basic-addon3" autocomplete="off"
+                            class="form-control ng-valid ng-dirty ng-touched" placeholder="Search Here" type="text"
+                            [(ngModel)]="menuSearchInput" (keyup)="searchFromMenuList()" id="searchInputId">
+                        <span *ngIf="menuSearchInput.length <= 0"
+                            class="input-group-addon icon-input-field search_icon">
+                            <i aria-hidden="true" class="fa fa-search ng-star-inserted clr_gray">
+                            </i>
+                        </span>
+
+                        <span id="search_close_icon_id" class="input-group-addon icon-input-field search_icon"
+                            (click)="clearMenuSearch($event)" *ngIf="menuSearchInput.length > 0">
+                            <i aria-hidden="true" class="fa fa-close ng-star-inserted clr_gray menuSearchCloseIcon">
+                            </i>
+                            <!-- Added menuSearchCloseIcon class to prevent closing of menu on click of close icon -->
+                        </span>
+
+
+                    </div>
+                    <!-- MENU SEARCH INPUT ENDS -->
+
+                    <!-- Menu Search results starts-->
+                    <div class="search_container" id="search_container" [hidden]="hideMenuSearchList">
+                        <ul id="search_results_list" *ngIf="searchListArr.length > 0">
+
+                            <li *ngFor="let searchResultMenu of searchListArr">
+
+                                <a *ngIf="searchResultMenu.path.split('#')[1] != undefined"
+                                    [routerLink]="[searchResultMenu.path.split('#')[1]]" aria-selected="true"
+                                    (click)="showNavigationHeader($event,searchResultMenu.path)">
+
+                                    <span class="pull-left search_breadcrumb">
+                                        <span
+                                            *ngFor="let srchResMenuName of searchResultMenu.parentPathArr; let k = index ">
+
+                                            <span [innerHTML]="srchResMenuName | highlightPipe: menuSearchInput"></span>
+
+                                            <span class="icon"
+                                                *ngIf="searchResultMenu.parentPathArr.length > 1 && k != searchResultMenu.parentPathArr.length-1">
+                                            </span>
+
+
+
+                                        </span>
+                                    </span>
+
+                                </a>
+
+                                <a *ngIf="searchResultMenu.path.split('#')[1] == undefined && searchResultMenu.menu_name != 'Notification Settings'"
+                                    href="{{searchResultMenu.path}}"
+                                    (click)="showNavigationHeader($event,searchResultMenu.path)">
+
+                                    <span class="pull-left search_breadcrumb">
+                                        <span
+                                            *ngFor="let srchResMenuName of searchResultMenu.parentPathArr; let k = index ">
+
+
+                                            <span [innerHTML]="srchResMenuName | highlightPipe: menuSearchInput"></span>
+
+                                            <span class="icon"
+                                                *ngIf="searchResultMenu.parentPathArr.length > 1 && k != searchResultMenu.parentPathArr.length-1">
+                                            </span>
+
+                                        </span>
+                                    </span>
+
+
+                                </a>
+
+                                <a *ngIf="searchResultMenu.path.split('#')[1] == undefined && searchResultMenu.menu_name == 'Notification Settings'"
+                                    [routerLink]="[searchResultMenu.path.split('#')[1]]"
+                                    (click)="showNavigationHeader($event,searchResultMenu.path)">
+
+                                    <span class="pull-left search_breadcrumb">
+                                        <span
+                                            *ngFor="let srchResMenuName of searchResultMenu.parentPathArr; let k = index ">
+
+                                            <span [innerHTML]="srchResMenuName | highlightPipe: menuSearchInput"></span>
+
+                                            <span class="icon"
+                                                *ngIf="searchResultMenu.parentPathArr.length > 1 && k != searchResultMenu.parentPathArr.length-1">
+                                            </span>
+                                        </span>
+                                    </span>
+
+                                </a>
+
+
+                            </li>
+
+                        </ul>
+                        <div *ngIf="showResultMsg">
+                            <h5> No Results Found</h5>
+                        </div>
+
+                    </div>
+
+                    <!-- Menu Search results Ends-->
+
+
+                    <!-- MENU DROPDOWN STARTS -->
+                    <div class="m_container" [hidden]="hideMenu">
+                        <ul id="menu_list">
+
+                            <!-- FIRST LEVEL MENU LISTING  STARTS -->
+                            <li id="menu_{{cyncMenu.menu_id}}"
+                                [ngClass]="{'has_submenu': (cyncMenu.sub_menu_list.length > 0), 'menu_is_active': (currentMenuSelected==cyncMenu.menu_name)}"
+                                class="lhsMenuList" *ngFor="let cyncMenu of cyncMenus"
+                                (mouseenter)="mouseEnter(cyncMenu)">
+                                <a *ngIf="cyncMenu.path.split('#')[1] != undefined"
+                                    [routerLink]="[cyncMenu.path.split('#')[1]]" (click)="navigateToRor($event)"
+                                    class="the_head">{{cyncMenu.menu_name}}</a>
+                                <a *ngIf="cyncMenu.path.split('#')[1] == undefined && cyncMenu.path.split('http')[1] == null"
+                                    class="the_head">{{cyncMenu.menu_name}}</a>
+                                <!-- Angular Menu -->
+                                <a *ngIf="cyncMenu.path.split('#')[1] == undefined && cyncMenu.path.split('http')[1] != null"
+                                    href="{{cyncMenu.path}}" class="the_head">{{cyncMenu.menu_name}}</a>
+                                <!-- Ror Menu -->
+
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <div class="submenu_list" *ngIf="showSubMenu">
+                        <div>
+                            <div class="row" (mouseleave)="getFirstMenu($event)">
+                                <sub-menu [menuList]="subMenuList"></sub-menu>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <!-- <div id="submenu_container" class="has-scrollbar"></div> -->
+
+                    <div class="clearfix"></div>
+
+                </div>
+
+                <div class="menu_overlayout_pannel" id="menu_overlayout_pannel" (click)="getMenuHide($event)"></div>
+            </nav>
+
+            <!-- Code for Menu v 1.0 Ends -->
+
+            <!-- ROUTING CODE STARTS -->
+            <div class="module-sub-menu">
+                <div class="subnav_nav_wrapper">
+                    <nav id="subnav_nav" class="pn-ProductNav" style="display: flex;">
+                        <div style="float: left ">
+                         <span class="scrollArrow"> <i class="fa fa-caret-left" (click)="scrollLeft()" style="font-size: 18px; cursor: pointer;"></i></span>
+                        </div>
+                        &nbsp;&nbsp;
+                        <div id="subnav_navContents" class="middle pn-ProductNav_Contents" #widgetsContent >
+                         
+                            <ng-container *ngFor="let angularMenus of angularMenu">
+
+                                <a *ngIf="angularMenu!=undefined && angularMenu.length==1 && angularMenus.path.split('#')[1] != undefined && isCurrentAppUrl(angularMenus.path)"
+                                    id="routerLinkId" class="info-widget subnav_nav_links active"
+                                    [routerLink]="[angularMenus.path.split('#')[1]]" (click)="navigateToRor($event)"
+                                    aria-selected="true"> {{angularMenus.menuName}}</a>
+
+                                <a *ngIf="angularMenu!=undefined && angularMenu.length!=1 && angularMenus.path.split('#')[1] != undefined && isCurrentAppUrl(angularMenus.path)"
+                                    id="routerLinkId" [routerLinkActive]="['active']" class="info-widget subnav_nav_links"
+                                    [routerLink]="[angularMenus.path.split('#')[1]]" (click)="navigateToRor($event)"
+                                    aria-selected="true"> {{angularMenus.menuName}}</a>
+
+                                <a *ngIf="angularMenus.path.split('#')[1] == undefined && angularMenus.menuName != 'Notification Settings' && !isCurrentAppUrl(angularMenus.path)"
+                                    id="routerLinkId" [routerLinkActive]="['active']" class="info-widget subnav_nav_links"
+                                    (click)="navigateToRor($event)" href="{{angularMenus.path}}" aria-selected="true">
+                                    {{angularMenus.menuName}}</a>
+                                
+                                <a *ngIf="!isCurrentAppUrl(angularMenus.path) && isLoanLink(angularMenus.path)"
+                                    id="routerLinkId" [routerLinkActive]="['active']" class="info-widget subnav_nav_links"
+                                    (click)="navigateToRor($event)" href="{{angularMenus.path}}" aria-selected="true">
+                                    {{angularMenus.menuName}}</a>
+
+                                <a *ngIf="angularMenus.path.split('#')[1] == undefined && angularMenus.menuName == 'Notification Settings' && isCurrentAppUrl(angularMenus.path)"
+                                    id="routerLinkId" [routerLinkActive]="['active']" class="info-widget subnav_nav_links active"
+                                    (click)="navigateToRor($event)" [routerLink]="[angularMenus.path]"
+                                    aria-selected="true">{{angularMenus.menuName}}</a>
+
+                            </ng-container>
+                        
+                            <span id="pnIndicator" class="pn-ProductNav_Indicator"></span>
+                            
+                        </div>
+                        &nbsp;&nbsp;
+                        <div style="float: right">
+                          <span class="scrollArrow"> <i class="fa fa-caret-right" (click)="scrollRight()" style="font-size: 18px; cursor: pointer;"></i></span>
+                        </div>
+                    </nav>
+                    <button id="subadvance_left" class="subadvancer subadvancer_d_left" type="button">
+                        <svg class="subadvance_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 551 1024">
+                            <path
+                                d="M445.44 38.183L-2.53 512l447.97 473.817 85.857-81.173-409.6-433.23v81.172l409.6-433.23L445.44 38.18z" />
+                        </svg>
+                    </button>
+                    <button id="subadvance_right" class="subadvancer subadvancer_d_right" type="button">
+                        <svg class="subadvance_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 551 1024">
+                            <path
+                                d="M105.56 985.817L553.53 512 105.56 38.183l-85.857 81.173 409.6 433.23v-81.172l-409.6 433.23 85.856 81.174z" />
+                        </svg>
+                    </button>
+                </div>
+
+            </div>
+            <!-- Grid should be loaded only when permissions are loaded-->
+            <div *ngIf="isPermissionLoaded && isMenuLoaded">
+                <router-outlet></router-outlet>
+            </div>
+            <!-- <router-outlet></router-outlet> -->
+
+            <!-- ROUTING CODE ENDS -->
+
+        </div>
+        <div *ngIf="viewAllNotifications" class="ui-widget-overlay ui-dialog-mask" style="z-index: 100"></div>
+
+        <div *ngIf="viewAllNotifications && isNotificationLoaded"
+            class="ng-tns-c2-2 ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all ui-shadow ng-trigger ng-trigger-dialogState bg-white position_modal"
+            [ngStyle]="{'height': modal_height+'px', 'display': 'block'}" id="view_all_notifications"
+            [ngClass]="{'expandStyle': isExpandStyleVisible}">
+
+
+
+            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top row">
+                <!---->
+                <span class="ui-dialog-title ng-tns-c2-2">Notifications</span>
+                <!---->
+
+
+
+                <a (click)="setNotificationCount()" role="button"
+                    class="ng-tns-c2-2 ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all">
+                    <span class="fa fa-fw fa-close closeModal notificationClose"></span>
+                </a>
+
+                <a (click)="expandAllNotifications = !expandAllNotifications;isExpandStyleVisible = !isExpandStyleVisible"
+                    role="button" class="ng-tns-c2-2 ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all"
+                    *ngIf="!showClearNotificationMsg && notifictionCountAll>0"
+                    [ngClass]="{'disableToggle': isdisableToggle}">
+                    <img src="{{assetsPath}}/images/notification-icon-expand.png" alt="expand"
+                        class="toggle-icon-custom">
+                </a>
+
+            </div>
+
+            <div *ngIf="(showClearNotificationMsg || notifictionCount == 0) && notifictionCountAll == 0"
+                class="ui-dialog-content ui-widget-content height:500px">
+                <!--       <img class="bell-slash"  src="../../assets/images/notification-icon.png"> -->
+                <!--       <i class="fa fa-bell fa-2x text-center bell-slash" aria-hidden="true" *ngIf="!isClearNotication"></i> -->
+                <img src="{{assetsPath}}/images/notification-bell.png" class="text-center bell-slas clearNotification">
+                <h5 class="text-center">All Caught Up!</h5>
+                <p class="text-center">You have Successfully cleared all the notifications</p>
+            </div>
+
+            <div class="ui-dialog-content ui-widget-content "
+                *ngIf="!showClearNotificationMsg && notifictionCountAll>0">
+                <div class="row margin0" *ngIf="expandAllNotifications">
+                    <div class="col-md-4 notification-main has-scrollbar"
+                        [ngStyle]="{'max-height': modal_height-120+'px'}" id="dialog1"
+                        *ngIf="notificationSuccessCount !=0"
+                        [ngClass]="{'col-md-6': showTwoColNotification,'col-md-4':!showTwoColNotification}">
+                        <div class="notification-bg1">
+                            <div *ngFor="let notificationItem of notificationItemsAll">
+                                <ng-container *ngIf="notificationItem.category == 'S'">
+                                    <div class="notification-header">
+                                        <span>
+                                            <b>{{getDateString(notificationItem.createdate)}}</b>
+                                        </span>
+                                    </div>
+                                    <div class="notification-content">
+                                        <span class="notification-time pull-right">
+                                            {{getTimeString(notificationItem.createdate)}}
+                                            <i class="fa fa-times hand"
+                                                (click)="clearSingleNotification(notificationItem)"
+                                                aria-hidden="true"></i>
+                                        </span>
+                                        <p class="notification-msg" [innerHTML]="notificationItem.message"></p>
+
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 notification-main has-scrollbar"
+                        [ngStyle]="{'max-height': modal_height-120+'px'}" id="dialog2"
+                        *ngIf="notificationAlertCount > 0"
+                        [ngClass]="{'col-md-6': showTwoColNotification ,'col-md-4':!showTwoColNotification}">
+                        <div class="notification-bg2">
+                            <div *ngFor="let notificationItem of notificationItemsAll">
+                                <ng-container
+                                    *ngIf="notificationItem.category == 'N' || notificationItem.category == 'W'">
+                                    <div class="notification-header">
+                                        <span>
+                                            <b>{{getDateString(notificationItem.createdate)}}</b>
+                                        </span>
+                                    </div>
+                                    <div class="notification-content">
+                                        <span class="notification-time pull-right">
+                                            {{getTimeString(notificationItem.createdate)}}
+                                            <i class="fa fa-times hand"
+                                                (click)="clearSingleNotification(notificationItem)"
+                                                aria-hidden="true"></i>
+                                        </span>
+                                        <p class="notification-msg" [innerHTML]="notificationItem.message"></p>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+
+                    <div class="col-md-4 notification-main has-scrollbar"
+                        [ngStyle]="{'max-height': modal_height-120+'px'}" id="dialog3"
+                        *ngIf="notificationErrorCount > 0"
+                        [ngClass]="{'col-md-6': showTwoColNotification,'col-md-4':!showTwoColNotification}">
+                        <div class="notification-bg3 ">
+                            <div *ngFor="let notificationItem of notificationItemsAll">
+                                <ng-container *ngIf="notificationItem.category == 'E'">
+                                    <div class="notification-header">
+                                        <span>
+                                            <b>{{getDateString(notificationItem.createdate)}}</b>
+                                        </span>
+                                    </div>
+                                    <div class="notification-content">
+                                        <span class="notification-time pull-right">
+                                            {{getTimeString(notificationItem.createdate)}}
+                                            <i class="fa fa-times hand"
+                                                (click)="clearSingleNotification(notificationItem)"
+                                                aria-hidden="true"></i>
+                                        </span>
+                                        <p class="notification-msg" [innerHTML]="notificationItem.message"></p>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+
+                        <br>
+                    </div>
+
+                </div>
+
+                <div class="row" *ngIf="!expandAllNotifications">
+                    <div class="col-md-12 has-scrollbar no-pad" [ngStyle]="{'max-height': modal_height-120+'px'}"
+                        id="dialog1">
+                        <div class="notification-bg1">
+                            <div *ngFor="let notificationItem of notificationItemsAll">
+                                <ng-container *ngIf="notificationItem.category == 'S'">
+                                    <div class="notification-header">
+                                        <span>
+                                            <b>{{getDateString(notificationItem.createdate)}}</b>
+                                        </span>
+                                    </div>
+                                    <div class="notification-content">
+                                        <span class="notification-time pull-right">
+                                            {{getTimeString(notificationItem.createdate)}}
+                                            <i class="fa fa-times hand"
+                                                (click)="clearSingleNotification(notificationItem)"
+                                                aria-hidden="true"></i>
+                                        </span>
+                                        <p class="notification-msg" [innerHTML]="notificationItem.message"></p>
+
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="notification-bg2">
+                            <div *ngFor="let notificationItem of notificationItemsAll">
+                                <ng-container
+                                    *ngIf="notificationItem.category == 'N' || notificationItem.category == 'W'">
+                                    <div class="notification-header">
+                                        <span>
+                                            <b>{{getDateString(notificationItem.createdate)}}</b>
+                                        </span>
+                                    </div>
+                                    <div class="notification-content">
+                                        <span class="notification-time pull-right">
+                                            {{getTimeString(notificationItem.createdate)}}
+                                            <i class="fa fa-times hand"
+                                                (click)="clearSingleNotification(notificationItem)"
+                                                aria-hidden="true"></i>
+                                        </span>
+                                        <p class="notification-msg" [innerHTML]="notificationItem.message"></p>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="notification-bg3 ">
+                            <div *ngFor="let notificationItem of notificationItemsAll">
+                                <ng-container *ngIf="notificationItem.category == 'E'">
+                                    <div class="notification-header">
+                                        <span>
+                                            <b>{{getDateString(notificationItem.createdate)}}</b>
+                                        </span>
+                                    </div>
+                                    <div class="notification-content">
+                                        <span class="notification-time pull-right">
+                                            {{getTimeString(notificationItem.createdate)}}
+                                            <i class="fa fa-times hand"
+                                                (click)="clearSingleNotification(notificationItem)"
+                                                aria-hidden="true"></i>
+                                        </span>
+                                        <p class="notification-msg" [innerHTML]="notificationItem.message"></p>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+            <br>
+            <br>
+            <br>
+            <br>
+
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 sticky_btn_actions notifications_btns">
+                <hr>
+                <div class="col-md-6" style="display:inline;">
+                    <p>
+                        <i class="fa fa-circle success-notification" aria-hidden="true"></i>
+                        <span>Success</span>
+                        <i class="fa fa-circle alert-notification" aria-hidden="true"></i>
+                        <span>Alert</span>
+                        <i class="fa fa-circle error-notification" aria-hidden="true"></i>
+                        <span>Error</span>
+                    </p>
+
+                </div>
+                <div class="col-md-6 text-right">
+                    <button (click)="getLastFiveDaysNotifications()" id="view_all" label="view" pbutton="" type="button"
+                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad">View All</span>
+                    </button>
+                    <button (click)="clearAllNotifications()" id="clear_all" label="clear" pbutton="" type="button"
+                        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+                        [disabled]="notifictionCountAll == 0">
+                        <span class="ui-button-text ui-clickable no-pad">Clear All</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="ui-widget-overlay ui-dialog-mask" style="z-index: 100; display:none" id="modal_settings_overlay">
+        </div>
+        <!--modal code-->
+        <div class="ng-tns-c2-2 ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all ui-shadow ng-trigger ng-trigger-dialogState theme-modal position_modal"
+            id="modal_settings">
+            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
+                <!---->
+                <span class="ui-dialog-title ng-tns-c2-2">Theme Settings</span>
+                <!---->
+                <a (click)="hideThemeSettings()" role="button"
+                    class="ng-tns-c2-2 ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all">
+                    <span class="fa fa-fw fa-close closeModal"></span>
+                </a>
+            </div>
+            <div class="ui-dialog-content ui-widget-content ">
+
+                <div class="ui-datatable-tablewrapper has-scrollbar text-center" id="modal_content">
+                    <h5> Available Themes</h5>
+                    <!--   <p class="description text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </p> -->
+
+                    <div class="row no-marg">
+                        <ul class="list-theme">
+                            <li>
+                                <img src="{{assetsPath}}/images/theme-pearl.jpg">
+                                <div _ngcontent-c2="" class="ui-g-12">
+                                    <p-checkbox name="groupname" [(ngModel)]="selectedTheme_0" binary="true"
+                                        label="Pearl" class="theme-check"
+                                        (onChange)="selectCyncTheme('theme_0',$event)"></p-checkbox>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{{assetsPath}}/images/theme-aquatic.jpg">
+                                <div _ngcontent-c2="" class="ui-g-12">
+                                    <p-checkbox name="groupname" [(ngModel)]="selectedTheme_1" binary="true"
+                                        label="Aquatic" class="theme-check"
+                                        (onChange)="selectCyncTheme('theme_1',$event)"></p-checkbox>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{{assetsPath}}/images/theme-verdant.jpg">
+                                <div _ngcontent-c2="" class="ui-g-12">
+                                    <p-checkbox name="groupname" [(ngModel)]="selectedTheme_2" binary="true"
+                                        label="Verdant" class="theme-check"
+                                        (onChange)="selectCyncTheme('theme_2',$event)"></p-checkbox>
+
+
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{{assetsPath}}/images/theme-daylight.jpg">
+                                <div _ngcontent-c2="" class="ui-g-12">
+                                    <p-checkbox name="groupname" [(ngModel)]="selectedTheme_3" binary="true"
+                                        label="Daylight" class="theme-check"
+                                        (onChange)="selectCyncTheme('theme_3',$event)"></p-checkbox>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!---->
+
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions notifications_btns">
+
+                <button (click)="hideThemeSettings()"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel"
+                    label="Cancel" pbutton="" type="button">
+                    <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                </button>
+                <button (click)="applyThemeSettings()"
+                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+                    label="Save" pbutton="" type="button">
+                    <span class="ui-button-text ui-clickable no-pad">Apply</span>
+                </button>
+            </div>
+            <!---->
+        </div>
+
+
+        <!-- session timeout popup start><!-->
+
+        <div *ngIf="showTimeoutPopup" class="ui-widget-overlay ui-dialog-mask" style="z-index: 100"></div>
+
+        <div *ngIf="showTimeoutPopup"
+            class="ng-tns-c2-2 ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all ui-shadow ng-trigger ng-trigger-dialogState bg-white login-to-continue"
+            style="display: block;">
+            <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
+                <!---->
+                <span class="ui-dialog-title ng-tns-c2-2">Login to continue</span>
+                <!---->
+                <a (click)="cyncLogout()" role="button"
+                    class="ng-tns-c2-2 ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all">
+                    <span class="fa fa-fw fa-close closeModal"></span>
+                </a>
+            </div>
+
+
+            <div class="loginform1 text-center ui-dialog-content ui-widget-content">
+                <div class="logo-portion">
+                    <img src="{{headerLogo}}" alt="">
+                    <br>
+                    <!-- <img src=""/> -->
+                </div>
+
+
+                <div class="loginbox">
+
+                    <div class="row-fluid col-md-offset-2 col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                        <br>
+                        <input disabled="true" autofocus="autofocus" [(ngModel)]="Username"
+                            class="login-input form-control" placeholder="Login" type="text">
+                        <br>
+                    </div>
+                    <div class="row-fluid col-md-offset-2 col-lg-8 col-md-12 col-sm-12 col-xs-12">
+                        <input (keyup.enter)="sessionLogin()" class="login-password form-control" [(ngModel)]="Password"
+                            placeholder="Password" onpaste="return false" type="password">
+                        <br>
+                    </div>
+                    <div *ngIf="isErrorMessage">
+                        <label style="color: red"> *Please enter the Password</label>
+                    </div>
+                    <div class="row">
+                        <div class="login-Bdiv">
+                            <button (click)="sessionLogin()" label="Save" pbutton="" type="button"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">Login</span>
+                            </button>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+                <br>
+                <br>
+
+            </div>
+        </div>
+
+
+        <!-- session timeout popup start><!-->
+
+
+
+
+
+
+
+    </main>
+    <footer>
+        <div class="row">
+            <div class="col-lg-2 col-md-2" style="text-align: left;">
+                <span *ngIf="buildInformation !=undefined"> Build No. {{ buildInformation.no }}</span>
+            </div>
+            <div class="col-lg-10 col-md-10">Copyright &copy; {{currentYear}}, NDS Systems, L.C. All
+                rights reserved
+                <span *ngIf="footerInfo?.enable_links_footer">
+                    <!-- Code Changes for CYNCUXT-3540 begin -->
+                    <span *ngIf="footerInfo?.security_link?.length>0"><a href="{{footerInfo?.security_link}}"
+                            target="_blank">Security Policy</a></span>
+                    <span *ngIf="footerInfo?.privacy_link?.length>0">|<a href="{{footerInfo?.privacy_link}}"
+                            target="_blank">Privacy Policy</a></span>
+                    <span *ngIf="footerInfo?.termsandconditions_link?.length>0">|<a
+                            href="{{footerInfo?.termsandconditions_link}}" target="_blank">Terms and
+                            Conditions</a></span>
+                    <span *ngIf="footerInfo?.disclaimers_link?.length>0">|<a href="{{footerInfo?.disclaimers_link}}"
+                            target="_blank">Disclaimers</a></span>
+                    <!-- Code Changes for CYNCUXT-3540 ends -->
+                </span>
+            </div>
+        </div>
+    </footer>
+    <delete-modal-component></delete-modal-component>
+    <custom-error-popup></custom-error-popup>
+    <!-- <script src="../../assets/js/custom.js"></script> -->
+    <!-- Include Footer -->
+</div>

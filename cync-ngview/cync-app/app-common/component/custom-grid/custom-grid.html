@@ -1,0 +1,112 @@
+<div class="cync-grid-search row no-marg">
+  <div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+    <div class="input-group grid-search">
+      <input #sf (keyup)="onKey($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+        aria-describedby="basic-addon3" autocomplete="off">
+      <span (click)="clearSearchBox()" (click)="onKey($event)" class="input-group-addon icon-input-field border-right-none">
+        <i *ngIf="toogleGlobalSearchCloseIcon" class="fa fa-close" aria-hidden="true">
+        </i>
+        <i *ngIf="toogleGlobalSearchIcon" class="fa fa-search" aria-hidden="true">
+        </i>
+      </span>
+      <a *ngIf="gridModel.isAdvanceSearchAvailable" class="m-l-10 adv_search" style="cursor: pointer;" (click)='enableSearch()'>Advanced Search</a>
+    </div>
+  </div>
+  <div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right" *ngIf="!gridModel.onlyListingComponent">
+    <i id="New" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Add New" *ngIf="gridModel.isAddFunctionalityRequired"
+      (click)="goToAdd()" [ngClass]="(isAddPermitted)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+    <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" *ngIf="gridModel.isEditFunctionalityRequired"
+      (click)="goToEdit()" [ngClass]="(toggleEditIcon) ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+    <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" *ngIf="gridModel.isDeleteFunctionalityRequired"
+      (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+    <i *ngIf="gridModel.isReloadFunctionalityRequired" id="Reload" (click)="reLoadRecords()" class="hand fa fa-refresh fa-2x clr_grey f_s_20"
+      aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Reload"></i>
+    <i *ngIf="gridModel.isExportFunctionalityRequired" id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true"
+      data-toggle="tooltip" data-placement="top" title="Export" (click)="showDialogForExport()"></i>
+
+    <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true" *ngIf="gridModel.isMoreIconsRequired">
+      <i id="more" class="hand fa fa-ellipsis-v fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+        title="More"></i>
+    </button>
+
+    <ul class="dropdown-menu no-t-pad grid-menu-dropdown">
+      <li>
+        <a class="hand">Settings</a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+<!-- EXPORT CONFIRMATION POP UP STARTS -->
+<div class="form-group">
+  <p-dialog header={{gridModel.type}} [(visible)]="toogleExportConfirmPoupup" appendTo="body" [modal]="true" width="500" height="auto"
+    [responsive]="true">
+    <div *ngFor="let col of exportColumns">
+      <p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+      <br>
+      <br>
+    </div>
+
+    <p-footer>
+      <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary"
+        pButton icon="fa-check" label="Export" (click)="exportSelectedColumns(exportColumns)">
+        <!-- <span>Export</span> -->
+      </button>
+    </p-footer>
+  </p-dialog>
+</div>
+<!-- EXPORT CONFIRMATION POP UP ENDS -->
+
+<!-- EXPORT WARNING POP UP STARTS -->
+<div class="form-group">
+  <p-dialog header="Error" [(visible)]="toogleExportWarningPopup" appendTo="body" [modal]="true" width="300" height="auto"
+    [responsive]="true">
+    <p style="color:red;">Select columns to export.</p>
+  </p-dialog>
+</div>
+<!-- EXPORT WARNING POP UP ENDS -->
+
+
+<div class="has-scrollbar" id="cync_main_contents" (scroll)="onScroll($event)">
+  <p-dataTable *ngIf="isGridDataLoaded" [scrollable]="false" [value]="gridData" (onRowUnselect)="unSelectChkBox()" (onHeaderCheckboxToggle)="selectAllChkBox()"
+    (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple" [(selection)]="selectedRows" [globalFilter]="sf"
+    (onFilter)="printFilteredData($event)" #dt>
+    <p-column *ngIf="!gridModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+    <p-column *ngFor="let col of gridModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter" [field]="col.field"
+      [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" [style]="{'width':'300px'}">
+      <!-- grid data will come here -->
+    </p-column>
+  </p-dataTable>
+
+  <p-dialog header="Message" appendTo="body" [modal]="true" [(visible)]="showNotificationMsgPopup" showEffect="fade" [width]="600"
+    [responsive]="true">
+    <span [innerHTML]="notificationMessage"></span>
+  </p-dialog>
+</div>
+
+<div class="grid-loader">
+  <div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+  <ng-template #grid_count_template>
+    <p class="recordcount">
+      <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+    </p>
+  </ng-template>
+  <span [hidden]="!showSpinner" class="center">
+    <i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+  </span>
+  <ng-template #record_count_template>
+    <p *ngIf="filterRecordCount != -1 && filterRecordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+      <b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+    </p>
+  </ng-template>
+</div>
+
+<!-- <p *ngIf="gridModel.showTotalRecords" class="recordcount">
+  <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+</p> -->
+
+<!--<p *ngIf="gridModel.showTotalRecords"
+  class="recordcount">
+  <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+</p> -->

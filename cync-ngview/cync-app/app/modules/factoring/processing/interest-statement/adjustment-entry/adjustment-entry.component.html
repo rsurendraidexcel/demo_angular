@@ -1,0 +1,51 @@
+<div mat-dialog-title style="background: #3466b3; border: 1px solid #3466b3;">
+  <label class="top-title">Interest Statement Adjustment Entry </label>
+  <i style="font-size:20px; cursor: pointer; margin: 5px; color: #ffff;" class="fa close-btn pull-right"
+    (click)="cancelClick()">&#xf057;</i>
+</div>
+<div mat-dialog-content>
+  <div class="container-fluid" [formGroup]="adjustmentEentryForm">
+    <div class="ui-g ui-fluid">
+      <label for="fee_calculation_on" class="ui-md-4">Transaction Type <span style="color: red;">*</span></label>
+      <div class="ui-md-8">
+        <select class="customwidth dropdwon-style" formControlName="transaction_type">
+          <option selected value="">Please Select</option>
+          <option *ngFor="let list of transactionTypes" [value]="list.id">{{ list.transaction_type }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <label class="from-label" class="ui-md-4">Transaction Date <span style="color: red;">*</span></label>
+      <div class="ui-md-8">
+        <p-calendar showOn="button" class='cync-png-calendrar' (onMonthChange)="onMonthSelectTransactionDate($event)"
+        formControlName="transaction_date" [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1956:2030" [showIcon]="true" dateFormat="mm/dd/yy" [minDate]="mindate"  [maxDate]="maxdate">
+        </p-calendar>
+      </div>
+    </div>
+    <div class="ui-g ui-fluid">
+      <label class="from-label" class="ui-md-4">Transaction Amount <span style="color: red;">*</span></label>
+      <div class="ui-md-8">
+        <input type="number" class="customwidth text-box-style" formControlName="transaction_amount" autocomplete="off" />
+      </div>
+    </div>
+
+    <div class="ui-g ui-fluid">
+      <label class="from-label" class="ui-md-4">Notes <span style="color: red;">*</span> </label>
+      <div class="ui-md-8">
+        <textarea class="text-area-box-style" autocomplete="off" formControlName="transaction_notes"></textarea>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="btnPanel">
+  <div class="center-btn-grups">
+    <button type="button"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel"
+      (click)="doCancel()" style="margin-right: 5px;">Cancel</button>
+    <button type="button"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn"
+      (click)="submitAdjustmentEntry()">Save</button>
+  </div>
+  <div>

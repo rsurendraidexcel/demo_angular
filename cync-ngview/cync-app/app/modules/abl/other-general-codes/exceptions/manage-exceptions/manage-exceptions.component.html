@@ -1,0 +1,81 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Exception - {{currentAction}}</h3>
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="exceptionForm" data-parsley-validate novalidate (ngSubmit)="saveExceptionDetail(exceptionForm.value,exceptionForm.valid,false)">
+                <div class="has-scrollbar" id="cync_main_contents">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-4">
+                            <label>Exception Description
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" formControlName="display_label" [ngClass]="displayCssField('display_label')" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted">
+                            <cync-input-field-error-msg [control]="getFormControl('display_label')" labelName="Exception Description">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad  col-lg-4">
+                            <label>Exception Notes
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" formControlName="description" [ngClass]="displayCssField('description')" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted">
+                            <cync-input-field-error-msg [control]="getFormControl('description')" labelName="Exception Notes">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-2">
+                            <label class="mandatory">Exception Sign</label>
+                            <select formControlName="operator" class="form-control ng-submitted">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let operator of formDropDowns.operators" [ngValue]="operator.value">
+                                    {{operator.display}} </option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-2">
+                            <label class="mandatory">Value Type</label>
+                            <select formControlName="value_type" class="form-control ng-submitted">
+                                <option [ngValue]="null">Select</option>
+                                <option *ngFor="let val of formDropDowns.value_types" [ngValue]="val.value">
+                                    {{val.display}} </option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-2">
+                            <label>Exception Value</label>
+                            <input type="text" formControlName="exception_value" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted">
+                        </div>
+                        <!-- <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-2">
+                            <label>System</label>
+                            <input type="text" formControlName="system_defined" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted"
+                                placeholder="" value="">
+                        </div> -->
+                        <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2 m-t-10">
+                            <div class="help mandatory">&nbsp;</div>
+                            <p-checkbox _ngcontent-c2="" binary="true" formControlName="add_to_all_clients" inputid="add_to_all_clients" label="Auto All Clients"
+                                name="group2" value="true" class="ng-untouched ng-pristine ng-valid">
+                            </p-checkbox>
+                            <label>&nbsp;</label>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-22 text-right sticky_btn_actions">
+                            <hr>
+                            <button (click)="navigateToExceptionListing()" id="action_back" label="Cancel" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" id="action_save_new" (click)="saveExceptionDetail(exceptionForm.value,exceptionForm.valid,true)"
+                                label="SaveNew" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" id="action_save" label="Save" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                            </button>
+
+                            <!-- <button [disabled]="!exceptionForm.valid || exceptionForm.pristine" *ngIf="lenderExceptionId != 'add'" id="action_save" label="Save" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">Update</span>
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

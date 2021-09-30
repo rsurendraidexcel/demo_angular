@@ -1,0 +1,5 @@
+<select class="form-control" (change)="onChangeFileClassification($event)" >
+  <option  >Select</option>
+  <option [selected]="list.id == fileClassficationId" *ngFor="let list of fileValues" [value]='list.id'>
+    {{list.name}}</option>
+</select>

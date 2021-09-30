@@ -1,0 +1,103 @@
+
+        
+
+<div class="app-body-container bg-white currency-defination-custom" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container" > 
+                    <div class="close-btn-dash pull-right text-right top-action-btns"> 
+                        <!-- <div ng-click="hide_app_body()" class="pull-right hand"><i class="fa fa-times fa-1x f_s_16" aria-hidden="true"></i></div>  -->
+                      <!--   <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress" aria-hidden="true"></i></div>  -->
+                    </div> 
+                    <div class="pad-inner"> 
+                        <h3 class="no-m-bt">Currency Definition</h3> 
+                        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> --> 
+                        <div class="brder-1 p-t-32"> 
+                            <div class="has-scrollbar" id="main_contents"> 
+                                <div class="form-group"> 
+                                    <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2"> 
+                                        <label class="mandatory" for="currency_code">Currency<span class="required">*</span></label>
+
+<input [disabled]="isDisable" [(ngModel)]="currencyDefinition.currencyName" type='text' [ngClass]="(isRequiredCurrency==true)?  'form-control':'form-control has-error'" (focusout)="focusOutFunctionName('currencyName')"> 
+
+                                    </div>    
+                                    <div class="col-xs-12 col-sm-6 col-md-1 ad-bt-pad  col-lg-1"> 
+                                        <label>Code<span class="required">*</span></label> 
+                                        <input [(ngModel)]="currencyDefinition.currencyCode" type="text" maxlength="3" [disabled]="isDisable" [ngClass]="(isRequiredCurrencyCode==true)?  'form-control':'form-control has-error'" placeholder="" (focusout)="focusOutFunctionName('currencyCode')"> 
+                                    </div> 
+                                    <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2"> 
+                                        <label>Description<span class="required">*</span></label> 
+                                        <input [disabled]="isDisable" [(ngModel)]="currencyDefinition.currencyDescription"  type="text" [ngClass]="(isRequiredCurrencyDesc==true)?  'form-control':'form-control has-error'" placeholder="" (focusout)="focusOutFunctionName('currencyDesc')"> 
+                                    </div> 
+                                    <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2"> 
+                                        <label>Country<span class="required">*</span> </label> 
+                                        
+
+
+                                        <input *ngIf="isDisable && currencyDefinition.ccyCountry != undefined" [disabled]="isDisable" [(ngModel)]="currencyDefinition.ccyCountry.countryName" type='text' class="form-control" /> 
+
+                                        <input *ngIf="!isDisable" [(ngModel)]="countryName" [ngClass]="(isRequiredCurrencyCntry==true)?  'form-control':'form-control has-error'" type="text" ng2-auto-complete [source]="arrayCountries" display-property-name="countryName" value-property-name="id" [list-formatter]="autocompleteListFormatter" (focusout)="focusOutFunctionName('currencyCntry')" (valueChanged)="selectedCountry($event)"/>
+
+
+                                    </div> 
+                                    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2"> 
+                                        <label>Precision</label> 
+                                        <input *ngIf="currencyDefinition.status != 'new'" [(ngModel)]="currencyDefinition.currencyDecimalPrecision" OnlyNumber="true" maxlength="3" class="form-control" placeholder="">
+                                         <input *ngIf="currencyDefinition.status == 'new'"  OnlyNumber="true" value="2" maxlength="3" class="form-control" placeholder=""> 
+                                    </div> 
+                                    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2"> 
+                                        <label>Rounding Unit</label> 
+                                        <input [(ngModel)]="currencyDefinition.currencyRoundingUnit" OnlyNumber="true" maxlength="5" class="form-control" placeholder=""> 
+                                    </div> 
+                                    <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3"> 
+                                        <label class="mandatory">Interest Method</label> 
+<select class="form-control" [(ngModel)]="currencyIntMethod">
+  <option [ngValue]="null">Select</option>
+  <option *ngFor="let c of bindInterestMethodList" [ngValue]="c.interestmethods.id">{{c.interestmethods.intMethName}}</option>
+</select>
+
+
+
+                                    </div> 
+                                    <!-- <label class="col-xs-12 col-sm-6 col-md-12">Currency Preferences</label> --> 
+                                    <div class="col-xs-12 col-sm-12 col-md-12 p_b_10 semi_bold">Currency Preferences</div>
+                                    <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2"> 
+                                     <label class="mandatory" for="rounding_pref">Rounding Preferences<span class="required">*</span></label>
+<select class="form-control" [(ngModel)]="currRoundPrefs" >
+ <!--  <option [ngValue]="null">Select</option> -->
+  <option *ngFor="let c of roundingPrefList" [ngValue]="c.roundingPreferences.id">{{c.roundingPreferences.name}}</option>
+</select>
+
+                </div> 
+                                    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2"> 
+                                        <label>Cut-off Time</label> 
+                                         <div class="form-group cutOff-date" style="margin-top: 1px!important;">
+                                                       
+                <div class='ui-inputtext-cutoff input-group date' id='datetimepicker3'>
+                                    <p-calendar timeOnly="true" showSeconds="true"
+                                     [(ngModel)]="currencyDefinition.currencyCutoffTime" ></p-calendar> 
+                                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                          
+        </div>                             
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2"> 
+                                   
+                                <label class="mandatory">Format Mask<span class="required">*</span></label> 
+<select  class="form-control" [(ngModel)]="currFormatMask" >
+ <!--  <option [ngValue]="null">Select</option> -->
+  <option *ngFor="let c of formatmaskList" [ngValue]="c.formatmasks.id">{{c.formatmasks.formatMaskName}}</option>
+</select>
+
+
+                                    </div> 
+                                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions"> 
+                                        <hr> 
+                                        <button (click)="navigateToHome()" label="Click" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button> 
+                                        <button (click)="save();" label="Click" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Save</span></button> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                        </div> 
+                    </div> 
+                </div> 
+       

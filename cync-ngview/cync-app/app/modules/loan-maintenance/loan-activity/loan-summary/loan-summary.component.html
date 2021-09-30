@@ -1,0 +1,50 @@
+<div class="app-body-container bg-white loan-enquiry-main-dev" id="cync_app-body-container">
+	<div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+	<div class="pad-inner" [hidden]="!isDataLoaded">
+		<div class="row">
+			<div class="col-md-6 loan-equiry-heading">
+				<h3>Loan Summary</h3>
+			</div>
+			<div class="col-md-6 loan-equiry-export-button text-right">
+				<label>
+					<button class="export-button" *ngIf="isExportButtonDisable()" (click)="exportExcel()" title="Export to Excel">Export</button>
+				</label>
+			</div>
+		</div>
+		<div class="p-t-16" (mouseleave)="closeRowDetailsPopup()">
+			<div class="has-scrollbar row" id="loan_enquiry_grid">
+				<ag-grid-angular 
+					#agGrid 
+					style="width: 98%; height: calc(100vh - 290px);" 
+					id="loanEnquiryAGGrid" 
+					class="ag-theme-balham"
+					[floatingFilter]="true" 
+					[columnDefs]="columnDefs" 
+					[defaultColDef]="defaultColDef" 
+					[suppressRowClickSelection]="true"
+					[rowSelection]="rowSelection" 
+					[rowData]="rowData" 
+					(gridReady)="onGridReady($event)" 
+					[gridOptions]="gridOptions" 
+					[statusBar]="statusBar"
+					[excelStyles]="excelStyles"
+					[frameworkComponents]="frameworkComponents"
+					(rowClicked)="onRowClicked($event)"
+					(cellMouseOver)="cellMouseOver($event)"
+					(columnVisible)="onGridColumnsChanged($event)"
+					(dragStopped)="onGridColumnsChanged($event)"
+				>
+				</ag-grid-angular>
+			</div>
+			<div id="row_details_popup_div" *ngIf="rowDataObject">
+				<span id='row_details_close' (click)='closeRowDetailsPopup();' title="Close">x</span>
+				<table id="row_details_table">
+					<tr *ngFor="let data of rowDataObject | keyvalue: keepOriginalOrder">
+						<td class="row_details_td_key">{{ data.key }}: </td>
+						<td>{{ data.value }}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>

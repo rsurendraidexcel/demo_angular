@@ -1,0 +1,30 @@
+<div *ngIf="params.type === 'dropdown'" class="select-dropdown-wrapper icon">
+  <select [attr.disabled]="enable ? true: null" class="cync-dropdown-style" [(ngModel)]="ngModuleData">
+    <option value=null>Please Select</option>
+    <option *ngFor="let opt of options" value="{{opt.value}}">{{opt.display}}</option>
+  </select>
+</div>
+
+<div *ngIf="params.type === 'checkbox'">
+  <input [attr.disabled]="enable" type="checkbox" class="icon" [checked]="ngModuleData">
+</div>
+
+<p-calendar [disabled]="enable" *ngIf="params.type === 'dateinput'" showOn="button" appendTo="body"
+  [(ngModel)]="ngModuleData" [monthNavigator]="true" [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true"
+  dateFormat="mm/dd/yy" [inputStyle]="{'width':'216px', 'height':'24px'}">
+</p-calendar>
+
+<div *ngIf="params.type === 'link'">
+  <a [attr.disabled]="enable" href="{{ngModuleData}}">{{ngModuleData}}</a>
+</div>
+
+<div *ngIf="params.type === 'button'">
+  <button [ngStyle]="buttonStyle" (click)="buttonFn($event)">{{this.buttonText}}</button>
+</div>
+
+<div *ngIf="params.type === 'inputbox'">
+  <input *ngIf="inputType === 'text'" type="text" class="icon">
+  <input *ngIf="inputType === 'email'" [disabled]="enable" type="text" class="icon">
+  <input *ngIf="inputType === 'password'" [disabled]="enable" type="text" class="icon">
+  <input *ngIf="inputType === 'number'" [disabled]="enable" type="text" class="icon">
+</div>

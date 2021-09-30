@@ -1,0 +1,1588 @@
+<div *ngIf="gridModel.type == 'Collateral Reserves'">
+  <div class="row no-marg">
+    <div class="col-md-4 col-sm-12 col-xs-12 no-marg" style="padding:0;">
+      <label class="">Select Collateral Type</label>
+      <select class="form-control" [(ngModel)]="searchData.selectCollateralType"
+        (change)="changeCollateralType(searchData)">
+        <option [ngValue]="undefined" selected>All</option>
+        <ng-container *ngFor="let ct of selectFromCollateral">
+          <option *ngIf="ct != '' && ct != null" [ngValue]="ct">{{ct}}</option>
+        </ng-container>
+      </select>
+    </div>
+  </div>
+  <br />
+</div>
+
+<div class="cync-grid-search row no-marg">
+  <div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+    <select *ngIf="gridModel.type == 'Dilution Analysis'"
+      class="ui-inputtext ui-corner-all ui-state-default ui-widget w_300 search-p-l" [(ngModel)]="selectDilution"
+      (change)="dilutionAnalysis(selectDilution)">
+      <option value="">Select Client</option>
+      <ng-container *ngFor="let clients of clientList">
+        <option *ngIf="clients.client_name != '' && clients.client_name != null" [ngValue]="clients.id">
+          {{clients.client_name}}</option>
+      </ng-container>
+    </select>
+    <div [hidden]="gridModel.type != 'Dilution Analysis' && gridModel.type != 'Exception Reporting'"
+      class="input-group grid-search">
+
+      <input (keyup)="onKey($event)" #gb placeholder="Search Here" [(ngModel)]="searchValue" type="text"
+        class="form-control search-input-text" aria-describedby="basic-addon3" autocomplete="off">
+      <span (click)="clearSearchBox()" (click)="onKey($event)"
+        class="input-group-addon icon-input-field border-right-none">
+        <i *ngIf="isCloseBox==true" class="fa fa-close" aria-hidden="true">
+        </i>
+        <i *ngIf="isSearchBox==true" class="fa fa-search" aria-hidden="true">
+        </i>
+      </span>
+
+      <a *ngIf="gridModel.type == 'Audit Logs' || gridModel.type == 'Automated Task Logs' || gridModel.type == 'Document Compliance Reporting' ||gridModel.type == 'Watch List' "
+        class="m-l-10 adv_search" style="cursor: pointer;" (click)='enableSearch()'>Advanced Search</a>
+    </div>
+
+  </div>
+
+  <div class="col-md-6 form-inline">
+
+    <div class="col-md-5">
+      <p-calendar *ngIf="gridModel.type == 'Exchange Rate History'" [monthNavigator]="true" placeholder="From Date"
+        [yearNavigator]="true" yearRange="2000:2030" [(ngModel)]="enableFromDate"
+        (onSelect)="onSelectFromDate(enableFromDate)"></p-calendar>
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5">
+      <p-calendar ngClass *ngIf="gridModel.type == 'Exchange Rate History'" [monthNavigator]="true"
+        placeholder="To Date" [yearNavigator]="true" yearRange="2000:2030" [(ngModel)]="enableToDate"
+        (onSelect)="onSelectToDate(enableToDate)"></p-calendar>
+    </div>
+  </div>
+
+  <div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right"
+    *ngIf="gridModel.type != 'Audit Logs' && gridModel.type != 'Automated Task Logs' && gridModel.type != 'Notification Logs' && gridModel.type != 'Notification Logs'">
+
+    <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip"
+      data-placement="top" title="Add New"
+      *ngIf="gridModel.type != 'System Parameters' && gridModel.type != 'ABL GL Transactions' && gridModel.type != 'Exchange Rate History' && gridModel.type != 'Tickler Tasks' && gridModel.type != 'Watch List' && gridModel.type != 'Exception Reporting' && gridModel.type != 'Dilution Analysis' && gridModel.type != 'Document Compliance Reporting' && gridModel.type != 'GL Setup' && gridModel.type != 'Collateral Reserves'"
+      (click)="goToAdd()"
+      [ngClass]="(isDisableAdd)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled'"></i>
+    <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit"
+      *ngIf="gridModel.type != 'System Parameters' && gridModel.type != 'ABL GL Transactions' && gridModel.type != 'Exchange Rate History' && gridModel.type != 'Tickler Tasks' && gridModel.type != 'Watch List'&& gridModel.type != 'Exception Reporting' && gridModel.type != 'Dilution Analysis' && gridModel.type != 'Document Compliance Reporting'&& gridModel.type != 'Collateral Reserves'"
+      (click)="goToEdit()"
+      [ngClass]="(isDisableEdit)? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled'"></i>
+    <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete"
+      *ngIf="gridModel.type != 'System Parameters' && gridModel.type != 'ABL GL Transactions' && gridModel.type != 'Exchange Rate History' && gridModel.type != 'Tickler Tasks' && gridModel.type != 'Watch List' && gridModel.type != 'Exception Reporting' && gridModel.type != 'Dilution Analysis' && gridModel.type != 'Document Compliance Reporting'&& gridModel.type != 'Collateral Reserves'"
+      (click)="delete()"
+      [ngClass]="(isDisableDelete)? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled'"></i>
+    <i id="Reload" (click)="reLoadRecords()" class="hand fa fa-refresh fa-2x clr_grey f_s_24" aria-hidden="true"
+      data-toggle="tooltip" data-placement="left" title="Reload"
+      *ngIf="gridModel.type == 'Dilution Analysis' || gridModel.type == 'Tickler Tasks'|| gridModel.type == 'Watch List'||gridModel.type == 'Exception Reporting' || gridModel.type == 'Dilution Analysis' || gridModel.type == 'Document Compliance Reporting'||gridModel.type == 'Exception Reporting'"></i>
+
+    <!-- <i id="Customize" class="hand fa fa-cog fa-2x clr_grey f_s_24" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Customize" *ngIf="gridModel.type != 'Exchange Rate History'"> -->
+    <!-- <p-multiSelect [options]="columnOptions" [(ngModel)]="cols"></p-multiSelect> -->
+
+    <!-- </i> -->
+    <i *ngIf="gridModel.type == 'Exchange Rate' && gridModel.type != 'Exchange Rate History'"
+      (click)="navigateToHistory()" id="History" class="hand fa fa-history fa-2x  clr_grey f_s_23" aria-hidden="true"
+      data-toggle="tooltip" data-placement="left" title="Exchange Rate History"></i>
+    <i *ngIf="gridModel.type != 'Rate Type' && gridModel.type != 'Currency Holiday' && gridModel.type != 'Exchange Rate History'&& gridModel.type != 'Collateral Reserves'"
+      id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip"
+      data-placement="top" title="Export" (click)="showDialogForExport()"></i>
+  </div>
+  <!--Document Compliance Reporting Start-->
+  <div>
+    <div class="form-group" *ngIf="isSearch && gridModel.type == 'Document Compliance Reporting'">
+
+      <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2 no_marg no_pad">
+        <label class="mandatory">Client
+          <span class="required">*</span>
+        </label>
+        <select class="form-control" [(ngModel)]="searchReport.searchClientName">
+          <option value="">All</option>
+          <ng-container *ngFor="let clientsName of clientNameList">
+            <option
+              *ngIf="clientsName.client_name != '' && clientsName.client_name != null && clientsName.client_name !=undefined "
+              [ngValue]="clientsName.id">{{clientsName.client_name}}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+        <label class="mandatory">Reporting Parameters
+          <span class="required">*</span>
+        </label>
+        <select class="form-control" [(ngModel)]="searchReport.searchReportingParameters">
+          <option value="">All</option>
+          <option value="Notified But Not Past Due Date">Notified But Not Past Due Date</option>
+          <option value="Notified But Past Due Date">Notified But Past Due Date</option>
+          <option value="5 days before due date">5 days before due date</option>
+          <option value="10 days before due date">10 days before due date</option>
+          <option value="Non Compliant last 30 days">Non Compliant last 30 days</option>
+          <option value="Non Compliant">Non Compliant</option>
+        </select>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2 no_marg no_pad">
+        <label class="mandatory">Classification
+          <span class="required">*</span>
+        </label>
+        <select class="form-control" [(ngModel)]="searchReport.searchClassification">
+          <option value="">All</option>
+          <ng-container *ngFor="let clients_classification of classificationList">
+            <option *ngIf="clients_classification.name != '' && clients_classification.name != null"
+              [ngValue]="clients_classification.id">{{clients_classification.name}}</option>
+          </ng-container>
+        </select>
+      </div>
+
+      <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+        <label class="mandatory" for="currency_code">From Due Date</label>
+        <p-calendar class="form-control" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="2000:2030" [(ngModel)]="searchReport.searchFromDueDate"></p-calendar>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+        <label class="mandatory" for="currency_code">To Due Date</label>
+        <p-calendar class="form-control" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="2000:2030" [(ngModel)]="searchReport.searchToDueDate"></p-calendar>
+      </div>
+      <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+        <br>
+        <button (click)="documentComplianceReportingSearch(searchReport)" id="action_save" label="Search" pbutton=""
+          type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+          <span class="ui-button-text ui-clickable no-pad">Search</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <!--Document Compliance Reporting End-->
+</div>
+
+<div class="form-group">
+  <p-dialog header={{gridModel.type}} [(visible)]="display1" appendTo="body" [modal]="true" width="500" height="auto"
+    [responsive]="true">
+    <div *ngFor="let col of exportColArray; let i = index; ">
+      <div *ngFor=" let selectedValue of checked; let index = index; trackBy:trackByIndex; ">
+        <div *ngIf="i == index">
+          <p-checkbox binary="true" [(ngModel)]="checked[index]" label={{col}}
+            (onChange)="selectColForExport($event,checked)"></p-checkbox>
+          <br>
+          <br>
+        </div>
+      </div>
+    </div>
+    <p-footer>
+      <button id="Export" type="button" pButton icon="fa-check" label="Export"
+        (click)="exportToCsv(exportSelectedCol)"></button>
+    </p-footer>
+  </p-dialog>
+</div>
+
+<div class="form-group">
+  <p-dialog header="Error" [(visible)]="display2" appendTo="body" [modal]="true" width="300" height="auto"
+    [responsive]="true">
+    <p style="color:red;">Select columns to export.</p>
+    <!-- <button type="button" pButton icon="fa-check" label="Close" (click)="closeDialogBox()"></button> -->
+  </p-dialog>
+</div>
+
+<div class="has-scrollbar" id="main_contents" (scroll)="onScroll($event)">
+  <!-- Audit Logs Start-->
+  <div class="form-group p-t-16" id="adv_search" *ngIf="isSearch && gridModel.type == 'Audit Logs'">
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2 no_marg no_pad">
+      <label class="mandatory">Client Name</label>
+      <select class="form-control" [(ngModel)]="searchData.searchClient">
+        <option value="">All</option>
+        <ng-container *ngFor="let clients of clientList">
+          <option *ngIf="clients.client_name != '' && clients.client_name != null" [ngValue]="clients.id">
+            {{clients.client_name}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+      <label class="mandatory">Action</label>
+      <select class="form-control" [(ngModel)]="searchData.searchAction">
+        <option value="">All</option>
+        <option value="create">Create</option>
+        <option value="update">Update</option>
+        <option value="delete">Delete</option>
+
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+      <label class="mandatory">Program</label>
+      <select class="form-control" [(ngModel)]="searchData.searchProgram">
+        <option value="">All</option>
+        <ng-container *ngFor='let key of customKeyArr'>
+          <option value="{{key.key}}">{{key.value}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+      <label class="mandatory">User</label>
+      <select class="form-control" [(ngModel)]="searchData.searchUser">
+        <option value="">All</option>
+        <ng-container *ngFor="let users of userList">
+          <option *ngIf="users.login != '' && users.login != null" [ngValue]="users.id">{{users.user_name}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+      <label class="mandatory" for="currency_code">From Date</label>
+      <p-calendar class="form-control" readonlyInput="null" [showIcon]="true" [monthNavigator]="true"
+        [yearNavigator]="true" yearRange="2000:2030" [maxDate]="auditLogAdvanceSearchMaxDate"
+        [(ngModel)]="searchData.searchFrmDate"></p-calendar>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+      <label class="mandatory" for="currency_code">To Date</label>
+      <p-calendar class="form-control" readonlyInput="null" [showIcon]="true" [monthNavigator]="true"
+        [yearNavigator]="true" yearRange="2000:2030" [maxDate]="auditLogAdvanceSearchMaxDate"
+        [(ngModel)]="searchData.searchToDate"></p-calendar>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad-15 col-lg-2">
+      <label class="mandatory">Other Info</label>
+      <input type="text" style="width: 100% !important; padding: 4px 8px !important;" [(ngModel)]="searchData.info_one">
+    </div>
+
+    <div class="col-md-12 col-lg-12 text-right pull-right">
+      <div class="btn-group">
+        <button (click)="enableSearchCancel()" id="action_cancel" label="Cancel" pbutton="" type="button"
+          class="btn-group btn-cancel ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn m-r-15">
+          <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+        </button>
+        <button (click)="auditLogSearch(searchData,false)" id="action_save" label="Save" pbutton="" type="button"
+          class="btn-group ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+          <span class="ui-button-text ui-clickable no-pad">Search</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Audit Task Logs End-->
+  <!-- Dilution Analysis Start-->
+  <div *ngIf="gridModel.type == 'Dilution Analysis'"
+    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-left filter-button p-t-16">
+    <span>Statistical Summary</span> &nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+  <!-- Dilution Analysis End-->
+
+
+  <!-- Automated Task Logs Start-->
+  <div class="form-group" *ngIf="isSearch && gridModel.type == 'Automated Task Logs'">
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-3">
+      <label class="mandatory" for="currency_code">Task Name</label>
+      <input *ngIf="!isDisable" [(ngModel)]="searchData.taskName" type="text" ng2-auto-complete [source]="taskNameArray"
+        display-property-name="taskName"
+        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched task-name" />
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory" for="currency_code">From Date</label>
+      <br>
+      <p-calendar class="form-control" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+        yearRange="2000:2030" [(ngModel)]="searchData.searchFrmDate_1"></p-calendar>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory" for="currency_code">To Date</label>
+      <br>
+      <p-calendar class="form-control" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+        yearRange="2000:2030" [(ngModel)]="searchData.searchToDate_1"></p-calendar>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Status</label>
+      <select class="form-control" [(ngModel)]="searchData.automatedStatus">
+        <option value="">All</option>
+        <option value="Success">Success</option>
+        <option value="Failure">Failure</option>
+
+      </select>
+    </div>
+    <div class="right-btn col-xs-12 col-sm-6 col-md-2 col-lg-3">
+      <div>
+        <label class="mandatory white-pre"> </label>
+      </div>
+      <div>
+        <div class="pull-left">
+          <button (click)="automatedLogSearch(searchData,false)" id="action_save" label="Save" pbutton="" type="button"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn m-r-15">
+            <span class="ui-button-text ui-clickable no-pad">Search</span>
+          </button>
+        </div>
+        <div class="pull-left">
+          <button (click)="enableSearchCancel()" id="action_cancel" label="Cancel" pbutton="" type="button"
+            class="btn-cancel ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Automated Task Logs End-->
+  <!-- Tickler Tasks Start -->
+  <div *ngIf="gridModel.type == 'Tickler Tasks'"
+    class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right filter-button p-t-32">
+    <span>Completion Date:
+      <strong>{{currentDate}}</strong>
+    </span> &nbsp;&nbsp;&nbsp;&nbsp;
+    <button (click)="OnClickCompleteTasks()" id="action_save" label="Save" pbutton="" type="button"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+      <span class="ui-button-text ui-clickable no-pad">Complete Tasks</span>
+    </button>
+  </div>
+  <!-- Tickler Tasks End -->
+  <!-- Watch List Start -->
+
+  <div *ngIf="isSearch && gridModel.type == 'Watch List'" class="form-group">
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Exception Description</label>
+      <select class="form-control" [(ngModel)]="searchData.searchException">
+        <option [ngValue]="undefined" selected>All</option>
+        <ng-container *ngFor="let desc of exceptionDescList.exception_descriptions">
+          <option *ngIf="desc.exception_description != '' && desc.exception_description != null" [ngValue]="desc.id">
+            {{desc.exception_description}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-1 ad-bt-pad col-lg-1">
+      <br>
+      <strong>Period</strong>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Month</label>
+      <select [ngClass]="(isEnteredMonth)?'form-control':'form-control has-error'" [(ngModel)]="searchData.searchMonth"
+        (change)="checkRequiredMonth(searchData)">
+        <option [ngValue]="undefined" selected disabled="true">Select</option>
+        <ng-container *ngFor="let desc of exceptionDescList.months">
+          <option *ngIf="desc.month != '' && desc.month != null" [ngValue]="desc.id"> {{desc.month}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Year</label>
+      <select [ngClass]="(isEnteredYear)?'form-control':'form-control has-error'" [(ngModel)]="searchData.searchYear"
+        (change)="checkRequiredYear(searchData)">
+        <option [ngValue]="undefined" selected disabled="true">Select</option>
+        <ng-container *ngFor="let desc of exceptionDescList.years;index as i">
+          <option> {{exceptionDescList.years[i]}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label for="currency_code">Client Total</label>
+      <input type="text"
+        class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+        value={{exceptionDescList.client_total}} disabled>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <br>
+      <button (click)="WatchListSearch(searchData)" id="action_cancel" label="Cancel" pbutton="" type="button"
+        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+        <span class="ui-button-text ui-clickable no-pad">Search</span>
+      </button>
+    </div>
+
+  </div>
+
+
+  <!-- Watch List End-->
+  <!-- Exception Reporting Start-->
+  <div *ngIf="gridModel.type == 'Exception Reporting'" class="form-group">
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Exceptions</label>
+      <select class="form-control" [(ngModel)]="searchData.reportingException">
+        <option [ngValue]="undefined" selected>All</option>
+        <ng-container *ngFor="let descr of reportingDescList">
+          <option [ngValue]="descr.id">{{descr.display_label}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Column Type</label>
+      <select class="form-control" [(ngModel)]="searchData.reportingColumn" (change)="checkRequiredColumn(searchData)">
+        <option [ngValue]="undefined" selected disabled="true">Select</option>
+        <ng-container *ngFor="let desc of reportingColumnList">
+          <option [ngValue]="desc">{{desc}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div *ngIf="disableSelectRange" class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Select Range</label>
+      <select class="form-control" [(ngModel)]="searchData.selectRange" (change)="checkRequiredRange(searchData)">
+        <option [ngValue]="undefined" selected disabled="true">Select</option>
+        <ng-container *ngFor="let descrt of selectRangeList">
+          <option [ngValue]="descrt">{{descrt}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div *ngIf="disableToYear" class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">From Year</label>
+      <select class="form-control" [(ngModel)]="searchData.selectFromYear">
+        <option [ngValue]="undefined" selected disabled="true">Select</option>
+        <ng-container *ngFor="let descy of selectFromList.from">
+          <option [ngValue]="descy">{{descy}}</option>
+        </ng-container>
+      </select>
+    </div>
+    <div *ngIf="disableToYear" class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">To Year</label>
+      <select class="form-control" [(ngModel)]="searchData.selectToYear">
+        <option [ngValue]="undefined" selected disabled="true">Select</option>
+        <ng-container *ngFor="let descty of selectFromList.to">
+          <option [ngValue]="descty">{{descty}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div *ngIf="disableYear" class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <label class="mandatory">Year</label>
+      <select class="form-control" [(ngModel)]="searchData.selectYear">
+        <option [ngValue]="undefined" selected disabled="true">Select</option>
+        <ng-container *ngFor="let des of selectYearList.from">
+          <option [ngValue]="des">{{des}}</option>
+        </ng-container>
+      </select>
+    </div>
+
+    <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+      <br>
+      <button (click)="generateExceptionReporting(searchData)" id="action_cancel" label="Cancel" pbutton=""
+        type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+        <span class="ui-button-text ui-clickable no-pad">Generate</span>
+      </button>
+    </div>
+
+
+  </div>
+
+  <!-- Exception Reporting End-->
+  <div class="clearfix"></div>
+  <div *ngIf="gridModel.type == 'Currency Holiday'" class="form-group">
+    <p-dialog header="Modify Weekends" [(visible)]="display" appendTo="body" [modal]="true">
+      <p-checkbox binary="true" [(ngModel)]="holidayWeekend0" (onChange)="weekendDayChange('Sunday',$event)"
+        value="Sunday" label="Sunday"></p-checkbox>
+      <br>
+      <br>
+      <p-checkbox binary="true" (onChange)="weekendDayChange('Monday',$event)" [(ngModel)]="holidayWeekend1"
+        value="Monday" label="Monday"></p-checkbox>
+      <br>
+      <br>
+      <p-checkbox binary="true" (onChange)="weekendDayChange('Tuesday',$event)" [(ngModel)]="holidayWeekend2"
+        value="Tuesday" label="Tuesday"></p-checkbox>
+      <br>
+      <br>
+      <p-checkbox binary="true" (onChange)="weekendDayChange('Wednesday',$event)" [(ngModel)]="holidayWeekend3"
+        value="Wednesday" label="Wednesday"></p-checkbox>
+      <br>
+      <br>
+      <p-checkbox binary="true" (onChange)="weekendDayChange('Thursday',$event)" [(ngModel)]="holidayWeekend4"
+        value="Thursday" label="Thursday"></p-checkbox>
+      <br>
+      <br>
+      <p-checkbox binary="true" (onChange)="weekendDayChange('Friday',$event)" [(ngModel)]="holidayWeekend5"
+        value="Friday" label="Friday"></p-checkbox>
+      <br>
+      <br>
+      <p-checkbox binary="true" (onChange)="weekendDayChange('Saturday',$event)" [(ngModel)]="holidayWeekend6"
+        value="Saturday" label="Saturday"></p-checkbox>
+      <p-footer>
+        <button (click)="OnClickModifyWeekend()" id="action_save" pbutton="" type="button"
+          class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+          <span class="ui-button-text ui-clickable no-pad">Apply</span>
+        </button>
+      </p-footer>
+    </p-dialog>
+    <p-dialog id="viewCalendar" [(visible)]="viewCalenderDisplay">
+      <div class="row text-center" style="width: 750px;">
+        <div class="col-md-4">
+          <div class="btn-group">
+            <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+              (viewDateChange)="skipWeekends('back')">
+              Previous
+            </div>
+            <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+              Today
+            </div>
+            <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+              (viewDateChange)="skipWeekends('forward')">
+              Next
+
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-primary" (click)="view = 'month'" [class.active]="view === 'month'">
+                Month
+              </div>
+              <div class="btn btn-primary" (click)="view = 'week'" [class.active]="view === 'week'">
+                Week
+              </div>
+              <div class="btn btn-primary" (click)="view = 'day'" [class.active]="view === 'day'">
+                Day
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events"
+            [excludeDays]="excludeDays">
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view *ngSwitchCase="'week'" [excludeDays]="excludeDays" [viewDate]="viewDate"
+            [events]="events">
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events">
+          </mwl-calendar-day-view>
+        </div>
+
+      </div>
+    </p-dialog>
+    <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 p_l_0_label">
+      <label class="mandatory">Currency
+        <span class="required">*</span>
+      </label>
+      <select [ngClass]="(isSelectedCurrency)?'form-control':'form-control has-error'" [(ngModel)]="searchCurrency"
+        (change)="requiredCheckCurrency()">
+
+        <option disabled [ngValue]="null">Select</option>
+        <option *ngFor="let currency of currencyDetailsApproved" [ngValue]="currency.id">{{currency.currencyName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1 md-p-b-20">
+      <label class="help mandatory">Year
+        <span class="required">*</span>
+      </label>
+      <input maxlength="4" (focusout)="requiredCheckYear()" type="text" [(ngModel)]="searchYear"
+        [ngClass]="(isEnteredYear)?'form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched':'form-control has-error'"
+        placeholder="">
+    </div>
+    <button (click)="loadCurrencyHolidays()" pbutton="" type="button"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad">Load</span>
+    </button>
+    <button (click)="resetCurrencyHolidaySearch()" pbutton="" type="button"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad">Reset</span>
+    </button>
+    <button (click)="currencyViewCalender()" pbutton="" type="button" style="background-color: #fff !important"
+      class="currency-summary-btns ui-button-secondary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad calenderBtn">View Calendar</span>
+    </button>
+    <button (click)="showDialog()" style="background-color: #fff !important" pbutton="" type="button"
+      class="currency-summary-btns ui-button-secondary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad calenderBtn">Modify Weekend Calendar</span>
+    </button>
+
+
+    <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 p_l_0_label">
+      <label class="mandatory">Currency
+        <span class="required">*</span>
+      </label>
+      <select [ngClass]="(isSelectedCurrency)?'form-control':'form-control has-error'" [(ngModel)]="searchCurrency"
+        (change)="requiredCheckCurrency()">
+
+        <option disabled [ngValue]="null">Select</option>
+        <option *ngFor="let currency of currencyDetailsApproved" [ngValue]="currency.id">{{currency.currencyName}}
+        </option>
+      </select>
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-2 col-lg-1 md-p-b-20">
+      <label class="help mandatory">Year
+        <span class="required">*</span>
+      </label>
+      <input maxlength="4" (focusout)="requiredCheckYear()" type="text" [(ngModel)]="searchYear"
+        [ngClass]="(isEnteredYear)?'form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched':'form-control has-error'"
+        placeholder="">
+    </div>
+    <button (click)="loadCurrencyHolidays()" pbutton="" type="button"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad">Load</span>
+    </button>
+    <button (click)="resetCurrencyHolidaySearch()" pbutton="" type="button"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad">Reset</span>
+    </button>
+    <button (click)="currencyViewCalender()" pbutton="" type="button" style="background-color: #fff !important"
+      class="currency-summary-btns ui-button-secondary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad calenderBtn">View Calendar</span>
+    </button>
+    <button (click)="showDialog()" style="background-color: #fff !important" pbutton="" type="button"
+      class="currency-summary-btns ui-button-secondary ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+      <span class="ui-button-text ui-clickable no-pad calenderBtn">Modify Weekend Calendar</span>
+    </button>
+
+
+  </div>
+  <p-dataTable *ngIf="isDataLoading" #dt [value]="gridData" (onRowUnselect)="unSelectChkBox()"
+    (onHeaderCheckboxToggle)="selectAllChkBox()" (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple"
+    [(selection)]="selectedRows" (onFilter)="printFilteredData($event)" [globalFilter]="gb">
+    <!-- <p-dataTable *ngIf="visible" scrollable="false" #dt [value]="gridData" (onRowUnselect)="unSelectChkBox()" (onHeaderCheckboxToggle)="selectAllChkBox()" (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple" [(selection)]="selectedRows" [lazy]="false" (onFilter)="printFilteredData($event)" [globalFilter]="gb" > -->
+
+
+    <!--  <p-dataTable [scrollable]="false" #dt [value]="gridData" (onRowUnselect)="unSelectChkBox()" (onHeaderCheckboxToggle)="selectAllChkBox()" (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple" [(selection)]="selectedCurrency" scrollHeight="400px" [lazy]="false"  [globalFilter]="gb" [totalRecords]="totalRecords" [rows]="15" [paginator]="true" > -->
+
+
+    <p-column
+      *ngIf="recordTotal != 0 && gridData != '' && gridModel.type != 'Audit Logs' && gridModel.type != 'Automated Task Logs' && gridModel.type != 'Notification Logs' && gridModel.type != 'Exchange Rate History'"
+      selectionMode="multiple" disableSelection="true">
+    </p-column>
+    <p-column *ngFor="let col of gridModel.columnDef | slice : 0:50; let idx = index" [sortable]="col.sortable"
+      [filter]="col.filter" [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains"
+      filterPlaceholder="Search" [style]="{'width':'10%'}">
+
+      <!-- Below Content is added to fix  CYNCUXT-3275 Issue-->
+      <!-- Calendar for a column filter -->
+      <ng-template *ngIf="col.header == 'Created Date' && gridModel.type == 'Notification Logs'" pTemplate="filter"
+        let-col>
+
+        <p-calendar dateFormat="mm/dd/yy" [(ngModel)]="notificationLogCreatedDate" [monthNavigator]="true"
+          [yearNavigator]="true" yearRange="2000:2030" placeholder="Search"
+          (onMonthChange)="filterColumnOnDateChange($event, dt, col)"
+          (onSelect)="filterColumnOnDateChange($event, dt, col)" readonlyInput="true" class="p-t-4"></p-calendar>
+        <i *ngIf="notificationLogCreatedDate" class="fa fa-close"
+          (click)="notificationLogCreatedDate=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+
+      </ng-template>
+      <!--    <ng-template pTemplate="filter" let col>
+          <div class="input-group grid-search">
+         <input placeholder="Search Here" type="text" class="form-control search-input-text" aria-describedby="basic-addon3" autocomplete="off"> 
+         <span class="input-group-addon icon-input-field border-right-none">
+             <i class="fa fa-close" aria-hidden="true">
+             </i>
+         </span>   
+       </div> 
+   </ng-template>   -->
+      <ng-template *ngIf="col.header == 'Date' && gridModel.type == 'Exchange Rate History'" let-file="rowData"
+        pTemplate="body">
+        <table class="table history-noborder">
+          <tr>
+            {{file.createdAt}}
+          </tr>
+        </table>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Currency Pairs' && gridModel.type == 'Exchange Rate History'"
+        let-file="rowData" pTemplate="body">
+        <table class="table history-noborder">
+          <tr>
+            {{file.currencyPair.currencyIdBase}}
+          </tr>
+        </table>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Rate Type' && gridModel.type == 'Exchange Rate History'" let-file="rowData"
+        pTemplate="body">
+
+        <table class="table history-noborder" *ngFor="let fileData of file.rateDetails">
+
+          <tr>
+            {{fileData.rateType.rateTypeName}}
+          </tr>
+        </table>
+
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Mid Rate' && gridModel.type == 'Exchange Rate History'" let-file="rowData"
+        pTemplate="body">
+
+        <table class="table history-noborder" *ngFor="let fileData of file.rateDetails">
+          <tr>
+            {{fileData.midRate}}
+          </tr>
+        </table>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Buy Spread' && gridModel.type == 'Exchange Rate History'" let-file="rowData"
+        pTemplate="body">
+
+        <table class="table history-noborder" *ngFor="let fileData of file.rateDetails">
+          <tr>
+            {{fileData.buySpread}}
+          </tr>
+        </table>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Sell Spread' && gridModel.type == 'Exchange Rate History'" let-file="rowData"
+        pTemplate="body">
+
+        <table class="table history-noborder" *ngFor="let fileData of file.rateDetails">
+          <tr>
+            {{fileData.sellSpread}}
+          </tr>
+        </table>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Buy Rate' && gridModel.type == 'Exchange Rate History'" let-file="rowData"
+        pTemplate="body">
+
+        <table class="table history-noborder" *ngFor="let fileData of file.rateDetails">
+          <tr>
+            {{fileData.buyRate}}
+          </tr>
+        </table>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Sell Rate' && gridModel.type == 'Exchange Rate History'" let-file="rowData"
+        pTemplate="body">
+
+        <table class="table history-noborder" *ngFor="let fileData of file.rateDetails">
+          <tr>
+            {{fileData.sellRate}}
+          </tr>
+        </table>
+      </ng-template>
+
+      <!--   <ng-template *ngIf="col.header == 'Currency Pairs' && gridModel.type == 'Exchange Rate History'"  pTemplate="filter" let-col>
+              <p-multiSelect [options]="currencyPairArray" defaultLabel="Filter by:" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
+             </ng-template> -->
+
+      <ng-template *ngIf="col.isTemplate" let-file="rowData" pTemplate="body">
+        <span *ngIf="file.recurring" class="ui-cell-data">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'No. of Units'" let-file="rowData" pTemplate="body">
+        {{file.noOfUnits == 1 ? "One" : ""}} {{file.noOfUnits == 100 ? "Hundred" : ""}} {{file.noOfUnits == 1000 ?
+        "Thousand" : ""}}
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Field' && gridModel.type == 'Audit Logs'" let-file="rowData" pTemplate="body">
+        <tr *ngFor="let field of file.fields">
+          <td class="no-pad-left" nowrap style="white-space: nowrap;padding-left: 0px !important;">{{field.field_name}}
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Old Value' && gridModel.type == 'Audit Logs'" let-file="rowData"
+        pTemplate="body">
+        <tr *ngFor="let field of file.fields">
+          <td class="no-pad-left" nowrap style="white-space: nowrap;padding-left: 0px !important;">
+            <span
+              [innerHTML]="(field.old_value == null || field.old_value == 'undefined' || field.old_value == '') ? '&nbsp;' : field.old_value"></span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'New Value' && gridModel.type == 'Audit Logs'" let-file="rowData"
+        pTemplate="body">
+        <tr *ngFor="let field of file.fields">
+          <td class="no-pad-left" nowrap style="white-space: nowrap; padding-left: 0px !important;">
+            <span
+              [innerHTML]="(field.new_value == null || field.new_value == 'undefined' || field.new_value == '') ? '&nbsp;' : field.new_value"></span>
+
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'System Defined'" let-file="rowData" pTemplate="body">
+
+        <span *ngIf="file.system_defined" class="ui-cell-data">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'In Balance'" let-file="rowData" pTemplate="body">
+
+        <span *ngIf="file.add_to_balance" class="ui-cell-data">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Accure to Loan'" let-file="rowData" pTemplate="body">
+
+        <span *ngIf="file.accrued_to_loan" class="ui-cell-data">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Auto New Client'" let-file="rowData" pTemplate="body">
+
+        <span *ngIf="file.add_to_borrower" class="ui-cell-data">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Apply To New' && gridModel.type == 'Factoring Charge Code'" let-file="rowData"
+        pTemplate="body">
+
+        <span *ngIf="file.add_to_borrower" class="ui-cell-data">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Auto All Client'" let-file="rowData" pTemplate="body">
+
+        <span *ngIf="file.auto_all_client" class="ui-cell-data">
+          <i class="fa fa-check-square-o" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Value' && gridModel.type == 'System Parameters'" let-file="rowData"
+        let-row="rowData" pTemplate="body">
+        <!-- Below span tag condition is only for DEBTOR_MATCH_PCT -->
+        <span *ngIf="isEdited && row.name == editField && (file.name=='DEBTOR_MATCH_PCT')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamDropDown" (change)="saveEdit(row,sysParamDropDown)">
+            <option value="50">50</option>
+            <option value="60">60</option>
+            <option value="70">70</option>
+            <option value="80">80</option>
+            <option value="90">90</option>
+            <option value="100">100</option>
+          </select>
+        </span>
+        <span *ngIf="isEdited && row.name == editField && (file.name=='PAGE_DISPLAY')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamPageDisplay" (change)="saveEdit(row,sysParamPageDisplay)">
+            <option value="8">8</option>
+            <option value="20">20</option>
+            <option value="40">40</option>
+            <option value="80">80</option>
+            <option value="150">150</option>
+            <option value="500">500</option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='COLLATERAL_ADV_RATE_DECIMALS')"
+          class="ui-cell-data">
+          <select [(ngModel)]="sysParamCollateralAdvRateDisplay"
+            (change)="saveEdit(row,sysParamCollateralAdvRateDisplay)">
+
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='AGING_DATE')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamAgingDate" (change)="saveEdit(row,sysParamAgingDate)">
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+          </select>
+        </span>
+        <span *ngIf="isEdited && row.name == editField && (file.name=='DEFAULT_CLIENT_STATUS')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamDefaultClientStatus" (change)="saveEdit(row,sysParamDefaultClientStatus)">
+            <option value="AC">Active</option>
+            <option value="INAC">Inactive</option>
+          </select>
+        </span>
+        <span *ngIf="isEdited && row.name == editField && (file.name=='LOAN_ID_DROPDOWN')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamLoanidDropdown" (change)="saveEdit(row,sysParamLoanidDropdown)">
+            <option value="F">First</option>
+            <option value="FP">First-Partic Only</option>
+            <option value="L">Last</option>                        
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='DISPLAY_AGINGS')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamAgingsDisplay" (change)="saveEdit(row,sysParamAgingsDisplay)">
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+          </select>
+        </span>
+
+
+        <!-- FACT-1448 Issue changes starts , Editable dropdown for-->
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='DISPLAY_FUNDING_BATCH_REPORT_HEADER')"
+          class="ui-cell-data">
+          <select [(ngModel)]="sysParamDisplayFundingBatchReportHeader"
+            (change)="saveEdit(row,sysParamDisplayFundingBatchReportHeader)">
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+          </select>
+        </span>
+        <!-- FACT-1448 Issue changes Ends , Editable dropdown for-->
+
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='PRIMARY_MANAGER_REQUIRED')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamPrimaryManager" (change)="saveEdit(row,sysParamPrimaryManager)">
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='EXCHANGE_RATE')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamExchangeRate" (change)="saveEdit(row,sysParamExchangeRate)">
+            <option value="N">No</option>
+            <option value="Y">Yes</option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='LOGO_DISPLAY_REPORTS')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamLogoDisplay" (change)="saveEdit(row,sysParamLogoDisplay)">
+            <option value="true">Show</option>
+            <option value="false">Hide</option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='PURGE_SUMMARY_FILES')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamPurgeSummary" (change)="saveEdit(row,sysParamPurgeSummary)">
+            <option value="BF">By File</option>
+            <option value="BC">By Collateral</option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='CLIENT_DETAILS_REQUIRES_STATE_PROVINCE')"
+          class="ui-cell-data">
+          <select [(ngModel)]="sysParamClientDetails" (change)="saveEdit(row,sysParamClientDetails)">
+            <option value="Y">Yes</option>
+            <option value="N">No</option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='AFFILIATE_LENDER_REQUIRED')"
+        class="ui-cell-data">
+        <select [(ngModel)]="sysParamAffiliateLenderRequired" (change)="saveEdit(row,sysParamAffiliateLenderRequired)">
+          <option value="Y">Yes</option>
+          <option value="N">No</option>
+        </select>
+      </span>
+
+        <!-- CYNCS-3732 Issue changes starts , Editable dropdown for Default Comment (Private or Public)-->
+        <span *ngIf="isEdited && row.name == editField && (file.name=='DEFAULT_COMMENT')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamDefaultComment" (change)="saveEdit(row,sysParamDefaultComment)">
+            <option value="1">PUBLIC</option>
+            <option value="0">PRIVATE</option>
+          </select>
+        </span>
+        <!-- CYNCS-3732 Issue changes ends -->
+
+        <!-- CYNCSPS-1835 Issue changes starts , Editable dropdown for MANUAL_INELIGIBLES_INELIGIBLE_SUMMARY(BELLOW CALCULATED or FOLLOW SEQUENCE)-->
+        <span *ngIf="isEdited && row.name == editField && (file.name=='MANUAL_INELIGIBLES_INELIGIBLE_SUMMARY')"
+          class="ui-cell-data">
+          <select [(ngModel)]="sysParamManualEligibleSummary" (change)="saveEdit(row,sysParamManualEligibleSummary)">
+            <option value="BC">Below Calculated</option>
+            <option value="FS">Follow Sequence</option>
+          </select>
+        </span>
+        <!-- CYNCSPS-1835 Issue changes ends -->
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='CLIENT_SEARCH_DISPLAY')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamClientSearch" (change)="saveEdit(row,sysParamClientSearch)">
+            <option *ngFor="let each of allClientSearchParam" value={{each.value}}>
+              {{each.display}}
+            </option>
+          </select>
+        </span>
+
+        <span *ngIf="isEdited && row.name == editField && (file.name=='REPORT_COMMENTS')" class="ui-cell-data">
+          <select [(ngModel)]="sysParamReportComment" (change)="saveEdit(row,sysParamReportComment)">
+            <option *ngFor="let each of reportCommentsParam" value={{each.value}}>
+              {{each.display}}
+            </option>
+          </select>
+        </span>
+
+        <!--For replacing dropdown insted of text box (condition Statement)-->
+        <span
+          *ngIf="isEdited && row.name == editField && (file.name !='DEBTOR_MATCH_PCT' && file.name !='DEFAULT_COMMENT' && file.name !='MANUAL_INELIGIBLES_INELIGIBLE_SUMMARY' && file.name !='CLIENT_SEARCH_DISPLAY' && file.name !='REPORT_COMMENTS' && file.name !='PAGE_DISPLAY' && file.name !='DISPLAY_AGINGS'&& file.name !='DISPLAY_FUNDING_BATCH_REPORT_HEADER'&& file.name !='LOGO_DISPLAY_REPORTS'&& file.name !='PURGE_SUMMARY_FILES'&& file.name !='CLIENT_DETAILS_REQUIRES_STATE_PROVINCE' && file.name !='PRIMARY_MANAGER_REQUIRED' && file.name !='COLLATERAL_ADV_RATE_DECIMALS' && file.name !='EXCHANGE_RATE' && file.name !='AGING_DATE' && file.name !='DEFAULT_CLIENT_STATUS' && file.name !='LOAN_ID_DROPDOWN' && file.name !='AFFILIATE_LENDER_REQUIRED')" class="ui-cell-data">
+
+          <!-- #fixed is FACT-805
+            <select [(ngModel)]="amountValue" (change)="saveEdit(row,sysParamReportComment)">
+            <option *ngFor="let each of reportCommentsParam" value="{{file.value}}">
+              {{each.display}}
+            </option>
+          </select> -->
+
+          <input [(ngModel)]="amountValue" type="text" value="{{file.value}}">
+          <i (click)="cancelEdit(row)" class="fa fa-times icon-red" aria-hidden="true "></i>
+          <i (click)="saveEdit(row,amountValue)" class="fa fa-check icon-green" aria-hidden="true"></i>
+
+        </span>
+
+        <!-- CYNCS-3732 Issue changes starts -->
+        <span *ngIf="!isEdited || row.name != editField" class="ui-cell-data">
+          <div *ngIf="file.name=='DEFAULT_COMMENT';then edit_comment_template else edit_sysParam_template"></div>
+          <ng-template #edit_comment_template>
+            {{(file.value == 0)? 'PRIVATE' : 'PUBLIC'}}
+          </ng-template>
+          <ng-template #edit_sysParam_template>
+            <div
+              *ngIf="file.name=='MANUAL_INELIGIBLES_INELIGIBLE_SUMMARY';then edit_manual_template else edit_sys_manual_template">
+            </div>
+            <ng-template #edit_manual_template>
+              {{(file.value == 'FS')? 'Follow Sequence' : 'Below Calculated'}}
+            </ng-template>
+            <ng-template #edit_sys_manual_template>
+              <div
+                *ngIf="file.name=='CLIENT_SEARCH_DISPLAY';then edit_client_search else edit_sys_param_client_search_template">
+              </div>
+              <ng-template #edit_client_search>
+                {{(file.value == 'NA')? 'Name Number' : (file.value == 'NAH')? 'Name - Number' : (file.value == 'NU')?
+                'Number Name' : 'Number- Name'}}
+              </ng-template>
+              <ng-template #edit_sys_param_client_search_template>
+                <div
+                  *ngIf="file.name=='REPORT_COMMENTS';then edit_report_comment else edit_sys_param_report_comment_template">
+                </div>
+                <ng-template #edit_report_comment>
+                  {{(file.value == 'BC')? 'BBC Comments' : 'Past Comments'}}
+                </ng-template>
+                <ng-template #edit_sys_param_report_comment_template>
+                  <div *ngIf="file.name=='DISPLAY_AGINGS';then edit_agings_comment else edit_sys_aging_date_template">
+                  </div>
+                  <ng-template #edit_agings_comment>
+                    {{(file.value == 'Y') ? 'Yes' : 'No'}}
+                  </ng-template>
+                </ng-template>
+                <ng-template #edit_sys_aging_date_template>
+                  <div
+                    *ngIf="file.name=='AGING_DATE';then edit_agings_date else edit_sys_default_client_status_template">
+                  </div>
+                  <ng-template #edit_agings_date>
+                    {{(file.value == 'Y') ? 'Yes' : 'No'}}
+                  </ng-template>
+                </ng-template>
+
+                <ng-template #edit_sys_default_client_status_template>
+                  <div
+                    *ngIf="file.name=='DEFAULT_CLIENT_STATUS';then edit_default_client_status else edit_sys_affiliate_lender_required">
+                  </div>
+                  <ng-template #edit_default_client_status>
+                    {{(file.value == 'AC' ) ? 'Active ' : 'Inactive'}}
+                  </ng-template>
+                </ng-template>
+
+                <ng-template #edit_sys_affiliate_lender_required>
+                  <div
+                    *ngIf="file.name=='LOAN_ID_DROPDOWN';then edit_loan_id_dropdown else edit_sys_loan_id_dropdown">
+                  </div>
+                  <ng-template #edit_loan_id_dropdown>
+                     {{(file.value == 'F')? 'First' : (file.value == 'FP')? 'First-Partic Only' :'Last' }}
+                  </ng-template>
+                  </ng-template>
+
+                <ng-template #edit_sys_loan_id_dropdown> 
+                  <div 
+                    *ngIf="file.name=='AFFILIATE_LENDER_REQUIRED';then edit_affiliate_lender_required  else edit_sys_display_funding_batch_report_header_template"> 
+                  </div> 
+                  <ng-template #edit_affiliate_lender_required> 
+                    {{(file.value == 'Y') ? 'Yes' : 'No'}} 
+                 </ng-template>
+                </ng-template>
+
+                <ng-template #edit_sys_display_funding_batch_report_header_template>
+                  <div
+                    *ngIf="file.name=='DISPLAY_FUNDING_BATCH_REPORT_HEADER';then edit_display_funding_batch_report_header_template else edit_sys_param_display_logo_template">
+                  </div>
+                  <ng-template #edit_display_funding_batch_report_header_template>
+                    {{(file.value == 'Y') ? 'Yes' : 'No'}}
+                  </ng-template>
+                </ng-template>
+
+
+                <ng-template #edit_sys_param_display_logo_template>
+                  <div
+                    *ngIf="file.name=='LOGO_DISPLAY_REPORTS';then edit_display_logo  else edit_sys_param_purge_summary_template">
+                  </div>
+                  <ng-template #edit_display_logo>
+                    {{(file.value == 'true') ? 'Show' : 'Hide'}}
+                  </ng-template>
+                </ng-template>
+                <ng-template #edit_sys_param_purge_summary_template>
+                  <div
+                    *ngIf="file.name=='PURGE_SUMMARY_FILES';then edit_purge_summary_files  else edit_sys_param_client_details_summary_template">
+                  </div>
+                  <ng-template #edit_purge_summary_files>
+                    {{(file.value == 'BF') ? 'By File' : 'By Collateral'}}
+                  </ng-template>
+                </ng-template>
+
+                <ng-template #edit_sys_param_client_details_summary_template>
+                  <div
+                    *ngIf="file.name=='CLIENT_DETAILS_REQUIRES_STATE_PROVINCE';then edit_client_details_requires  else edit_sys_param_exchange_rate_template">
+                  </div>
+                  <ng-template #edit_client_details_requires>
+                    {{(file.value == 'Y') ? 'Yes' : 'No'}}
+                  </ng-template>
+                  <ng-template #edit_sys_param_report_comment_template_new>
+                    {{file.value}}
+                  </ng-template>
+                </ng-template>
+                <ng-template #edit_sys_param_exchange_rate_template>
+                  <div
+                    *ngIf="file.name=='EXCHANGE_RATE';then edit_exchange_rate_requires  else edit_sys_param_primary_manager_template">
+                  </div>
+                  <ng-template #edit_exchange_rate_requires>
+                    {{(file.value == 'Y') ? 'Yes' : 'No'}}
+                  </ng-template>
+                </ng-template>
+                <!-- <ng-template #edit_sys_param_contra_ineligible>
+                    <div *ngIf="file.name=='CONTRA_INELIGIBLE';then edit_contra_ineligible  else edit_sys_param_primary_manager_template"></div>
+                    <ng-template #edit_contra_ineligible>
+                      {{(file.value == 'IC') ? 'Individual Collateral' : 'Eligible Balance'}}
+                    </ng-template>
+                  </ng-template> -->
+                <ng-template #edit_sys_param_primary_manager_template>
+                  <div
+                    *ngIf="file.name=='PRIMARY_MANAGER_REQUIRED';then edit_primary_manager_requires  else edit_sys_param_report_comment_template_new">
+                  </div>
+                  <ng-template #edit_primary_manager_requires>
+                    {{(file.value == 'Y') ? 'Yes' : 'No'}}
+                  </ng-template>
+                  <ng-template #edit_sys_param_report_comment_template_new>
+                    {{file.value}}
+                  </ng-template>
+                </ng-template>
+              </ng-template>
+            </ng-template>
+          </ng-template>
+          <!-- <div *ngIf="file.name=='DISPLAY_LOGO';then edit_display_logo"></div>
+          <ng-template #edit_display_logo>
+            {{(file.value == 'true') ? 'Show' : 'Hide'}}
+          </ng-template> -->
+          <i (click)="editData(row, $event);" class="fa fa-pencil pad-left10" aria-hidden="true" *ngIf='isDisableSystemParameterEdit' ></i>
+        </span>
+        <!-- CYNCS-3732 Issue changes ends -->
+
+
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Status' && gridModel.type == 'Automated Task Logs'" let-file="rowData"
+        pTemplate="body">
+        <span *ngIf="file.status == 'Success'" class="notify-success">{{file.status}}</span>
+        <span *ngIf="file.status != 'Success'" class="notify-failure">{{file.status}}</span>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Status' && gridModel.type == 'Notification Logs'" let-file="rowData"
+        pTemplate="body">
+        <span *ngIf="file.status == 'Success'" class="notify-success">{{file.status}}</span>
+        <span *ngIf="file.status != 'Success'" class="notify-failure">{{file.status}}</span>
+      </ng-template>
+      <!--  <ng-template *ngIf="col.header == 'Assigned Reports' && gridModel.type == 'Report Comments'" let-file="rowData" pTemplate="body">
+              <ul *ngFor="let cync_report_id of file.cync_report_ids" class="report-align-left">
+                <li>{{cync_report_id}}</li>
+              </ul>
+            </ng-template> -->
+      <!-- <ng-template *ngIf="col.header == 'Created Date' && gridModel.type == 'Report Comments'" let-file="rowData" pTemplate="body">
+              {{formatDate(file.created_at)}}
+            </ng-template> -->
+
+      <ng-template *ngIf="col.header == 'Visibility' && gridModel.type == 'Comments'" let-file="rowData"
+        pTemplate="body">
+        <div *ngIf="file.visibility">Public</div>
+        <div *ngIf="!file.visibility">Private</div>
+      </ng-template>
+      <ng-template *ngIf="col.header == 'System' && gridModel.type == 'Borrower Exceptions'" let-file="rowData"
+        pTemplate="body">
+        <div>{{file.system_defined ? "Yes" : "No"}}</div>
+      </ng-template>
+      <!--    <ng-template *ngIf="col.header == 'Log Type' && gridModel.type == 'Notification Logs'" pTemplate="filter" let-col>
+                <p-multiSelect [options]="logTypes" [filter]="false" defaultLabel="Filter by:" (onChange)="dt.filter($event.value,col.field,col.filterMatchMode)" styleClass="ui-column-filter"></p-multiSelect>
+            </ng-template>    -->
+
+      <!-- <ng-template *ngIf="col.header == 'Resend Activation Email' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+                  <span class="ui-cell-data">
+                    <label *ngIf="file.resend_activation_email == null || file.resend_activation_email == false; else otherWise" class="switch"><input type="checkbox"><span class="slider round"></span></label>
+                    <ng-template #otherWise><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label></ng-template>
+                  </span>
+             </ng-template> -->
+      <!--      <ng-template *ngIf="col.header == 'Active' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+                  <span class="ui-cell-data">
+                    <label *ngIf="file.active == false; else otherWise" class="switch"><input type="checkbox"><span class="slider round"></span></label>
+                    <ng-template #otherWise><label class="switch"><input type="checkbox" checked><span class="slider round"></span></label></ng-template>
+                  </span>
+             </ng-template> -->
+      <!--              <ng-template *ngIf="col.header == 'Resend Activation Email' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+                   <span class="ui-cell-data">
+                      <span class="label label-primary" *ngIf="file.resend_activation_email == true">Yes</span>
+                      <span class="label label-default" *ngIf="file.resend_activation_email == null || file.resend_activation_email == false">No</span>
+                    </span>
+              </ng-template>
+             <ng-template *ngIf="col.header == 'Active' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+                   <span class="ui-cell-data">
+                      <span class="label label-primary" *ngIf="file.active == true">Active</span>
+                      <span class="label label-default" *ngIf="file.active == false">InActive</span>
+                    </span>
+              </ng-template> -->
+      <ng-template *ngIf="col.header == 'Status' && gridModel.type == 'Client Creation'" let-file="rowData"
+        pTemplate="body">
+        <span class="ui-cell-data">
+          <label *ngIf="file.active == false; else otherWise" class="switch">
+            <input type="checkbox">
+            <span class="slider round"></span>
+          </label>
+          <ng-template #otherWise>
+            <label class="switch">
+              <input type="checkbox" checked>
+              <span class="slider round"></span>
+            </label>
+          </ng-template>
+        </span>
+      </ng-template>
+
+      <!--  <ng-template *ngIf="col.header == 'Resend Activation Email' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+        <span class="ui-cell-data">
+          <span class="label label-default label-default-custom" *ngIf="file.resend_activation_email == true">Yes</span>
+          <span class="label label-default label-default-custom" *ngIf="file.resend_activation_email == null || file.resend_activation_email == false">
+            <div class="popover__wrapper">
+              <a>
+                <span class="popover__title">No
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
+              </a>
+              <div class="push popover__content">
+                <button onclick="fnResndEmail(this);" (click)="resndEmail(file);" class="label-custom btn btn-default btn-default-custom">Resend Mail </button>
+                <div class="resendInfo" id="resendInfo">
+                  <i class="fa fa-inbox fa-2x shakeInbox" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </span>
+        </span>
+      </ng-template>
+
+
+      <ng-template *ngIf="col.header == 'Active' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+        <span class="ui-cell-data">
+          <span class="label label-default label-default-custom" *ngIf="file.active == true">
+            <div class="popover__wrapper" *ngIf="file.active == true">
+              <a>
+                <span class="popover__title">Active
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
+              </a>
+              <div class="push popover__content">
+                <button (click)="changeUserSts(file,'false')" class="label-custom btn btn-default btn-default-custom">InActive </button>
+                <div class="resendInfo" id="resendInfo">
+                  <label class="switch">
+                    <input (click)="changeUserSts(file,'false')" type="checkbox" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </span>
+          <span class="label label-default label-default-custom" *ngIf="file.active == false">
+            <div class="popover__wrapper" *ngIf="file.active == false">
+              <a>
+                <span class="popover__title">InActive
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
+              </a>
+              <div class="push popover__content">
+                <button (click)="changeUserSts(file,'true')" class="label-custom btn btn-default btn-default-custom">Active </button>
+                <div class="resendInfo" id="resendInfo">
+                  <label class="switch">
+                    <input (click)="changeUserSts(file,'true')" type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </span>
+        </span>
+      </ng-template> -->
+
+      <!--Code changes for CYNCUXT-2811 begin -->
+      <ng-template *ngIf="col.header == 'Status' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+        <span class="ui-cell-data user_status">
+          <label *ngIf="file.active == false; else otherWise" class="switch user_status">
+            <input type="checkbox" (click)="event.preventDefault()">
+            <span class="slider round  user_status" (click)="showUserStatusModal(file)">
+            </span>
+          </label>
+          <ng-template #otherWise>
+            <label class="switch user_status">
+              <input type="checkbox" checked (click)="event.preventDefault()">
+              <span class="slider round  user_status" (click)="showUserStatusModal(file)">
+              </span>
+            </label>
+          </ng-template>
+        </span>
+      </ng-template>
+
+      <!--Code changes for CYNCUXT-2811 ends -->
+
+      <ng-template *ngIf="col.header == 'Activation Email' && gridModel.type == 'Users'" let-file="rowData"
+        pTemplate="body">
+
+        <!--Code changes for CYNCUXT-2811 begin -->
+        <span *ngIf="(file.active == true || file.active == 'true')" class="ui-cell-data no_view ActivationEmailID"
+          title="Resend" data-toggle="tooltip" data-placement="right" (click)="resndEmail(file);">
+          <img class="no_view" src="{{assetsPath}}/images/ActivationEmail.png">
+        </span>
+
+        <span *ngIf="(file.active == false || file.active == 'false')"
+          class="ui-cell-data email_disabled_user ActivationEmailID" data-placement="right" style="cursor:pointer"
+          (click)="resndEmail(file);">
+          <img class="email_disabled_user" src="{{assetsPath}}/images/email-disabled.png">
+        </span>
+        <!--Code changes for CYNCUXT-2811 ends -->
+        <!-- <span  class="ui-cell-data ActivationEmailID"  [attr.title]="(file.active == false || file.active == 'false') ? '' : 'Resend'" [attr.data-toggle]="(file.active == false || file.active == 'false') ? '' : 'tooltip'" data-placement="right" (click)="resndEmail(file);" [ngClass]="(file.active == false || file.active == 'false')? 'email_disabled_user':'no_view'">
+  <i class="fa fa-envelope" aria-hidden="true" [ngClass]="(file.active == false || file.active == 'false') ? 'email_disabled_user icon_disabled':'no_view'"></i> 
+</span> -->
+
+      </ng-template>
+
+      <!-- code changes for CYNCS-4446 -->
+      <ng-template *ngIf="col.header == 'Unlock Account' && gridModel.type == 'Users'" let-file="rowData"
+        pTemplate="body">
+
+        <span *ngIf="(file.unlock_account == true || file.unlock_account == 'true')"
+          class="ui-cell-data no_view ActivationEmailID" title="Unlock" data-toggle="tooltip" data-placement="right"
+          (click)="unlockUserAccount(file);">
+          <i style="font-size:30px;color:limegreen" class="fa fa-unlock-alt no_view" aria-hidden="true"></i>
+        </span>
+
+        <span *ngIf="(file.unlock_account == false || file.unlock_account == 'false')"
+          class="ui-cell-data email_disabled_user ActivationEmailID" data-placement="right" style="cursor:pointer">
+          <i style="font-size:30px;color:#e3e3e3;fill:#e3e3e3;pointer-events:none;cursor:not-allowed;"
+            class="fa fa-unlock-alt email_disabled_user" aria-hidden="true"></i>
+        </span>
+      </ng-template>
+
+      <!-- code changes for CYNCS-4446 -->
+
+
+      <ng-template *ngIf="col.header == 'Active' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+        <span class="ui-cell-data">
+          <span class="label label-default label-default-custom" *ngIf="file.active == true">
+            <div class="popover__wrapper" *ngIf="file.active == true">
+              <a>
+                <span class="popover__title">Active
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
+              </a>
+              <div class="push popover__content">
+                <button (click)="changeUserSts(file,'false')"
+                  class="label-custom btn btn-default btn-default-custom">InActive </button>
+                <div class="resendInfo" id="resendInfo">
+                  <label class="switch">
+                    <input (click)="changeUserSts(file,'false')" type="checkbox" checked>
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </span>
+          <span class="label label-default label-default-custom" *ngIf="file.active == false">
+            <div class="popover__wrapper" *ngIf="file.active == false">
+              <a>
+                <span class="popover__title">InActive
+                  <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </span>
+              </a>
+              <div class="push popover__content">
+                <button (click)="changeUserSts(file,'true')"
+                  class="label-custom btn btn-default btn-default-custom">Active </button>
+                <div class="resendInfo" id="resendInfo">
+                  <label class="switch">
+                    <input (click)="changeUserSts(file,'true')" type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </span>
+        </span>
+      </ng-template> -->
+
+      <!--Code changes for CYNCUXT-2811 begin -->
+      <ng-template *ngIf="col.header == 'Status' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+        <!-- <span class="ui-cell-data user_status">
+<label *ngIf="file.active == false; else otherWise" class="switch user_status">
+ <input type="checkbox" (click)="event.preventDefault()">
+ <span class="slider round  user_status" (click)="showUserStatusModal(file)">
+ </span>
+</label>
+<ng-template #otherWise>
+ <label class="switch user_status">
+   <input type="checkbox" checked (click)="event.preventDefault()">
+     <span class="slider round  user_status" (click)="showUserStatusModal(file)">
+     </span>
+ </label>
+</ng-template>
+</span> -->
+
+        <span class="ui-cell-data ">
+          <span *ngIf="(file.active == false || file.active == 'false')" class="ui-cell-data" title="Inactive"
+            data-toggle="tooltip" data-placement="right">
+            <img class="" src="{{assetsPath}}/images/inactive-icon.png" class="user_status"
+              (click)="showUserStatusModal(file);">
+          </span>
+
+
+          <span *ngIf="(file.active == true || file.active == 'true')" class="ui-cell-data" title="Active"
+            data-toggle="tooltip" data-placement="right">
+            <img class="" src="{{assetsPath}}/images/active-icon.png" class="user_status"
+              (click)="showUserStatusModal(file);">
+          </span>
+        </span>
+
+        <!-- <span *ngIf="(file.active == false || file.active == 'false')" class="ui-cell-data user_status"  title="Inactive" data-toggle="tooltip" data-placement="right"  (click)="event.preventDefault();showUserStatusModal(file);">
+  <img class="" src="../../assets/images/inactive-icon.png">
+</span>
+
+
+  <span *ngIf="(file.active == true || file.active == 'true')" class="ui-cell-data user_status"  title="Active" data-toggle="tooltip" data-placement="right" (click)="event.preventDefault();showUserStatusModal(file);"><img class="" src="../../assets/images/active-icon.png"></span> -->
+
+
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Sales Region' && gridModel.type == 'Users'" let-file="rowData"
+        pTemplate="body">
+        <div data-toggle="tooltip" title="{{file.sales_region}}"
+          style="width: 110px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">{{file.sales_region}}
+        </div>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Phone No' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body"
+        class="emailStyle">
+
+
+        <span class="ui-cell-data" x-ms-format-detection="none">{{file.phone_no}}</span>
+
+      </ng-template>
+      <ng-template *ngIf="col.header == 'Dilution' && gridModel.type == 'Adjustment Reasons'" let-file="rowData"
+        pTemplate="body">
+        <i *ngIf="file.dilution" class="fa fa-check" aria-hidden="true"></i>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'Message' && gridModel.type == 'Notification Logs'" let-file="rowData"
+        pTemplate="body">
+        <i class="fa fa-envelope" aria-hidden="true" (click)="showNotificationPopup(file.msg)"></i>
+      </ng-template>
+
+      <ng-template *ngIf="col.header == 'User Name' && gridModel.type == 'Users'" let-file="rowData" pTemplate="body">
+        {{file.login}}
+        <!--          <i *ngIf="file.extended_time_before_start != null && file.extended_time_after_end != null" class="fa fa-clock-o clock-icon" aria-hidden="true" data-toggle="tooltip" title="Extended login 
+  Start Time: {{file.extended_time_before_start}} 
+  End Time: {{file.extended_time_after_end}}"></i>   -->
+
+        <a class="tip">
+          <i *ngIf="file.extended_time_before_start != null && file.extended_time_after_end != null"
+            class="fa fa-clock-o clock-icon tooltip-custom" aria-hidden="true"></i>
+          <span>Extended login
+            <br /> &nbsp;&nbsp;Start Time: {{file.extended_time_before_start}}
+            <br /> &nbsp;&nbsp;End Time: {{file.extended_time_after_end}}</span>
+        </a>
+      </ng-template>
+    </p-column>
+  </p-dataTable>
+
+  <!--Code Changes for CYNCUXT-2811 begin - Modal html on change of user Status Button -->
+  <div class="modal fade in" id="statusChangeModalId" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="closeUserStatusModal();" id="close-modal">&times;
+          </button>
+          <div class="col-md-9">
+            <h4 class="modal-title">Change User Status</h4>
+          </div>
+        </div>
+        <div class="modal-body">
+          <h4>Are You sure you want to
+            <span>{{userStatusAction}}</span> the user
+            <span>{{statusChangeUserName}}</span>
+          </h4>
+
+        </div>
+        <div class="modal-footer">
+
+          <button id="action_back" (click)="closeUserStatusModal();" label="Cancel" pbutton="" type="button"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn close-modal">
+            <span class="ui-button-text ui-clickable no-pad">No</span>
+          </button>
+
+          <button id="action_save" label="Save" pbutton="" (click)="fnChangeUserStatus();" type="submit"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Yes</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade in" id="activationEmailModalID" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="fnCloseActivationEmailModal();" id="close-modal">&times;</button>
+          <div class="col-md-3 no-pad">
+            <img src="{{assetsPath}}/images/ActivationTitle.png" class="activation-title">
+          </div>
+          <div class="col-md-9">
+            <h4 class="modal-title">Activation Email</h4>
+          </div>
+
+
+
+        </div>
+        <div class="modal-body">
+          <h4>Do you want to send activation email to the user
+            <span>{{resendEmail}} ?</span>
+          </h4>
+
+        </div>
+        <div class="modal-footer">
+
+          <button id="action_back" (click)="fnCloseActivationEmailModal();" label="Cancel" pbutton="" type="button"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn close-modal">
+            <span class="ui-button-text ui-clickable no-pad">No</span>
+          </button>
+
+          <button id="action_save" label="Save" pbutton="" (click)="fnActivationEmail();" type="submit"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Yes</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Code Changes for CYNCUXT-2811 ends -->
+
+  <!--Code Changes for CYNCS-4446 ends -->
+  <div class="modal fade in" id="unlockAccountEmailModalID" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="CloseUnlockEmailPopup();" id="close-modal">&times;</button>
+          <div class="col-md-3 no-pad">
+            <img src="{{assetsPath}}/images/ActivationTitle.png" class="activation-title">
+          </div>
+          <div class="col-md-9">
+            <h4 class="modal-title">Unlock Account</h4>
+          </div>
+        </div>
+        <div class="modal-body">
+          <h4>Do you want to send unlock account email to the user </h4>
+
+        </div>
+        <div class="modal-footer">
+
+          <button id="action_back" (click)="CloseUnlockEmailPopup();" label="Cancel" pbutton="" type="button"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn close-modal">
+            <span class="ui-button-text ui-clickable no-pad">No</span>
+          </button>
+
+          <button id="action_save" label="Save" pbutton="" (click)="sendUnlockEmail();" type="submit"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Yes</span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--Code Changes for CYNCS-4446 ends -->
+
+
+
+
+
+  <p-dialog header="Message" styleClass="notificationLogDialog" appendTo="body" [modal]="true"
+    [(visible)]="showNotificationMsgPopup" showEffect="fade" [width]="600" [responsive]="true" height="auto">
+    <span [innerHTML]="notificationMessage"></span>
+  </p-dialog>
+</div>
+<!-- <p *ngIf="gridDataLen != 0" align="center">Displaying {{gridDataLen}} items of {{datasource.length}}.</p> Displaying {{gridData.length}} items -->
+<!-- <p *ngIf="gridData.length>=20&&(gridModel.type == 'NAICS Codes'||gridModel.type == 'Audit Logs'||gridModel.type == 'Automated Task Logs'||gridModel.type == 'Sales Regions'||gridModel.type == 'System Parameters'||gridModel.type == 'Notification Logs'||gridModel.type == 'Adjustment Reasons'||gridModel.type == 'Comments Type')" align="center"> <a nohref style="cursor:pointer" (click)="OnClickShowMore()"><i class="fa fa-arrow-down" aria-hidden="true"></i></a></p> -->
+<!-- <p *ngIf="gridDataLen != 0" class="recordcount"><b>Showing {{gridData.length}} of {{showTotalrecords}} records</b></p>  -->
+<div *ngIf="recordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+<ng-template #grid_count_template>
+  <p class="recordcount">
+    <b>Showing {{gridData.length}} of {{showTotalrecords}} records</b>
+  </p>
+</ng-template>
+<ng-template #record_count_template>
+  <p *ngIf="recordCount != -1 && recordCount!=gridData.length ; else grid_count_template"
+    class="recordcount less_count">
+    <b>Showing {{recordCount}} of {{showTotalrecords}} records</b>
+  </p>
+</ng-template>

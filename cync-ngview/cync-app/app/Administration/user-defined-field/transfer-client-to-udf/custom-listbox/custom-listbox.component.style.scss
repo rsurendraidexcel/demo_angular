@@ -1,0 +1,342 @@
+//colors
+$color_celeste_approx: #ccc;
+$wild_sand: #f4f4f4;
+$white: #fff;
+$color_mercury_approx: #e3e3e3;
+$web_orange: orange;
+$color_silver_approx: #bfbfbf;
+$color_gallery_approx: #ebecee;
+$color_black_haze_approx: #f6f7f9;
+$color_mine_shaft_approx: #333;
+$color_wild_sand_approx: #f3f5f4;
+$color_alto_approx: #ddd;
+
+.udf-transfer {
+    form {
+        margin-top: 15px;
+    }
+    .checkbox {
+        margin-top: inherit;
+    }
+    .input-group-addon {
+        border: 1px solid $color_celeste_approx;
+        border-left: none !important;
+    }
+    .ui-multiselect-header {
+        background: $wild_sand !important;
+        background: $color_gallery_approx !important;
+        .ui-multiselect-filter-container .fa {
+            position: absolute;
+            left: 1.125em;
+        }
+    }
+    .ui-multiselect-panel {
+        background-color: $color_gallery_approx;
+        .ui-multiselect-item {
+            background: $white;
+            padding: 0.5em 0.5em;
+            border: 1px solid $color_alto_approx;
+            //Instead of the line below you could use @include border-top-right-radius($radius)
+            border-top-right-radius: 4px;
+            //Instead of the line below you could use @include border-top-left-radius($radius)
+            border-top-left-radius: 4px;
+            display: block;
+            margin-bottom: 2px;
+            padding: 5px 7px;
+                margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+
+        }
+    .selected{
+            background-color: #ccd4e9;
+        }
+
+        .selected:hover {
+            background-color: #ccd4e9;
+        }
+    }
+    .ui-multiselect-filter-container {
+        border: 1px solid $color_mercury_approx;
+        border-bottom: none;
+    }
+    .ui-multiselect-items-wrapper {
+        border: 1px solid $color_mercury_approx;
+        border-top: none;
+    }
+    .dragable {
+        margin-top: -20px;
+        // height: 245px;
+        border-top: 1px solid $color_mercury_approx !important;
+        background: $white;
+        width: 96%;
+        margin-left: 2%;
+        div {
+            max-height: 256px;
+             height: 200px;
+            text-align: center;
+        }
+        i {
+            margin-top: 55px;
+            color: $color_silver_approx;
+        }
+    }
+    .m-t-7 {
+        margin-top: 7px !important;
+    }
+    .m-t-4 {
+        margin-top: 4px !important;
+    }
+
+
+
+    .search-by {
+        background: $color_black_haze_approx;
+        color: $color_mine_shaft_approx;
+    }
+    .list-autocomplete {
+        background: $color_wild_sand_approx !important;
+    }
+    ul.nav-tabs {
+        cursor: pointer;
+    }
+    .fa-info-circle:before {
+        color: $web_orange;
+    }
+    .multiDemo ul {
+        min-height: 42px;
+        padding-left: 0;
+        li {
+            background-color: $white;
+            border: 1px solid $color_alto_approx;
+            //Instead of the line below you could use @include border-top-right-radius($radius)
+            border-top-right-radius: 4px;
+            //Instead of the line below you could use @include border-top-left-radius($radius)
+            border-top-left-radius: 4px;
+            display: block;
+            margin-bottom: 2px;
+            padding: 10px 15px;
+        }
+    }
+}
+.client-mapping {
+    .ui-multiselect-list {
+        background-color: $color_gallery_approx;
+    }
+    .ui-multiselect-header {
+        background-color: $color_gallery_approx;
+    }
+    .ui-inputtext {
+        background-color: $color_gallery_approx;
+    }
+}
+#basic-addon3 {
+    border-left: 1px solid $color_celeste_approx !important;
+}
+.text-align-left{
+    text-align: left;
+}
+
+.client-assignment-search {
+    padding: 8px;
+    width: 100%;
+}
+.sec-drop{
+        margin-top: 5px;
+}
+.drag-drop{
+        margin-top: -10px;
+}
+
+
+
+
+
+
+
+
+div.ui-multiselect-panel {
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: relative;
+	cursor: pointer;
+}
+
+div.ui-multiselect-panel::-webkit-scrollbar {
+/* 	width: 12px; */
+}
+
+div.ui-multiselect-panel::-webkit-scrollbar-button {
+/* 	width: 0px;
+	height: 0px; */
+}
+
+div.ui-multiselect-panel {
+	scrollbar-base-color: indigo;
+	scrollbar-3dlight-color: indigo;
+	scrollbar-highlight-color: indigo;
+	scrollbar-track-color: #eee;
+	scrollbar-arrow-color: gray;
+	scrollbar-shadow-color: gray;
+	scrollbar-dark-shadow-color: gray;
+}
+
+div.ui-multiselect-panel::-webkit-scrollbar-track {
+	background:#eee;
+	box-shadow: 0px 0px 3px #dfdfdf inset;
+}
+
+div.ui-multiselect-panel::-webkit-scrollbar-thumb {
+	background: indigo;
+	border: thin solid gray;
+}
+
+div.ui-multiselect-panel::-webkit-scrollbar-thumb:hover {
+	background: purple;
+}
+
+.ui-multiselect-panel ul {
+	margin: 0;
+	padding: 0 0 1px 0;
+}
+
+.ui-multiselect-panel .ui-multiselect-item {
+	border-top: thin solid #ddd;
+	border-bottom: 1px solid #ddd;
+	display: block;
+	padding: 2px 2px 2px 10px;
+	margin-bottom: -1px;
+	font-size: 0.85em;
+	cursor: move;
+	white-space: nowrap;
+	text-align: left;
+}
+
+.ui-multiselect-panel .ui-multiselect-item:hover {
+	background-color: #8ea4dd;
+}
+
+
+.ui-multiselect-panel .ui-multiselect-item .disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+.ui-multiselect-panel .ui-multiselect-item:first-child {
+	border-top: none;
+}
+
+.ui-multiselect-panel .ui-multiselect-item:last-child {
+	border-bottom: none;
+}
+
+.ui-multiselect-panel label {
+	cursor: pointer;
+	font-weight: inherit;
+	font-size: 14px;
+	padding: 4px;
+	margin-bottom: -1px;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.ui-multiselect-panel ul.over {
+	background-color:lightgray;
+}
+
+.dual-list {
+	display: flex;
+	flex-direction: row;
+	align-content: flex-start;
+	justify-content: space-evenly;
+	
+}
+
+.dual-list .listbox {
+	width: 35%;
+	margin: 0px;
+	flex-grow: 2;
+}
+
+.buttonbox {
+	margin: 0 10px;
+	display: flex;
+	flex-direction: column;
+	/* justify-content: center; */
+}
+
+.btn-block {
+	display: block;
+	width: 70px;
+	margin: 4px;
+}
+
+.dropable{
+    height: 358px !important;
+}
+
+.dropable .record-picker li{
+  cursor: pointer !important;
+}
+.m-t-10{
+margin-top:10px;
+}
+
+.client-mapping .ui-multiselect-header {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 0px !important;
+    margin-top: -7px !important;
+}
+
+
+.record-picker {
+    background-color:#fff !important;
+       min-height: 154px;
+    overflow: auto;
+    height: 160px;
+        border-radius: 3px;
+        border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+.filter-list{
+    background-color: #F4F6F5;
+        border: none;
+}
+.list-search i{
+        color: #bfbfbf;
+}
+
+small, .small {
+    font-size: 78%;
+}
+
+.udf-transfer .ui-multiselect-panel label {
+     font-size: 12px;
+         width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.disable{
+    background-color:#eee;
+}
+.dropable .record-picker {
+    height: 197px !important;
+     margin-left: 9px;
+     margin-right:9px;
+        border-radius: 3px;
+}
+.transfer_udf_main_div{
+    margin-right: 0px !important;
+}
+
+.select_all_label{
+    text-transform: none;
+    padding-left: 5px;
+    font-size: 90%;
+}

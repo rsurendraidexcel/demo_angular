@@ -1,0 +1,139 @@
+<div class="app-body-container bg-white show-financial-ratio" id="component_html_financial_wradio">
+
+
+  <div class="pad-inner">
+    <div class="row m-b-15">
+      <h3 class="no-m-bt no-left-marg">{{projectName}}</h3>
+      <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+      <div class="brder-1 p-t-32">
+        <div class="row btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0" data-toggle="buttons">
+            <common-radio-header></common-radio-header>
+        </div>
+      </div>
+    </div>
+
+    <div class="row no-marg cync-grid-search strip_marg">
+      <div class="col-md-3 col-lg-2 pad-left0">
+        <select class="form-control" [(ngModel)]="typeOfView" (ngModelChange)="initView($event)">
+          <option selected="selected" value="tabular">Tabular View</option>
+          <option value="graph">Graph View</option>
+        </select>
+      </div>
+      <div class="col-md-3 col-lg-2 pull-right top_8px_pad">
+        <i aria-hidden="true" class="hand fa fa-share-square-o fa-2x clr_grey f_s_20" data-placement="top" data-toggle="tooltip"
+          id="Export" title="Export" (click)="exportPdf()"></i>
+      </div>
+    </div>
+  </div>
+  <div class="has-scrollbar m_r_15" id="cync_main_contents_wradio-list">
+
+    <!-- HTML For Tabular View Starts Here -->
+    <div id="cync_main_contents_tabular">
+      <ng-container *ngIf="typeOfView=='tabular'">
+        <div class="row m-t-20" *ngFor="let category of tabularCategories; let i= index">
+          <div class="col-sm-12 abc-table" >
+            <div class="ui-datatable ui-widget">
+              <div class="ui-datatable-tablewrapper ui-datatable-resizable">
+                <table id="{{'table_content'+i}}">
+                  <thead class="ui-datatable-thead">
+                    <tr class="ui-datatable-odd ui-widget-content master_head">
+                      <td class="" [attr.colspan]="14">
+                        <div>
+                          <span class="ui-cell-data">{{category.name}}</span>
+                        </div>
+                      </td>
+
+                    </tr>
+                    <tr class="ui-state-default">
+                      <th class="ui-state-default ui-unselectable-text ui-resizable-column text-right input_column" scope="col">
+                        <!-- <span class="ui-column-title font-normal">Period</span> -->
+                      </th>
+                      <th class="ui-state-default ui-unselectable-text ui-resizable-column text-right input_column" scope="col" *ngFor="let timeperoids of finTableTimeline">
+                        <!-- <span class="ui-column-title" *ngIf="timeperoids=='Benchmark Value'">Benchmark <br>Value</span> -->
+                        <span class="ui-column-title">{{timeperoids}}</span>
+                      </th>
+
+                      <th class="ui-state-default ui-unselectable-text ui-resizable-column" scope="col">
+                        <span class="ui-column-title"></span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="ui-datatable-data ui-widget-content">
+
+                    <tr class="ui-datatable-even ui-widget-content" *ngFor="let datasets of category.datasets">
+                      <td class="report_values_label input_column_label" style="min-width: 300px;">
+
+                        <span class="ui-cell-data">
+                          {{datasets.label}}
+                        </span>
+
+                      </td>
+
+                      <td class="report_values text-right input_column" *ngFor="let colmnvalues of datasets.tabularView">
+                        <span class="ui-cell-data" [ngStyle]="{color: colmnvalues.color}">
+                          {{(colmnvalues.result | number) != null  ? colmnvalues.result : 'n.a.' }}{{category.symbol != null ? category.symbol : ''}}
+                        </span>
+                      </td>
+
+                      <!-- One Additional td to maintain the automatic space as in the design -->
+                      <td class="report_values">
+                        <span class="ui-cell-data">
+
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+    <!-- HTML For Tabular View Ends Here -->
+
+    <!-- HTML For Graph View Starts Here -->
+    <div id="cync_main_contents_chart">
+      <ng-container *ngIf="typeOfView=='graph'">
+
+        <!-- Ratio Category Starts Here -->
+        <div class="graph_row" *ngFor="let category of graphCategories; let j= index">
+          <div class="chart_graph_row" id="{{'chart_content'+j}}">
+            <div class="row m-t-20">
+              <div class="col-sm-12 p-l-30 p-b-15">
+                <strong>{{category.name}}</strong>
+              </div>
+            </div>
+            <div class="row graph-btm-brder">
+              <div class="col-md-{{dynamicColumn}} col-sm-6 chart_items" *ngFor="let graphs of category.datasets; let k=index">
+                <chart [type]="type" [data]="{labels: finTimeline, datasets: [{datalabels: {align:'end',anchor: 'end'},data: graphs.data, backgroundColor: backGroundColor(category.name)}]}"
+                  [options]="options[j][k]"></chart>
+                <div class="text-center" style="margin-bottom: 15px;word-break: break-all;">
+                  {{graphs.label}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Ratio Category Ends Here -->
+
+
+      </ng-container>
+    </div>
+    <!-- HTML For Graph View Ends Here -->
+
+    <!-- Save and Cancel Button starts -->
+    <div class="row sticky_btn_actions left_0">
+
+      <hr>
+      <div class="col-md-12 text-right">
+        <button id="action_save" label="Save" pbutton="" (click)="backToSetup();" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+          <span class="ui-button-text ui-clickable no-pad"> Back to Setup </span>
+        </button>
+      </div>
+    </div>
+    <!-- Save and Cancel Button ends -->
+  </div>
+
+</div>

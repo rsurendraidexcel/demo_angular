@@ -1,0 +1,210 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" >
+  <div class="close-btn-dash pull-right text-right top-action-btns">
+  </div>
+  <div class="pad-inner">
+      <h3 class="no-m-b">Financial Analyzer - {{addOrEdit}} Project</h3>
+      <div class="row">
+        <hr/>
+      </div>
+    <form  [formGroup]="financialRatioForm" (ngSubmit)="saveFACode(financialRatioForm.getRawValue(),financialRatioForm.valid,false)">
+      <div class="has-scrollbar" id="cync_main_contents">
+        <div class="form-group row">
+          <div class="col-sm-6 col-md-3 ad-bt-pad">
+            <label class="mandatory">Folder Name
+              <span class="required">*</span>
+            </label>
+
+           <select class="form-control col-lg-8"  [ngClass]="displayCssField('folder')" formControlName="folder"
+           (change)="fnChange(financialRatioForm.controls.folder.value)" [compareWith]="compare">
+              <option disabled value="" selected>Select</option>
+            <option *ngFor="let fol of get_folder_name" [ngValue]="fol"  >
+                {{fol.folderName}}
+            </option>
+         </select>
+         <cync-input-field-error-msg [control]="getFormControl('folder')" labelName="Folder Name">
+        </cync-input-field-error-msg>
+
+          </div>
+          <div class="col-sm-6 col-md-3 ad-bt-pad"  *ngIf="showNewFolder">
+            <label for="new_project_name">
+              <span class="required"> </span>
+            </label>
+            <input type="text" class="form-control" [ngClass]="displayCssField('folderName')" 
+             id="new_project_name" formControlName="folderName">
+            <cync-input-field-error-msg [control]="getFormControl('folderName')" labelName="Folder Name">
+            </cync-input-field-error-msg>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-6 col-md-3">
+            <label class="mandatory" for="projectName">Project Name
+              <span class="required">*</span>
+            </label>
+            <input type="text" formControlName="projectName" class="form-control" id="project_name"  [ngClass]="displayCssField('projectName')">
+            <cync-input-field-error-msg [control]="getFormControl('projectName')" labelName="Project Name">
+            </cync-input-field-error-msg>
+          </div>
+
+          <div class="col-sm-6 col-md-4 ">
+            <label>Description</label>
+            <input type="text" formControlName="description" class="form-control" id="proj_description">
+          </div>
+
+        </div>
+
+        <div class="form-group row">
+          <div class="col-sm-12 ad-bt-pad">
+            <hr>
+            <h3 class="no-marg">Financial Setup</h3>
+          </div>
+          <div class="col-sm-6 col-md-3 ad-bt-pad">
+            <label>Client Name
+            </label>
+            <input type="text" readonly formControlName="clientName" class="form-control" id="client_name" [ngClass]="displayCssField('clientName')">
+            <input type="hidden" readonly formControlName="clientId" class="form-control" id="client_name">
+            <cync-input-field-error-msg [control]="getFormControl('clientName')" labelName="Project Name">
+              </cync-input-field-error-msg>
+          </div>
+
+          <div class="col-sm-6 col-md-2 ad-bt-pad ">
+            <label>Industry (NAICS Code)</label>
+            <input type="text" readonly formControlName="industry" class="form-control" id="naics_code"  [ngClass]="displayCssField('industry')">
+            <cync-input-field-error-msg [control]="getFormControl('industry')" labelName="Project Name">
+              </cync-input-field-error-msg>
+          </div>
+ </div>
+
+        
+        <div class="form-group row">
+            <div class="col-sm-6 col-md-2 ad-bt-pad ">
+                <label class="mandatory" for="financial_period">Financial Period</label>
+                <span class="required">*</span>
+                <select class="form-control" name="financial_period" id="financial_period"  [ngClass]="displayCssField('financialPeriod')"
+                 formControlName="financialPeriod" [attr.disabled]="disableField?true:null"
+                 (change)="fnFinancialPeriodChange(financialRatioForm.controls.financialPeriod.value);">
+                    <option disabled value=null>Select</option>
+                  <option *ngFor="let period of get_financial_periods" [ngValue]="period.value">
+                    {{ period.display }}
+                  </option>
+                </select>
+                <cync-input-field-error-msg [control]="getFormControl('financialPeriod')" labelName="Financial Period">
+                </cync-input-field-error-msg>
+              </div>
+
+              <div class="col-sm-12 col-md-4 ad-bt-pad" [ngClass]="{'col-md-2':selectedValuePeriod === 'YEARLY'}"  *ngIf="selectedValuePeriod">
+                  <label for="from_financial_period">From</label>
+                  <span class="required">*</span>
+                    <div class="display-flex">
+                        <select class="form-control col-sm-5 col-md-5" *ngIf="selectedValuePeriod == 'HALF_YEARLY'"
+                        formControlName="fromPeriod" >
+                            <option disabled value=null>Select</option>
+                            <option *ngFor="let halfyearly of get_halfyearly_data" [ngValue]="halfyearly.value">
+                                {{ halfyearly.display }}
+                              </option>
+                        </select>
+    
+                        <select class="form-control col-sm-5 col-md-5" *ngIf="selectedValuePeriod == 'QUARTERLY'"
+                        formControlName="fromPeriod">
+                            <option disabled value=null>Select</option>
+                            <option *ngFor="let quaterly of get_quaterly_data" [ngValue]="quaterly.value">
+                                {{ quaterly.display }}
+                              </option>
+                        </select>
+    
+                        <select class="form-control col-sm-5 col-md-5" *ngIf="selectedValuePeriod == 'MONTHLY'"
+                        formControlName="fromPeriod">
+                            <option disabled value=null>Select</option>
+                            <option *ngFor="let monthly of get_monthly_data" [ngValue]="monthly.value">
+                                {{ monthly.display }}
+                              </option>
+                        </select>
+
+                        <select class="form-control col-sm-5 col-md-2 " name="balance_sheet_year" id="balance_sheet_year" 
+                        [ngClass]="{'m-l-10':selectedValuePeriod != 'YEARLY'}"
+                       formControlName="yearFrom">
+                           <option disabled value=null>Select</option>
+                          <option *ngFor="let ballist of get_balanceSheet_list" [ngValue]="ballist.value">
+                           {{ ballist.display }}
+                         </option>
+                       </select>
+                   
+
+                       <cync-input-field-error-msg [control]="getFormControl('yearFrom')" labelName="From" class="from-to-error">
+                        </cync-input-field-error-msg>
+                        <span class="from-to-error info-year"  *ngIf="selectedValuePeriod == 'YEARLY'">Range should be Max of 12 Years</span>
+                        <span class="from-to-error info-year"  *ngIf="selectedValuePeriod == 'HALF_YEARLY'">Range should be Max of 12 Half-Years</span>
+                        <span class="from-to-error info-year"  *ngIf="selectedValuePeriod == 'QUARTERLY'">Range should be Max of 12 Quaters</span>
+                        <span class="from-to-error info-year"  *ngIf="selectedValuePeriod == 'MONTHLY'">Range should be Max of 12 Months</span>
+                    </div>
+                </div>
+
+              <div class="col-sm-12 col-md-4 ad-bt-pad" [ngClass]="{'col-md-2':selectedValuePeriod === 'YEARLY'}"  *ngIf="selectedValuePeriod">
+               
+                    <label for="to_financial_period">To</label>
+                    <span class="required">*</span>
+                    <div class="display-flex">
+                <select class="form-control col-sm-5 col-md-5" *ngIf="selectedValuePeriod == 'HALF_YEARLY'"
+                formControlName="toPeriod">
+                        <option disabled value=null>Select</option>
+                        <option *ngFor="let halfyearly of get_halfyearly_data" [ngValue]="halfyearly.value">
+                            {{ halfyearly.display }}
+                          </option>
+                    </select>
+
+                    <select class="form-control col-sm-5 col-md-5" *ngIf="selectedValuePeriod == 'QUARTERLY'"
+                    formControlName="toPeriod">
+                        <option disabled value=null>Select</option>
+                        <option *ngFor="let quaterly of get_quaterly_data" [ngValue]="quaterly.value">
+                            {{ quaterly.display }}
+                          </option>
+                    </select>
+
+                    <select class="form-control col-sm-5 col-md-5" *ngIf="selectedValuePeriod == 'MONTHLY'"
+                    formControlName="toPeriod">
+                        <option disabled value=null>Select</option>
+                        <option *ngFor="let monthly of get_monthly_data" [ngValue]="monthly.value">
+                            {{ monthly.display }}
+                          </option>
+                    </select>
+
+
+                    <select class="form-control col-sm-5 col-md-2 " name="balance_sheet_year" id="balance_sheet_year" 
+                    [ngClass]="{'m-l-10':selectedValuePeriod != 'YEARLY'}"
+                    formControlName="yearTo" >
+                        <option disabled value=null>Select</option>
+                       <option *ngFor="let ballist of get_balanceSheet_list" [ngValue]="ballist.value">
+                        {{ ballist.display }}
+                      </option>
+                    </select>
+
+                    <cync-input-field-error-msg [control]="getFormControl('yearTo')" labelName="To" class="from-to-error">
+                      </cync-input-field-error-msg>
+                
+                    </div>
+              </div>
+          </div>
+
+ <!-- Save and Cancel Button starts -->
+ <div class="row">
+    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+        <hr>
+        <button id="action_back" label="Cancel" (click)="navigateToFAList()" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+        </button>
+
+        <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" id="action_save_new"
+        (click)="createFACode(financialRatioForm.getRawValue(),financialRatioForm.valid,true)"
+        label="SaveNew" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+        <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+    </button>
+
+    <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+        <span class="ui-button-text ui-clickable no-pad"> {{currentActionBtnText}} </span>
+    </button>
+    </div>
+</div>
+<!-- Save and Cancel Button ends -->
+      </div>
+    </form>
+  </div>
+</div>

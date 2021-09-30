@@ -1,0 +1,79 @@
+<div class="app-body-container bg-white is_summary list-letter-names" id="cync_app-body-container">
+  <h3 class="no-m-bt">&nbsp;&nbsp;&nbsp; </h3>
+
+  <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+  <div class="row no-marg email-header">
+    <div  class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-7" data-toggle="buttons">
+     <div class="col-md-4 d-b">
+      <label>Letter Type&nbsp;&nbsp;&nbsp;&nbsp;</label>
+      <select [(ngModel)]="letterType"  (change)="onChangeLetterType($event.target.value)" class="form-control ">
+        <option value="" disabled>Please Select</option>
+        <option value="Verification Letter">Verification Letter</option>
+        <option value="Notice of Assignment">Notice of Assignment</option>
+        <option value="Audit Letter">Audit Letter</option>
+      </select>
+     </div>
+    </div>
+    <button id="action_save" label="Preview Letter" (click)="previewLetterButtonClick()" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+      <span class="ui-button-text ui-clickable no-pad">Preview Letter</span>
+    </button>
+    <button id="action_save" label="Send Letter" (click)="sendLetterButtonClick()" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+      <span class="ui-button-text ui-clickable no-pad">Send Letter</span>
+    </button>
+    <button id="action_save" label="Save" pbutton="" type="button" (click)="saveButtonClick()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+      <span class="ui-button-text ui-clickable no-pad">Save</span>
+    </button>
+    <button id="action_save" label="Cancel" pbutton="" (click)="cancelButtonClick()" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+      <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+    </button>
+  </div>
+  <div class="pad-inner" *ngIf="isGridDataLoaded">
+    <div class="p-t-16">
+      <div class="row" *ngIf="gridOfNoticeOfAssginment">
+          <div class="has-scrollbar row">
+            <ag-grid-angular #agGrid 
+              style="width: 100%; height: calc(100vh - 315px);" 
+              class="ag-theme-balham" 
+              [floatingFilter]="true"
+              [rowData]="rowData" 
+              [columnDefs]="columnDefs" 
+              rowSelection="multiple" 
+              [defaultColDef]="defaultColDef"
+              (rowClicked)="onRowClicked($event)"
+              (gridReady)="onGridReady($event)"
+              rowMultiSelectWithClick=true
+              [frameworkComponents]="frameworkComponents"
+              [gridOptions] = "gridOptions"
+              >
+            </ag-grid-angular>
+          </div>
+      </div>
+
+      <div class="row" *ngIf="!gridOfNoticeOfAssginment">
+        <div class="has-scrollbar row">
+          <ag-grid-angular #agGrid 
+            style="width: 100%; height: calc(100vh - 315px);" 
+            class="ag-theme-balham" 
+            [floatingFilter]="true"
+            [rowData]="rowData" 
+            [columnDefs]="columnDefs" 
+            rowSelection="multiple" 
+            [defaultColDef]="defaultColDef"
+            (rowClicked)="onRowClicked($event)"
+            (gridReady)="onGridReady($event)"
+            rowMultiSelectWithClick=true
+            [frameworkComponents]="frameworkComponents"
+            [gridOptions] = "gridOptions"
+            >
+          </ag-grid-angular>
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+<!-- <h1>"hello"</h1> 
+              [frameworkComponents]="frameworkComponents"
+                     [editType]="editType"
+
+-->

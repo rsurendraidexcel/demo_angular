@@ -1,0 +1,45 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+	<div class="pad-inner">
+		<h3 class="no-m-bt">Cash Controls - {{currentAction}}</h3>
+		<div class="brder-1 p-t-32">
+			<div [formGroup]="cashControlForm">
+				<div class="has-scrollbar" id="cync_main_contents">
+					<div class="form-group">
+						<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-2">
+							<label>Cash controls<span class="required">*</span></label>
+							<input type="text" formControlName="cash_control" required class="form-control" />
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-2">
+							<label>Description</label>
+							<input type="text" formControlName="description" required class="form-control" />
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-12 col-xs-12 col-sm-12 col-lg-22 text-right sticky_btn_actions">
+					<button id="action_back" (click)="navigateToControlListing()" label="Cancel" type="button"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+						<span class="ui-button-text ui-clickable no-pad">Cancel</span>
+					</button>
+
+					<button *ngIf="currentAction==='Add'" id="action_save_new" label="SaveNew" type="button"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+						<span class="ui-button-text ui-clickable no-pad" (click)="cashControlSaveNew()">Save&New</span>
+					</button>
+
+					<button *ngIf="currentAction==='Add'" id="action_save" label="Save" type="button"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+						<span class="ui-button-text ui-clickable no-pad" (click)="cashControlSubmit()">Save</span>
+					</button>
+
+					<button [disabled]="isFormValid()" id="action_save" *ngIf="currentAction==='Edit'" label="Save" type="button"
+						class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+						<span class="ui-button-text ui-clickable no-pad" (click)="cashControlEdit()">Save</span>
+					</button>
+
+					<!-- [disabled]="isFormValid()" -->
+				</div>
+
+			</div>
+		</div>
+	</div>

@@ -1,0 +1,108 @@
+
+.roll-forwards {
+    height: calc(100vh - 310px);
+    overflow-y: auto;
+    display: block;
+  }
+  .m-left {
+    margin-left: 14px !important;
+  }
+  .margin-0 {
+    margin: 0px !important;
+  }
+  
+  .setwidth {
+    width: 15vw;
+    height: 24px;
+    padding: 3px 5px !important;
+    border-radius: 1px !important;
+  }
+  .p-7 {
+    padding: 7px !important;
+  }
+  .p-right {
+    padding-right: 7px;
+  }
+  .roll-forwoad-division-collateral {
+    width: 100%;
+    margin: auto;
+    text-align: left;
+    display: block;
+  }
+  .height {
+    height: 30px;
+    margin-left: 0px;
+    background-color: #b9b9b957;
+    width: 100%;
+    padding-top: 5px;
+  }
+  .h8 {
+    height: 8px;
+  }
+  .groove {
+    border-color: #c0c0c057;
+    border: 1px solid #a9a9a9;
+  }
+  
+  .margin-box {
+    margin: 0px !important;
+  }
+  
+  .text-right {
+    text-align: right;
+  }
+  
+  :host /deep/ .b-l {
+    border-bottom-color: white;
+    // height: 82%;
+    padding: 5px !important;
+  }
+  :host /deep/ .h-100 {
+    border: 1px solid #a9a9a9;
+    height: 27px;
+    text-align: left;
+    background-color: #ebebe4;
+
+    // padding: top;
+    // padding-top: 5px;
+    // padding-left: 3px;
+  }
+  .p-5 {
+    padding: 14px;
+    border: 1px solid #a9a9a9;
+    // height: 84%;
+    justify-content: right;
+    display: flex;
+  }
+  :host /deep/ .ar-turn-days-value {
+    padding: 5px;
+    border: 1px solid #a9a9a9;
+    justify-content: right;
+    display: flex; 
+    height: 27px;
+    padding-left: 17px;
+    padding-top: 4px;
+    background-color: #ebebe4;
+    }
+
+  .margin{
+    margin-left:-8px;
+    margin-top: 2px;
+    }
+   :host /deep/ .value-right-align {
+    display: block; 
+    text-align: right;
+    padding: 4px 15px 4px 4px;
+    }  
+.rollforward-logs{
+    width: 100%;
+    margin: auto;
+    text-align: left;
+    display: block;
+    }
+.pull-right{
+   padding-right: 0px;
+   text-align: right;
+   float: right;
+    }
+  

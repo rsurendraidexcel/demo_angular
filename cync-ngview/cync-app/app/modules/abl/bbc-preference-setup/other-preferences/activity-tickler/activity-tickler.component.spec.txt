@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ActivityTicklerComponent } from './activity-tickler.component';
+
+describe('ActivityTicklerComponent', () => {
+  let component: ActivityTicklerComponent;
+  let fixture: ComponentFixture<ActivityTicklerComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ActivityTicklerComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ActivityTicklerComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

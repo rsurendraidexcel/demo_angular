@@ -1,0 +1,20 @@
+{
+    "host": "https://currency-prestaging.cyncsoftware.com",
+    "host_ror": "https://lenderId.cyncsoftware.com/api/v1/",
+    "host_finance": "https://finservice.cyncsoftware.com/api/v1/",
+    "host_notification": "https://notifications.cyncsoftware.com/v1/",
+    "cyncUserCookie": "",
+    "lenderId": "",
+    "notificationAPIKey": "pVGnepy7903uEGsCFYgnd8HtoOdvvpe75GAwh97x",
+    "assets_path": "/angular/assets",
+    "host_factoring": "https://lenderId.cyncsoftware.com/factoring/api/v1/",
+    "host_abl": "https://lenderId.cyncsoftware.com/abl/api/v1/",
+    "cdn_url": "",
+    "host_mcl": "https://lenderId.cyncsoftware.com/api/mcl/",
+    "host_cash_application": "https://lenderId.cyncsoftware.com/api/cash-application-v2/v1/",
+    "host_webhook": "https://apiprod.cyncsoftware.com/api/webhook/",
+    "host_tableau": "https://reportinglos.cyncsoftware.com",
+    "host_tableau_tiket_token": "https://reportinglos.cyncsoftware.com",
+    "host_lambda_api": "https://apiprodbase.cyncsoftware.com",
+    "host_factoring_node_api":"https://apistagingbase.cyncsoftware.com/"
+}

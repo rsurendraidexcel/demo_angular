@@ -1,0 +1,120 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Exceptions Summary</h3>
+        <div class="p-t-16">
+            <div class="cync-grid-search row no-marg">
+                <div class="col-md-6 col-sm-6 col-xs-12 p_l_1 hidden-xs hidde-sm">
+                    <div class="input-group grid-search" id="global_search">
+                        <input #gb id="exception_global_search" (keyup)="onKey($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+                            aria-describedby="basic-addon3" autocomplete="off">
+                        <span (click)="clearSearchBox()"  class="input-group-addon icon-input-field border-right-none">
+                            <i *ngIf="globalSearchCloseIcon==true" class="fa fa-close" aria-hidden="true">
+                            </i>
+                            <i *ngIf="globalSearchIcon==true" class="fa fa-search" aria-hidden="true">
+                            </i>
+                        </span>
+                        <a  class="m-l-10 adv_search" style="cursor: pointer;" (click)='openAdvanceSearchPoup()'>Advanced Search</a>
+                    </div>
+                </div>
+                <div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right">
+                    <i id="New" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Add New" (click)="goToAdd()" [ngClass]="(isAddPermitted)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+                    <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="goToEdit()" [ngClass]="(toggleEditIcon) ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+                    <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+                    <i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                        title="Export" (click)="showDialogForExport()"></i>
+                     <!-- SETTINGS ICON STARTS  -->
+                     <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true" *ngIf="exceptionModel.isMoreIconsRequired">
+                        <i id="more" class="hand fa fa-ellipsis-v fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+                        title="More"></i>
+                    </button>
+        
+                    <ul class="dropdown-menu no-t-pad grid-menu-dropdown">
+                        <li>
+                        <a class="hand">Settings</a>
+                        </li>
+                    </ul>
+                    <!-- SETTINGS ICON ENDS -->
+                </div>
+            </div>
+            <div class="form-group">
+                <p-dialog header={{exceptionModel.type}} [(visible)]="toggleExportModal" appendTo="body" [modal]="true" width="500" height="auto"
+                    [responsive]="true">
+                    <div *ngFor="let col of exportColumns">
+                        <p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+                        <br>
+                        <br>
+                    </div>
+                    <p-footer>
+                        <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary" id="exportDataConfirmButton"
+                            pButton icon="fa-check" label="Export" (click)="exportSelectedColumns(exportColumns)">
+                            <span>Export</span>
+                        </button>
+                    </p-footer>
+                </p-dialog>
+            </div>
+            <div class="form-group">
+                <p-dialog header="Error" [(visible)]="toggleExportErrorModal" appendTo="body" [modal]="true" width="300" height="auto" [responsive]="true">
+                    <p style="color:red;">Select columns to export.</p>
+                </p-dialog>
+            </div>
+            <div class="has-scrollbar" id="cync_main_contents" (scroll)="onScroll($event)">
+                <div class="ui-datatable-tablewrapper">
+                    <p-dataTable #dt *ngIf="isGridDataLoaded" [scrollable]="false" [value]="gridData" sortMode="multiple" (onRowUnselect)="unSelectChkBox()"
+                        (onRowSelect)="goToView($event)" (onHeaderCheckboxToggle)="selectAllChkBox()" dataKey="id" selectionMode="multiple"
+                        [(selection)]="selectedRows" id="exceptionFilter" (onFilter)="printFilteredData($event)" [globalFilter]="gb">
+                        <p-column selectionMode="multiple" disableSelection="true"></p-column>
+                        <p-column *ngFor="let col of exceptionModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter" [field]="col.field"
+                            [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+                            [style]="{'width':'10%'}">
+
+                            <ng-template *ngIf="col.header == 'Auto All Clients'" let-file="rowData" pTemplate="body">
+                                <span *ngIf="file.add_to_all_clients" class="ui-cell-data">
+                                    <i class="fa fa-check-square f-s-15" style="color:#a2a3a7"> </i>
+                                </span>
+                                <span *ngIf="!file.add_to_all_clients" class="ui-cell-data">
+                                    <i class="fa fa-square f-s-15" style="color:#a2a3a7"></i>
+                                </span>
+                            </ng-template>
+
+                             <ng-template *ngIf="col.header == 'System'" let-file="rowData" pTemplate="body">
+                                <div>{{file.system_defined_str}}</div>
+                            </ng-template>
+
+                            <ng-template  *ngIf="col.header == 'Exception Sign'" let-file="rowData" pTemplate="body"><div class="f-s-15">{{file.operator}}</div>
+                            </ng-template>
+
+                            <ng-template  *ngIf="col.header == 'Exception Value'" let-file="rowData" pTemplate="body"><div class="text-right p-r-6">{{file.exception_value}}</div>
+                            </ng-template>
+
+                              <ng-template  *ngIf="col.header == 'Exception Description'" let-file="rowData" pTemplate="body"><div class="w-200">{{file.display_label}}</div>
+                            </ng-template>
+
+                              <ng-template  *ngIf="col.header == 'Exception Note'" let-file="rowData" pTemplate="body"><div class="w-200">{{file.description}}</div>
+                            </ng-template>
+                        </p-column>
+                    </p-dataTable>
+                </div>
+            </div>
+            <!-- loading code when user scrolls -->
+            <div class="grid-loader">
+                <span [hidden]="!showSpinner">
+                    <i class="fa fa-spinner fa-spin spinner-color"></i> Loading &nbsp;
+                </span>
+
+                <div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+                <ng-template #grid_count_template>
+                    <p class="recordcount">
+                        <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+                    </p>
+                </ng-template>
+                <ng-template #record_count_template>
+                    <p *ngIf="filterRecordCount != -1 && filterRecordCount != gridData.length ; else grid_count_template" class="recordcount less_count">
+                        <b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+                    </p>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

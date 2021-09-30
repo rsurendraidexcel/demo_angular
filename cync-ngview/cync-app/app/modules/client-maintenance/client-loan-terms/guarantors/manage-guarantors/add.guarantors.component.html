@@ -1,0 +1,123 @@
+<div class="app-body-container bg-white client-loan-terms-custom" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+
+        <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Guarantors</h3>
+
+        <div class="p-t-32">
+            <div class="row tab_panel">
+                <div class="inline tabbtn tablinks">
+                    <!-- <input type="radio" name="guarantors"/> -->
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" checked [routerLink]="['/client-maintenance/client-loan-terms/guarantors']">Guarantors</label>
+                </div>
+                <div class="inline tabbtn tablinks">
+                    <!-- <input type="radio" name="loan_free"/>  -->
+
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/loan-fees']">Loan Fees</label>
+                </div>
+                <div class="inline tabbtn tablinks">
+                    <!-- <input type="radio" name="ineligible_advances"/>"  -->
+                    <label class="radio-inline">
+                        <input type="radio" name="optradio" [routerLink]="['/client-maintenance/client-loan-terms/ineligible-advances']">Ineligible/Advances</label>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-4 col-md-3 col-lg-3 p_b_10">
+                    <select disabled class="form-control">
+                        <option selected value="Guarantors">Guarantors</option>
+                    </select>
+                </div>
+            </div>
+
+            <form [formGroup]="addEditGuarantors" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveData(addEditGuarantors.value,addEditGuarantors.valid, false)">
+                <div class="has-scrollbar" id="cync_main_contents">
+                    <div class="form-group">
+                        <div class="row no-marg">
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label>Company Name
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" formControlName="company_name" class="form-control" id="companyName" [ngClass]="displayFieldCss('company_name')">
+                                <cync-input-field-error-msg [control]="getFormControl('company_name')" labelName="Company Name">
+                                </cync-input-field-error-msg>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label>Federal Id
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" formControlName="federal_id" class="form-control" id="federalId" [ngClass]="displayFieldCss('federal_id')">
+                                <cync-input-field-error-msg [control]="getFormControl('federal_id')" labelName="Federal Id">
+                                </cync-input-field-error-msg>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label>Country</label>
+                                <select class="form-control" id="countryId" formControlName="country_id" (change)="onChangeOfCountry()">
+                                    <option value="null">Select</option>
+                                    <option *ngFor="let country of countriesList" value="{{country.id}}">{{country.name}}</option>
+                                </select>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label>State</label>
+                                <select class="form-control" id="stateProvinceId" formControlName="state_province_id">
+                                    <option value="null">Select</option>
+                                    <option *ngFor="let state of statesList" value="{{state.id}}">{{state.name}}</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label class="mandatory">Corporate Type</label>
+                                <select class="form-control" id="corporateId" formControlName="corporate_type">
+                                    <option value="null">Select</option>
+                                    <option *ngFor="let key of corporateTypesList" value="{{key.value}}">{{key.display}}</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-4">
+                                <label>NAICS Code
+                                    <span class="required">* </span>
+                                </label>
+                                <select class="form-control" id="naicsId" formControlName="naics_code_id" [ngClass]="displayFieldCss('naics_code_id')">
+                                    <option value="">Select</option>
+                                    <option *ngFor="let naics of naicsCodesList" value="{{naics.id}}">{{naics.description}}</option>
+                                </select>
+                                <cync-input-field-error-msg [control]="getFormControl('naics_code_id')" labelName="NAICS Code">
+                                </cync-input-field-error-msg>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad  col-lg-4">
+                                <label>% Owned
+                                </label>
+                                <input type="text" formControlName="percent_owned" class="form-control" placeholder="" value="">
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                                <hr>
+                                <button (click)="navigateToHome()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel">
+                                    <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                                </button>
+
+                                <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" (click)="saveData(addEditGuarantors.value,addEditGuarantors.valid,true)"
+                                    id="action_savenew" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                                </button>
+
+                                <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit"
+                                    class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                    <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+
+    </div>
+</div>

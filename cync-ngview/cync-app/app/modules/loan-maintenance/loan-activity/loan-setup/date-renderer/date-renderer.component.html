@@ -1,0 +1,4 @@
+<p-calendar showOn="button" appendTo ="body" [(ngModel)]="effective_date"  (onSelect) = "onChangeDate($event)"
+[monthNavigator]="true" (onInput)="onInputDate($event)" [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true"
+dateFormat="mm/dd/yy"  [inputStyle]="{'width':'216px', 'height':'24px'}">
+</p-calendar>

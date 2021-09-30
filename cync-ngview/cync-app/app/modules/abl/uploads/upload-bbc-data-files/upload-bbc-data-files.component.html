@@ -1,0 +1,510 @@
+<div class="app-body-container bg-white is_summary upload-file" id="component_html_wradio">
+  <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+  <div class="pad-inner">
+    <h3>Data Reviews</h3>
+    <div class="p-t-16">
+      <div class="cync-grid-search row">
+        <div class="col-md-12 col-sm-10 col-xs-10 p_l_2 hidden-xs hidde-sm">
+          <div class="input-group grid-search">
+            <input (keyup)="globalSearch($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text"
+              class="form-control search-input-text" aria-describedby="basic-addon3" autocomplete="off"
+              id="globalSearch">
+            <span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+              <i *ngIf="globalSearchCloseIcon==true" class="fa fa-close" aria-hidden="true">
+              </i>
+              <i *ngIf="globalSearchIcon==true" class="fa fa-search" aria-hidden="true">
+              </i>
+            </span>
+          </div>
+          <div class="form-inline m-l-20">
+            <fieldset>
+              <label class="control-label p-l-20 p_r_10" for="bbc_date">
+                <strong>BBC Date</strong>
+              </label>
+              <p-calendar *ngIf="bbcYearRange != ''" class="form-control grid_fields pristine" [(ngModel)]="bbc_dt"
+                [yearRange]="bbcYearRange" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+                id="bbc_date" readonlyInput="null" (onSelect)="isCancleDisable()"></p-calendar>
+              <label class="control-label p-l-20 p_r_10" for="division">
+                <strong>Division</strong>
+              </label>
+              <select class="grid_fields form-control" (change)="getDivisionId($event.target.value)"
+                [(ngModel)]="division_code" id="divisiondivision" name="division">
+                <option value="" [selected]="true">All</option>
+                <option *ngFor="let each of allDivisionsDropDown" value={{each.id}}>
+                  {{each.name}}
+                </option>
+              </select>
+              <label class="control-label p-l-20 p_r_10">
+                <a class="m-l-10" style="cursor: pointer;" (click)='openExchangeRatePoup()'>Exchange Rate</a>
+              </label>
+
+            </fieldset>
+          </div>
+
+        </div>
+      </div>
+      <br>
+      <ng-container *ngIf="toggleExchangeRateModal">
+        <p-dialog header="Enter Exchange Rate(s)" [(visible)]="toggleExchangeRateModal" appendTo="body" [modal]="true"
+          width="650" height="auto" [responsive]="true">
+          <form [formGroup]="exchangeRateForm">
+            <div class="">
+              <table class="table" formArrayName="exchange_rates">
+                <thead class="ui-table-thead">
+                  <tr>
+                    <th class="col"> Currency </th>
+                    <th class="col input_fld"> Exchange Rate </th>
+                    <!-- <th class="col reload_row"> Reload </th> -->
+                  </tr>
+                </thead>
+                <tfoot class="ui-table-tfoot">
+                </tfoot>
+                <tbody class="ui-table-tbody" [formGroupName]="i"
+                  *ngFor="let exchangeRateData of exchangeRateControl.controls; let i=index">
+                  <tr>
+                    <td class="row currency_row">
+                      <span>{{exchangeRateData.controls.description.value}}</span>
+                    </td>
+                    <td class="row input_fld">
+                      <input [ngClass]="displayFieldCss(i,'exchange_rate_value')" type="text" class="form-control"
+                        value="{{exchangeRateData.controls.exchange_rate_value.value}}"
+                        formControlName="exchange_rate_value" />
+                      <cync-input-field-error-msg [control]="getFormControl(i,'exchange_rate_value')"
+                        labelName="Exchange Rate">
+                      </cync-input-field-error-msg>
+
+                      <small *ngIf="exchangeRateData.controls.exchange_rate_value.errors?.pattern"
+                        class="error-text-msg m-t-15">{{exchangeRateData.controls.decimal_precision.value}} decimal
+                        precision required.</small>
+                    </td>
+                    <!-- <td class="row reload_row">
+                      <div class="exchng_reload">
+                        <i class="fa fa-refresh hand fa-1x" aria-hidden="true" (click)="reApplyExchangeRate(exchangeRateData.controls.currency_id.value,exchangeRateData.controls.exchange_rate_value.value,exchangeRateData.controls.description.value)"></i>
+                      </div>
+                    </td> -->
+                  </tr>
+                </tbody>
+              </table>
+              <span style="color:#fa231b; font-size: 14px; padding: 2px; float: right;" *ngIf="isValidPression" > <strong> {{invalidPdescription}}</strong> precision should be less than or equal to {{this.isCurrentPression}} </span>
+            </div>
+            <p-footer>
+              <div class="col-md-8 p-l-0">
+                *Note - Modifying the exchange rate and clicking apply will affect new and existing uploads.
+              </div>
+              <div class="col-md-4 text-right">
+                <button [hidden]="exchangeRateForm.get('exchange_rates').length == 0"
+                  [disabled]="!exchangeRateForm.valid" id="exchangeRateDataId" label="OK"
+                  (click)="applyExchangeRate(exchangeRateForm.value)" type="button"
+                  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn cust-pad">
+                  <span class="ui-button-text ui-clickable">Apply</span>
+                </button>
+              </div>
+            </p-footer>
+          </form>
+        </p-dialog>
+      </ng-container>
+      <!-- this is progress bar -->
+      <p-progressBar *ngIf="isFilesProcessing" [value]="progress.percentage"></p-progressBar>
+      <div class="has-scrollbar remo_padding" id="cync_main_contents_wradio" (scroll)="onScroll($event)">
+        <!-- The above div height should be dynamically set based on the browser height -->
+        <div class="row_marg">
+          <p-dataTable *ngIf="isGridDataLoaded" tableStyleClass="ui-datatable-resizable" #dt
+            [value]="ablFileUploadAPIResponse.uploaded_file" expandableRows="true" (onRowExpand)="loadlazy($event)"
+            (onFilter)="printFilteredData($event)">
+            <p-column [expander]="true" styleClass="col-icon"></p-column>
+            <p-column *ngFor="let col of fileUploadModel.columnDef;"
+             [sortable]="col.sortable" [filter]="col.filter"
+              filterMatchMode="contains" filterPlaceholder="Search" 
+              [field]="col.field" [header]="col.header" [styleClass]="customWidth(col.field)" >
+
+              <!-- Hyper link mapping name as per CYNCS-4170 requirement -->
+              <ng-template *ngIf="col.field == 'mapping_name'" let-collateralFrom="rowData"
+                let-ablFileUploadModel="rowData" pTemplate="body">
+                <span class="ui-cell-data clr_blue">
+                  <a target="_blank"
+                    href="../../borrowers/{{ablFileUploadModel.borrower_id}}/mappings/{{ablFileUploadModel.mapping_id}}/edit?step=S1">
+                    {{collateralFrom.mapping_name}}
+                  </a>
+                </span>
+              </ng-template>
+ 
+              <!-- File format with sheet number as per CYNCS-4170 requirement -->
+              <ng-template *ngIf="col.field == 'file_format'" let-collateralFrom="rowData" pTemplate="body">
+                <ng-container
+                  *ngIf="collateralFrom.file_format.toUpperCase() !== 'XLS' && collateralFrom.file_format.toUpperCase() !== 'XLSX'">
+                  {{collateralFrom.file_format}}
+                </ng-container>
+                <ng-container
+                  *ngIf="collateralFrom.file_format.toUpperCase() === 'XLS' || collateralFrom.file_format.toUpperCase() === 'XLSX'">
+                  {{collateralFrom.file_format}} (sheet {{collateralFrom.sheet_no}})
+                </ng-container>
+              </ng-template>
+
+              <ng-template let-i="rowIndex" *ngIf="col.field == 'file' " let-ablFileUploadModel="rowData"
+                pTemplate="body">
+                <div class="upload-btn-wrapper">
+                  <button style="width:85px" class="btn" (click)="openfileBrowse('file_upload'+i)" [disabled]='isCheckPendingLink(ablFileUploadModel.pending_action_link)'
+                    *ngIf="!ablFileUploadModel.uiBindings.isFileSelected">
+                    {{ablFileUploadModel.uiBindings.labelForSelectFile}} </button>
+                  <input type="file" id="file_upload{{i}}" onclick="this.value = null"
+                    (change)="addFileInQueue($event,ablFileUploadModel)" />
+                </div>
+                <div *ngIf="ablFileUploadModel.uiBindings.isFileSelected">
+                  <span title="{{ablFileUploadModel.uiBindings.labelForSelectFile}}"
+                    class="ellipsify badge badge-default-custom">{{ablFileUploadModel.uiBindings.labelForSelectFile}}</span>
+                  <span class="badge badge-danger" (click)="removeFileFromQueue(ablFileUploadModel)">X</span>
+                </div>
+              </ng-template>
+              <ng-template *ngIf="col.field == 'expected_value' " let-collateralFrom="rowData" pTemplate="body">
+                <span class="ui-cell-data ng-star-inserted">
+                  <input type="text" class="form-control" value="{{collateralFrom.expected_value}}"
+                    (input)="updateExpectedValue($event.target.value,collateralFrom)" />
+                </span>
+              </ng-template>
+              <ng-template *ngIf="col.field == 'dropDown' " let-collateralFrom="rowData" pTemplate="body">
+                <select class="form-control" [(ngModel)]="collateralFrom.default_select_collateral"
+                  (change)="updateCollateralFrom($event.target.value,collateralFrom)">
+                  <option value="" [selected]="true">Select</option>
+                  <option *ngFor="let each of collateralFrom.select_collateral_from_dropdown" value={{each.key}}>
+                    {{each.value}}
+                  </option>
+                </select>
+              </ng-template>
+
+              <ng-template *ngIf="col.field == 'layout_dropDown' " let-collateralFrom="rowData" pTemplate="body">
+                <select style="width:150px" class="form-control" [(ngModel)]="collateralFrom.layoutID"
+                (change)="updateSelectedLayout($event.target.value,collateralFrom)">
+                <option value="" *ngIf="collateralFrom.layouts.length > 1 ">Select</option>
+                <option *ngFor="let each of collateralFrom.layouts" value={{each.layout_id}}>
+                  {{each.layout_name}}
+                </option>
+                </select>
+              </ng-template>
+
+              <ng-template *ngIf="col.field == 'variance' " let-collateralFrom="rowData" pTemplate="body">
+                <!-- <span title="Upload Value : {{collateralFrom.uploaded_value}}&#013;Total Expected Value : {{collateralFrom.total_expected_value}}" class="ui-cell-data ng-star-inserted">
+                  {{collateralFrom.variance}}
+                </span> -->
+                <span class="ui-cell-data ng-star-inserted">
+                  {{collateralFrom.variance}}
+                </span>
+              </ng-template>
+
+              <!--
+              <ng-template *ngIf="col.field == 'choosen_mapping_name'" let-collateralFrom="rowData"
+              let-ablFileUploadModel="rowData" pTemplate="body">
+                <span class="ui-cell-data clr_blue" *ngIf="ablFileUploadModel.layoutID">
+                <a target="_blank"
+                  href="../../borrowers/{{ablFileUploadModel.borrower_id}}/mappings/{{ablFileUploadModel.layoutID}}/edit?step=S1">
+                  {{collateralFrom.layoutName}}
+                </a>
+              </span>
+              <span class="ui-cell-data clr_blue hand" *ngIf="ablFileUploadModel.layoutID">
+                <img src="{{assetsPath}}/images/mapping-icon.png" (click)="mappingIconClickEvent(ablFileUploadModel.borrower_id, ablFileUploadModel.layoutID)">
+              </span>
+              </ng-template>
+              -->
+
+
+              <ng-template let-i="rowIndex" *ngIf="col.field == 'image_flag'" let-ablFileUploadModel="rowData"
+                pTemplate="body">
+                <div *ngIf="ablFileUploadModel.image_flag" class="upload-btn-wrapper">
+                  <button class="btn" (click)="openfileBrowse('img_upload'+i)"
+                    *ngIf="!ablFileUploadModel.imageBindings.isFileSelected">
+                    {{ablFileUploadModel.imageBindings.labelForSelectFile}}
+                  </button>
+                  <input type="file" id="img_upload{{i}}" onclick="this.value = null"
+                    (change)="addBBCDataFileImageInQueue($event,ablFileUploadModel)" />
+                </div>
+                <div *ngIf="ablFileUploadModel.imageBindings.isFileSelected">
+                  <span title="{{ablFileUploadModel.imageBindings.labelForSelectFile}}"
+                    class="ellipsify badge badge-default-custom">{{ablFileUploadModel.imageBindings.labelForSelectFile}}</span>
+                  <span class="badge badge-danger" (click)="removeBBCDataFileImageInQueue(ablFileUploadModel)">X</span>
+                </div>
+              </ng-template>
+              <ng-template *ngIf="col.field == 'next_date'" pTemplate="filter" let-col>
+                <br />
+                <p-calendar appendTo="body" dateFormat="mm/dd/yy" [(ngModel)]="currenctPeriodDate"
+                  [monthNavigator]="true" [yearNavigator]="true" [inputStyle]="{'width':'125px'}" yearRange="2000:2030"
+                  placeholder="Search" (onMonthChange)="filterColumnOnDateChange($event, dt, col)"
+                  (onSelect)="filterColumnOnDateChange($event, dt, col)" readonlyInput="true"
+                  class="p-t-4  display_block"></p-calendar>
+                <i *ngIf="currenctPeriodDate" class="fa fa-close"
+                  (click)="currenctPeriodDate=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+              </ng-template>
+              <ng-template *ngIf="col.field == 'due_date'" pTemplate="filter" let-col>
+                <br />
+                <p-calendar appendTo="body" dateFormat="mm/dd/yy" [(ngModel)]="dueDate" [monthNavigator]="true"
+                  [yearNavigator]="true" yearRange="2000:2030" [inputStyle]="{'width':'125px'}" placeholder="Search"
+                  (onMonthChange)="filterColumnOnDateChange($event, dt, col)"
+                  (onSelect)="filterColumnOnDateChange($event, dt, col)" readonlyInput="true"
+                  class="p-t-4 display_block"></p-calendar>
+                <i *ngIf="dueDate" class="fa fa-close"
+                  (click)="dueDate=null;dt.filter(null,col.field,col.filterMatchMode)"></i>
+              </ng-template>
+
+              <!-- Pending action link button code  start -->
+              <ng-template *ngIf="col.field == 'pending_action_link' " let-ablFileUploadModel="rowData" pTemplate="body">
+                <button type="button" *ngIf='isCheckPendingLink(ablFileUploadModel.pending_action_link)' class="btn btn-primary" (click)="clickPendingActionLinkMethod(ablFileUploadModel.pending_action_link)">Click Here</button>
+              </ng-template>
+              <!-- Pending action link button code  end -->
+
+              <ng-template *ngIf="col.field == 'preview'" let-collateralFrom="rowData" let-ablFileUploadModel="rowData" pTemplate="body">
+                <ng-container>
+                  <span style="float:left" class="ui-cell-data clr_blue hand mapping_icon_parent_class" *ngIf="ablFileUploadModel.layoutID" >
+                      <img class="mapping_icon" title="Mapping View" src="{{assetsPath}}/images/mapping-icon.png" (click)="mappingIconClickEvent(ablFileUploadModel.borrower_id, ablFileUploadModel.layoutID)">
+                  </span>
+                  <span style="float:right" *ngIf="ablFileUploadModel.layoutID && ablFileUploadModel.layoutFilePresent">
+                      <a class="fa fa-file-pdf-o" title="Layout View" (click)="previewModel(collateralFrom, ablFileUploadModel.layoutID);">
+                    </a>
+                  </span>
+                </ng-container>
+              </ng-template>
+            </p-column>
+            <ng-template let-ablFileUploadModel pTemplate="rowexpansion">
+              <div class="row-expanded" *ngIf="isExpandRowPermitted">
+                <!-- <tr  class="row-expanded">
+                <td colspan="12" class="brder"> -->
+                <table>
+                  <thead class="ui-datatable-thead">
+                    <tr class="ui-state-default">
+                      <th scope="col" style="width:50px;">
+                        <span class="ui-column-title"> </span>
+                      </th>
+                      <th scope="col" style="width:140px;padding-left:50px;">
+                        <span class="ui-column-title">Description</span>
+                      </th>
+                      <th scope="col" style="width:115px">
+                        <span class="ui-column-title">Mapping Name</span>
+                      </th>
+                      <!-- <th scope="col" style="width:115px">
+                        <span class="ui-column-title">Collateral Name</span>
+                      </th> -->
+                      <th *ngFor="let header of ablFileUploadModel.uiBindings.headers" scope="col" style="width:80px">
+                        <span class="ui-column-title">{{header.value}}</span>
+                      </th>
+                      <th scope="col" style="width:95px">
+                        <span class="ui-column-title">Balance Amt</span>
+                      </th>
+                      <th scope="col" style="width:100px">
+                        <span class="ui-column-title">Expected Value</span>
+                      </th>
+                      <th scope="col" style="width:90px">
+                        <span class="ui-column-title">Actual Value</span>
+                      </th>
+                      <th scope="col" style="width:70px;">
+                        <span class="ui-column-title">Variance</span>
+                      </th>
+                      <th scope="col" style="width:70px;">
+                        <span class="ui-column-title"># Records</span>
+                      </th>
+                      <th scope="col" style="width:105px">
+                        <span class="ui-column-title">New Accounts</span>
+                      </th>
+                      <th scope="col" style="width:125px">
+                        <span class="ui-column-title">Duplicate Invoices</span>
+                      </th>
+                      <th scope="col" style="width:125px">
+                        <span class="ui-column-title">Collateral From</span>
+                      </th>
+                      <th scope="col">
+                        <span class="ui-column-title">Actions</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="ui-datatable-data ui-widget-content">
+                    <tr *ngIf="ablFileUploadModel.uiBindings.expendedRowData.length == 0">
+                      <td>
+                        <span class="ui-cell-data clr_blue">No Record Found </span>
+                      </td>
+                    </tr>
+                    <tr *ngFor="let expendedData of ablFileUploadModel.uiBindings.expendedRowData"
+                      class="ui-widget-content no-brder">
+                      <td>
+                        <span class="ui-cell-data clr_blue hand">
+                          <img src="{{assetsPath}}/images/uploads_warning.png"
+                            (click)="openNotification(expendedData.id)">
+                        </span>
+                      </td>
+                      <td>
+                        <span class="m-l-10 ui-cell-data clr_blue">
+                          <a target="_blank" href="{{onClickOfFile(expendedData.data_type, expendedData.id)}}">
+                            {{expendedData.file_name}}</a>
+                        </span>
+                      </td>
+                      <!-- <td>
+                        <span class="ui-cell-data">{{expendedData.mapping_name}}</span>
+                      </td> -->
+                      <td>
+                        <span class="ui-cell-data clr_blue">
+                          <!-- <a target="_blank" href="../../borrowers/{{ablFileUploadModel.borrower_id}}/mappings/{{expendedData.mapping_id}}/edit?step=S1">
+                            {{expendedData.mapping_name}}</a> -->
+                          <a target="_blank" href="{{ mappingNameClickEvent(ablFileUploadModel.borrower_id, expendedData.mapping_id) }}">
+                              {{expendedData.mapping_name}}</a>
+                          </span>
+                      </td>
+                      <!-- <td>
+                        <span class="ui-cell-data clr_blue">
+                          <a target="_blank" href="../../borrowers/{{ablFileUploadModel.borrower_id}}/mappings/{{ablFileUploadModel.mapping_id}}/edit?step=S1">
+                            {{expendedData.collateral_name}}</a>
+                        </span>
+                        <span class="ui-cell-data">{{expendedData.collateral_name}}</span>
+                      </td> -->
+                      <td *ngFor="let header of ablFileUploadModel.uiBindings.headers">
+                        <span class="ui-cell-data">{{getHeadersValue(header.key,expendedData)}}</span>
+                      </td>
+                      <td>
+                        <span class="ui-cell-data">{{maskAmountInFormat(expendedData.balance_amt)}}</span>
+                      </td>
+                      <td>
+                        <span class="ui-cell-data">{{maskAmountInFormat(expendedData.expected_value)}}</span>
+                      </td>
+                      <td>
+                        <span class="ui-cell-data">{{maskAmountInFormat(expendedData.actual_value)}}</span>
+                      </td>
+                      <td>
+                        <span class="ui-cell-data">{{maskAmountInFormat(expendedData.variance)}}</span>
+                      </td>
+                      <td style="text-align: center;">
+                        <span
+                          class="ui-cell-data">{{expendedData.record_invoices != null ? expendedData.record_invoices : 0 }}</span>
+                      </td>
+                      <td>
+                        <span class="ui-cell-data"
+                          *ngIf="expendedData.new_accounts == null || expendedData.new_accounts == 0">{{expendedData.new_accounts}}</span>
+                        <span class="ui-cell-data clr_blue"
+                          *ngIf="expendedData.new_accounts != null && expendedData.new_accounts > 0">
+                          <a target="_blank" href="../../{{expendedData.new_accounts_link}}">
+                            {{expendedData.new_accounts}}
+                          </a>
+                        </span>
+                      </td>
+                      <td>
+                        <span class="ui-cell-data">{{expendedData.duplicate_invoices}}</span>
+                      </td>
+                      <td>
+                        <select class="form-control" [(ngModel)]="expendedData.default_select_collateral"
+                          (change)="updateCollateralForDataReview($event.target.value)">
+                          <option value="" [selected]="true">Select</option>
+                          <option *ngFor="let each of expendedData.select_collateral_from" value={{each.key}}>
+                            {{each.value}}
+                          </option>
+                        </select>
+                      </td>
+                      <td>
+                        <!-- class="fa fa-times-circle uploads_delete hand" -->
+                        <span class="ui-cell-data">
+                          <i [ngClass]="(isUndoPermitted)? 'hand fa fa-times-circle uploads_delete ':'hand fa fa-times-circle uploads_delete icon_disabled operation_disabled'"
+                            aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Undo File"
+                            (click)="undoExpendedRowDataFiles(expendedData.id,ablFileUploadModel)"></i>
+
+                          <i aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                            title="Reapply Collateral Name"
+                            [ngClass]="(isReprocessCollateralPermitted)? 'hand fa fa-refresh uploads_reload ':'hand fa fa-refresh uploads_reload icon_disabled operation_disabled'"
+                            (click)="reprocessSelectedCollateralFrom(expendedData.id, expendedData.default_select_collateral, ablFileUploadModel)"></i>
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- </td>
+              </tr> -->
+            </ng-template>
+          </p-dataTable>
+          <!-- below is to show pagination -->
+          <div *ngIf="isGridDataLoaded" class="grid-loader">
+            <!-- below code is to show loader when user scrolls -->
+            <span [hidden]="!showSpinner" class="center">
+              <i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+            </span>
+            <div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored
+            </div>
+            <ng-template #grid_count_template>
+              <p class="recordcount">
+                <b>Showing {{ablFileUploadAPIResponse.uploaded_file.length}} of {{recordTotal}} records</b>
+              </p>
+            </ng-template>
+            <ng-template #record_count_template>
+              <p *ngIf="filterRecordCount != -1 && filterRecordCount!=ablFileUploadAPIResponse.uploaded_file.length; else grid_count_template"
+                class="recordcount less_count">
+                <b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+              </p>
+            </ng-template>
+          </div>
+          <!-- below is to show pagination ends -->
+          <div class="m-t-10">
+            <img src="{{assetsPath}}/images/icons/info-icon.png" width="16px" height="16px" /> Choose at least one file
+            to process
+          </div>
+          <div class="clearfix"></div>
+        </div>
+        <div class="row_marg">
+          <div class="required_source_docs">
+
+            <h3 class="no-marg">Required Source Documents</h3>
+            <hr class="no-m-bt">
+            <p-dataTable *ngIf="isGridDataLoaded" tableStyleClass="ui-datatable-resizable" #dt
+              [value]="ablFileUploadAPIResponse.bbc_document">
+              <p-column *ngFor="let col of requiredSourceDocumentsModel.columnDef" [sortable]="col.sortable"
+                [filter]="col.filter" filterMatchMode="contains" filterPlaceholder="Search" [field]="col.field"
+                [header]="col.header">
+                <ng-template let-i="rowIndex" *ngIf="col.field === 'file' " let-requiredSourceDocument="rowData"
+                  pTemplate="body">
+                  <div class="upload-btn-wrapper">
+                    <button class="btn" (click)="openfileBrowse('required_field'+i)"
+                      *ngIf="!requiredSourceDocument.uiBindings.isFileSelected">
+                      {{requiredSourceDocument.uiBindings.labelForSelectFile}} </button>
+                    <input type="file" id="required_field{{i}}" onclick="this.value = null"
+                      (change)="addRequiredSourceDocumentInQueue($event,requiredSourceDocument)" /> </div>
+                  <div *ngIf="requiredSourceDocument.uiBindings.isFileSelected">
+                    <span title="{{requiredSourceDocument.uiBindings.labelForSelectFile}}"
+                      class="ellipsify badge badge-default-custom">{{requiredSourceDocument.uiBindings.labelForSelectFile}}</span>
+                    <span class="badge badge-danger"
+                      (click)="removeSourceDocumentFromQueue(requiredSourceDocument)">X</span>
+                  </div>
+                </ng-template>
+              </p-column>
+            </p-dataTable>
+          </div>
+        </div>
+        <!-- Floating buttons at the bottom of the screen -->
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+          <!-- <hr> -->
+          <button [disabled]="isCancelButtonDisable || isFileLoaded" id="cancel" label="Cancel"
+            (click)="cancelUpdatedValue()" type="button"
+            class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+          </button>
+          <button [disabled]="isFileQueueEmpty()" id="process_files" label="Process Files" (click)="processFiles()"
+            type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Process Files</span>
+          </button>
+        </div>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,185 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "cync-ngview": {
+      "root": "",
+      "sourceRoot": "cync-app",
+      "projectType": "application",
+      "prefix": "app",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        },
+        "@schematics/angular:directive": {
+          "prefix": "app"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist",
+            "index": "cync-app/index.html",
+            "main": "cync-app/main.ts",
+            "tsConfig": "cync-app/tsconfig.app.json",
+            "polyfills": "cync-app/polyfills.ts",
+            "assets": [
+              "cync-app/favicon.ico",
+              "cync-app/assets"
+            ],
+            "styles": [
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/primeng/resources/themes/omega/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeicons/primeicons.css",
+              "cync-app/assets/vendors/tinymce/skins/lightgray/skin.min.css",
+              "cync-app/assets/vendors/tinymce/skins/lightgray/content.min.css",
+              "cync-app/assets/css/style.scss",
+              "cync-app/assets/vendors/intro/introjs.min.css",
+              "node_modules/flatpickr/dist/flatpickr.min.css"
+            ],
+            "scripts": [
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/lists/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/tinymce/plugins/image/plugin.min.js",
+              "node_modules/tinymce/plugins/media/plugin.min.js",
+              "node_modules/tinymce/plugins/anchor/plugin.min.js",
+              "node_modules/tinymce/plugins/code/plugin.min.js",
+              "node_modules/moment/min/moment.min.js",
+              "node_modules/moment-timezone/builds/moment-timezone-with-data-2012-2022.js",
+              "node_modules/flatpickr/dist/flatpickr.min.js",
+              "cync-app/assets/js/intro.min.js",
+              "cync-app/assets/js/tableau-2.3.0.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "8mb",
+                  "maximumError": "10mb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "cync-app/environments/environment.ts",
+                  "with": "cync-app/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "cync-ngview:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "cync-ngview:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "cync-ngview:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "cync-app/test.ts",
+            "karmaConfig": "./karma.conf.js",
+            "polyfills": "cync-app/polyfills.ts",
+            "tsConfig": "cync-app/tsconfig.spec.json",
+            "scripts": [
+              "node_modules/tinymce/tinymce.min.js",
+              "node_modules/tinymce/themes/modern/theme.js",
+              "node_modules/tinymce/plugins/link/plugin.min.js",
+              "node_modules/tinymce/plugins/lists/plugin.min.js",
+              "node_modules/tinymce/plugins/paste/plugin.min.js",
+              "node_modules/tinymce/plugins/table/plugin.min.js",
+              "node_modules/tinymce/plugins/image/plugin.min.js",
+              "node_modules/tinymce/plugins/media/plugin.min.js",
+              "node_modules/tinymce/plugins/anchor/plugin.min.js",
+              "node_modules/moment/min/moment.min.js",
+              "node_modules/moment-timezone/builds/moment-timezone-with-data-2012-2022.js"
+            ],
+            "styles": [
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "node_modules/primeng/resources/themes/omega/theme.css",
+              "cync-app/assets/vendors/tinymce/skins/lightgray/skin.min.css",
+              "cync-app/assets/vendors/tinymce/skins/lightgray/content.min.css",
+              "cync-app/assets/css/style.scss"
+            ],
+            "assets": [
+              "cync-app/favicon.ico",
+              "cync-app/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "cync-app/tsconfig.app.json",
+              "cync-app/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "cync-ngview-e2e": {
+      "root": "e2e",
+      "sourceRoot": "e2e",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "./protractor.conf.js",
+            "devServerTarget": "cync-ngview:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "cync-ngview:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "cync-ngview"
+}

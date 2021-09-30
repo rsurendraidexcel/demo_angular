@@ -1,0 +1,28 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1" aria-hidden="true"></i></div> -->
+    </div>            
+    <div class="pad-inner">
+    <h3 class="no-m-bt">Exchange Rates</h3>
+        <div class="p-t-16">
+            <!-- <div class="has-scrollbar" id="main_contents"> -->
+                <div class="ui-datatable-tablewrapper">
+                    <grid [gridModel]="model"></grid>
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+    <div id="uiOverlay" class="ui-widget-overlay ui-dialog-mask" style="z-index: 100" style="display: none;"></div>
+<!--Exchange Rate Popul (Modal Window - Prime NG with overlay) code-->
+<div id="exchangeHistory" class="ng-tns-c2-2 ui-dialog ui-confirmdialog ui-widget ui-widget-content ui-corner-all ui-shadow ng-trigger ng-trigger-dialogState" style="display: none; overflow: hidden; height: 700px;">
+    <div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
+    <span class="ui-dialog-title ng-tns-c2-2">Exchange Rate History</span>
+    <a (click)="hideHistory()" role="button" class="ng-tns-c2-2 ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all">
+        
+    </a>    
+    </div>
+    <div class="ui-dialog-content ui-widget-content ">
+           <grid [gridModel]="historyModel"></grid>
+    </div>
+</div>
+</div>

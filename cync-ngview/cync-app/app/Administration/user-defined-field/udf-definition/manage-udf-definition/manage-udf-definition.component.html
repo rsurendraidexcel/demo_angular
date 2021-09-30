@@ -1,0 +1,252 @@
+<div class="app-body-container bg-white" id="component_html_wradio">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+        <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">{{headerText}}</h3>
+        <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="addEditUdfDefinition" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveRecord(addEditUdfDefinition.value,false)">
+                <div class="has-scrollbar" id="cync_main_contents_wradio-mapping">
+
+                    <!-- Primary Fields STARTS Here -->
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="udf_name">UDF Name
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" [ngClass]="displayFieldCss('name',false,0)" id="udf_name" formControlName="name" class="form-control">
+                            <cync-input-field-error-msg [control]="getFormControl('name',false,0)" labelName="UDF Name">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="udf_description">Description
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="udf_description" [ngClass]="displayFieldCss('description',false,0)" formControlName="description"
+                                class="form-control" placeholder="">
+                            <cync-input-field-error-msg [control]="getFormControl('description',false,0)" labelName="Description">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="field_type">Field Type
+                                <span class="required">*</span>
+                            </label>
+                            <select class="form-control" name="udf_field_type" id="udf_field_type" formControlName="field_type" (change)="onChangeOfFieldType(addEditUdfDefinition.get('field_type').value)">
+                                <option *ngFor="let key of addEditUdfDefinition.get('fieldTypeList').value" value="{{key.column_value}}">{{key.column_display}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="validation_type">Validation Type
+                                <span class="required">*</span>
+                            </label>
+                            <select class="form-control" name="udf_validation_type" id="udf_validation_type" formControlName="validation_type" (change)="onChangeOfValidationType(addEditUdfDefinition.get('validation_type').value)">
+                                <option *ngFor="let key of addEditUdfDefinition.get('validationTypeList').value" value="{{key.column_value}}">{{key.column_display}}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="active">Status
+                            </label>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox" name="udf_status" id="udf_status" checked formControlName="active">
+                                    <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Primary Fields ENDS Here -->
+
+                    <!-- Length Conditions STARTS Here   -->
+                    <div class="row brder-1" formGroupName="value_length" *ngIf="isLengthSelected">
+                        <div class="col-md-12">
+                            <h5 class="p_b_10">Length</h5>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                            <div class="pull-left udf_fixed_length pos_chbox_middle">
+                                <p-checkbox binary="true" name="udf_fixed_length" id="udf_fixed_length" formControlName="is_fixed_length" value="" label="Fixed Length"
+                                    (onChange)="onChangeOfFixedLength(addEditUdfDefinition.get('value_length.is_fixed_length').value)"></p-checkbox>
+                            </div>
+
+                            <div class="pull-left udf_length_value">
+                                <label class="mandatory" for="udf_length_value">Length Value
+                                    <span class="required" *ngIf="addEditUdfDefinition.get('value_length.is_fixed_length').value">*</span>
+                                </label>
+                                <input type="number" [ngClass]="displayFieldCss('value_length.length_value',false,0)" id="udf_length_value" name="udf_length_value"
+                                    formControlName="length_value" class="form-control" (keyup)="resetOtherConditions()">
+                                <cync-input-field-error-msg [control]="getFormControl('value_length.length_value',false,0)" labelName="Length Value">
+                                </cync-input-field-error-msg>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2 left_brder">
+                            <label class="mandatory" for="udf_min_length">Min Length
+                                <span class="required" *ngIf="!(addEditUdfDefinition.get('value_length.is_fixed_length').value)">*</span>
+                            </label>
+                            <input type="number" [ngClass]="displayFieldCss('value_length.min_length',false,0)" id="udf_min_length" name="udf_min_length"
+                                formControlName="min_length" class="form-control" (keyup)="resetOtherConditions()">
+                            <cync-input-field-error-msg [control]="getFormControl('value_length.min_length',false,0)" labelName="Min Length">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="udf_max_length">Max Length
+                                <span class="required" *ngIf="!(addEditUdfDefinition.get('value_length.is_fixed_length').value)">*</span>
+                            </label>
+                            <input type="number" [ngClass]="displayFieldCss('value_length.max_length',false,0)" id="udf_max_length" name="udf_max_length"
+                                formControlName="max_length" class="form-control" (keyup)="resetOtherConditions()">
+                            <cync-input-field-error-msg [control]="getFormControl('value_length.max_length',false,0)" labelName="Max Length">
+                            </cync-input-field-error-msg>
+                        </div>
+                    </div>
+                    <!-- Length Conditions ENDS Here -->
+
+                    <!-- Range Conditions STARTS Here  checkFieldAndValidationForRange() -->
+                    <div class="row brder-1" formGroupName="value_range" *ngIf="isRangeSelected">
+                        <div class="col-md-12">
+                            <h5 class="p_b_10">Range</h5>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="udf_range_min_value">Min Value
+                                <span class="required">*</span>
+                            </label>
+                            <input type="number" [ngClass]="displayFieldCss('value_range.range_min',false,0)" id="udf_range_min_value" name="udf_range_min_value"
+                                formControlName="range_min" class="form-control" (keyup)="resetOtherConditions()">
+                            <cync-input-field-error-msg [control]="getFormControl('value_range.range_min',false,0)" labelName="Min Value">
+                            </cync-input-field-error-msg>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="udf_range_max_value">Max Value
+                                <span class="required">*</span>
+                            </label>
+                            <input type="number" [ngClass]="displayFieldCss('value_range.range_max',false,0)" id="udf_range_max_value" name="udf_range_max_value"
+                                formControlName="range_max" class="form-control" (keyup)="resetOtherConditions()">
+                            <cync-input-field-error-msg [control]="getFormControl('value_range.range_max',false,0)" labelName="Max Value">
+                            </cync-input-field-error-msg>
+                        </div>
+                    </div>
+                    <!-- Range Conditions ENDS Here -->
+
+
+                    <!-- List of Value STARTS Here  -->
+                    <div class="row brder-1" formArrayName="list_of_values" *ngIf="isLOVSelected">
+                        <div class="col-md-12">
+                            <h5 class="p_b_10">List of Values (LOV)</h5>
+                        </div>
+
+                        <div [formGroupName]="i" class="row" *ngFor="let lovRecord of LOVControls.controls; let i = index ">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="udf_range_min_value">LOV Value
+                                        <span class="required">*</span>
+                                    </label>
+                                    <input type="hidden" formControlName="id">
+                                    <input *ngIf="addEditUdfDefinition.get('field_type').value == 'AN'" type="text" [ngClass]="displayFieldCss('lov_value',true,i)"
+                                        class="form-control" formControlName="lov_value">
+                                    <input *ngIf="addEditUdfDefinition.get('field_type').value == 'N'" type="number" [ngClass]="displayFieldCss('lov_value',true,i)"
+                                        class="form-control" formControlName="lov_value">
+                                    <cync-input-field-error-msg [control]="getFormControl('lov_value',true,i)" labelName="LOV Value">
+                                    </cync-input-field-error-msg>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="udf_range_max_value">Description
+                                        <span class="required">*</span>
+                                    </label>
+                                    <input [ngClass]="displayFieldCss('description',true,i)" type="text" class="form-control" formControlName="description">
+                                    <cync-input-field-error-msg [control]="getFormControl('description',true,i)" labelName="Description">
+                                    </cync-input-field-error-msg>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 pos_chbox_middle">
+                                    <p-checkbox class="m-r-15" binary="true" label="Default Value" formControlName="is_default_value" (onChange)="onChangeOfLovDefaultValue(i)"></p-checkbox>
+                                    <span class="add_more" (click)="addLov(i)" *ngIf="i == LOVControls.controls.length - 1">
+                                        <i aria-hidden="true" class="hand fa fa-plus fa-1x" data-placement="top" data-toggle="tooltip" title="Add More"></i>
+                                    </span>
+                                    <span class="add_more" *ngIf="LOVControls.controls.length > 1" (click)="removeLov(i)">
+                                        <i aria-hidden="true" class="hand fa fa-minus fa-1x" data-placement="top" data-toggle="tooltip" title="Delete this Item"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr-custom">
+                                <hr/>
+                            </div>                        
+                        </div>
+                    </div>
+
+                    <div class="row" *ngIf="isLOVSelected">
+                        <div class="col-md-6">
+                            <div class="col-xs-12 col-sm-6 col-md-4 m-t-10 m-b-20 col-lg-4 p-r-0 p-l-0">
+                                <p-checkbox binary="true" label="Sort in Alphabetical Order" name="love_sort_alphtic_ordr" id="love_sort_alphtic_ordr" formControlName="is_sort_by_alphabetic"></p-checkbox>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- List of Value ENDS Here -->
+
+                    <!-- Other Conditions STARTS Here -->
+                    <div class="row brder-1 ">
+                        <div class="col-md-12">
+                            <h5 class="p_b_10">Other Conditions</h5>
+                        </div>
+
+                        <div class="col-md-12 p_b_10">
+                            <p-checkbox class="m-r-15" name="udf_is_mandatory" id="udf_is_mandatory" formControlName="is_mandatory" binary="true" label="Mandatory Field"></p-checkbox>
+                            <p-checkbox class="m-r-15" name="unique_field" id="unique_field" formControlName="is_unique" binary="true" label="Unique Field"></p-checkbox>
+                            <p-checkbox class="m-r-15" name="udf_updatable_field" id="udf_updatable_field" formControlName="is_updatable" binary="true"
+                                label="Updatable Field" (onChange)="onChangeOfUpdatableField(addEditUdfDefinition.get('is_updatable').value)"></p-checkbox>
+                            <p-checkbox class="m-r-15" name="unique_field_value" id="unique_field_value" formControlName="is_unique_value" binary="true"
+                                label="Unique Field Value" *ngIf="addEditUdfDefinition.get('validation_type').value != 'LOV'"
+                                (onChange)="onChangeOfUniqueFieldValue(addEditUdfDefinition.get('is_unique_value').value)"></p-checkbox>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <!-- The following three checkbox for mainingtaing the same space only no action required -->
+                            <p-checkbox class="m-r-15 not-visible" label="Mandatory Field"></p-checkbox>
+                            <p-checkbox class="m-r-15 not-visible" label="Unique Field"></p-checkbox>
+                            <p-checkbox class="m-r-15 not-visible" label="Updatable Field"></p-checkbox>
+                            <span class="p-absolute">
+                                <input type="text" [ngClass]="displayFieldCss('udf_value',false,0)" class="unique_f_value_input form-control" formControlName="udf_value"
+                                    *ngIf="addEditUdfDefinition.get('is_unique_value').value && addEditUdfDefinition.get('validation_type').value != 'LOV'">   
+                                       <cync-input-field-error-msg [control]="getFormControl('udf_value',false,0)" labelName="Unique Field Value">
+                                </cync-input-field-error-msg>                  
+                             </span>
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <!-- The following three checkbox for mainingtaing the same space only no action required -->
+                     <!--        <p-checkbox class="m-r-15 not-visible" label="Mandatory Field"></p-checkbox>
+                            <p-checkbox class="m-r-15 not-visible" label="Unique Field"></p-checkbox>
+                            <p-checkbox class="m-r-15 not-visible" label="Updatable Field"></p-checkbox>
+                            <span>
+                                <cync-input-field-error-msg [control]="getFormControl('udf_value',false,0)" labelName="Unique Field Value">
+                                </cync-input-field-error-msg>
+                            </span> -->
+
+                        </div>
+
+
+                    </div>
+                    <!-- Other Conditions ENDS Here -->
+
+                    <!-- Save and Cancel Button starts -->
+                    <div class="row">
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <hr>
+                            <button id="action_back" label="Cancel" pbutton="" type="button" (click)="navigateToUdfDefinitionSummary()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" (click)="saveRecord(addEditUdfDefinition.value,true)"
+                                id="action_save_new" label="Save & New" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad"> {{currentActionBtnText}} </span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Save and Cancel Button ends -->
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

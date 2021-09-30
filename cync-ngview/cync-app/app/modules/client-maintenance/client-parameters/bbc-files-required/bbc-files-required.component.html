@@ -1,0 +1,49 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="rollforward-logs">
+    <div class="col-md-12 col-sm-5 col-xs-12 padding">
+      <strong class="bbc-title"> BBC Files Required </strong>
+    </div>
+    <div class="row cync-container-pannel">
+      <div id="" class="col-md-6 col-sm-5 col-xs-12 align">
+        <label class="title">Division</label>
+        <select class="div-width" (change)="onChangeDivision($event)">
+          <option value='all'>All</option>
+          <option *ngFor="let list of divisonData" [value]='list.id'>{{list.name}}</option>
+        </select>
+      </div>
+      <!-- <div class="row"> -->
+      <div class="col-md-6 col-sm-6 col-xs-12 ">
+      <div class="pull-right">
+        <div class="action-btn-wrapper">
+          <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey i-button" aria-hidden="true"
+          data-toggle="tooltip" data-placement="top" title="Add New" (click)="bbcFileRequiredAddNew()"></i>
+
+          <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete"
+            (click)="deleteBBCFilegData()" class='hand fa fa-trash fa-2x f_s_20 clr_grey i-button'></i>
+
+            <i aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset" (click)="onCancelClick()"
+            class="hand fa fa-times fa-1x clr_grey f_s_20 p-right-10 i-button">
+          </i>
+          
+          <i id="Export" aria-hidden="true" data-toggle="tooltip" title="Export"
+            class="margin-left export-icon hand fa fa-external-link fa-2x f_s_20 clr_grey i-button"
+            (click)="exportData()"></i>
+        </div>
+
+        <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad"
+          (click)="onSaveclick()">
+          Save
+        </button>
+        </div>
+      </div>
+      <!-- </div> -->
+    </div>
+    <div class="row grid-pad">
+      <ag-grid-angular style="width: 100%; height:calc(100vh - 300px)" class="ag-theme-balham"
+        [defaultColDef]="bbcFilesRequiredDefaultColDef" [gridOptions]="bbcFilesRequiredGridOptions"
+        [rowData]="bbcFilesRequiredRowData" [columnDefs]="bbcFilesRequiredColdef" [floatingFilter]="true"
+        (gridReady)="bbcFileRequiredOnGridReady($event)" (cellClicked)="onCellSelected($event)" [excelStyles]="excelStyles">
+      </ag-grid-angular>
+    </div>
+  </div>
+</div>

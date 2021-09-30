@@ -1,0 +1,135 @@
+
+.field-Panel{
+  border: 1px groove #d3d3d3 !important;
+  padding: 0 1.4em 1.4em 1.4em !important;
+  margin: 10px 0px 2px 0px !important;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+          box-shadow:  0px 0px 0px 0px #000;
+  .legend-title{
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    border:none;
+    width:150px;
+    padding-left: 10px;
+    margin-bottom: 2px;
+    font-size: 12px !important;
+  }
+}
+
+label{
+  margin-bottom: 0px !important;
+}
+.upload-section{
+  border: 2px  dashed #d3d3d3;
+  min-height: 80px;
+  width: 75vw;
+  margin: 10px;
+  display: inline-block;
+}
+.doc-files-list{
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  li { line-height: 20px; height: 20px;  padding-left: 15px;}
+}
+.options-btn, .btn{
+  padding: 4px 10px;
+}
+.row-buton-mg{ margin-bottom: 4px;}
+
+ .mg-ducument-label{ margin-top: 7px;}
+ .zpd{ padding-left: 0px;}
+ .bPCommonCardsBlock {
+  padding-left: 0.8vw;
+  }
+  .basicParameterWarpbox {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  width: 100%;
+  }
+
+  .row-space{ margin:6px 0px 6px 0px ;}
+  .bpcommonElementBoxMd {
+   width: 20vw;
+  }
+  
+  .margin-box-common {
+    margin-right: 1.7vw;
+    margin-top: 8px;
+  } 
+  .commonDropdownStyle {
+    width: 100%;
+    height: 32px;
+  }
+  .bPCommonTitles {
+   border-bottom: 1px solid #d3d3d3;
+  }
+  .bpcommonElementCheckBoxMd {
+    display: flex;
+    width: 190px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .margin-Checkbox-common {
+    margin-right: 2px;
+    margin-top:2px;
+  }
+
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 19px;
+    width: 19px;
+    background-color: #eee;
+    border: 1px solid lightgrey;
+  }
+  
+  .checkbox-controle{ 
+    display: inline-block;
+     height: 15px; 
+     width: 15px;
+     margin-left: 10px;
+    }  
+  #interestDetails {
+    cursor: pointer;
+  } 
+
+ .ui-state-disabled, .ui-widget:disabled {
+    opacity: 0.5;
+    filter: Alpha(Opacity=50);
+    background-image: none;
+    cursor: not-allowed !important;
+    background-color: #d3d3d3;
+    border: 1px solid lightgrey;
+    color: #000;
+}
+
+.loan_document_download_link {
+  color: #337ab7;
+}
+
+.loan_document_delete_link {
+  display: inline;
+}
+
+.delte_link_styling{
+    font-size: 16px;
+    color: red;
+    float: right;
+    margin-left: 131px;
+    cursor: pointer;
+}
+.custom-field{
+  display: inline-block;
+}

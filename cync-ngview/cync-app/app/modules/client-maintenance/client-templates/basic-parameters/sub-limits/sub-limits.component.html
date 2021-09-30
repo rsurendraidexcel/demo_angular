@@ -1,0 +1,92 @@
+<div [formGroup]="subLimitForm">
+  <div class="row bPCommonTitles">
+    <h4>Sub Limits</h4>
+  </div>
+  <div class="row form-group bPCommonCardsBlock">
+    <div class="row basicParameterWarpbox">
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>AR Sublimit Cap</label>
+        <input formControlName="receivable_sublimit" type="text"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Based On</label>
+        <select formControlName="receivable_sublimit_based_on" class="form-control commonDropdownStyle">
+          <option *ngFor="let item of allDropDownData?.default_sublimits_based_on; let i=index" [value]="item.value">
+            {{item.display}}</option>
+        </select>
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Calculated Cap By</label>
+        <select formControlName="receivable_sublimit_calculated_cap_by" class="form-control commonDropdownStyle">
+          <option value="">Select</option>
+          <option value="1"> 1</option>
+          <option value="??">??</option>
+        </select>
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Max Cap %</label>
+        <input formControlName="receivable_sublimit_max_cap_pct" type="text"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+    </div>
+    <div class="row basicParameterWarpbox">
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Inventory Sublimit Cap</label>
+        <input formControlName="inventory_sublimit" type="text"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Based On</label>
+        <select formControlName="inventory_sublimit_based_on" class="form-control commonDropdownStyle">
+          <option *ngFor="let item of allDropDownData?.default_sublimits_based_on; let i=index" [value]="item.value">
+            {{item.display}}</option>
+
+        </select>
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Calculated Cap By</label>
+        <select formControlName="inventory_sublimit_calculated_cap_by" class="form-control commonDropdownStyle">
+          <option value="">Select</option>
+          <option value="1"> 1</option>
+          <option value="??">??</option>
+        </select>
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Max Cap %</label>
+        <input formControlName="inventory_sublimit_max_cap_pct" type="text"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+
+    </div>
+
+    <div class="row basicParameterWarpbox">
+
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Other Sublimit Cap</label>
+        <input formControlName="other_sublimit" type="text" class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Based On</label>
+        <select formControlName="other_collateral_based_on" class="form-control commonDropdownStyle">
+          <option *ngFor="let item of allDropDownData?.default_sublimits_based_on; let i=index" [value]="item.value">
+            {{item.display}}</option>
+
+        </select>
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Calculated Cap By</label>
+        <select formControlName="other_collateral_calculated_cap_by" class="form-control commonDropdownStyle">
+          <option value="">Select</option>
+          <option value="1"> 1</option>
+          <option value="??">??</option>
+        </select>
+      </div>
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Max Cap %</label>
+        <input formControlName="other_collateral_max_cap_pct" type="text"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+    </div>
+  </div>
+</div>

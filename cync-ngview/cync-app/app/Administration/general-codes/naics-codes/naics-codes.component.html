@@ -1,0 +1,17 @@
+<div class="app-body-container bg-white is_summary" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">NAICS Codes Summary</h3>
+        <div class="p-t-16">
+            <!-- <div class="has-scrollbar" id="main_contents"> -->
+            <div>
+                <div class="ui-datatable-tablewrapper">
+                    <grid [gridModel]="naicsModel"></grid>
+                </div>
+            </div>
+            <!-- </div> -->
+        </div>
+
+    </div>
+</div>

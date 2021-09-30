@@ -1,0 +1,88 @@
+<div [formGroup]="rollForwardsForm">
+  <div class="row bPCommonTitles">
+    <h4>Rollforwards</h4>
+  </div>
+  <div class="row form-group bPCommonCardsBlock">
+    <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>RECEIVABLES</h5>
+      </div>
+    <div class="row basicParameterWarpbox">
+      <!-- <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Post New Sales/ Credits to RF </label>
+        <select formControlName="PostNewSalesCreditsToRF" class="form-control commonDropdownStyle">
+    
+          <option value="enable">Enable</option>
+          <option value="disable">Disable</option>
+        </select>
+      </div> -->
+
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Post Cash to Rollforward </label>
+        <select formControlName="division_or_all_in_rollforward" class="form-control commonDropdownStyle">
+          <option value="">None</option>
+          <option *ngFor="let item of allDropDownData?.post_cash_to_roll_forward; let i=index" value="{{item.value}}">
+            {{item.display}}</option>
+        </select>
+      </div>
+      
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Post New Sales/Credits to Rollforward </label>
+        <select formControlName="post_to_rollforward" class="form-control commonDropdownStyle">
+          <option *ngFor="let item of allDropDownData?.post_to_roll_forward; let i=index" value="{{item.value}}">
+            {{item.display}}</option>
+        </select>
+      </div>
+      
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Collateral Value Based On </label>
+        <select formControlName="rollforward_to_adjust_collateral" class="form-control commonDropdownStyle">
+          <option value=true>
+           Rollforward</option>
+           <option value=false>
+            Aging</option>
+        </select>
+      </div>
+
+    </div>
+    </div>
+    <div class="ineligibleResonSubCat">
+      <div class="row IneligibleCommonTitles">
+        <h5>INVENTORY</h5>
+      </div>
+    <div class="row basicParameterWarpbox">
+      <!-- <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Post New Sales/ Credits to RF </label>
+        <select formControlName="PostNewSalesCreditsToRF" class="form-control commonDropdownStyle">
+    
+          <option value="enable">Enable</option>
+          <option value="disable">Disable</option>
+        </select>
+      </div> -->
+
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Post New Cash/Credits to Rollforward </label>
+        <select formControlName="inventory_post_to_rollforward" class="form-control commonDropdownStyle">
+          
+          <option value=true>
+            Enabled</option>
+            <option value=false>
+              Disabled</option>
+        </select>
+      </div>
+      
+      <div class="bpcommonElementBoxMd margin-box-common">
+        <label>Collateral Value Based On</label>
+        <select formControlName="inventory_rollforward_collateral_value" class="form-control commonDropdownStyle">
+          <option value=true>
+            Rollforward</option>
+            <option value=false>
+              Actual Value</option>
+        </select>
+      </div>
+      
+
+    </div>
+    </div>
+  </div>
+</div>

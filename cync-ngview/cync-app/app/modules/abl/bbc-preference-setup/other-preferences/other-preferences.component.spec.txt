@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { OtherPreferencesComponent } from './other-preferences.component';
+
+describe('OtherPreferencesComponent', () => {
+  let component: OtherPreferencesComponent;
+  let fixture: ComponentFixture<OtherPreferencesComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ OtherPreferencesComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(OtherPreferencesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

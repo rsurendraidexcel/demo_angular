@@ -1,0 +1,133 @@
+<div class="app-body-container bg-white">
+  <div class="top-action-btns top-title text-left m-left">Inventory Rollforward</div>
+  <div class="cync-container-pannel">
+    <div class="row cync-row-margin margin-0">
+      <form [formGroup]="RollForwardDivisionCollateralGroup" class="form-inline">
+        <div class="col-md-3 p-7">
+          <div class="formGroup">
+            <label for="division"  class="p-right"> Division:</label>
+            <select class="form-control setwidth" id="division" formControlName="division" name="division"
+              (change)="onChangeDivision($event)" [(ngModel)]="divisionId">
+              <option value="-1">All</option>
+              <option *ngFor="let division of divisonData" [value]="division.id">
+                {{division.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 p-7" id="collateralId" *ngIf="divisionId != -1">
+          <div class="formGroup">
+            <label for="collateral"  class="p-right"> Collateral: </label>
+            <select class="form-control setwidth" name="collateral" formControlName="collateral"
+            (change)="onChangeCollateral($event)" [(ngModel)]="collateralId">
+              <option value="-1">All</option>
+              <option *ngFor="let collateral of collateralData" [value]="collateral.id">
+                {{collateral.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 p-7" *ngIf="divisionId != -1 && collateralId != -1">
+          <div class="formGroup">
+            <label for="division"  class="p-right">Product Group:</label>
+            <select class="form-control setwidth" id="product_group" formControlName="product_group" name="product_group"
+            (change)="onChangeProductGroup($event)"  [(ngModel)]="productGroupId">
+              <option value="-1">All</option>
+              <option *ngFor="let productGroup of productGroupData" [value]="productGroup.id">
+                {{productGroup.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 p-7">
+          <div class="formGroup">
+            <label for="bbc_date" class="p-right"> BBC Date: </label>
+            <input class="cync-inputstyle margin-left" disabled="disabled" name="bbc_date" formControlName="bbc_date">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row cync-row-margin roll-forwards">
+      <div class="row height groove margin-0">
+        <div class="col-xs-6 col-md-9 pull-left">
+          <label>{{priorBalanceTotalInventory}}</label>
+        </div>
+        <div class="col-xs-6 col-md-3 pull-right text-right">{{balanceAmount}}</div>
+      </div>
+      <div class="h8"></div>
+      <!-- Rollforward division collateral ag grid start -->
+      <div class="roll-forwoad-division-collateral">
+        <ag-grid-angular #rollForwardCollateral style="width:100%; height: 231px;" class="ag-theme-balham"
+          [columnDefs]="rollForwardColDef" 
+          [rowData]="rollForwardDivisionCollateralRowData"
+          [gridOptions]="rollForwardDivisionCollateralGridOptions"
+          (gridReady)="rollForwardDivisionCollateralOnGridReady($event)" 
+          [defaultColDef]="rollForwardDivisionCollateralDefaultColDef"
+        >
+        </ag-grid-angular>
+      </div>
+      <!-- Rollforward division collateral ag grid end -->
+      <div class="h8"></div>
+      <div class="row margin-box" >
+        <div class="col-sm-4 b-l" id="arturnday">
+          <div class="col-sm-7 h-100">
+            <label class="margin">Inventory Turn days</label>
+          </div>
+          <div class="col-sm-5 ar-turn-days-value">
+            <!-- <input type="text" style="width: 100%;" [(ngModel)]= "arturnday"> -->
+            {{arturnday}}
+          </div>
+        </div>
+        <div *ngIf="rollforward_to_adjust_collateral" class="col-sm-4 b-l" id="arturnday">
+          <div class="col-sm-7 h-100">
+            <label class="margin">Asset/Inventory Actual Value</label>
+          </div>
+          <div class="col-sm-5 ar-turn-days-value value-right-align">
+            {{asset_inventory_total}}
+          </div>
+        </div>
+        <div  *ngIf="rollforward_to_adjust_collateral" class="col-sm-4 b-l" id="arturnday">
+          <div class="col-sm-7 h-100">
+            <label class="margin">Unreconciled</label>
+          </div>
+          <div class="col-sm-5 ar-turn-days-value value-right-align">
+            {{unreconciled}}
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="app-body-container bg-white" id="cync_app-body-container">
+        <div class="rollforward-logs">
+          <div class="col-md-4 col-sm-5 col-xs-12">
+            <strong> Rollforward Logs </strong>
+          </div>
+          <div class="row">
+            <div class="col-md-8 col-sm-6 col-xs-12 top-action-btns pull-right" *ngIf="editMode == true">
+              <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip"
+                data-placement="top" title="Add New" (click)="addRollForwardLogData()"></i>
+              <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit"
+                (click)="editRollForwardLogData()" [ngClass]="selectedRolls.length>0 ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"
+                ></i>
+              <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteRollforwardLogData()"
+              [ngClass]="selectedRolls.length>0 ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+            </div>
+          </div>
+          <ag-grid-angular style="width: 100%; height: calc(100vh - 450px)" 
+          class="ag-theme-balham" 
+          [floatingFilter]="true"
+          rowSelection="multiple" 
+          [defaultColDef]="rollForwardLogdefaultColDef" 
+          [gridOptions]="rollForwardLogGridOptions"
+          [rowData]="rollForwordLogsRowData" 
+          [columnDefs]="rollForwardLogColdef" 
+          (rowSelected)="onRowSelected($event)"
+          (gridReady)="onGridReadyRollForward($event)"
+          [frameworkComponents]="frameworkComponents"
+          [suppressRowClickSelection]="true">
+          </ag-grid-angular>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

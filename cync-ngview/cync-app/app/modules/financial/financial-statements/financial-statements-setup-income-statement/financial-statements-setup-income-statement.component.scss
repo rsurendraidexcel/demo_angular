@@ -1,0 +1,120 @@
+.ui-datatable thead th:first-child,
+.ui-datatable-tablewrapper thead th:first-child {
+    padding-top: 8px !important
+}
+
+.fin-inputs {
+    max-width: 200px;
+    text-align: right
+}
+
+.master_head {
+    div {
+        background-color: #AAD1F0 !important;
+        margin-top: 15px;
+        padding: 4px
+    }
+    td {
+        border-width: 0px;
+        padding: 0px !important;
+    }
+    .ui-cell-data {
+        font-weight: 600;
+        font-size: 15px;
+    }
+}
+
+.master_head:first-child { div  {
+    margin-top: 0px !important
+}
+}
+
+.total_cat {
+    background-color: #F9F9FA !important;
+    .ui-cell-data {
+        font-weight: 600;
+        padding-right: 8px;
+    }
+}
+
+.total_section {
+    background-color: #EDF4FB !important;
+    .ui-cell-data {
+        font-weight: 600;
+        padding-right: 8px;
+    }
+}
+
+.input_column {
+    width: 150px;
+}
+
+@media screen and (max-width: 1024px) {
+    .input_column_label {
+        width: 250px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .input_column_label {
+        width: 325px;
+    }
+}
+
+.category {
+    .ui-cell-data {
+        font-weight: 600;
+        display: block;
+        padding-top: 6px;
+    }
+}
+
+.balance_sheet_title {
+    margin: 6px auto !important
+}
+
+.font-normal {
+    font-weight: normal !important
+}
+
+.total-input-field {
+    background:rgba(0,0,0,0);
+    border:none;
+    text-align: right;
+}
+
+.display-flex{
+    display: flex;
+}
+.cross-icon{
+    padding-right: 8px;
+    vertical-align: middle;
+    margin-top: 10px;
+    font-size: 17px;
+}
+.add-icon{
+    font-size: 18px;
+    padding-right: 5px;
+}
+.dropdownMenu{
+    position: relative;
+    display: block;
+}
+
+#component_html_financial_wradio.style-for-fullscreen{
+    z-index: 999; 
+    width: 100%; 
+    height: 100% !important; 
+    position: fixed; 
+    top: -15px; 
+    left: 0; 
+  }
+  .style-for-fullscreen#cync_main_contents_wradio-list{ 
+   overflow: none;
+  }
+  
+  #component_html_financial_wradio.style-for-fullscreen{background:#fff;}
+  #component_html_financial_wradio.style-for-fullscreen #cync_main_contents_wradio-list{
+      height: 500px !important;
+      overflow: unset !important;
+  }

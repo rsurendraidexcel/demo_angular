@@ -1,0 +1,53 @@
+.mat-dialog-content {
+    height: auto;
+    margin: auto;
+    max-height: none;
+}
+.customwidth {
+    width: 61%;
+}
+.text-box-style {
+    height: 28px;
+    border: 1px solid #ddd;
+    padding-left: 2px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: #fff;
+}
+.text-area-box-style {
+    min-height: 90px;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding-left: 2px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: #fff;
+}
+.dropdwon-style {
+    height: 28px;
+    border: 1px solid #ddd;
+    padding-left: 2px;
+    border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    background-color: #fff;
+}
+.top-title {
+    color: #ffffff;
+    padding: 4px;
+    margin-left: 10px;
+}
+.btnPanel {
+    margin-top: 10px;
+    text-align: center;
+    height: 35px;
+    display: block;
+    width: 100%;
+}
+.center-btn-grups {
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+}

@@ -1,0 +1,43 @@
+<div class="app-body-container bg-white is_summary" id="app-body-container">
+ 
+  <div class="titile-section">
+    <label class="top-title"> Process OneTime & Manual Charges</label>
+</div>
+ 
+  <div class="pad-inner">
+    <!-- <div class="top-action-btns top-title text-left m-left .titile-section">
+      <h5 style="margin-left: 20px;">Process OneTime & Manual Charges</h5>
+    </div> -->
+    <div class="hscrollbar-tab">
+      <div class="row">
+        <div class="bbc_date_div" style="display: inline-flex;">
+          <label>Activity Date</label>&nbsp;
+          <p-calendar [disabled]="gridEditOff" (onSelect)="onSelectActivityDate()" [(ngModel)]="activity_date"
+            placeholder="Activity Date" yearRange="2000:2030" dateFormat="mm/dd/yy" [monthNavigator]="true"
+            [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true" [inputStyle]="{'width':'150px'}"
+            [maxDate]="current_date"></p-calendar>
+        </div>
+        <div class="collatral-drop-down" style="display: inline-flex;">
+          <label>Loan ID:</label> &nbsp;
+          <select class="collatral-name-select" #loandID (change)="dropDownSelect($event)">
+            <option *ngFor="let id of combainedDropdownVal" value="{{id.loan_id}},{{id.loan_type}}">{{id.loan_no}}
+            </option>
+          </select>
+        </div>
+        <button id="editPermission" *ngIf="gridEditOff" (click)="editClickFn()" class="btn btn-primary pull-right"
+          style="display: inline-block; margin-right: 20px;">Edit</button>
+        <button *ngIf="gridEditOn" (click)="cancelClickFn()" class="btn btn-danger pull-right"
+          style="display: inline-block; margin-right: 20px;">Cancel</button>
+        <button *ngIf="gridEditOn" (click)="saveClickFn()" class="btn btn-primary pull-right"
+          style="display: inline-block; margin-right: 7px;">Save</button>
+      </div>
+      <div class="row" style="margin-top: 10px; height: 280px;">
+        <ag-grid-angular style="width: 100%; height: 100%; overflow: scroll;" class="ag-theme-balham"
+          [gridOptions]="gridOptions" rowSelection="multiple" [columnDefs]="columnDefs" [defaultColDef]="defaultColDef"
+          [rowData]="rowData" (gridReady)="onGridReady($event)" (rowSelected)="ongridRowSelected($event)"
+          suppressRowClickSelection="true" [floatingFilter]="true" singleClickEdit="true" [statusBar]="statusBar">
+        </ag-grid-angular>
+      </div>
+    </div>
+  </div>
+</div>

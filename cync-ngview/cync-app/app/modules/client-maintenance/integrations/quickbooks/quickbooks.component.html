@@ -1,0 +1,38 @@
+<div class="app-body-container bg-white loan-enquiry-main-dev" id="cync_app-body-container">
+  <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+  <div class="pad-inner">
+    <div class="row">
+      <div class="col-md-12 loan-equiry-heading">
+        <h3 style="margin: 0;">Quickbooks</h3>
+        <br />
+      </div>
+      <br />
+    </div>
+    
+    <div class="hscrollbar-tab" style="margin-top: 17px;">
+      <div  id="mainGridPannel" class="row gridMainPannel" style="height: 280px;">
+        <!-- <cync-grid [rowSelection]="'multiple'" [floatingFilter]="true" [cyncGridConfig]="cyncGridConfig" [gridOptions]="gridOptions"
+          [cyncRowData]="cyncRowData" [cyncColumnDefs]="cyncColumnDefs" (cyncOnGridReady)="cyncGridReady($event)"
+          [pagination]="true" [paginationPageSize]="paginationPageSize">
+        </cync-grid> -->
+
+        <ag-grid-angular 
+        #agGrid 
+        class="ag-theme-balham"
+        style="width: 100%; height: calc(100vh - 315px);" [floatingFilter]="true" [gridOptions]="gridOptions"
+        [rowData]="cyncRowData" [columnDefs]="cyncColumnDefs" (onGridReady)="cyncGridReady($event)"
+        [pagination]="true">
+        </ag-grid-angular>
+      </div>
+    </div>
+    <!-- <div *ngIf="userRole === 'Borrower'" class="hscrollbar-tab borrowerContentDiv">
+      <div class="borrowerConnectDiv">
+        <button (click)="borrowerQbResult()" style="padding: 7px !important;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary">Connect to QuickBooks</button>
+      </div>
+
+    </div> -->
+
+  </div>
+</div>
+
+

@@ -1,0 +1,141 @@
+<div class="app-body-container bg-white is_summary client-assginment client-assginment-custom-style is_summary udf-transfer" id="component_html_wradio" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+    <div class="row">
+        <h3 class="no-m-bt text-align-left">UDF Client Transfer</h3>
+        <div class="brder-1 p-t-32">
+            <div class="has-scrollbar client-mapping udf-transfer-scroll" id="cync_main_contents_wradio-def-list">
+                <!-- Transfer client from section start -->
+                <div class="ui-g-12 ui-md-6 ui-lg-3 transfer_udf_main_div">
+                    <div class="ui-multiselect-panel ui-widget ui-widget-content ui-corner-all ui-shadow colleteral-loan-select text-align-left">
+
+                        <!--  Transfer client from heading -->
+                        <span class="heading">{{ transferClientFromHeading }}</span>
+
+                        <!-- UDF-From UDF Names  start-->
+                        <div class="input-group client-assignment-search">
+                            <select class="form-control" [(ngModel)]="selectedUDFFromName" (ngModelChange)="onChangeUDFFromName($event)">
+                                <option value="">Select</option>
+                                <option *ngFor="let udf of fromUDFNameList" [ngValue]="udf.id">{{udf.name}}</option>
+                            </select>
+                        </div>
+                        <!-- UDF-From UDF Names  end-->
+
+                        <!--  Transfer client from body section start -->
+                        <div class="ui-corner-all ui-multiselect-header ui-helper-clearfix">
+
+
+                            <!-- UDF-From UDF values  start-->
+                            <div class="input-group client-assignment-search sec-drop no-pad">
+                                <select class="form-control" [(ngModel)]="selectedUDFFromValue" (ngModelChange)="onChangeUDFFromValue($event)">
+                                    <option value="">Select</option>
+                                    <option *ngFor="let value of fromUDFValuesList" [ngValue]="value">{{value}}</option>
+                                </select>
+                            </div>
+                            <!-- UDF-From UDF values  end-->
+
+                            <!-- Filter clients by name start -->
+                            <form *ngIf="filter" class="filter">
+                                <input class="form-control filter-list" name="filterSource" [(ngModel)]="available.picker" (ngModelChange)="onFilter(available)"
+                                    [disabled]="!isUDFFromSelected" placeholder="Search Client" (keyup)="onKeyPressClientSearch($event)">
+                                <span *ngIf="!showCloseIconUDFFrom" class="list-search">
+                                    <i class="fa fa-search" aria-hidden="true"></i>
+                                </span>
+                                <span (click)="clearClientSearchBox()" *ngIf="showCloseIconUDFFrom" class="list-search close-btn-custom">
+                                    <i class="fa fa-close" aria-hidden="true"></i>
+                                </span>
+                            </form>
+                            <!-- Filter clients by name end -->
+
+                            <!-- UDF-From Client list start -->
+                            <div class="record-picker">
+                                <ul [ngClass]="{over:available.dragOver}" (drop)="drop($event, confirmed);" (dragover)="allowDrop($event, available);" (dragleave)="dragLeave();">
+                                    <li class="ui-multiselect-item ui-corner-all" *ngFor="let item of available.sift; let idx=index;" (click)="selectItem(available.pick, item); shiftClick($event, idx, available, item); isUDFToClientSelectionMethod(available.pick.length);"
+                                        [ngClass]="{selected: isItemSelected(available.pick, item)}" (dragstart)="drag($event, item, available)" (dragend)="dragEnd(available);">
+                                        <label title="{{item._name}}">{{item._name}}</label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- UDF-From Client list end -->
+
+                            <!--  Transfer client from select all checkbox-->
+                            <div class="row m-t-4">
+                                <p-checkbox binary="true" [(ngModel)]="selectAllCheckbox" label="All" (click)="selectAllTransfer()" [disabled]="!isUDFFromSelected"></p-checkbox>
+                            </div>
+                        </div>
+                        <!--  Transfer client from body section end -->
+                    </div>
+                    <!--  Transfer client from static message to select all -->
+                    <div class="row text-align-left">
+                        <label class="checkbox-inline select_all_label">
+                            <i class="fa fa-info-circle f_s_15"></i>
+                            <strong>
+                                <small>Select client, Press Ctrl key for selecting multiple Clients</small>
+                            </strong>
+                        </label>
+                    </div>
+                </div>
+                <!-- Transfer client from section end -->
+
+                <!-- Transfer client to section start -->
+                <div class="ui-g-12 ui-md-6 ui-lg-3">
+                    <div class="ui-multiselect-panel ui-widget ui-widget-content ui-corner-all ui-shadow colleteral-loan-select text-align-left dropable">
+                        <!--  Transfer client to heading -->
+                        <span class="heading">{{ transferClientToHeading }}</span>
+
+                        <!-- UDF-To UDF Names  start-->
+                        <div class="input-group client-assignment-search">
+                            <select class="form-control" [(ngModel)]="selectedUDFToName" (ngModelChange)="onChangeUDFToName($event)">
+                                <option value="">Select</option>
+                                <option *ngFor="let udf of toUDFNameList" [ngValue]="udf.id">{{udf.name}}</option>
+                            </select>
+                        </div>
+                        <!-- UDF-To UDF Names  end-->
+
+                        <!-- UDF-To UDF values  start-->
+                        <div class="input-group client-assignment-search drag-drop">
+                            <select class="form-control" [(ngModel)]="selectedUDFToValue" (ngModelChange)="onChangeUDFToValue($event)">
+                                <option value="">Select</option>
+                                <option *ngFor="let value of toUDFValuesList" [ngValue]="value">{{value}}</option>
+                            </select>
+                        </div>
+                        <!-- UDF-To UDF values  end-->
+
+
+                        <!--  Transfer client to body section start -->
+                        <div class="ui-corner-all ui-multiselect-header ui-helper-clearfix" *ngIf="confirmed.sift.length==0">
+                        </div>
+                        <div class="record-picker" *ngIf="confirmed.sift.length>0">
+                            <ul [ngClass]="{over:confirmed.dragOver}" (drop)="drop($event, available);" (dragover)="allowDrop($event, confirmed)" (dragleave)="dragLeave()"
+                                [ngStyle]="{'max-height': height, 'min-height': height}">
+                                <li class="ui-multiselect-item ui-corner-all" *ngFor="let item of confirmed.sift; let idx=index;" [ngClass]="{selected: isItemSelected(confirmed.pick, item)}">
+                                    <label title="{{item._name}}">{{item._name}}</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="ui-multiselect-items-wrapper dragable" *ngIf="confirmed.sift.length==0">
+                            <div class="row">
+                                <i class="fa fa-arrows fa-5x"></i>
+                                <br/>
+                                <!-- <strong>Drag it here</strong> -->
+                            </div>
+                        </div>
+                        <!--  Transfer client to body section end -->
+                    </div>
+                </div>
+            </div>
+            <!-- Transfer client to section end -->
+            <!-- Cancel and transfer button section start -->
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                <hr>
+                <button (click)="resetClients()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                    <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                </button>
+                <button [disabled]="!transferButtonValidation()" (click)="transferClients()" id="action_cancel" label="Back" pbutton=""
+                    type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                    <span class="ui-button-text ui-clickable no-pad">Transfer</span>
+                </button>
+            </div>
+            <!-- Cancel and transfer button section end -->
+        </div>
+    </div>
+</div>

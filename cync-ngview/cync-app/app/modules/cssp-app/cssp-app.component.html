@@ -1,0 +1,382 @@
+<div style="background:white; margin-top:10px">
+  <div class="clearfix"></div>
+  <div class="cp_topform cp_margin0 row">
+    <div class="col-md-4 col-sm-4  col-xs-4">
+      <h3 class="cp_reportissue">Support Portal</h3>
+    </div>
+    <div class="col-md-4 col-sm-4  col-xs-4">
+      <div class="alert1 alert-danger1" id="showMessage" style="display: none;"><span></span></div>
+      <div class="alert1 alert-success1" id="showMessageSuccess" style="display: none;"><span></span></div>
+    </div>
+    <div class="col-md-4 col-sm-4  col-xs-4">
+      <input *ngIf="createButtonPermission" data-toggle="collapse" href="#createIssueFields" class="cp_btnprimary"
+        id="hid" (click)="clearForm(csspfrm)" type="button" value="Create Request">
+    </div>
+  </div>
+  <div id="createIssueFields" class="accordion-body collapse cp_margin22">
+    <form [formGroup]="csspForm" #csspfrm="ngForm" (ngSubmit)="createRequest(csspfrm)">
+      <div class="col-md-6 col-sm-6  col-xs-6" style="padding: 10px;">
+        <div class="form-group">
+          <label for="summary" class="labelstyle">Summary*</label>
+          <input type="text" formControlName="frmCtrl_summary" class="form-control selectWidth inputStyle"
+            placeholder="Provide the brief summary of the issue" [ngModel]="summaryVal">
+          <control-messages appSetClass [control]="csspForm.controls.frmCtrl_summary" [form]="csspfrm">
+          </control-messages>
+        </div>
+
+        <div class="form-group">
+          <label for="comment" class="labelstyle">Description*</label>
+          <textarea formControlName="frmCtrl_description" class="form-control selectWidth" rows="5" id="comment"
+            placeholder="Provide the detailed description of the issue" style="resize: none;padding: 6px 12px;"
+            [ngModel]="descriptionVal"></textarea>
+          <control-messages appSetClass [control]="csspForm.controls.frmCtrl_description" [form]="csspfrm">
+          </control-messages>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-6  col-xs-6" style="padding: 10px; padding-top: 12px;">
+        <div class="form-group">
+          <div class="field-group">
+            <label class="field-label labelstyle" for="customfield_10801">Browser*</label>
+            <select formControlName="frmCtrl_browser" class="form-control selectWidth inputStyle"
+              [ngModel]="browserVal">
+              <option value="12703">Google Chrome</option>
+              <option value="13101">Internet Explorer 10</option>
+              <option value="13102">Internet Explorer 11</option>
+              <option value="13100">Microsoft Edge</option>
+              <option value="12705">Mozilla Firefox</option>
+              <option value="12706">Safari</option>
+              <option value="13103">Other</option>
+            </select>
+            <control-messages appSetClass [control]="csspForm.controls.frmCtrl_browser" [form]="csspfrm">
+            </control-messages>
+            <div class="description">
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="sel1" class="labelstyle">Operating System</label>
+              <select formControlName="frmCtrl_operatingsystem" class="form-control selectWidth inputStyle"
+                [ngModel]="operatingSystemVal">
+                <option value="12707">Linux</option>
+                <option value="12708">OS x (Apple)</option>
+                <option value="12709">Ubuntu</option>
+                <option value="12710">Windows</option>
+                <option value="13600">Other</option>
+              </select>
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="sel1" class="labelstyle">Severity*</label>
+              <select formControlName="frmCtrl_severity" class="form-control selectWidth inputStyle" id="sel1"
+                [ngModel]="severityVal">
+                <option value="12700">High</option>
+                <option value="12701" selected="selected">Medium</option>
+                <option value="12702">Low</option>
+              </select>
+              <control-messages appSetClass [control]="csspForm.controls.frmCtrl_severity" [form]="csspfrm">
+              </control-messages>
+
+            </div>
+          </div>
+
+        </div>
+        <div class="form-group">
+          <label for="attachment" class="labelstyle">Attachment</label>
+          <input style="width: 100%" formControlName="frmCtrl_attachment" type="file"
+            class="form-control selectWidth inputStyle" name="file" (change)="createReqAttachment($event)"
+            [ngModel]="attachmentVal">
+        </div>
+
+      </div>
+      <div class="clearfix"></div>
+      <div style="padding-bottom: 80px;">
+        <div align="center">
+          <button type="submit" id="createRequestId" [disabled]="csspForm.status ==='INVALID' || buttonClicked"
+            class="btn_save"><b>Save</b></button>
+          <button type="button" class="btn_delete" (click)="clearForm(csspfrm)"><b>Reset</b></button>
+          <button type="button" id="cp_btndelete" (click)="createTicketcancel()"
+            class="btn_delete"><b>Cancel</b></button>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+  <div class="clearfix"></div>
+
+  <div class="row cp_margin22">
+    <form [formGroup]="csspStatusForm" #csspStatusfrm="ngForm">
+      <div class="col-md-4">
+        <select class="form-control cp_selectbox selectWidth" [ngModel]="selectedStatus" #selectStatus
+          formControlName="frmCtrl_reqStatus" (change)="getRequestsByStatus(selectStatus.value, selectCreatedBy.value)">
+          <option *ngFor="let status of reqStatus" [ngValue]="status.key">{{status.value}}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select class="form-control cp_selectbox selectWidth" [ngModel]="selectedCreateUser" #selectCreatedBy
+          formControlName="frmCtrl_reqCreated"
+          (change)="getRequestsByCreated(selectCreatedBy.value, selectStatus.value)">
+          <option *ngFor="let createdStatus of reqCreatedStatus" [ngValue]="createdStatus.key">{{createdStatus.value}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group changethisone">
+          <input type="text" formControlName="frmCtrl_search" class="form-control selectWidth inputStyle cp_inputsearch"
+            (keydown)="searchRequest($event)" #input placeholder="Request Contains" />
+          <span class="input-group-addon" style="border: 1px solid #ccc !important;border-left: 0px !important"
+            [ngClass]="(isFiltered == false)?'loadMoreDisabled':'loadMore'" (click)="filterRequest()">
+            <i class="glyphicon glyphicon-remove-circle"></i>
+          </span>
+          <span class="input-group-addon" (click)="searchRequest($event)"
+            style="border: 1px solid #ccc !important;border-left: 0 none !important;">
+            <i class="glyphicon glyphicon-search"></i>
+          </span>
+        </div>
+        <!-- <a [ngClass]="(isFiltered == false)?'loadMoreDisabled':'loadMore'" (click)="filterRequest()" style="float: right;">Clear Filter</a> -->
+      </div>
+    </form>
+  </div>
+
+  <!-- <div class="loaderStyle" id="loaderImage"><img class="imageStyle" src="{{assetsPath}}/customer_portal/wait.gif"></div> -->
+  <div class="cp_maincontent row container-fluid">
+    <div class="col-lg-12">
+      <div class="panel panel-default panelBody">
+        <div class="panel-body cssp-scroll-height" style="overflow: scroll !important;" infinite-scroll
+          [scrollWindow]="false" [infiniteScrollDistance]="2" [infiniteScrollThrottle]="10" (scrolled)="onScrollDown()">
+          <table class="table table-condensed tableStyle" style="border-collapse:collapse;">
+            <thead>
+              <tr>
+                <th class="cp_tableHeader">Type</th>
+                <th class="cp_tableHeader" (click)="sortTable('reference')"><a href="#" class="sort-by">Reference</a>
+                </th>
+                <th class="cp_tableHeader" (click)="sortTable('summary')"><a href="#" class="sort-by">Summary</a></th>
+                <th class="cp_tableHeader" (click)="sortTable('severity')"><a href="#" class="sort-by">Severity</a></th>
+                <th class="cp_tableHeader" (click)="sortTable('status')"><a href="#" class="sort-by">&nbsp;Status</a>
+                </th>
+                <th class="cp_tableHeader" (click)="sortTable('requestor')"><a href="#" class="sort-by">Requester</a>
+                </th>
+                <th class="cp_tableHeader" (click)="sortTable('updated')"><a href="#" class="sort-by">Updated</a></th>
+              </tr>
+            </thead>
+            <span class="commentsTxt" id="noResults" style="display: none;">No Results.</span>
+
+            <tbody class="cp_tbody"
+              *ngFor="let result of allResults | searchPipe: input.value; let requestIndex = index;">
+
+              <tr style="height: 60px" *ngIf="rolesPermsticketFn(result, result.requestFieldValues[10].value)"
+                (click)="getComments(result.issueKey,requestIndex,csspCreateCommentFrm, result.requestFieldValues[10].value)">
+                <td valign="middle"><img *ngIf="!result.requestFieldValues[10].value" data-toggle="tooltip"
+                    title="General Questions" class="icon_table1"
+                    src="{{assetsPath}}/images/customer_portal/ico-message.png"><img
+                    *ngIf="result.requestFieldValues[10].value == 'RBS'" data-toggle="tooltip" title="Billable Service"
+                    class="icon_table1" src="{{assetsPath}}/images/customer_portal/billable.png"><img
+                    *ngIf="result.requestFieldValues[10].value == 'RMH'" data-toggle="tooltip" title="Mapping Help"
+                    class="icon_table1" src="{{assetsPath}}/images/customer_portal/mapping.png"></td>
+                <td valign="middle"><a class="cp_table_link">{{result.issueKey}}</a></td>
+                <td><a *ngIf="result != undefined" class="cp_table_link">{{result.requestFieldValues[0].value}}</a></td>
+                <td><span *ngIf="result != undefined">{{result.requestFieldValues[2].value.value}}</span></td>
+                <td>
+                  <div *ngIf="result != undefined && result.currentStatus != undefined" class="cp_closed">
+                    <span>{{result.currentStatus.status}}</span></div>
+                </td>
+                <td><span *ngIf="result != undefined">{{result.requestFieldValues[6].value}}</span></td>
+
+                <td style="text-align: left;">
+                  <span style="float: left;" *ngIf="result.comments != undefined && result.comments.size > 0">{{
+                    formatDate(result.comments.values[result.comments.size-1].created.epochMillis) }}</span>
+                  <span style="float: left;" *ngIf="result.comments != undefined && result.comments.size == 0">{{
+                    formatDate(result.createdDate.epochMillis ) }}</span>
+                  <span style="float: left;" *ngIf="result.comments == undefined">{{
+                    formatDate(result.createdDate.epochMillis) }}</span>
+                  <div class="cp_dropdown">
+                    <button class="cp_dropbtn"></button>
+                    <div class="cp_dropdown-content">
+                      <a href="#"><span id="issueSts{{requestIndex}}">{{viewIssue}}</span></a>
+                    </div>
+                  </div>
+                </td>
+
+              </tr>
+              <tr *ngIf="rolesPermsticketFn(result, result.requestFieldValues[10].value)">
+
+                <td colspan="12" class="hiddenRow" style="border:none;padding:0px;">
+                  <div class="accordian-body collapse  cp_paneltable hiddenRow" id="demo{{requestIndex}}"
+                    style="height: inherit !important;">
+
+
+                    <div class="col-md-6 cp_padtop">
+                      <form *ngIf="commentPermissionFunction(result.requestFieldValues[10].value)"
+                        [formGroup]="csspCreateCommentForm" #csspCreateCommentFrm="ngForm">
+                        <div class="form-group">
+                          <textarea formControlName="frmCtrl_commentTxtArea"
+                            class="form-control cp_textarea selectWidth inputStyle" rows="1"
+                            placeholder="Comment on this request..." style="height: 65px !important;"></textarea>
+                          <control-messages appSetClass
+                            [control]="csspCreateCommentForm.controls.frmCtrl_commentTxtArea"
+                            [form]="csspCreateCommentFrm"></control-messages> <br>
+                          <input type="file" class="form-control inputStyle" formControlName="frmCtrl_commentAttachment"
+                            name="fileAttachment" style="width: 100%" (change)="createCommentAttachment($event)">
+                          <div><br>
+                            <button type="submit" [disabled]="csspCreateCommentFrm.status ==='INVALID' || buttonClicked"
+                              (click)="createComment(result.issueKey,requestIndex, csspCreateCommentFrm)"
+                              class="btn_add"><b>Add</b></button>
+                            <button type="button" data-toggle="collapse" attr.data-target="#demo{{requestIndex}}"
+                              id="cp_btndelete" class="btn_delete" (click)="createCommentcancel(requestIndex)"
+                              style="vertical-align: center !important"><b>Cancel</b></button>
+
+                          </div>
+
+                        </div>
+
+
+                      </form>
+
+                      <div
+                        *ngIf="result != undefined && result.status != undefined && result.status.values[0].status != 'Open'">
+                        <h5><b>Activity</b></h5>
+                        <div *ngFor="let statusUpdate of result.status.values">
+                          <span>
+                            <p> Your request status changed to <b>{{statusUpdate.status}}</b>. {{
+                              formatDate(statusUpdate.statusDate.epochMillis) }}</p>
+                          </span>
+                          <hr>
+                        </div>
+                      </div>
+
+                      <span>
+                        <h5><b>Details</b></h5> {{ formatDate(result.createdDate.epochMillis ) }}
+                      </span><br>
+
+                      <span *ngIf="!result.requestFieldValues[10].value"><b>Severity:</b>&nbsp;<span
+                          *ngIf="result != undefined">{{result.requestFieldValues[2].value.value}}</span></span><br
+                        *ngIf="!result.requestFieldValues[10].value">
+
+                      <span *ngIf="result != undefined"><span
+                          *ngFor="let browser of result.requestFieldValues[3].value"><b>Browser:</b>&nbsp;{{browser.value}}</span></span><br>
+
+                      <span *ngIf="!result.requestFieldValues[10].value"><b>Operating System:</b><span
+                          *ngIf="result != undefined && result.requestFieldValues[4].value != undefined">&nbsp;{{result.requestFieldValues[4].value.value}}</span></span><br
+                        *ngIf="!result.requestFieldValues[10].value">
+
+                      <span><strong>Description:</strong></span>&nbsp;<span
+                        *ngIf="!result.requestFieldValues[10].value">{{result.requestFieldValues[1].value}}</span>
+                      <p *ngIf="result.requestFieldValues[10].value === 'RBS' || result.requestFieldValues[10].value === 'RMH'"
+                        [innerHTML]="descriptionFormatFn(result.requestFieldValues[1].value, result.requestFieldValues[10].value)">
+                      </p><br>
+
+                      <br>
+
+                    </div>
+                    <div class="col-md-6 cp_padtop">
+
+                      <div id="commentsDiv" class="row cp_chat">
+                        <div class="loaderStyle1" id="loaderImageComment{{requestIndex}}"><img class="imageStyle1"
+                            src="{{assetsPath}}/images/customer_portal/wait.gif"></div>
+                        <span class="commentsTxt" id="noCommentsTxt{{requestIndex}}" style="display: none;">No comments
+                          found.</span>
+                        <div *ngFor="let requestComment of requestComments; let attachmentIndex = index"
+                          [ngClass]="(attachmentIndex == 0)?'col-md-12':'col-md-12 cp_divPadding'">
+
+                          <div class="well cp_chatbg_blue mar-btm"
+                            *ngIf="requestComment.body != undefined && requestComment.public == true && result.reporter.emailAddress == requestComment.author.emailAddress">
+                            <pre *ngIf="requestComment.body[0] != '['"
+                              style="background-color: inherit !important; border: none !important; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif">{{requestComment.body | formatTextPipe: requestComment.body}} </pre>
+
+                            <div *ngFor="let imagefileType of imagefileTypes">
+                              <a style="padding-left: 10px;" *ngIf="result.reporter.emailAddress == requestComment.author.emailAddress && requestComment.attachments != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == imagefileType)"
+                                href="{{requestComment.attachments.values[0]._links.content}}"><img style="width: 33%"
+                                  src="{{requestComment.attachments.values[0]._links.content}}"></a>
+                            </div>
+                            <div *ngFor="let otherfileType of otherfileTypes">
+                              <a style="padding-left: 10px;"
+                                href="{{requestComment.attachments.values[0]._links.content}}" *ngIf="result.reporter.emailAddress == requestComment.author.emailAddress && requestComment.attachments != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == otherfileType)">
+                                <img *ngIf="requestComment.attachments != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == otherfileType)" style="width: 33%"
+                                  src="{{assetsPath}}/images/customer_portal/attachments-icon.jpg"><br>
+                                {{requestComment.attachments.values[0].filename}}</a>
+                            </div>
+                          </div>
+
+                          <div class="well cp_chatbg_green mar-btm"
+                            *ngIf="requestComment.body != undefined && requestComment.public == true && result.reporter.emailAddress != requestComment.author.emailAddress">
+                            <pre *ngIf="requestComment.body[0] != '['"
+                              style="background-color: inherit !important; border: none !important; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;">{{requestComment.body | formatTextPipe: requestComment.body}} </pre>
+                            <div *ngFor="let imagefileType of imagefileTypes">
+                              <a style="padding-left: 10px;" *ngIf="requestComment.body != undefined && requestComment.attachments != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == imagefileType)"
+                                href="{{requestComment.attachments.values[0]._links.content}}"><img style="width: 33%"
+                                  src="{{requestComment.attachments.values[0]._links.content}}"></a>
+                            </div>
+                            <div *ngFor="let otherfileType of otherfileTypes">
+                              <a style="padding-left: 10px;"
+                                href="{{requestComment.attachments.values[0]._links.content}}" *ngIf="requestComment.body != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == otherfileType)">
+                                <img *ngIf="requestComment.body != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == otherfileType)" style="width: 33%"
+                                  src="{{assetsPath}}/images/customer_portal/attachments-icon.jpg"><br>
+                                {{requestComment.attachments.values[0].filename}}</a>
+                            </div>
+                          </div>
+
+                          <div class="well cp_chatbg_blue mar-btm"
+                            *ngIf="requestComment.comment != undefined && requestComment.comment.body != undefined">
+                            <pre *ngIf="requestComment.comment.body[0] != '['"
+                              style="background-color: inherit !important; border: none !important; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif">{{requestComment.comment.body | formatTextPipe: requestComment.comment.body}} </pre>
+                            <div *ngFor="let imagefileType of imagefileTypes">
+                              <a style="padding-left: 10px;" *ngIf="requestComment.comment != undefined && requestComment.attachments != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == imagefileType)"
+                                href="{{requestComment.attachments.values[0]._links.content}}"><img style="width: 33%"
+                                  src="{{requestComment.attachments.values[0]._links.content}}"></a>
+                            </div>
+                            <div *ngFor="let otherfileType of otherfileTypes">
+                              <a style="padding-left: 10px;"
+                                href="{{requestComment.attachments.values[0]._links.content}}" *ngIf="requestComment.comment != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == otherfileType)">
+                                <img *ngIf="requestComment.comment != undefined && requestComment.attachments.values[0] 
+!= undefined && (requestComment.attachments.values[0].mimeType == otherfileType)" style="width: 33%"
+                                  src="{{assetsPath}}/images/customer_portal/attachments-icon.jpg"><br>
+                                {{requestComment.attachments.values[0].filename}}</a>
+                            </div>
+
+                          </div>
+
+                          <span class="text-right" style="padding-top: 0px !important;"
+                            *ngIf="requestComment.comment == undefined && requestComment.public == true"><a
+                              class="cp_commentdtTxt"
+                              *ngIf="result.reporter.emailAddress != requestComment.author.emailAddress">Cync
+                              Support</a><a class="cp_commentdtTxt"
+                              *ngIf="result.reporter.emailAddress == requestComment.author.emailAddress">{{requestComment.body
+                              | getUsername: requestComment.body}}</a>{{ formatDate(requestComment.created.epochMillis )
+                            }}</span>
+
+                          <span class="text-right" style="padding-top: 0px !important;"
+                            *ngIf="requestComment.comment != undefined"><a
+                              class="cp_commentdtTxt">{{requestComment.comment.body | getUsername:
+                              requestComment.comment.body}}</a>{{ formatDate(requestComment.comment.created.epochMillis)
+                            }}</span>
+                        </div>
+
+                      </div>
+                    </div>
+
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row paging-text"> Showing {{totalPullRecords}} of {{limit}} </div>
+    </div>
+  </div>
+</div>

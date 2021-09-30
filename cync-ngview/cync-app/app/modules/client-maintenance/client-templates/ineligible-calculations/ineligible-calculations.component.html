@@ -1,0 +1,31 @@
+<div class="app-body-container bg-white is_summary ">
+  <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+  <div class="pad-inner">
+    <div class="row template">
+      <div class="col-md-3">
+        <h3 class="no-m-bt">Ineligible Calculations</h3>
+      </div>
+      <div class="col-md-4 pull-right text-right">
+        <button type="button" [disabled]="disableComponent" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right" (click)="saveIneligibleReasonData()">Save Ineligible calculation</button>
+        <button type="button" [disabled]="disableComponent" class="btn btn-light primarycancelbtn" (click)="cancelButtonClick()">Reset</button>
+      </div>
+    </div>
+    <div class="align">
+      <div class="bbc_basic_paramter" id="main_contents">
+        <p-pickList id="Ineligible-calculation" [source]="source" [target]="confirmed" dragdrop="true" filterBy="description"
+          metaKeySelection="true" [sourceStyle]="{'height':'300px','border':'1px solid #c8c8c8','padding':'4px'}"
+          [targetStyle]="{'height':'300px','border':'1px solid #c8c8c8','padding':'4px'}" showSourceControls="true"
+          [responsive]=true [disabled]="disableComponent" (onMoveToTarget)="onMoveToTarget($event)" (onMoveToSource)="onMoveToSource($event)"
+          (onSourceReorder)="onSourceReorder($event)" (onTargetReorder)="onTargetReorder($event)">
+          <div class="ui-picklist ">
+            <ng-template let-data pTemplate="item">
+              <div class="ui-helper-clearfix ">
+                <div class="list-of-reason">{{data.description}}</div>
+              </div>
+            </ng-template>
+          </div>
+        </p-pickList>
+      </div>
+    </div>
+  </div>
+</div>

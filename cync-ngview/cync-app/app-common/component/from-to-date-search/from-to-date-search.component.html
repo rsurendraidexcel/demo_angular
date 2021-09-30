@@ -1,0 +1,18 @@
+<div class="row search_row">
+	<div class="search-from-date">
+		<label for="from_effective_date">From Effective Date</label>&nbsp;&nbsp;
+		<p-calendar [(ngModel)]="from_date" placeholder="From Date" yearRange="2000:2030" dateFormat="mm/dd/yy"
+			[monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+			(onSelect)="fromDateSelectMethod($event)" [inputStyle]="{'width':'150px'}" [maxDate]="current_date"></p-calendar>
+	</div>
+	<div class="search-from-date">
+		&nbsp;
+		<label for="to_effective_date">To Effective Date</label> &nbsp;
+		<p-calendar [(ngModel)]="to_date" placeholder="To Date" yearRange="2000:2030" dateFormat="mm/dd/yy"
+			[monthNavigator]="true" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="true"
+			(onSelect)="toDateSelectMethod($event)" [inputStyle]="{'width':'150px'}" [maxDate]="current_date"></p-calendar>
+	</div>
+	<div class="search-button-div">
+		<button class="search-button" (click)="searchButtonClick()" title="Search">Search</button>
+	</div>
+</div>

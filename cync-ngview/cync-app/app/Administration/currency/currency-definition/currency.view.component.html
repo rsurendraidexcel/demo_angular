@@ -1,0 +1,359 @@
+
+<div class="app-body-container bg-white detail_view" id="app-body-container"
+ng-show="yes_visible" ng-controller="app_body_container">
+
+           <div class="close-btn-dash pull-right text-right top-action-btns">
+
+
+
+   <!-- <div ng-click="hide_app_body()" class="pull-right hand"><i class="fa
+fa-times fa-2x clr_gray light_1" aria-hidden="true"></i></div> -->
+
+   <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i
+class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+
+           
+
+   <div class="pull-right hand"><i (click)="edit()" class="hand fa fa-pencil fa-1x clr_grey f_s_20" aria-hidden="true"></i></div>
+   <div class="pull-right hand"><i (click)="delete()" class="hand fa fa-trash fa-2x f_s_20 clr_grey" aria-hidden="true"></i></div>
+
+   </div>            <div class="pad-inner">
+
+               <h3 class="no-m-bt">Currency Definition - View</h3>
+
+               <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor
+sit amet, consectetur adipiscing elit</small> -->
+
+               <div class="brder-1 p-t-32">
+
+                   <div class="has-scrollbar" id="main_contents">
+
+                        <div class="ui-datatable ui-widget
+ui-datatable-reflow exchange-rate-gridbg">
+
+          
+
+           <!----><div class="ui-datatable ui-widget-header">
+
+      
+
+           </div>
+
+           <!---->
+
+           <!----><div class="ui-datatable-tablewrapper
+exchange-rate-view">
+
+               <table>
+
+                   <thead class="ui-datatable-thead">
+
+                       <!----><tr class="ui-state-default">
+
+       <!---->
+
+           <th style="text-align: left !important;">                
+
+             Currency         
+
+           </th>
+
+            <th style="text-align: left !important;">                
+
+              Code       
+
+           </th>
+
+            <th style="text-align: left !important;">                
+
+             Description         
+
+           </th>
+
+            <th style="text-align: left !important;">                
+
+            Country        
+
+           </th>
+
+            <th style="text-align: left !important;">                
+
+             Precision         
+
+           </th>
+
+            <th style="text-align: left !important;">                
+
+             Rounding Unit            
+
+           </th> 
+
+            <th style="text-align: left !important;">                
+
+             Interest Method            
+
+           </th>            
+
+       
+
+   </tr>
+
+                       <!---->
+
+                   </thead>
+
+                   <!---->
+
+                   <tbody class="ui-datatable-data ui-widget-content">
+
+ 
+
+           <tr class="ui-datatable-even ui-widget-content">
+
+               <td>
+
+                     <span class="ui-column-title">Name</span>
+
+                     <span class="ui-cell-data  ui-cell-data-view">{{viewDetails.currencyName}}</span>
+
+                     
+
+                   </td>
+
+                <td>
+
+                       <span class="ui-column-title">Code</span>
+
+                      <span class="ui-cell-data  ui-cell-data-view">{{viewDetails.currencyCode}}</span>
+
+                    
+
+                   </td>
+
+                 
+
+                  <td>
+
+                       <span class="ui-column-title">Description</span>
+
+                      <span class="ui-cell-data  ui-cell-data-view">{{viewDetails.currencyDescription}}</span>
+
+                    
+
+                   </td>
+
+                 
+
+                 <td>
+
+                       <span class="ui-column-title">Country</span>
+
+                      <span class="ui-cell-data  ui-cell-data-view">{{viewDetails.ccyCountry.countryName}}</span>
+
+                    
+
+                   </td>
+
+                    <td>
+
+                       <span class="ui-column-title">Precision</span>
+
+                      <!-- <span *ngIf="viewDetails.status != 'new'" class="ui-cell-data  ui-cell-data-view">{{viewDetails.currencyDecimalPrecision}}</span> -->
+                       <span class="ui-cell-data  ui-cell-data-view">{{viewDetails.currencyDecimalPrecision}}</span>
+
+                      <!-- <span *ngIf="viewDetails.status == 'new'" class="ui-cell-data  ui-cell-data-view">2</span> -->
+
+                      <span class="ui-cell-data  ui-cell-data-view">2</span>
+
+                    
+
+                   </td>
+
+                <td>
+
+                       <span class="ui-column-title">Rounding Unit</span>
+
+                      <span class="ui-cell-data  ui-cell-data-view">{{viewDetails.currencyRoundingUnit}}</span>
+
+                    
+
+                   </td>
+
+                    <td>
+
+                       <span class="ui-column-title">Interest Method</span>
+
+                      <span *ngIf="viewDetails.currencyInterestMethod != undefined" class="ui-cell-data  ui-cell-data-view">{{viewDetails.currencyInterestMethod.intMethName}}</span>
+
+                    
+
+                   </td>
+
+           </tr>
+
+           
+
+           
+
+       
+
+       
+
+
+
+       <!---->
+
+   </tbody>
+
+               </table>
+
+           </div>
+
+           
+
+           <!---->
+
+      
+
+           
+
+           <div class="ui-column-resizer-helper ui-state-highlight"
+style="display:none"></div>
+
+           <span class="fa fa-arrow-down ui-datatable-reorder-indicator-up"
+style="position: absolute; display: none;"></span>
+
+           <span class="fa fa-arrow-up ui-datatable-reorder-indicator-down"
+style="position: absolute; display: none;"></span>
+
+       </div>
+
+             
+
+             
+
+               <div class="ui-datatable ui-widget ui-datatable-reflow
+exchange-rate-gridbg">
+
+          
+
+           <!----><div class="ui-datatable ui-widget-header">
+
+          <span class="pull-left exchange-rate-thaed">         
+
+         <strong>Currency Preferences</strong>            
+
+          </span>
+
+       
+
+           </div>
+
+           <!---->
+
+           <!----><div class="ui-datatable-tablewrapper
+exchange-rate-view">
+
+               <table>
+
+                   <thead class="ui-datatable-thead ">
+
+                       <!----><tr class="ui-state-default">
+
+       <!---->
+
+           <th style="text-align: left !important;">                
+
+             Rounding Preferences            
+
+           </th>
+
+            <th style="text-align: left !important;">                
+
+            Cut-off Time           
+
+           </th>
+
+            <th style="text-align: left !important;">                
+
+            Format Mask         
+
+           </th>
+
+         
+
+   </tr>
+
+                       <!---->
+
+                   </thead>
+
+                   <!---->
+
+                   <tbody class="ui-datatable-data ui-widget-content">
+
+  
+
+           <tr class="ui-datatable-even ui-widget-content">
+
+               <td>
+
+                     <span class="ui-column-title">Rounding
+Preferences</span>
+
+                     <span *ngIf="viewDetails.currencyRoundingPrefs != undefined" class="ui-cell-data">{{viewDetails.currencyRoundingPrefs.name}}</span>
+
+                     <span *ngIf="viewDetails.currencyRoundingPrefs == undefined" class="ui-cell-data">Truncate method</span>
+
+                     
+
+                   </td>
+
+                <td>
+
+                       <span class="ui-column-title">Cut-off Time </span>
+
+                      <span class="ui-cell-data">{{viewDetails.currencyCutoffTime}}</span>
+
+                    
+
+                   </td>
+
+                 
+
+                  <td>
+
+                       <span class="ui-column-title">Format Mask</span>
+
+                      <span *ngIf="viewDetails.currencyFormatMask != undefined" class="ui-cell-data">{{viewDetails.currencyFormatMask.formatMaskName}}</span>
+
+                      <span *ngIf="viewDetails.currencyFormatMask == undefined" class="ui-cell-data">9,999,999, 99.99</span>
+           </td>
+                    
+                
+            </tr>
+            
+    </tbody>
+                </table>
+            </div>
+            
+            <!---->
+       
+            
+            <div class="ui-column-resizer-helper ui-state-highlight" style="display:none"></div>
+            <span class="fa fa-arrow-down ui-datatable-reorder-indicator-up" style="position: absolute; display: none;"></span>
+            <span class="fa fa-arrow-up ui-datatable-reorder-indicator-down" style="position: absolute; display: none;"></span>
+        </div>
+
+        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+<hr>
+
+
+    <button (click)="navigateToHome()" id="action_cancel" label="Back" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Back</span></button>
+
+
+</div>                    </div>
+                </div>
+            </div>
+        </div>
+

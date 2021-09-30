@@ -1,0 +1,43 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Loan Type - {{ currentAction }}</h3>
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="loanTypeForm" (ngSubmit)="saveLoanType(loanTypeForm.getRawValue(),loanTypeForm.valid,false)">
+                <div class="has-scrollbar" id="cync_main_contents">
+                    <div class="form-group">
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="loan_type_name">Loan Type
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" id="loan_type_name" formControlName="loan_type_name" class="form-control" placeholder="" [ngClass]="displayCssField('loan_type_name')">
+                            <cync-input-field-error-msg [control]="getFormControl('loan_type_name')" labelName="Loan Type">
+                            </cync-input-field-error-msg>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-2  ad-bt-pad ">
+                            <label>Description</label>
+                            <input type="text" formControlName="loan_type_desc" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                placeholder="">
+                        </div>
+
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <hr>
+                            <button (click)="navigateToLoanTypeList()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" id="action_save_new" (click)="saveLoanType(loanTypeForm.getRawValue(),loanTypeForm.valid,true)"
+                                label="SaveNew" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                            </button>
+                            <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad"> {{currentActionBtnText}} </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

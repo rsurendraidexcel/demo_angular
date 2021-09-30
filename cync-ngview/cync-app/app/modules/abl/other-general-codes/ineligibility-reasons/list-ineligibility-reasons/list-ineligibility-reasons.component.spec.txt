@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ListIneligibilityReasonsComponent } from './list-ineligibility-reasons.component';
+
+describe('ListIneligibilityReasonsComponent', () => {
+  let component: ListIneligibilityReasonsComponent;
+  let fixture: ComponentFixture<ListIneligibilityReasonsComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ListIneligibilityReasonsComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ListIneligibilityReasonsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

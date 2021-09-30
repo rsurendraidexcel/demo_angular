@@ -1,0 +1,12 @@
+<span style="display: inline-flex;position:relative;">
+	<div *ngFor="let i of data; let last = last;let first = first;let index = index;">
+		&nbsp;
+		<a *ngIf="!last" class="link-color" (click)="onClick(i)" style="cursor:pointer; text-decoration: underline;">
+			{{i.substring(i.indexOf(":")+1,i.length)}},
+		</a>
+
+		<a *ngIf="last" class="link-color" (click)="onClick(i)" style="cursor:pointer; text-decoration: underline;">
+			{{i.substring(i.indexOf(":")+1,i.length)}}
+		</a>
+	</div>
+</span>

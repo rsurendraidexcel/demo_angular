@@ -1,0 +1,51 @@
+<div class="app-body-container bg-white is_summary upload-other-req-doc" id="component_html_wradio">
+    <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+    <div class="pad-inner">
+        <h3>Upload Other Required Documents</h3>
+        <div class="p-t-16"></div>
+        <div class="ui-datatable-tablewrapper">
+            <div class="cync-grid-search row no-marg">
+                <div class="form-inline m-l-20">
+                    <fieldset>
+                        <label class="control-label p-l-20 p_r_10" for="received_date">
+                            <strong>Received Date</strong>
+                        </label>
+                        <p-calendar class="form-control grid_fields" yearRange="2000:2030" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+                            id="bbc_date" [(ngModel)]="receivedDate" [disabled]="true"></p-calendar>
+                    </fieldset>
+                </div>
+            </div>
+            <!-- this is progress bar -->
+            <p-progressBar *ngIf="isFilesProcessing" [value]="progress.percentage"></p-progressBar>
+            <!-- DATATABLE STARTS -->
+            <div class="has-scrollbar row" id="cync_main_contents_wradio-list">
+                <p-dataTable id="MyDataTable" *ngIf="isGridDataLoaded" tableStyleClass="ui-datatable-resizable" [scrollable]="false" #dt
+                    [value]="ablOtherRequiredDocAPIResponse.reporting_documents" dataKey="id" [lazy]="false">
+                    <p-column *ngFor="let col of otherFileUploadModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+                        [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+                        [style]="{'width':'300px'}">
+                        <ng-template *ngIf="col.field == 'file' " let-otherFileUploadsModel="rowData" pTemplate="body">
+                            <div class="upload-btn-wrapper">
+                                <button class="btn" *ngIf="!otherFileUploadsModel.uiBindings.isFileSelected"> {{otherFileUploadsModel.uiBindings.labelForSelectFile}} </button>
+                                <input type="file" onclick="this.value = null" (change)="addFileInQueue($event,otherFileUploadsModel)" />
+                            </div>
+                            <div *ngIf="otherFileUploadsModel.uiBindings.isFileSelected">
+                                <span title="{{otherFileUploadsModel.uiBindings.labelForSelectFile}}" class="ellipsify badge badge-default-custom">{{otherFileUploadsModel.uiBindings.labelForSelectFile}}</span>
+                                <span class="badge badge-danger" (click)="removeFileFromQueue(otherFileUploadsModel)">X</span>
+                            </div>
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                    <hr>
+                    <button [disabled]="isFileQueueEmpty()" id="cancel" label="Cancel" (click)="_resetAllProperties()" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                    </button>
+                    <button [disabled]="isFileQueueEmpty()" id="process_files" label="Process Files" (click)="processFiles()" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad">Process Files</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

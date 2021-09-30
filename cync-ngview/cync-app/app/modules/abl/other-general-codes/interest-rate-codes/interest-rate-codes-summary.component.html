@@ -1,0 +1,428 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash">
+        <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i>
+        </div>
+    </div>            
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Interest Rate Code Summary</h3>
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+                          <label class="mandatory">Select Loan Type :</label>
+                         
+                           <select class="form-control ng-untouched ng-pristine ng-valid" formcontrolname="product_Type" >
+                            <option value="undefined">Please Select</option>
+               <option value="1: ABL"  class="ng-star-inserted">Credit Loan</option> 
+                    </select>
+                      </div>
+        </div>
+
+        <div class="p-t-16 row">
+            
+        <div class="col-md-8"> 
+
+
+                             <div class="cync-grid-search row no-marg">
+    <div class="col-md-6 col-sm-6 col-xs-12 p_l_2 hidden-xs hidde-sm">
+        <input pinputtext="" placeholder="Search Here" type="text" class="ui-inputtext ui-corner-all ui-state-default ui-widget w_200 search-p-l">                                  <!-- <button class="ui-button-secondary ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only" icon="fa-search" pbutton="" type="button"><span class="ui-button-icon-left ui-clickable fa fa-fw fa-search"></span><span class="ui-button-text ui-clickable">ui-btn</span></button> -->
+    </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 pull-right p-r-0 top-action-btns text-right" >
+        <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Add New"></i><i id="Edit" class="hand fa fa-pencil fa-1x clr_grey f_s_20 " aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit"></i><i id="Delete" class="hand fa fa-trash fa-2x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Delete"></i><!-- <i id="Customize" class="hand fa fa-cog fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Customize"></i> --><!-- <i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Export"></i> --> 
+          
+
+         <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true">
+                               <i id="more" class="hand fa fa-ellipsis-v fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Export" ></i> 
+                            </button>
+
+                       <ul class="dropdown-menu no-t-pad grid-menu-dropdown">
+                                  <li class="m-t-4">
+                                    <a class="hand">Export</a>
+                                </li>
+                                <li>
+                                    <a class="hand">Settings</a>
+                                </li>
+                            </ul>          
+    </div>
+    </div>            
+            <!--     <div class="ui-datatable-tablewrapper">
+                    <grid [gridModel]="model"></grid>
+                </div>  --> 
+
+                 <div class="has-scrollbar" id="main_contents">
+                        
+          
+                        
+                        <div class="ui-datatable-tablewrapper">
+                            <table class="table cync-grid">
+                                <thead class="ui-datatable-thead">
+                                    <tr class="ui-state-default">
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                              <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </th>
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                            <span class="ui-column-title">   Rate Code</span>
+                                            <span class="ui-sortable-column-icon fa fa-fw fa-sort"></span>
+                                        </th>
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                            <span class="ui-column-title">Rate Name</span>
+                                            <span class="ui-sortable-column-icon fa fa-fw fa-sort"></span>
+                                        </th>
+                                         <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                            <span class="ui-column-title">Description</span>
+                                            <span class="ui-sortable-column-icon fa fa-fw fa-sort"></span>
+                                        </th>
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                            <span class="ui-column-title">Daily Divisor</span>
+                                            <span class="ui-sortable-column-icon fa fa-fw fa-sort"></span>
+                                        </th>
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                            <span class="ui-column-title">Daily Precision</span>
+                                            <span class="ui-sortable-column-icon fa fa-fw fa-sort"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ui-datatable-data ui-widget-content">
+                                   
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                         <td>
+                                          <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                         <td>
+                                            <span class="ui-cell-data">0.00</span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>      
+    
+        </div>
+
+             <div class="col-md-4">  
+
+
+
+                                 <div class="cync-grid-search row no-marg">
+    <div class="col-md-6 col-sm-6 col-xs-12 p_l_2 hidden-xs hidde-sm">
+        <input pinputtext="" placeholder="Search Here" type="text" class="ui-inputtext ui-corner-all ui-state-default ui-widget w_200 search-p-l">                       
+    </div>
+        <div class="col-md-6 col-sm-6 col-xs-12 pull-right p-r-0 top-action-btns text-right" >
+        <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Add New"></i><i id="Edit" class="hand fa fa-pencil fa-1x clr_grey f_s_20 " aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit"></i><i id="Clone" class="hand fa fa-files-o fa-1x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Copy"></i><i id="Delete" class="hand fa fa-trash fa-2x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Delete"></i><!-- <i id="Customize" class="hand fa fa-cog fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Customize"></i><i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Export"></i>  -->   
+
+         <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true">
+                               <i id="more" class="hand fa fa-ellipsis-v fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Export" ></i> 
+                            </button>
+
+                       <ul class="dropdown-menu no-t-pad grid-menu-dropdown">
+                                  <li class="m-t-4">
+                                    <a class="hand">Export</a>
+                                </li>
+                                <li>
+                                    <a class="hand">Settings</a>
+                                </li>
+                            </ul>      
+        
+    </div>
+    </div>         
+            <!--     <div class="ui-datatable-tablewrapper">
+                    <grid [gridModel]="model"></grid>
+                </div>  --> 
+   
+
+                       <div class="has-scrollbar" id="sec_main_contents">
+                         <div class="ui-datatable-tablewrapper">
+                            <table class="table cync-grid">
+                                <thead class="ui-datatable-thead">
+                                    <tr class="ui-state-default">
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                              <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </th>
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                            <span class="ui-column-title"> Interest Rate Date</span>
+                                            <span class="ui-sortable-column-icon fa fa-fw fa-sort"></span>
+                                        </th>
+                                        <th class="ui-state-default ui-unselectable-text ui-sortable-column">
+                                            <span class="ui-column-title">Interest Rate Value</span>
+                                            <span class="ui-sortable-column-icon fa fa-fw fa-sort"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="ui-datatable-data ui-widget-content">
+                                   
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td>
+                                            <span class="ui-cell-data"><input type="checkbox" class="edit_item"></span>
+                                        </td>
+                                        <td>
+                                          <span class="ui-cell-data">10011</span>
+                                        </td>
+                                        <td>
+                                            <span class="ui-cell-data"> Account Name </span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>     
+        </div>
+
+          </div>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+ <div class="app-body-container bg-white is_summary" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+            <div class="close-btn-dash pull-right text-right top-action-btns">
+
+    <!-- <div  id="action_cancel" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1 f_s_24 p_t_5" aria-hidden="true"></i></div> -->
+    <!-- <div ng-click="hide_app_body()" class="pull-right hand m_r_5"><i class="fa fa-compress clr_gray" aria-hidden="true"></i></div> -->
+        
+    </div>            <div class="pad-inner">
+                <h3 class="no-m-bt">Sales Region Summary</h3>
+                 <div class="p-t-16">
+            <!-- <div class="has-scrollbar" id="main_contents"> -->
+               
+                        <grid [gridModel]="salesRegionsModel"></grid>
+                   
+            <!-- </div> -->
+        </div>
+            
+            </div>
+        </div>

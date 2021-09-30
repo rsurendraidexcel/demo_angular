@@ -1,0 +1,55 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+	<div class="close-btn-dash pull-right text-right top-action-btns">
+	</div>
+
+	<div class="pad-inner">
+		<h3 class="no-m-bt">System Parameters - Edit</h3>
+		<div class="brder-1 p-t-32">
+			<form [formGroup]="editSystemParameters" data-parsley-validate novalidate  #addform="ngForm" (ngSubmit)="saveData()" >
+				<div class="has-scrollbar" id="main_contents">
+					<div class="form-group">
+						
+						<div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-3">
+							
+							<label class="mandatory">Name</label>
+							<input type="text" formControlName="name" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted" placeholder="" value="" required>
+							
+						</div>
+
+						<div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+							
+							<label class="mandatory">Parameter Type</label>
+							<input type="text" formControlName="parameter_type" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted" placeholder="" value="" required>
+
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-4">
+							
+							<label class="mandatory">Description</label>
+							<input type="text" formControlName="description" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted" placeholder="" value="" required>
+
+						</div>
+						<div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+							
+							<label class="mandatory">Value</label>
+							<input type="text" formControlName="numericvalue" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched ng-submitted" placeholder="" value="" required>
+
+						</div>
+
+
+						<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+							<hr>
+							
+							<button (click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+ 							
+ 							<button id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad" >Save</span></button>
+						
+						</div>
+
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+
+</div>

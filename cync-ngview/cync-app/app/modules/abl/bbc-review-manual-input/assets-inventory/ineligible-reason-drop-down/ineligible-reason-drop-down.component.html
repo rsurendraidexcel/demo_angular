@@ -1,0 +1,9 @@
+<div *ngIf="hideDropdown">
+  <select [attr.disabled]="attrDisable() ? true: null" class="cync-dropdown-style" [(ngModel)]="dropdownBindVal" (change)="onAdjustmentReasonChange($event)">
+    <option value="">Empty</option>
+    <option *ngFor="let items of ineligiblityReasonDD"  value="{{items.id}}">{{items.value}}</option>
+    
+  </select>
+</div>
+
+<span *ngIf="hideNone">Totals</span>

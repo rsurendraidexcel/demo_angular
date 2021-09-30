@@ -1,0 +1,172 @@
+       <div class="app-body-container bg-white is_user_settings" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+            <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>            
+        <div class="pad-inner">
+                <h3 class="no-m-bt">Notification Settings</h3>
+                <div class="brder-1">
+                    <div class="has-scrollbar" id="main_contents">
+                        <div class="row no-marg email-header">
+                            <div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 p-l-0" data-toggle="buttons">
+                                <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140" [routerLink]="['/notificationCenter/global-setting']">
+                                    <input type="radio" name="letter-type">
+                                    <i class="fa fa-circle-o fa-2x"></i>
+                                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                                    <span>Global Settings</span>
+                                </label>
+                                <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140" [routerLink]="['/notificationCenter/role-setting']">
+                                    <input type="radio" name="letter-type" checked="">
+                                    <i class="fa fa-circle-o fa-2x"></i>
+                                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                                    <span>Role Settings</span>
+                                </label>
+                                <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140">
+                                    <input type="radio" name="letter-type" checked>
+                                    <i class="fa fa-circle-o fa-2x"></i>
+                                    <i class="fa fa-dot-circle-o fa-2x"></i>
+                                    <span>User Settings</span>
+                                </label>
+
+                            </div>
+                        </div>
+<div class="no-marg form-inline">
+ <div class="full_width {{isShowClientIcon}}  m_l-10">
+   <div class="no-marg alert alert-info letterType-alert col-md-4 col-sm-12 col-xs-12">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <strong class="verticalLine"> <span class="glyphicon glyphicon-info-sign"></span> </strong><small>Select Client first to proceed User Settings.</small>
+    </div>
+</div>
+
+         <div class="row no-marg">
+<div class="col-xs-12 col-sm-12 col-md-5 p_b_10 no-pad">
+<div class="ui-corner-all ui-multiselect-header ui-helper-clearfix">
+<label for="email">Client:</label> 
+<div class="ui-multiselect-filter-container">
+<p-autoComplete [(ngModel)]="client"
+[suggestions]="filteredClientsList"
+(completeMethod)="searchClient($event)" (onSelect)="searchClientByName()"
+placeholder="Search client..." 
+field="client_name"
+class="search-input-text client-search-text"
+(onKeyUp)=" onKeyPress(client)"> 
+</p-autoComplete>
+<span class="fa fa-fw fa-search pos_right search-right" *ngIf="!showCloseIcon"></span>
+<span (click)="clearClientSearchBox()" *ngIf="showCloseIcon">
+    <i class="fa fa-fw fa-close pos_right" aria-hidden="true" style="margin-left: 87%"></i>
+</span>
+
+
+</div>
+
+</div>
+</div>
+</div>
+                                <!-- <div class="form-group {{hideAllField}}">
+                                    <label>Product Type
+                                        <span class="required">*</span>
+                                    </label>
+                                    <select class="form-control">
+                                        <option>ABL</option>
+                                        <option>Factoring</option>                                    
+                                    </select>
+                                </div> -->   
+                        </div>
+                        <div class="p_l_5 p_t_20"></div>
+                        <div class="p_l_5">
+                            <div class="col-md-3 col-sm-12 col-xs-12 cync-grid-search no-marg {{hideAllField}}">
+                                <h5 class="col-md-12 col-sm-12 col-xs-12">
+                                    Users
+                                </h5>
+                                <div id="custom-search-input">
+                                    <div class="ui-corner-all ui-multiselect-header ui-helper-clearfix only-btm-brder">
+ 
+                                        <div class="ui-multiselect-filter-container">
+<p-autoComplete 
+[suggestions]="filteredUsersList" (completeMethod)="searchUser($event)" 
+(onSelect)="searchUserByName()"
+placeholder="Search Users" [(ngModel)]="user" field="user_name" class="search-input-text"
+(onKeyUp)="showUserCloseIcon = true">
+</p-autoComplete>
+                        <span class="fa fa-fw fa-search pos_right" *ngIf="!showUserCloseIcon"></span>
+                         <span (click)="clearSearchBox()" *ngIf="showUserCloseIcon">
+                      <i class="fa fa-fw fa-close pos_right" aria-hidden="true"></i>
+                    </span> 
+                                    </div>
+                                    </div>   
+                                                
+<ul class="list-group" style="max-height:250px;" *ngIf="tempUsersList!=undefined">
+<ng-container *ngFor="let x of tempUsersList">
+                     <li
+                    [ngClass]="(userId!= x.id)? 'list-group-item':'list-group-item active-list-item'"  
+                      ><span (click)="userName(x.id)" >{{x.user_name}}</span></li> 
+                       </ng-container>  
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="col-md-9 col-sm-12 col-xs-12">
+        <div class="select-purpose {{isEditShowIcon}}">  
+        <i class="glyphicon glyphicon-info-sign fa-3x"></i> 
+        <br>  
+         <div class="col-md-12 col-sm-12 col-xs-12">
+         Please select user from the left                                              
+        </div>                                         
+        </div>                                                                            <div class="abl_fact_selection" >
+                 <div *ngIf="product_type == 'ABL' ">
+                           <!--  <div class="col-md-12 text-right pane-btm-brder">
+                                        <p-checkbox binary="true" name="abl_notification" label="Select All" value="val1" [(ngModel)]="changedValueABL" (onChange) = "selectAllForAbl($event)"></p-checkbox>
+                                </div> -->
+                                <div class="col-md-12 panel-btm-brder {{hideText}}" *ngFor = "let c of ablArray; let i = index; ">
+                                    <div class="col-md-10 p-l-0">
+                                        <span>{{c.name}}</span>
+                                    </div>
+                                    <div class="col-md-2 text-right p-r-0" *ngFor = " let selectedValue of selectedAblValue; let index = index; trackBy:trackByIndex; ">
+                    <select *ngIf = "i == index" [(ngModel)]="selectedAblValue[index]" (change)="onChangeForAbl($event.target.value)" placeholder="selectedValue" id="typeValueABL{{index}}" class="form-control wid_100 pull-right p-3px">
+                        <option value="S">Select</option>
+                        <option *ngIf="c.email_subscription != undefined" value="E">Email</option>
+                        <option *ngIf="c.text_subscription != undefined" value="T">Text</option>
+                        <option *ngIf="c.email_subscription != undefined  && c.text_subscription != undefined" value="B">Both</option>
+                       <!--  <option value="B">Both </option>
+                        <option value="T">Text</option>
+                        <option value="E">Email</option> -->
+                    </select>
+                                     </div>
+                                </div>
+                            </div>  
+                            <div *ngIf="product_type == 'FACTORING' ">
+                            <div class="col-md-12 text-right pane-btm-brder">
+                                        <!-- <p-checkbox binary="true" name="abl_notification" label="Select All" value="val1" [(ngModel)]="changedValueFACT" (onChange) = "selectAllForFactoring($event)"></p-checkbox> -->
+                                </div>
+                                <div class="col-md-12 panel-btm-brder" *ngFor = "let c of factoringArray; let i = index; ">
+                                    <div class="col-md-10 p-l-0">
+                                        <span>{{c.name}}</span>
+                                    </div>
+                                    <div class="col-md-2 text-right p-r-0" *ngFor = " let selectedValue of selectedFactoringValue; let index = index; trackBy:trackByIndex; ">
+                    <select *ngIf = "i == index" [(ngModel)]="selectedFactoringValue[index]" (change)="onChangeForFactoring($event.target.value)" placeholder="selectedValue" id="typeValueFACT{{index}}" class="form-control wid_100 pull-right p-3px">
+                        <option value="S">Select</option>
+                        <option *ngIf="c.email_subscription != undefined" value="E">Email</option>
+                        <option *ngIf="c.text_subscription != undefined" value="T">Text</option>
+                        <option *ngIf="c.text_subscription != undefined  && c.email_subscription != undefined" value="B">Both</option>
+                        <!-- <option value="B">Both </option>
+                        <option value="T">Text</option>
+                        <option value="E">Email</option> -->
+                    </select>
+                                     </div>
+                                </div>
+                            </div> 
+                        </div>
+                        </div>
+                        </div>
+<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <hr>
+                            <button [disabled] = 'isDisable'  (click)="cancelUserSetting()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                            </button>
+                            <button [disabled] = 'isDisable' (click)="saveData()" id="action_save" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                                <span class="ui-button-text ui-clickable no-pad">Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

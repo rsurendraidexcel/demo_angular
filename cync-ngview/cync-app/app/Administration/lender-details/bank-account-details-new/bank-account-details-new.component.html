@@ -1,0 +1,322 @@
+<div class="app-body-container bg-white is_summary" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">    
+<div class="close-btn-dash">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+        </div>                
+            </div>
+            <div class="pad-inner">
+                <h3 class="no-m-bt">{{bankDetailsHearder}}</h3>
+  <div class="brder-1 p-t-32">
+                    <div class="p-t-20"> </div>
+                    <div class="has-scrollbar manDivContent " id="main_contents">
+                    <div class="form-group">
+
+             <!-- <form [formGroup]="bankAccoutdetailsForm" data-parsley-validate novalidate  #bankDetailsForm="ngForm" (ngSubmit)="bankAccoutdetailsSubmit()"> -->
+             <form [formGroup]="bankAccoutdetailsForm" data-parsley-validate novalidate  #bankDetailsForm="ngForm" >
+               
+                            <div class="row no-marg">
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Bank<span class="required">*</span></label>
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" formControlName="bankName" [ngClass]="(isBankNameValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankNameValid()" placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Account No.<span class="required">*</span></label>
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" formControlName="bankaccountNo" [ngClass]="(isBankAccountNoValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankAccountNoValid()" placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Account Name<span class="required">*</span></label>
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" formControlName="bankaccountName" [ngClass]="(isBankAccountNameValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankAccountNameValid()" placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Routing Number<span class="required">*</span></label>
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" formControlName="bankRouting"  [ngClass]="(isBankRoutingValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsBankRoutingValid()" placeholder="" value="">
+                                </div>
+                            </div>
+
+                            <div class="row no-marg">
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Address Line 1<span class="required">*</span></label>
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" formControlName="bankAddressLine1" [ngClass]="(isBankAddressLine1Valid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsAddressLine1Valid()" placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Address Line 2</label>
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" formControlName="bankAddressLine2"
+                                placeholder="" value="">
+                                </div>
+                                   <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">City</label>
+                                  <!--   <select formControlName="bankCity" [ngClass]="(isCityValid)?  'form-control':'form-control has-error'"
+                                    (focusout)="checkIsCityValid()" class="form-control">
+                                        <option></option>
+                                        <option>1</option>
+                                         <option>2</option>
+                                          <option>3</option>
+                                    </select> -->
+                                    <input type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" formControlName="bankCity" placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Country</label>
+                                    <select formControlName="bankCountry" [(ngModel)]="selectCountry" (change)="onChangeCountry($event.target.value)" class="form-control">
+                                    <option value=""  selected>Select</option>
+                                        <option *ngFor = "let countryName of countryListInfo" value={{countryName.id}}>{{countryName.name}}</option>
+                                    </select>
+                                </div>
+                                 <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">State Province</label>
+                                    <select formControlName="bankState" [(ngModel)]="selectState" class="form-control">
+                                               <option value=""  selected>Select</option>
+                                        <option *ngFor = "let stateName of stateListInfo" value={{stateName.id}}>{{stateName.name}}</option>
+                                    </select>
+                                </div>
+
+                           
+                         </div>
+
+                                <div class="row no-marg">
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Zip/Postal Code</label>
+                                    <input type="text" formControlName="bank_zip_code" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" placeholder="" value="">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-2 ad-bt-pad col-lg-2">
+                                    <label class="mandatory" for="currency_code">Fax No.</label>
+                                    <input type="text" formControlName="bank_fax_no" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched" placeholder="" value="">
+                                </div>
+                             </div>
+                             <div class="row no-marg">
+                                      
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                              
+                                     <button id="action_save" [hidden]="isVisibleAddButton" [disabled]="isEditIconEnabled === true ? false : 'disabled'" 
+                                    (click)="addTempBankDetails();saveAllBankDetails();" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Add Bank</span></button>
+
+                                     <button id="action_save" [hidden]="isVisibleEditButton" [disabled]="isEditIconEnabled === true ? false : 'disabled'"  (click)="bankAccoutdetailsUpdate()" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Update Details</span></button>
+
+                                     <button id="action_back" [disabled]="isEditIconEnabled === true ? false : 'disabled'"  (click)="concelAction()" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel"><span class="ui-button-text ui-clickable no-pad">{{cancelButtonHeader}}</span></button>
+                                        </div> 
+                                          
+                             </div>
+                             </form>
+                             </div>
+    <hr>
+<div class="row no-marg {{hideBankDetails}}">
+    <div class="col-sm-12 col-md-12 col-xs-12">
+        <div class="col-sm-12 col-md-3 col-xs-12 text-right">
+               <img src="./../../..{{assetsPath}}/images/indicator.png"/>
+        </div>
+          <div class="col-sm-12 col-md-6 col-xs-12 text-center" >
+
+     
+        <h4>No Records available for Bank Details</h4>
+        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p> -->
+   
+        </div>
+    </div>
+</div>
+<div class="clearfix"> &nbsp;</div>
+
+        <div class="row no-marg">
+                  <div class="col-sm-12 col-md-12 col-lg-4 mt-4 p_t_10" *ngFor = "let BankDetail of bankAccoutdetails; let i = index; ">
+                               <div [ngClass]="!(i==disableNumber)? 'card':'card bottom disable-card'">
+<div class="arrow"></div>
+
+                                                  <div class="card-title">
+                                                     <div class="col-md-7 col-sm-6 col-xs-12 m-t-7">
+                                         <span>{{BankDetail.bank_name}}</span> 
+                                    </div>
+                                    <div class="col-md-5 col-sm-6 col-xs-12 pull-right p-r-0 top-action-btns text-right"
+                                    style="padding-right: 14px !important;padding-top: 0px;margin-top: -10px;" >
+
+                                    <i id="Edit" class="hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled" *ngIf="!isEditIconEnabled" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit"></i>
+                                    <i id="Edit" class="hand fa fa-pencil fa-1x clr_grey f_s_20 " aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit" *ngIf="isEditIconEnabled" (click)="editBankAccout(BankDetail.id,i); search(BankDetail.bank_name,BankDetail)"></i>
+                                    <i id="Delete" class="hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Delete" *ngIf="!isDeleteIconEnabled"></i> 
+                                    <i id="Delete" class="hand fa fa-trash fa-2x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Delete" (click)="delateBankAccout(BankDetail.id,BankDetail.bank_name)" *ngIf="isDeleteIconEnabled"></i>    
+                                    </div>
+
+
+                                   <!--  <span class="icon-bank-details">
+                     <i class="fa fa-pencil btnAction icon_disabled" aria-hidden="true" *ngIf="!isEditIconEnabled"></i>
+                     <i class="fa fa-pencil btnAction" aria-hidden="true" *ngIf="isEditIconEnabled" (click)="editBankAccout(BAD.id)"></i>
+                     <i class="fa fa-trash btnAction icon_disabled" aria-hidden="true" *ngIf="!isDeleteIconEnabled"></i>
+                     <i class="fa fa-trash btnAction" aria-hidden="true" (click)="delateBankAccout(BAD.id)" *ngIf="isDeleteIconEnabled"></i>
+                </span> -->
+                                   
+                                    <hr/>
+                                    </div>
+                                    <div class="card-block">
+                                    <div class="meta">
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                     
+
+                                        <div class="row no-marg">
+                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 no-pad">
+                                                     <div>Bank Name </div>
+                                            </div>
+                                            <span class="col-lg-1 col-md-1 col-sm-12 col-xs-12 no-pad">&nbsp;:</span>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad">
+                                                    <div> <strong> {{BankDetail.bank_name}}</strong></div>
+                                            </div>
+                                        </div>
+                                   <div class="row no-marg">
+                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 no-pad">
+                                                     <div>Bank Account Number</div>
+                                            </div>
+                                              <span class="col-lg-1 col-md-1 col-sm-12 col-xs-12 no-pad">&nbsp;:</span>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad">
+                                                    <div> <strong>{{BankDetail.bank_account_no}}</strong></div>
+                                            </div>
+                                        </div>
+
+                                               <div class="row no-marg">
+                                            <div class="col-lg-5 col-md-5col-sm-12 col-xs-12 no-pad">
+                                                     <div>Bank Account Name</div>
+                                            </div>
+                                              <span class="col-lg-1 col-md-1 col-sm-12 col-xs-12 no-pad">&nbsp;:</span>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad">
+                                                    <div> <strong>{{BankDetail.bank_account_name}}</strong></div>
+                                            </div>
+                                        </div>
+
+
+                                       
+                                                    <div class="row no-marg">
+                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 no-pad">
+                                                     <div>Bank Routing</div>
+                                            </div>
+                                               <span class="col-lg-1 col-md-1 col-sm-12 col-xs-12 no-pad">&nbsp;:</span>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad">
+                                                    <div> <strong>{{maskRoutingNumber(BankDetail.bank_routing)}}</strong></div>
+                                            </div>
+                                        </div>
+   
+                                                           <div class="row no-marg">
+                                            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 no-pad">
+                                                     <div>Address</div>
+                                            </div>
+                                               <span class="col-lg-1 col-md-1 col-sm-12 col-xs-12 no-pad">&nbsp;:</span>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad"><div> 
+                                                    <strong>{{BankDetail.bank_address}}
+    <span class="containerspan" *ngIf="BankDetail.address_line_1!=null">,&nbsp;{{BankDetail.address_line_1}}</span>
+   <span  class="containerspan" *ngIf="BankDetail.city!=null"  >,&nbsp;{{BankDetail.city}}</span> 
+    <span class="containerspan" *ngIf="BankDetail.state_province_name!=null" >,&nbsp;{{BankDetail.state_province_name}}</span>
+    <span class="containerspan" *ngIf="BankDetail.country_name!=null"  >,&nbsp;{{BankDetail.country_name}}</span>
+     <span class="containerspan" *ngIf="BankDetail.zip_code!=null"  >,&nbsp;{{BankDetail.zip_code}}</span>
+                                       
+                                               
+                                                     </strong>
+                                                     </div>
+                                            </div>
+                                       
+                                        </div>
+                                          <div *ngIf="BankDetail.fax_no!=null" class="row no-marg">
+                                              <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 no-pad">
+                                                     <div>Fax Number</div>
+                                            </div>
+    <span class="col-lg-1 col-md-1 col-sm-12 col-xs-12 no-pad">&nbsp;:</span>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 no-pad">
+                                           <div> <strong>{{BankDetail.fax_no}}</strong></div>
+                                            </div>
+                                            </div>
+                                         
+                                    </div>
+                                    </div>
+                                    <div class="card-text">
+                                    </div>
+                                    </div>
+                          
+                                    </div>
+                                    </div>
+
+
+     <!--    <div *ngIf="tempBankAccountDetails.length > 0">
+        <div *ngFor="let tmpAcc of tempBankAccountDetails"> 
+       <div class="col-sm-12 col-md-12 col-lg-4 mt-4 p_t_10">
+                                     <div class="card">
+
+                                                  <div class="card-title">
+                                                     <div class="col-md-6 col-sm-6 col-xs-12">
+                                        &nbsp;
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 pull-right p-r-0 top-action-btns text-right"
+                                    style="padding-right: 14px !important;padding-top: 0px;margin-top: -10px;" >
+                                    <i id="Edit" class="hand fa fa-pencil fa-1x clr_grey f_s_24 " aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Edit" click)="editTempBankDetails(tmpAcc)"></i>
+                                    <i id="Delete" class="hand fa fa-trash fa-2x f_s_24 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="left" title="Delete" (click)="deleteTempBankDetail(tmpAcc)"></i>     
+                                    </div>
+                                   
+                                    <hr/>
+                                    </div>
+                                    <div class="card-block">
+                                    <div class="meta">
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 p-0">
+                     
+
+                                        <div class="row no-marg">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                     <div>Bank Name: &nbsp;</div>
+                                            </div>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div> <strong>{{tmpAcc.bank_detail.bank_name}}</strong></div>
+                                            </div>
+                                        </div>
+
+                                               <div class="row no-marg">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                     <div>Bank Account Name: &nbsp;</div>
+                                            </div>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div> <strong>{{tmpAcc.bank_detail.bank_account_name}}</strong></div>
+                                            </div>
+                                        </div>
+
+
+                                               <div class="row no-marg">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                     <div>Bank Account Number: &nbsp;</div>
+                                            </div>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div> <strong>{{tmpAcc.bank_detail.bank_account_no}}</strong></div>
+                                            </div>
+                                        </div>
+
+                                                    <div class="row no-marg">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                     <div>Bank Routing: &nbsp;</div>
+                                            </div>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div> <strong>{{tmpAcc.bank_detail.bank_routing}}</strong></div>
+                                            </div>
+                                        </div>
+
+                                                           <div class="row no-marg">
+                                            <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                     <div>Bank Address: &nbsp;</div>
+                                            </div>
+                                             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                    <div> <strong>{{tmpAcc.bank_detail.bank_address}}</strong></div>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                    </div>
+                                    <div class="card-text">
+                                    </div>
+                                    </div>
+                          
+                                    </div>
+                                    </div>  
+                                    </div>
+                                    </div> -->
+
+                          </div>
+                              </div>
+                </div>
+            </div>
+        </div>

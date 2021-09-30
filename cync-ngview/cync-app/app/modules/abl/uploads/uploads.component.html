@@ -1,0 +1,18 @@
+<div *ngIf="isClientSelected" class="row no-marg brder-1 p-t-32 p_b_10 sub_radios">
+    <div class="row main-heading">
+        <h3 class="no-m-bt ">ABL File Uploads</h3>
+    </div>
+    <div class="row btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0" data-toggle="buttons">
+        <p-radioButton name="upload_bbc_data_files" [(ngModel)]="selectedRadioBtn" [disabled]="!isBBCDataFileViewPermitted" id="upload_bbc_data_files"
+            checked="true" [ngClass]="(!isBBCDataFileViewPermitted) ? 'disable-radio-for-router' : ''" value="upload bbc data files"
+            label="Upload BBC Data Files" [routerLink]="['/uploads/upload-bbc-data-files']">
+        </p-radioButton>
+        <p-radioButton name="upload_bbc_data_files" [(ngModel)]="selectedRadioBtn" [disabled]="!isOtherRequiredDocumentPermitted"
+            id="upload_other_required_documents" [ngClass]="(!isOtherRequiredDocumentPermitted) ? 'disable-radio-for-router' : ''"
+            value="upload other required documents" label="Upload Other Required Documents" [routerLink]="['/uploads/upload-other-required-documents']"></p-radioButton>
+        <p-radioButton name="upload_bbc_data_files" [(ngModel)]="selectedRadioBtn" [disabled]="!isAutoFileUploadPermitted" id="abl_auto_file_upload"
+            label="ABL Auto File Upload" [ngClass]="(!isAutoFileUploadPermitted) ? 'disable-radio-for-router' : ''" value="abl auto file upload"
+            [routerLink]="['/uploads/abl-auto-file-uploads']"></p-radioButton>
+    </div>
+</div>
+<router-outlet></router-outlet>

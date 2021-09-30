@@ -1,0 +1,751 @@
+<div class="app-body-container bg-white is_summary " id="app-body-container">
+	<div class="close-btn-dash pull-right text-right top-action-btns"></div>
+	<div class="pad-inner">
+		<h3 class="no-m-bt">Basic Parameters</h3>
+		<div class="p-t-32">
+			<div class="m-l-r-15">
+				<ul class="list-inline basic-menu hand">
+					<li>
+						<a (click)="onClick('#bbc_Basic_Details')"> BBC Basic Details</a>
+					</li>
+					<li>
+						<a (click)="onClick('#bbc_Others')"> BBC Others</a>
+					</li>
+					<li>
+						<a (click)="onClick('#over_Advance')"> Over Advance</a>
+					</li>
+					<li>
+						<a (click)="onClick('#sub_Limits')"> Sub Limits</a>
+					</li>
+					<li>
+						<a (click)="onClick('#ineligible_Reasons')"> Ineligible Reasons</a>
+					</li>
+					<li>
+						<a (click)="onClick('#client_BBC_Options')"> Client BBC Options</a>
+					</li>
+					<span *ngIf="isEditIconEnabled" class="basic_details_edit_icon">
+						<i class="fa fa-pencil clr_gray hand f_s_20" aria-hidden="true"></i>
+					</span>
+					<span *ngIf="!isEditIconEnabled" class="basic_details_edit_icon">
+						<i class="fa fa-pencil hand icon_disabled f_s_20" aria-hidden="true"></i>
+					</span>
+				</ul>
+			</div>
+
+
+			<div class="has-scrollbar bbc_basic_paramter" id="main_contents">
+				<form [formGroup]="basicParamForm">
+					<!-- form group for borrower api response keys -->
+					<div class="pad-inner">
+						<h4 class="panel-title title-border m-l-15" id="bbc_Basic_Details">BBC Basic Details</h4>
+						<div formGroupName="borrowerDetails" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>BBC Frequency </label>
+									<select formControlName="bbc_frequency" class="form-control" id="bbc-frequencyID">
+										<option value="" [selected]="true">Select</option>										
+										<option *ngIf="basicParamForm.get('asynchronousFormControls.mydropdown').value == null " value="">loading data </option>
+										<option *ngFor="let c of basicParamForm.get('asynchronousFormControls.mydropdown').value " [ngValue]="c.value"> {{c.display}} </option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Starting BBC Date </label>
+									<p-calendar [showIcon]="true" formControlName="bbc_frequency_date"></p-calendar>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Period</label>
+									<select formControlName="bbc_period" class="form-control">
+										<option value="" [selected]="true">Select</option>
+										<option value="first">First</option>
+										<option value="last">Last</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Day </label>
+									<select formControlName="bbc_day" class="form-control">
+										<option value="" [selected]="true">Select</option>
+										<option value="monday">Monday</option>
+										<option value="tuesday">Tuesday</option>
+										<option value="wednesday">Wednesday</option>
+										<option value="thursday">Thursday</option>
+										<option value="friday">Friday</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<!--end of bbc basic details-->
+
+						<div class="clearfix"></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #afafc2 !important;">
+						</div>
+
+						<h4 class="panel-title m-l-15" id="bbc_Others">BBC Others</h4>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+						<div class="row no-marg b-t-b">
+							<div formGroupName="borrowerBasicParameters" class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+									<label> Concentration Report Thresold %</label>
+									<select formControlName="concentration_report_threshold" class="form-control" id="bbc-frequencyID">
+										<option value="" [selected]="true">Select</option>
+										<option value="5.0">5.0</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+									<label> Maximum Invoice Amount </label>
+									<input formControlName="invoice_max_amt" type="input" class="form-control" id="invoice_max_amt-bbc-dateID">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Collateral Change %</label>
+									<select formControlName="collateral_change_pct" class="form-control">
+										<option value="" [selected]="true">Select</option>
+										<option value="10.0">10.0</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Audit Letter Days </label>
+									<select formControlName="send_audit_letter_in_days" class="form-control">
+										<option value="" [selected]="true">Select</option>
+										<option value="null">null</option>
+										<option value="??">??</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Default Invoice Status </label>
+									<select formControlName="default_invoice_status" class="form-control">
+										<option value="" [selected]="true">Select</option>
+										<option value="waiting_verification">Waiting Verification</option>
+										<option value="??">??</option>
+									</select>
+								</div>
+							</div>
+						</div>
+
+						<div class="row no-marg p-t-20">
+							<div formGroupName="borrowerBasicParameters" class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Accept Duplicate </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="accept_duplicate">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Processing Summary Aging ? </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="combine_summ_det_ar_yn">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Maintain Current AR </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="maintain_current_ar">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Post Cash to Rollforward </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="add_cash_from_batch_to_rollforward">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">&nbsp; </label>
+									<label class="radio-inline">
+										<!-- <input type="radio" value="To All" formControlName="division_or_all_in_rollforward">To All -->
+										<p-radioButton name="division_or_all_in_rollforward" formControlName="division_or_all_in_rollforward" value="To All" label="To All"
+										 [ngModel]="getFormControlModel('borrowerBasicParameters','division_or_all_in_rollforward')"></p-radioButton>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">&nbsp; </label>
+									<label class="radio-inline">
+										<!-- <input type="radio" value="To Division" formControlName="division_or_all_in_rollforward">To Division -->
+										<p-radioButton name="division_or_all_in_rollforward" formControlName="division_or_all_in_rollforward" value="To Division"
+										 label="To Division" [ngModel]="getFormControlModel('borrowerBasicParameters','division_or_all_in_rollforward')"></p-radioButton>
+									</label>
+								</div>
+							</div>
+
+						</div>
+						<!--end of BBC Others-->
+
+
+						<div class="clearfix"></div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #afafc2 !important;">
+						</div>
+
+						<h4 class="panel-title title-border m-l-15" id="over_Advance">Over Advance</h4>
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Allow Over Advance </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="allow_over_advance">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="form-group" class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Max Over Advance % </label>
+									<!-- <input type="text" formControlName="over_advance_pct" class="form-control" id="starting-bbc-dateID"> -->
+									<input type="text" formControlName="over_advance_pct" class="form-control" id="starting-bbc-dateID" [ngClass]="displayFieldCss('borrowerBasicParameters.over_advance_pct')">
+									<!-- <cync-input-field-error-msg [control]="getFormControl('borrowerBasicParameters.over_advance_pct')" [labelName]="Max Over Advance % ">
+									</cync-input-field-error-msg> -->
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Fund Send By</label>
+									<select class="form-control" formControlName="fund_send_by">
+										<option value="" [selected]="true">Select</option>
+										<option value="3">3</option>
+									</select>
+									<!-- <cync-input-field-error-msg 
+										[control]="borrowerBasicParameters.controls.fund_sent_by" 
+										labelName="Fund Send By">
+									</cync-input-field-error-msg> -->
+								</div>
+							</div>
+						</div>
+						<!--end of Over Advance-->
+
+						<div class="clearfix"></div>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #afafc2 !important;">
+						</div>
+
+
+						<h4 class="panel-title m-l-15" id="sub_Limits"> Sub Limits</h4>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> AR Sublimit Cap</label>
+									<input type="text" class="form-control" formControlName="receivable_sublimit">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Based On</label>
+									<select class="form-control" formControlName="receivable_sublimit_based_on">
+										<option value="" [selected]="true">Select</option>
+										<option value="??">??</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Calculated Cap By</label>
+									<select class="form-control" formControlName="receivable_sublimit_calculated_cap_by">
+										<option value="" [selected]="true">Select</option>
+										<option *ngFor="let each of getFormControlModel('borrowerBasicParameters','receivable_sublimit_calculated_cap_by')" value={{each}}>
+											{{each}}
+										</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Max Cap % </label>
+									<input type="text" class="form-control" formControlName="receivable_sublimit_max_cap_pct">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Inventory Sublimit Cap</label>
+									<input type="text" class="form-control" formControlName="inventory_sublimit">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Based On</label>
+									<select class="form-control" formControlName="inventory_sublimit_based_on">
+										<option value="" [selected]="true">Select</option>
+										<option value="??">??</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Calculated Cap By</label>
+									<select class="form-control" formControlName="inventory_sublimit_calculated_cap_by">
+										<option value="" [selected]="true">Select</option>
+										<option *ngFor="let each of getFormControlModel('borrowerBasicParameters','inventory_sublimit_calculated_cap_by')" value={
+										 {each}}>
+											{{each}}
+										</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Max Cap % </label>
+									<input type="text" class="form-control" formControlName="inventory_sublimit_max_cap_pct">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Other Sublimit Cap</label>
+									<input type="text" class="form-control" formControlName="other_sublimit">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Based On</label>
+									<select class="form-control" formControlName="other_collateral_based_on">
+										<option value="" [selected]="true">Select</option>
+										<option value="??">??</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Calculated Cap By</label>
+									<select class="form-control" formControlName="other_collateral_calculated_cap_by">
+										<option value="" [selected]="true">Select</option>
+										<option *ngFor="let each of getFormControlModel('borrowerBasicParameters','other_collateral_calculated_cap_by')" value={
+										 {each}}>
+											{{each}}
+										</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Max Cap % </label>
+									<input type="text" class="form-control" formControlName="other_collateral_max_cap_pct">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block"> Auto Calculate NOLV </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="auto_calculate_nolv">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Lesser of % Cost/NOLV</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="lesser_of_pct_cost_or_nolv">
+										<span class="slider round"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Min. Liq. Cost</label>
+									<input type="text" class="form-control" formControlName="min_liq_cost">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+									<label>Variable % for Min Liq Cost</label>
+									<input type="text" class="form-control" formControlName="percentage_of_var_liq_cost">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Liq. Cost %</label>
+									<input type="text" class="form-control" formControlName="liq_cost">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>% of NOLV</label>
+									<input type="text" class="form-control" formControlName="percentage_of_nolv">
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>% of Cost </label>
+									<input type="text" class="form-control" formControlName="percentage_of_cost">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Inventory AR Reliance %</label>
+									<input type="text" class="form-control" formControlName="ar_reliance_pct">
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Based On</label>
+									<select class="form-control" formControlName="ar_reliance_based_on">
+										<option value="" [selected]="true">Select</option>
+										<option value="??">??</option>
+
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Calculated Cap By</label>
+									<select class="form-control" formControlName="ar_reliance_calcaulated_cap_by">
+										<option value="" [selected]="true">Select</option>
+										<option *ngFor="let each of getFormControlModel('borrowerBasicParameters','ar_reliance_calcaulated_cap_by')" value={ {each}}>
+											{{each}}
+										</option>
+									</select>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Max Cap % </label>
+									<input type="text" class="form-control" formControlName="ar_reliance_max_cap_pct">
+								</div>
+							</div>
+						</div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-pad">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+						<!-- ranveer -->
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Advance on AR vs Inventory </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="ar_or_inventory">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Inventory Reserve Before Cap</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="inventory_with_sublimit">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Inventory Loan Balance %</label>
+									<input type="text" class="form-control" formControlName="loan_amt_pct">
+								</div>
+
+							</div>
+						</div>
+						<!--end of Sub Limits-->
+
+
+						<div class="clearfix"></div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #afafc2 !important;">
+						</div>
+
+
+						<h4 class="panel-title m-l-15" id="ineligible_Reasons">Ineligible Reasons</h4>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<h3 class="no-m-bt">Concentration</h3>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<hr style="border-top: 1px solid #ddd !important;">
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15 b-t-b">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Concentration % </label>
+									<label class="switch">
+										<input type="checkbox" formControlName="concentration_pct">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Concentration % Type </label>
+									<div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-6">
+										<label class="radio-inline">
+											<!-- <input type="radio" value="cap" formControlName="conc_pct_type">Cap -->
+											<p-radioButton name = "conc_pct_type" formControlName="conc_pct_type" value="cap" label="Cap" [ngModel]="getFormControlModel('borrowerBasicParameters','conc_pct_type')"></p-radioButton>
+										</label>
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-6">
+										<label class="radio-inline">
+											<!-- <input type="radio" value="exclude" formControlName="conc_pct_type">Exclude -->
+											<p-radioButton name = "conc_pct_type" formControlName="conc_pct_type" value="exclude" label="Exclude" [ngModel]="getFormControlModel('borrowerBasicParameters','conc_pct_type')"></p-radioButton>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<h3 class="no-m-bt">Cross Aging</h3>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<hr style="border-top: 1px solid #ddd !important;">
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15 b-t-b">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Concentration % </label>
+									<input type="text" class="form-control" formControlName="cross_aging_pct">
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Cross Age by Project</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="cross_aging_by_project">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Consider Past Due</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="consider_past_due_for_cross_age">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Past Due Days</label>
+									<input type="text" class="form-control" formControlName="cross_age_past_due_days">
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Past Due %</label>
+									<input type="text" class="form-control" formControlName="cross_age_past_due_pct">
+								</div>
+							</div>
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<h3 class="no-m-bt">Past Due & Aged credits</h3>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<hr style="border-top: 1px solid #ddd !important;">
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 b-t-b m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label> Past Due AR Days</label>
+									<input type="text" class="form-control" formControlName="ar_aging_days">
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Past Due Amount</label>
+									<select class="form-control" formControlName="ineligible_past_due_flag">
+										<option value="" [selected]="true">Select</option>
+										<option value="include_credits_in_aged_past_due">Include credits in aged past due</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label>Age Credit Amount</label>
+									<select class="form-control" formControlName="ineligible_aged_credit_flag">
+										<option value="" [selected]="true">Select</option>
+										<option value="credit amount in Aged past due &amp; Debtor balance is positive">credit amount in Aged past due &amp; Debtor balance is positive</option>
+									</select>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+									<label>Age Credit Ineligible</label>
+									<input type="text" class="form-control" formControlName="age_credit_ineligible" value="Deduct Aged Credit From Ineligibles"
+									 style="color: red;">
+								</div>
+							</div>
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<h3 class="no-m-bt">Other Ineligible Parameters</h3>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<hr style="border-top: 1px solid #ddd !important;">
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 b-t-b m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+									<label class="display_block">Include Negative Ineligibles in Total</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="include_negative_ineligibles">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Aging Starts From Inv Date</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="aging_starts_from_inv_date">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Aging by Due Date</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="age_by_due_dt">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2">
+									<label class="display_block">Current Bucket is 0 or less</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="current_bucket_is_0_or_less">
+										<span class="slider round"></span>
+									</label>
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+									<label>Payment Term Overdays</label>
+									<input type="text" class="form-control" formControlName="over_invoice_days">
+								</div>
+								<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+									<label>Ineligible calculation At</label>
+									<br>
+									<div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-6">
+										<label class="radio-inline">
+											<!-- <input type="radio" value="borrower_level" formControlName="ineligible_calculate_by">Borrower Level -->
+											<p-radioButton name="ineligible_calculate_by" formControlName="ineligible_calculate_by" value="borrower_level" label="Borrower Level" [ngModel]="getFormControlModel('borrowerBasicParameters','ineligible_calculate_by')"></p-radioButton>
+										</label>
+									</div>
+
+									<div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-6">
+										<label class="radio-inline">
+											<!-- <input type="radio" value="division_level" formControlName="ineligible_calculate_by">Division Level -->
+											<p-radioButton name="ineligible_calculate_by" formControlName="ineligible_calculate_by" value="division_level" label="Division Level" [ngModel]="getFormControlModel('borrowerBasicParameters','ineligible_calculate_by')"></p-radioButton>
+										</label>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<h3 class="no-m-bt">Exclude Parameters</h3>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<hr style="border-top: 1px solid #ddd !important;">
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 b-t-b m-t-15">
+								<label>Ignore Negative Availability</label>
+								<br>
+								<div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-3">
+									<label class="radio-inline">
+										<!-- <input type="radio" [value]="false"  [(ngModel)]="ignore_negative_inventory_available" formControlName="ignore_negative_inventory_available">Inventory -->
+										<p-radioButton name="ignore_negative_inventory_available" formControlName="ignore_negative_inventory_available" [value]="false" label="Inventory" [ngModel]="getFormControlModel('borrowerBasicParameters','ignore_negative_inventory_available')"></p-radioButton>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-3">
+									<label class="radio-inline">
+										<!-- <input type="radio" [value]="true" [(ngModel)]="ignore_negative_inventory_available" formControlName="ignore_negative_inventory_available"> Other Collateral -->
+										<p-radioButton name="ignore_negative_inventory_available" formControlName="ignore_negative_inventory_available" [value]="true" label="Other Collateral" [ngModel]="getFormControlModel('borrowerBasicParameters','ignore_negative_inventory_available')"></p-radioButton>
+									</label>
+								</div>
+							</div>
+						</div>
+
+						<div formGroupName="borrowerBasicParameters" class="row no-marg b-t-b">
+							<h3 class="no-m-bt">Inventory Ineligible Parameters</h3>
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<hr style="border-top: 1px solid #ddd !important;">
+							</div>
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15 b-t-b">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+									<label class="display_block">Display Inventory Ineligibles</label>
+									<label class="switch">
+										<input type="checkbox" formControlName="display_inventory_ineligibles">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+							</div>
+						</div>
+
+						<!--end of Ineligible Reasons-->
+						<div class="clearfix"></div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #afafc2 !important;">
+						</div>
+
+						<h4 class="panel-title m-l-15" id="client_BBC_Options"> Client BBC Options</h4>
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<hr style="border-top: 1px solid #ddd !important;">
+						</div>
+						<div formGroupName="bbcOptions" class="row no-marg b-t-b">
+							<div class="col-xs-12 col-sm-12 col-md-12 m-t-15">
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3 b-r-1">
+									<label> Receivables</label>
+									<br>
+									<br>
+									<div class="row">
+										<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-6 no-pad m-0">
+											<label class="display_block">Rollforward </label>
+											<label class="switch">
+												<input type="checkbox" formControlName="rollfwd">
+												<span class="slider round"></span>
+											</label>
+										</div>
+										<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-6 m-0">
+											<label class="display_block">Ineligible </label>
+											<label class="switch">
+												<input type="checkbox" formControlName="ineligible">
+												<span class="slider round"></span>
+											</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2 b-r-1">
+									<label class="display_block">Inventory </label>
+									<label class="switch m-t-40">
+										<input type="checkbox" formControlName="inventory">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2 b-r-1">
+									<label class="display_block">Other Collateral</label>
+									<label class="switch m-t-40">
+										<input type="checkbox" formControlName="other_collateral">
+										<span class="slider round"></span>
+									</label>
+								</div>
+
+								<div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-2 b-r-1">
+									<label class="display_block"> Reserves </label>
+									<label class="switch m-t-40">
+										<input type="checkbox" formControlName="reserves">
+										<span class="slider round"></span>
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+						<hr>
+						<div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+							<span [hidden] ="!showSpinner">
+								<i class="fa fa-spinner fa-spin spinner-color"></i> Saving Changes &nbsp;
+							</span>
+							<button id="action_back" label="Cancel" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+								<span class="ui-button-text ui-clickable no-pad">Cancel</span>
+							</button>
+							<button id="action_save" (click)="saveDetails(basicParamForm.value)" [disabled]="!basicParamForm.valid" label="Save" type="submit"
+							 class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+								<span class="ui-button-text ui-clickable no-pad">Save</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

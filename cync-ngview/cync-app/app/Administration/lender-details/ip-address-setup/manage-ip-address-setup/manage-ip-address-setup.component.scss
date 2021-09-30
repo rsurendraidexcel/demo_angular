@@ -1,0 +1,18 @@
+.m-t-7{
+	margin-top:7px;
+}
+
+.add_more {
+    background: black;
+    color: white;
+    width: 25px;
+    display: inline-block;
+    height: 25px;
+    font-size: 17px;
+    text-align: center;
+}
+@media only screen and (min-width: 768px) {
+    .pos_chbox_middle {
+        margin-top: 25px;
+    }
+}

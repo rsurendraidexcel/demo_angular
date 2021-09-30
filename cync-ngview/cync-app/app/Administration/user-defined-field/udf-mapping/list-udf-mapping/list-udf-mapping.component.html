@@ -1,0 +1,148 @@
+<div class="app-body-container bg-white list-udf-mapping" id="component_html_wradio" ng-show="yes_visible" ng-controller="app_body_container">
+        <div class="pad-inner">
+            <h3 class="no-m-bt">UDF Mapping - Summary</h3>
+
+            <div class="p-t-16">
+                <div class="ui-datatable-tablewrapper row">
+                    <div class="cync-grid-search row no-marg">
+                        <div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+                            <div class="input-group grid-search">
+                                <input placeholder="Search Here" (keyup)="globalSearchMethod($event)" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+                                    aria-describedby="basic-addon3" autocomplete="off" id="globalSearch">
+                                <!-- <input (keyup)="onKey($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+                                  aria-describedby="basic-addon3" autocomplete="off" id="globalSearch"> -->
+                                <span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+                                    <i *ngIf="!globalSearchIcon" class="fa fa-close" aria-hidden="true">
+                                    </i>
+                                    <i *ngIf="globalSearchIcon" class="fa fa-search" aria-hidden="true">
+                                    </i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right">
+                            <i id="New" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Add New" (click)="goToAdd()" [ngClass]="(isAddPermitted)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+                            <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="goToEdit()" [ngClass]="(toggleEditIcon) ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+                            <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+                            <i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                                title="Export" (click)="showDialogForExport()"></i>
+                            <!-- EXPORT & SETTINGS ICON STARTS  -->
+                            <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true" *ngIf="listUdfMappingModel.isMoreIconsRequired">
+                                <i id="more" class="hand fa fa-ellipsis-v fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+                                    title="More">
+                                </i>
+                            </button>
+                            <ul *ngIf="listUdfMappingModel.isMoreIconsRequired" class="dropdown-menu no-t-pad grid-menu-dropdown">
+                                <li>
+                                    <a class="hand">Settings</a>
+                                </li>
+                            </ul>
+                            <!-- EXPORT & SETTINGS ICON ENDS -->
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <p-dialog header={{listUdfMappingModel.type}} [(visible)]="toggleExportModal" appendTo="body" [modal]="true" width="500"
+                            height="auto" [responsive]="true" styleClass="charge-codes-export-modal">
+
+                            <div *ngFor="let col of exportColumns">
+                                <p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+                                <br>
+                                <br>
+                            </div>
+                            <p-footer>
+                                <button icon="fa-check" id="exportDataConfirmButton" label="Export" pbutton="" type="button" ng-reflect-icon="fa-check" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"
+                                    (click)="exportSelectedColumns(exportColumns)">
+                                    <span class="ui-button-icon-left ui-clickable fa fa-fw fa-check"></span>
+                                    <span class="ui-button-text ui-clickable">Export</span>
+                                </button>
+                            </p-footer>
+                        </p-dialog>
+                    </div>
+
+                    <div class="form-group">
+                        <p-dialog header="Error" [(visible)]="toggleExportErrorModal" appendTo="body" [modal]="true" width="300" height="auto" [responsive]="true">
+                            <p style="color:red;">Select columns to export.</p>
+                            <!-- <button type="button" pButton icon="fa-check" label="Close" (click)="closeDialogBox()"></button> -->
+                        </p-dialog>
+                    </div>
+
+
+                    <div class="has-scrollbar" id="cync_main_contents_wradio-list">
+                        <p-dataTable id="udf_mapping_table" *ngIf="isGridDataLoaded" [scrollable]="false" [value]="(isFilterPresent) ? filteredData : gridData"
+                            (onRowUnselect)="unSelectChkBox()" (onHeaderCheckboxToggle)="selectAllChkBox()" (onRowSelect)="goToView($event)"
+                            dataKey="program_id" selectionMode="multiple" [(selection)]="selectedRows" #dt (onFilter)="onFilterUdfMapping($event)">
+                            <p-column *ngIf="!listUdfMappingModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+                            <p-column *ngFor="let col of listUdfMappingModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+                                [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" [style]="{'width':'10%'}">
+
+                                <!-- grid data will come here -->
+
+                                <ng-template *ngIf="isColHeaderUdf(col.header)" pTemplate="filter" let-col>
+                                    <br/>
+                                    <input type="text" (keyup)="udfColumnFilterMethod($event)" class="ui-column-filter ui-inputtext ui-widget ui-state-default ui-corner-all">
+                                </ng-template>
+                                <ng-template *ngIf="isColHeaderUdf(col.header)" let-file="rowData" pTemplate="body">
+                                    <tr *ngFor="let udf of file.user_defined_field">
+                                        <td class="no-pad-left" style="padding-left: 0px !important;">{{udf.udf_name}} </td>
+                                    </tr>
+                                </ng-template>
+
+                            </p-column>
+
+                            <ng-template pTemplate="emptymessage">
+                                <div *ngIf="showNoRecords then no_records_template else add_udf_template">here is ignored</div>
+                                <ng-template #no_records_template>
+                                    <span>No records found</span>
+                                </ng-template>
+                                <ng-template #add_udf_template>
+                                    <div id="no_records">
+                                        <div class="message">
+                                            <img src="{{assetsPath}}/images/icons/udf-mapping-icon.png">
+                                            <h5>No UDF Mapped.</h5>
+                                            <button (click)="goToAdd()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn" id="create_udf_btn"
+                                                label="Create UDF Field" pbutton type="button">
+                                                <span class="ui-button-text ui-clickable no-pad">Map UDF to Program</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                            </ng-template>
+
+
+                        </p-dataTable>
+
+
+
+                        <!-- <p-dialog header="Message" appendTo="body" [modal]="true" [(visible)]="showNotificationMsgPopup" showEffect="fade" [width]="600"
+                          [responsive]="true">
+                          <span [innerHTML]="notificationMessage"></span>
+                      </p-dialog> -->
+
+
+                    </div>
+                    <!-- Commenting this code because for UDF Mapping only two programs are there and hence no pagination required -->
+                    <!-- <div class="grid-loader">
+
+
+                      <span [hidden]="!showSpinner" class="center">
+                          <i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+                      </span>
+
+                      <div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+                      <ng-template #grid_count_template>
+                          <p class="recordcount">
+                              <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+                          </p>
+                      </ng-template>
+                      <ng-template #record_count_template>
+                          <p *ngIf="filterRecordCount != -1 && filterRecordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+                              <b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+                          </p>
+                      </ng-template>
+
+                  </div> -->
+
+                </div>
+            </div>
+        </div>
+    </div>

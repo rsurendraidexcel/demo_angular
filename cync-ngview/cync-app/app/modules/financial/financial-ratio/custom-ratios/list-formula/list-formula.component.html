@@ -1,0 +1,52 @@
+<div class="cync-grid-search row">
+	<div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+		<div class="input-group grid-search">
+			<input (keyup)="onKey($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+			 aria-describedby="basic-addon3" autocomplete="off" id="globalSearch">
+			<span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+				<i *ngIf="globalSearchCloseIcon==true" class="fa fa-close" aria-hidden="true">
+				</i>
+				<i *ngIf="globalSearchIcon==true" class="fa fa-search" aria-hidden="true">
+				</i>
+			</span>
+		</div>
+	</div>
+	<div class="col-md-3 col-sm-5 col-xs-12 pull-right top-action-btns text-right">
+		<i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+		 title="Add New/Reset" (click)="goToAdd()"></i>
+		<i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="goToEdit()" [ngClass]="(toggleEditIcon)? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+		<i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+	</div>
+</div>
+
+<div class="has-scrollbar m_r_15 m_t_15" (scroll)="onScroll($event)" id="innerContainer">
+	<p-dataTable id="{{dataTableElementId}}" [scrollable]="false" [value]="gridData" (onRowUnselect)="unSelectChkBox()" (onHeaderCheckboxToggle)="selectAllChkBox()"
+	 (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple" [(selection)]="selectedRows" (onFilter)="printFilteredData($event)">
+		<p-column *ngIf="!listRatiosModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+		<p-column *ngFor="let col of listRatiosModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+		 [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" [style]="{'width':'10%'}">
+			<!-- <ng-template *ngIf="col.field == 'ratio' " let-ratioType="rowData" pTemplate="body">
+        <span class="ui-cell-data">
+          {{ratioType.ratio.name}}
+        </span>
+      </ng-template> -->
+		</p-column>
+	</p-dataTable>
+</div>
+<div class="grid-loader">
+	<!-- below code is to show loader when user scrolls -->
+	<span [hidden]="!showSpinner" class="center">
+		<i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+	</span>
+	<div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+	<ng-template #grid_count_template>
+		<p class="recordcount">
+			<b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+		</p>
+	</ng-template>
+	<ng-template #record_count_template>
+		<p *ngIf="filterRecordCount != -1 && filterRecordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+			<b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+		</p>
+	</ng-template>
+</div>

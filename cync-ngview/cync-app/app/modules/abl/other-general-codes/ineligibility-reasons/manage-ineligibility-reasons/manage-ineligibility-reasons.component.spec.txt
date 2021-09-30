@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { ManageIneligibilityReasonsComponent } from './manage-ineligibility-reasons.component';
+
+describe('ManageIneligibilityReasonsComponent', () => {
+  let component: ManageIneligibilityReasonsComponent;
+  let fixture: ComponentFixture<ManageIneligibilityReasonsComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ ManageIneligibilityReasonsComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ManageIneligibilityReasonsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

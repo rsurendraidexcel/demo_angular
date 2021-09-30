@@ -1,0 +1,16 @@
+
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+        <!-- <div ng-click="hide_app_body()" class="pull-right hand"><i class="fa fa-times fa-2x clr_gray light_1" aria-hidden="true"></i></div> -->
+    </div>            
+    <div class="pad-inner">
+    <h3 class="no-m-bt">Currency Pair</h3>
+        <div class="p-t-16">
+            <!-- <div class="has-scrollbar" id="main_contents"> -->
+                <div class="ui-datatable-tablewrapper">
+                    <grid [gridModel]="currencypairSummary"></grid>
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+</div>

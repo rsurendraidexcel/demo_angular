@@ -1,0 +1,56 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+  <div class="pad-inner">
+    <h3 class="no-m-bt">Currency Code - {{currentAction}} </h3>
+    <div class="brder-1 p-t-32">
+      <form [formGroup]="manageCurrencyCodeForm" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveData(manageCurrencyCodeForm.value,manageCurrencyCodeForm.valid, false)">
+        <div class="has-scrollbar" id="cync_main_contents">
+          <div class="form-group">
+            <div class="col-md-2">
+              <label class="mandatory" for="currency">Currency
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="currency" formControlName="currency_cd" [ngClass]="displayFieldCss('currency_cd')" class="form-control"
+                placeholder="">
+              <cync-input-field-error-msg [control]="getFormControl('currency_cd')" labelName="Curreny Code">
+              </cync-input-field-error-msg>
+            </div>
+            <div class="col-md-2">
+              <label class="mandatory" for="description">Description
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="description" formControlName="description" [ngClass]="displayFieldCss('description')" class="form-control"
+                placeholder="">
+              <cync-input-field-error-msg [control]="getFormControl('description')" labelName="Description">
+              </cync-input-field-error-msg>
+            </div>
+            <div class="col-md-2">
+              <label class="mandatory" for="decimalPrecision">Decimal Precision
+                <span class="required">*</span>
+              </label>
+              <input type="text" id="decimalPrecision" formControlName="decimal_precision" [ngClass]="displayFieldCss('decimal_precision')"
+                class="form-control" placeholder="">
+              <cync-input-field-error-msg [control]="getFormControl('decimal_precision')" labelName="Decimal Precision">
+              </cync-input-field-error-msg>
+            </div>
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+              <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                <hr>
+                <button (click)="navigateToSummaryPage()" id="action_back" label="Cancel" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn-cancel">
+                  <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                </button>
+                <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" (click)="saveData(manageCurrencyCodeForm.value,manageCurrencyCodeForm.valid,true)"
+                  id="action_savenew" label="Save and New" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                  <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                </button>
+                <button [disabled]="isFormValid()" id="action_save" label="Save" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                  <span class="ui-button-text ui-clickable no-pad">{{currentActionBtnText}}</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

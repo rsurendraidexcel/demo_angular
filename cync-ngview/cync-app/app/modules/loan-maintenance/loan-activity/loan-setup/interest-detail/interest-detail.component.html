@@ -1,0 +1,73 @@
+<div mat-dialog-title style="background: #3466b3; border: 1px solid #3466b3;">
+	<label class="top-title"> Interest Details </label>
+	<i style="font-size:20px; cursor: pointer; margin: 5px; color:#ffff;" class="fa close-btn pull-right"
+		(click)="closeModal()">&#xf057;</i>
+</div>
+<div class="row topHeadingPannel" style="background: white !important;">
+	<div class="col-md-12 col-sm-12 col-xs-12 pull-right text-right m-top">
+
+		<i id="arNew"  aria-hidden="true"
+            data-toggle="tooltip" data-placement="top" title="Add New" style="margin-right: 5px;"
+            (click)="onClickAddNew()"
+			[ngClass]="disableAddButton ? 'hand fa fa-plus fa-1x f_s_20 clr_grey':
+			'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+
+		<i id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset"
+			class="hand fa fa-times fa-1x clr_grey f_s_20 p-right-10" style="margin-right: 5px;"
+			(click)="onClickCancel()">
+		</i>
+
+		<i id="save" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="save"
+			 style="margin-right: 5px;"
+			(click)="onClickSave()"
+			[ngClass]="selectedRows.length === 1 ? 'hand fa fa-floppy-o fa-2x clr_grey f_s_20':
+			'hand fa fa-floppy-o fa-2x clr_grey f_s_20 clr_grey icon_disabled operation_disabled'">
+		</i>
+
+		<i id="delete"   aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" 
+		(click)="onClickDelete()"
+		[ngClass]="selectedRows.length>0 ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'">
+		</i>
+
+	</div>
+</div>
+<!--Interest Details Ag-grid section start -->
+<div class="p-top">
+	<ag-grid-angular style="width: 100%; height: 200px; padding: 10px;" class="ag-theme-balham" 
+		[gridOptions]="interestDetailsGridOptions"
+		[rowData]="interestDetailsRowData" 
+		[columnDefs]="interestDetailscolumnDefs" 
+		[singleClickEdit]="true"
+		rowSelection="single"
+		(rowSelected)="onInterestDetailsRowSelected($event)"
+		(gridReady)="onGridReady($event)"
+		(cellValueChanged)="onCellValueChanged($event)"
+		[defaultColDef]="defaultColDef" 
+		>
+	</ag-grid-angular>
+</div>
+<!-- Interest Details Ag-grid section end -->
+<!-- Interest Details table section start -->
+<div class="table-reponsive row">
+	<div class="table-wrapper">	
+		<table class="table">
+			<thead class="t-layout">
+				<tr>
+					<th class="t-col">Date</th>
+					<th class="t-col">Interest Rate Code</th>
+					<th class="t-col">Rate Adjustment</th>
+					<th class="t-col">Total Interest Rate</th>
+				</tr>
+			</thead>
+			<tbody  class="t-body-container">
+				<tr *ngFor="let item of interestDetailResponse; let i = index">
+					<td class="t-col">{{item.date}}  </td>
+					<td class="t-col text-ralign">{{ decimalFormateNumber(item.interest_code_rate)}}</td>
+					<td class="t-col text-ralign">{{ decimalFormateNumber(item.rate_adjustment)}}</td>
+					<td class="t-col text-ralign">{{ decimalFormateNumber(item.total_interest_rate)}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!-- Interest Details table section end -->

@@ -1,0 +1,71 @@
+<div class="app-body-container bg-white is_summary list-credit-queue" id="app-body-container">
+    <div class="pad-inner">
+     
+      <div class="row topHeadingPannel">
+        <div class="col-md-3 headingmain">
+          <a href="#/client-maintenance/client-templates" class="backIndexLink">
+            <span class="backIndexicon glyphicon glyphicon-chevron-left"></span>
+          </a>
+          <h3 class="no-m-bt" id="templateHeading">Edit Template</h3>
+        </div>
+      </div>
+
+      <div class="row templateDetailPannel">
+        <form id="creatClientTemplate" [formGroup]="creatClientTemplateForm" class="form-inline" style="display: flex;">
+          <div class="tempNameBlock form-group">
+            <label for="templateName">Template Name:</label>
+            <input formControlName="templateName" type="text" class="form-control" id="templateName" name="templateName">
+          </div>
+          <div class="tempDescriptionBlock form-group">
+            <label for="pwd">Template Description:</label>
+            <input formControlName="templateDescription" type="text" class="form-control" id="templateDescription" name="templateDescription">
+          </div>
+          <div class="pull-right templateDetailsButtonStyle">
+            <div class="templateActivePannel form-group">
+              <label class="switch">
+                <input [attr.disabled]="isRadioDisable" id="templateStatusID" type="checkbox" formControlName="isActive" (change)="statusPOPupFn()">
+                <span class="slider round"></span>
+              </label>
+              <span class="buttonspanTemplate">Active</span>
+            </div>
+            <div class="templateDefaultPannel form-group">
+              <label class="switch">
+                <input [attr.disabled]="isRadioDisable" id="templateDefaultID" formControlName="isDefault" type="checkbox" (change)="defaultPOPupFn()">
+                <span class="slider round"></span>
+              </label>
+              <span class="buttonspanTemplate">Default</span>
+            </div>
+          </div>
+          <div class="col-md-2 " style="padding: 0px; width: 20%;">
+            <button type="submit" form="creatClientTemplate" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn" (click)="oncreatClientTemplateSubmit(creatClientTemplateForm.getRawValue())">Save Template Info</button>
+            <button type="button" class="btn btn-light primarycancelbtn" (click)="cancelOperationFn()">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <hr class="moreMarginhr">
+        <div class="row tabbuttonBar">
+          <ul class="nav nav-pills">
+            <li [className]="btnStyle1"><a (click)="navigatePannel(1)">Basic Parameters</a></li>
+            <li [className]="btnStyle2"><a (click)="navigatePannel(2)">Ineligible Calculations</a></li>
+            <li [className]="btnStyle3"><a (click)="navigatePannel(3)">Bucket Aging</a></li>
+          </ul>
+        </div>
+        <div class="hscrollbar-tab">
+              
+            <div [className]="flag1" class="baseParameterPannel mainFormPanel">
+              <app-basic-parameters></app-basic-parameters>
+            </div>
+
+            <div [className]="flag2" class="calculationPannel mainFormPanel">
+              <app-ineligible-calculations></app-ineligible-calculations>
+            </div>
+
+            <div [className]="flag3" class="bucketAgingPannel mainFormPanel">
+              <app-bucket-aging></app-bucket-aging>
+            </div>
+
+        </div>
+
+  </div>
+</div>

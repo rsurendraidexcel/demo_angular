@@ -1,0 +1,24 @@
+.has_scrollbar_term_codes{
+    height: calc(100vh - 345px);
+    margin-top: 10px;
+}
+.addbtn {
+    position: fixed;
+    bottom: 71px;
+    right: 69px;
+
+}
+.deletebtn{
+    position: fixed;
+    bottom: 71px;
+    right: 110px;
+}
+:focus {
+    outline: none !important;
+}
+.addbtn button, .deletebtn button {
+    border-radius: 50%;
+}
+.app-body-container{
+    height: 570px;
+}

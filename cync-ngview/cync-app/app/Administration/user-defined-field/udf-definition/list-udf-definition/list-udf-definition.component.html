@@ -1,0 +1,149 @@
+<div class="app-body-container bg-white is_summary" id="component_html_wradio" ng-show="yes_visible" ng-controller="app_body_container">
+
+    <div class="pad-inner">
+        <h3 class="no-m-bt">{{gridModel.type}}</h3>
+
+        <div class="p-t-16">
+
+            <div class="ui-datatable-tablewrapper">
+                <!-- HEADER WITH SEARCH BOX, ADD,EDIT,DELETE ICONS STARTS -->
+                <div class="cync-grid-search row no-marg">
+
+                    <!-- SEARCH INPUT FIELD STARTS -->
+                    <div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+                        <div *ngIf="gridModel.isSearchAvailable" class="input-group grid-search">
+                            <input (keyup)="onKeyUp($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+                                aria-describedby="basic-addon3" autocomplete="off">
+                            <span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+                                <i *ngIf="toogleCloseBox" class="fa fa-close" aria-hidden="true">
+                                </i>
+                                <i *ngIf="toogleSearchBox" class="fa fa-search" aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                    </div>
+                    <!-- SEARCH INPUT FIELD ENDS -->
+
+                    <!-- ADD,EDIT,DELETE,EXPORT ICONS STARTS -->
+                    <div class="col-md-5 col-sm-6 col-xs-12 pull-right top-action-btns text-right" *ngIf="!gridModel.onlyListingComponent">
+
+                        <i id="New" [ngClass]="(isAddPermitted)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"
+                            aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Add New" *ngIf="gridModel.isAddFunctionalityRequired"
+                            (click)="goToAdd()"></i>
+                        <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" *ngIf="gridModel.isEditFunctionalityRequired"
+                            (click)="goToEdit()" [ngClass]="(toggleEditIcon) ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+                        <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" *ngIf="gridModel.isDeleteFunctionalityRequired"
+                            (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+
+                        <i *ngIf="gridModel.isExportFunctionalityRequired" id="Export" [ngClass]="(gridData.length > 0) ? 'hand fa fa-share-square-o fa-2x  clr_grey f_s_20':'hand fa fa-share-square-o fa-2x  clr_grey f_s_20 icon_disabled operation_disabled'" aria-hidden="true"
+                            data-toggle="tooltip" data-placement="top" title="Export" (click)="showDialogForExport()"></i>
+                        <!-- EXPORT & SETTINGS ICON STARTS  -->
+                        <button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true" *ngIf="gridModel.isMoreIconsRequired">
+                            <i id="more" class="hand fa fa-ellipsis-v fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+                                title="More">
+                            </i>
+                        </button>
+                        <ul *ngIf="gridModel.isMoreIconsRequired" class="dropdown-menu no-t-pad grid-menu-dropdown">
+                            <li>
+                                <a class="hand">Settings</a>
+                            </li>
+                        </ul>
+                        <!-- EXPORT & SETTINGS ICON ENDS -->
+
+                    </div>
+                    <!-- ADD,EDIT,DELETE,EXPORT ICONS ENDS -->
+
+                </div>
+                <!-- HEADER WITH SEARCH BOX, ADD,EDIT,DELETE ICONS ENDS -->
+
+                <!-- DATATABLE STARTS -->
+                <div class="has-scrollbar row" id="{{getDataTableElementId()}}" (scroll)="onScroll($event)">
+                    <p-dataTable *ngIf="isDataLoading" id="udf_definition" [scrollable]="false" #dt [value]="gridData" (onRowUnselect)="unSelectChkBox()"
+                        (onHeaderCheckboxToggle)="selectAllChkBox()" (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple"
+                        [(selection)]="selectedRows" [lazy]="false" (onFilter)="printFilteredData($event)">
+
+                        <p-column *ngIf="!gridModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+                        <p-column *ngFor="let col of gridModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter" [field]="col.field"
+                            [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" filterPlaceholder="Search"
+                            [style]="{'width':'300px'}">
+                        </p-column>
+                    </p-dataTable>
+
+                    <!-- SHOW CUSTOM MESSAGE WHEN NO RECORDS ARE FOUND -->
+                    <div id="no_records" *ngIf="isDataLoading && gridData.length == 0 && searchTerm.length == 0">
+                        <div class="message">
+                            <img src="{{assetsPath}}/images/icons/udf-icon.png">
+                            <h5>No UDF Field created.</h5>
+                            <button (click)="goToAdd()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn" id="create_udf_btn"
+                                label="Create UDF Field" pbutton type="button">
+                                <span class="ui-button-text ui-clickable no-pad">Create UDF Field</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- SHOW CUSTOM MESSAGE WHEN NO RECORDS ARE FOUND ON GLOBAL SEARCH-->
+                    <h5 *ngIf="isDataLoading && gridData.length == 0 && searchTerm.length > 0">No Records Found</h5>
+
+                </div>
+                <!-- DATATABLE ENDS -->
+
+                <!-- RECORD COUNT INFORMATION STARTS  -->
+                <div *ngIf="isDataLoading && gridData.length > 0" class="grid-loader">
+                    <div *ngIf="recordCount == -1;then grid_count_template else record_count_template"></div>
+                    <!-- Below code will be shown on load of the page or on scroll event -->
+                    <ng-template #grid_count_template>
+                        <p class="recordcount">
+                            <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+                        </p>
+                    </ng-template>
+
+                    <!-- below code is to show loader when user scrolls -->
+                    <span [hidden]="!showSpinner" class="center">
+                        <i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+                    </span>
+
+                    <!-- Below code will be shown on Column Search -->
+                    <ng-template #record_count_template>
+                        <p *ngIf="recordCount != -1 && recordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+                            <b>Showing {{recordCount}} of {{recordTotal}} records</b>
+                        </p>
+                    </ng-template>
+                </div>
+                <!-- RECORD COUNT INFORMATION ENDS -->
+
+                <!-- EXPORT CONFIRMATION POP UP STARTS -->
+                <div class="form-group">
+                    <p-dialog header={{gridModel.type}} [(visible)]="toogleExportConfirmPoupup" appendTo="body" [modal]="true" width="500" height="auto"
+                        [responsive]="true">
+                        <div *ngFor="let col of exportColumns">
+                            <p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+                            <br>
+                            <br>
+                        </div>
+
+                        <p-footer>
+                            <button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left"
+                                pButton icon="fa-check" label="Export" (click)="exportSelectedColumns(exportColumns)">
+                                <span class="ui-button-icon-left ui-clickable fa fa-fw fa-check"></span>
+                                <span class="ui-button-text ui-clickable">Export</span>
+                            </button>
+                        </p-footer>
+                    </p-dialog>
+                </div>
+                <!-- EXPORT CONFIRMATION POP UP ENDS -->
+
+                <!-- EXPORT WARNING POP UP STARTS -->
+                <div class="form-group">
+                    <p-dialog header="Error" [(visible)]="isExportWarningPopupVisible" appendTo="body" [modal]="true" width="300" height="auto"
+                        [responsive]="true">
+                        <p style="color:red;">Select columns to export.</p>
+                    </p-dialog>
+                </div>
+                <!-- EXPORT WARNING POP UP ENDS -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,22 @@
+<!-- Above Code will be removed once menu path is set from rorapi -->
+<div *ngIf="allPermissionsLoaded"></div>
+<div>
+        <div class="row no-marg brder-1 p-t-32 p_b_10 sub_radios">
+          <div class="row main-heading">
+                  <h3 class="no-m-bt ">User Defined Field</h3>
+        </div>
+
+        <div class="row btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0" data-toggle="buttons">
+            <p-radioButton [disabled]="!isUdfDefinitionPermitted" name="udf_data_files" [(ngModel)]="selectedRadioBtn" id="udf_definition"
+                value="udf_definition" label="UDF Definition " [ngClass]="(!isUdfDefinitionPermitted) ? 'disable-radio-for-router' : ''"
+                [routerLink]="['/udf/udf-definition']"></p-radioButton>
+            <p-radioButton [disabled]="!isUdfMappingPermitted" name="udf_data_files" [(ngModel)]="selectedRadioBtn" id="udf_mapping"
+                value="udf_mapping" label="UDF Mapping" [ngClass]="(!isUdfMappingPermitted) ? 'disable-radio-for-router' : ''"
+                [routerLink]="['/udf/udf-mapping']"></p-radioButton>
+            <p-radioButton [disabled]="!isUdfTransferPermitted" name="udf_data_files" [(ngModel)]="selectedRadioBtn" id="udf_transfer"
+                label="UDF Client Transfer" [ngClass]="(!isUdfTransferPermitted) ? 'disable-radio-for-router' : ''" [routerLink]="['/udf/transfer-client-to-udf']"
+                value="udf_transfer"></p-radioButton>
+        </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,23 @@
+{
+    "host": "https://currency-prestaging.cyncsoftware.com",
+    "host_ror": "https://lenderId.cyncsoftware.com/api/v1/",
+    "host_finance": "https://stagingfinservice.cyncsoftware.com/api/v1/",
+    "host_factoring": "https://lenderId.cyncsoftware.com/factoring/api/v1/",
+    "host_notification": "https://stagingnotifications.cyncsoftware.com/v1/",
+    "host_abl": "https://lenderId.cyncsoftware.com/abl/api/v1/",
+    "cyncUserCookie": "",
+    "lenderId": "",
+    "lenderId1": "",
+    "notificationAPIKey": "8hQRRnVqBP2OfccyxTvkOCTNg1sUEtWav7d1g0I7",
+    "assets_path": "/angular/assets",
+    "cdn_url" : "https://cync-staging-cdn.cyncsoftware.com/angular/",
+    "host_mcl": "https://lenderId.cyncsoftware.com/api/mcl/",
+    "host_webhook": "https://apistagingbase.cyncsoftware.com/api/webhook/",
+    "host_cash_application": "https://lenderId.cyncsoftware.com/api/cash-application-v2/v1/",
+    "host_tableau": "https://ablreporting.cyncsoftware.com",
+    "host_tableau_tiket_token": "https://apistagingbase.cyncsoftware.com",
+    "host_lambda_api": "https://9p708lwpo4.execute-api.us-east-1.amazonaws.com/Stage",
+    "host_factoring_node_api":"https://apistagingbase.cyncsoftware.com/",
+    "fact_interest_url":" https://cyncnextgenautomation.cyncsoftware.com/",
+    "host_tour_apps":"https://lq5d32tff1.execute-api.us-east-1.amazonaws.com/dev/api/v1/"
+}

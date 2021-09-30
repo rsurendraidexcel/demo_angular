@@ -1,0 +1,49 @@
+<div style="padding: 5px;">
+	<div class="pull-right">
+		<i id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset"
+		(click) ="onCancelClicked()" class="hand fa fa-times fa-1x clr_grey f_s_20 p-right-10">
+		</i>
+	</div>
+	<div style = "text-align: center;">
+		<img src="assets/images/icon-exclamation-80x80.png" style= "height: 57px;">
+	</div>
+</div>
+
+<!-- <div style = "text-align: center;">
+	<i class="fa fa-exclamation-circle" style = "font-size: 60px; color:#ff4000;"></i>
+</div> -->
+
+<div>
+	<div style="padding-left:10%">
+		<strong style="font-size: 15px;">Please select an option to set parameters as</strong>
+		<br>
+		<input  [(ngModel)]="assignData.assign" type="radio" name="assign" value="notupdate" (click)="notUpdateTemplate($event)" [checked]='true'><span>&nbsp;</span>One Time Use and Do Not Update Template<br>
+		<input [(ngModel)]="assignData.assign" type="radio" name="assign" value="update"  (click)="updateTemplate($event)"><span>&nbsp;</span>One Time Use and Update Template<br>
+		<input [(ngModel)]="assignData.assign" type="radio" name="assign" value="copy" (click)="createCopyTemplate($event)"><span>&nbsp;</span>One Time Use and Create Copy of Template<br>
+	</div>
+	
+	<div style="height: 10px">
+	</div>
+	<div style="padding-left:10%; display: none" id ="template" >
+		<input [(ngModel)]="assignData.fname" type="text" name="fname" placeholder="Template Name" autocomplete="off" style="width: 80%">
+		<div style="height: 10px">
+		</div>
+		<textarea [(ngModel)]="assignData.fdesc" name="fdesc" rows="4" cols="10" style=" max-width: 80%;
+			min-width: 80%; max-height: 66px;
+            min-height: 66px;"
+		 placeholder="Description"></textarea>
+	</div>
+
+	<div style="height: 15px">
+	</div>
+
+	<div class ="row" style="text-align: center;">
+
+		<button id="cancel" type="button" class="btn btn-light primarycancelbtn" style="margin-right: 8px;"  (click) ="onCancelClicked()">Cancel</button>
+		<button id="confirm" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only padding" [mat-dialog-close]="assignData"
+		 (click)="onConfrimClick()" [disabled]="isDisableConfirmMethod()">Confirm</button>
+	</div>
+	
+	<div style="height: 10px">
+	</div>
+</div>

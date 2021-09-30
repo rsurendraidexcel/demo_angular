@@ -1,0 +1,162 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+	<div class="close-btn-dash pull-right text-right top-action-btns">
+	</div>
+	<div class="pad-inner">
+		<!-- Heading of advance rate -->
+		<h3 class="no-m-bt">Advance Rate</h3>
+
+		<!-- Radio button selection code start -->
+		<div class="row brder-1 p-t-32 email-header">
+			<div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active" data-toggle="buttons">
+
+				<label class="btn radio-inline col-xs-6 col-sm-6 col-md-1 w_140">
+					<input checked formcontrolname="selectedValue" name="selectedValue" type="radio" value="" ng-reflect-name="selectedValue" ng-reflect-form-control-name="selectedValue"
+					 ng-reflect-value="" ng-reflect-model="text_template" class="ng-untouched ng-pristine ng-valid">
+					<i class="fa fa-circle-o fa-2x"></i>
+					<i class="fa fa-dot-circle-o fa-2x"></i>
+					<span>Colleteral</span>
+				</label>
+
+				<label class="btn radio-inline col-xs-6 col-sm-6 col-md-2" [routerLink]="['/bbc-preference-setup/advance-rate/seasonal-advance-rate']">
+					<input formcontrolname="selectedValue" label="Text Templates" name="selectedValue" type="radio" value="text_template"
+					 ng-reflect-name="selectedValue" ng-reflect-form-control-name="selectedValue" ng-reflect-value="" ng-reflect-model=""
+					 class="ng-untouched ng-pristine ng-valid">
+					<i class="fa fa-circle-o fa-2x"></i>
+					<i class="fa fa-dot-circle-o fa-2x"></i>
+					<span> Seasonal</span>
+				</label>
+			</div>
+		</div>
+		<!-- Radio button selection code end -->
+
+		<!-- Division heading start -->
+		<div class="row" style="padding-bottom: 10px;">
+			Select the division code to check the Advance Rate for the collaterals.
+		</div>
+		<!-- Division heading end -->
+
+		<div class="row">
+			<div class="p-t-16" id="collateral_division_main_div">
+				<div>
+					<div class="ui-datatable-tablewrapper">
+
+						<!-- HEADER WITH SEARCH BOX, ADD,EDIT,DELETE ICONS STARTS -->
+						<div class="cync-grid-search row no-marg">
+
+							<!-- SEARCH INPUT FIELD STARTS -->
+							<div class="col-md-8 col-sm-6 col-xs-12 p_l_2 hidden-xs hidde-sm no-pad">
+								<div *ngIf="collateralDivisionGridModel.isSearchAvailable" class="input-group grid-search">
+									<input #gb_collateral_divison (keyup)="onKeyUp1($event)" placeholder="Search Here" [(ngModel)]="searchTerm1" type="text"
+									 class="form-control search-input-text" aria-describedby="basic-addon3" autocomplete="off">
+									<span (click)="clearSearchBox1()" class="input-group-addon icon-input-field border-right-none">
+										<i *ngIf="toogleCloseBox1" class="fa fa-close" aria-hidden="true"></i>
+										<i *ngIf="toogleSearchBox1" class="fa fa-search" aria-hidden="true"></i>
+									</span>
+									<a *ngIf="collateralDivisionGridModel.isAdvanceSearchAvailable" class="m-l-10 adv_search" style="cursor: pointer;">Advanced Search</a>
+								</div>
+							</div>
+							<!-- SEARCH INPUT FIELD ENDS -->
+
+							<!-- ADD,EDIT,DELETE,EXPORT ICONS STARTS -->
+							<div class="col-md-4 col-sm-6 col-xs-12 pull-right top-action-btns text-right no-pad" *ngIf="!collateralDivisionGridModel.onlyListingComponent">
+								<i id="New1" [ngClass]="(isAddPermitted)? 'hand fa fa-plus fa-1x f_s_20 clr_grey ':'hand fa fa-plus fa-1x f_s_20 clr_grey icon_disabled operation_disabled'"
+								 aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Add New" *ngIf="collateralDivisionGridModel.isAddFunctionalityRequired && isAddPermitted"
+								 (click)="goToAdd1()"></i>
+								<i id="Edit1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" *ngIf="collateralDivisionGridModel.isEditFunctionalityRequired && isEditPermitted"
+								 (click)="goToEdit1()" [ngClass]="(toggleEditIcon1) ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+								<i id="Delete1" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" *ngIf="collateralDivisionGridModel.isDeleteFunctionalityRequired && isDeletePermitted"
+								 (click)="delete1()" [ngClass]="(toggleDeleteIcon1) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+								<i id="Export1" *ngIf="collateralDivisionGridModel.isExportFunctionalityRequired && isExportPermitted" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20"
+								 aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Export" (click)="showDialogForExport1()"></i>
+
+								<!-- SETTINGS ICON STARTS  -->
+								<button data-toggle="dropdown" class="dropdown-toggle plain" aria-expanded="true" *ngIf="collateralDivisionGridModel.isMoreIconsRequired">
+									<i id="more" class="hand fa fa-ellipsis-v fa-2x clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="left"
+									 title="More"></i>
+								</button>
+
+								<ul *ngIf="collateralDivisionGridModel.isMoreIconsRequired" class="dropdown-menu no-t-pad grid-menu-dropdown">
+									<li>
+										<a class="hand">Settings</a>
+									</li>
+								</ul>
+								<!-- SETTINGS ICON ENDS -->
+							</div>
+							<!-- ADD,EDIT,DELETE,EXPORT ICONS ENDS -->
+						</div>
+						<!-- HEADER WITH SEARCH BOX, ADD,EDIT,DELETE ICONS ENDS -->
+
+						<!-- DATATABLE STARTS -->
+						<div class="has-scrollbar" id="main_contents" (scroll)="onScroll1($event)">
+							<p-dataTable *ngIf="isDataLoading1" [scrollable]="false" #dt [value]="gridData1" (onRowSelect)="goToView1($event)" (onRowUnselect)="unSelectChkBox1($event)"
+							 sortMode="multiple" (onHeaderCheckboxToggle)="selectAllChkBox1()" dataKey="id" selectionMode="multiple" [lazy]="false"
+							 [(selection)]="selectedRows1" (onFilter)="printFilteredData1($event)" [globalFilter]="gb_collateral_divison">
+								<p-column *ngIf="!collateralDivisionGridModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+								<p-column *ngFor="let col of collateralDivisionGridModel.columnDef;" [sortable]="col.sortable" [filter]="col.filter" [field]="col.field"
+								 [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" [style]="{'width':'300px'}" filterPlaceholder="Search">
+									<ng-template pTemplate="body" let-file="rowData">
+										{{file[col.field]}}
+									</ng-template>
+								</p-column>
+							</p-dataTable>
+						</div>
+						<!-- DATATABLE ENDS -->
+
+						<!-- RECORD COUNT INFORMATION STARTS  -->
+						<div *ngIf="isDataLoading1" class="grid-loader">
+							<div *ngIf="recordCount1 == -1;then grid_count_template else record_count_template">here is ignored</div>
+							<ng-template #grid_count_template>
+								<p class="recordcount">
+									<b>Showing {{gridData1.length}} of {{showTotalrecords1}} records</b>
+								</p>
+							</ng-template>
+							<ng-template #record_count_template>
+								<p *ngIf="recordCount1 != -1 && recordCount1 != gridData1.length ; else grid_count_template" class="recordcount less_count">
+									<b>Showing {{recordCount1}} of {{showTotalrecords1}} records
+									</b>
+								</p>
+							</ng-template>
+							<!-- below code is to show loader when user scrolls -->
+							<span [hidden]="!showSpinner1" class="center">
+								<i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+							</span>
+						</div>
+						<!-- RECORD COUNT INFORMATION ENDS -->
+						
+						<!-- EXPORT CONFIRMATION POP UP STARTS -->
+						<div class="form-group">
+							<p-dialog header={{collateralDivisionGridModel.type}} [(visible)]="toogleExportConfirmPoupup1" appendTo="body" [modal]="true"
+							 width="500" height="auto" [responsive]="true">
+								<div *ngFor="let col of exportColumns1">
+									<p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+									<br>
+									<br>
+								</div>
+
+								<p-footer>
+									<button type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn btn btn-primary"
+									 pButton icon="fa-check" label="Export" (click)="exportSelectedColumns1(exportColumns1)">
+										<span>Export</span>
+									</button>
+								</p-footer>
+							</p-dialog>
+						</div>
+						<!-- EXPORT CONFIRMATION POP UP ENDS -->
+
+						<!-- EXPORT WARNING POP UP STARTS -->
+						<div class="form-group">
+							<p-dialog header="Error" [(visible)]="isExportWarningPopupVisible1" appendTo="body" [modal]="true" width="300" height="auto"
+							 [responsive]="true">
+								<p style="color:red;">Select columns to export.</p>
+							</p-dialog>
+						</div>
+						<!-- EXPORT WARNING POP UP ENDS -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</div>

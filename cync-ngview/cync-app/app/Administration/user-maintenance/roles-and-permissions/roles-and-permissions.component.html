@@ -1,0 +1,328 @@
+<div class="app-body-container bg-white is_summary" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">Roles & Permissions</h3>
+        <div class="brder-1 p-t-32">
+            <div class="has-scrollbar" id="main_contents">
+
+                <!-- Select Box and buttons starts -->
+                <div class="form-group">
+                    <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 m_r_5 ">
+                        <label class="mandatory">Select Role</label>
+                        <select class="form-control" [(ngModel)]="selectedRole" [disabled]="isDisable" (change)="getMenusAndPermissionsList()">
+                            <option *ngFor="let x of rolesList" [ngValue]="x">{{x.name}}</option>
+                        </select>
+                    </div>
+                    <button (click)="checkCR()" [disabled]="checkEditCR()" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20"
+                        onclick='document.getElementById("role_create").style.display="block"'>
+                        <span class="ui-button-text ui-clickable no-pad">Create Custom Role</span>
+                    </button>
+
+                    <button *ngIf="selectedRole && selectedRole.name !== 'Administrator' " (click)="editCustomRole()" [disabled]="checkRoleCreation()"
+                        pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+                        <span class="ui-button-text ui-clickable no-pad">Edit Custom Role</span>
+                    </button>
+
+                    <button (click)="deleteCustomRole()" [disabled]="checkCRSelection()" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+                        <span class="ui-button-text ui-clickable no-pad">Delete</span>
+                    </button>
+                    <button (click)="openExportPopup()" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn margin-top20">
+                        <span class="ui-button-text ui-clickable no-pad">Export</span>
+                    </button>
+                </div>
+                <!-- Select Box and buttons starts -->
+                <div class="clearfix"></div>
+
+                <!-- Form starts -->
+                <form [formGroup]="addCustomRole" data-parsley-validate novalidate #addform="ngForm">
+
+                    <!-- Create Custom Role Fields starts-->
+                    <div class="form-group" id="role_create" style="display: none;">
+                        <!-- Role Name -->
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">Role Name
+                                <span class="required">*</span>
+                            </label>
+                            <input [ngClass]="(isRoleNameValid)?  'form-control':'form-control has-error'" (focusout)="checkIsRoleNameValid()" type="text"
+                                formControlName="roleName" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                placeholder="" required [attr.disabled]="roleNameFieldValidation() ? '' :  null">
+                        </div>
+
+                        <!-- Parent Role -->
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Parent Role
+                                <span class="required">*</span>
+                            </label>
+                            <select [ngClass]="(isParentRoleValid)?  'form-control':'form-control has-error'" (change)="checkIsParentRoleValid()" formControlName="parentRole">
+                                <option value='null'>Select Role</option>
+                                <option *ngFor="let prl of rolesList" [ngValue]="prl.id">{{prl.name}}</option>
+                            </select>
+                        </div>
+
+                        <!-- Role Type -->
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory">Role Type
+                                <span class="required">*</span>
+                            </label>
+                            <select [ngClass]="(isRoleTypeValid)?  'form-control':'form-control has-error'" (change)="onChangeOfRoleType()" formControlName="roleType">
+                                <option value='null'>Select Role Type</option>
+                                <option *ngFor="let roletype of roleTypeList" [ngValue]="roletype.value">{{roletype.display_name}}</option>
+
+                            </select>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-4">
+                            <label class="mandatory" for="currency_code">Description
+                                <span class="required">*</span>
+                            </label>
+                            <input [ngClass]="(isRoleDescValid)?  'form-control':'form-control has-error'" (focusout)="checkIsRoleDescriptionValid()"
+                                formControlName="roleDescription" type="text" class="form-control ng-pristine ng-valid ui-inputtext ui-corner-all ui-state-default ui-widget ng-touched"
+                                placeholder="" required>
+                        </div>
+                    </div>
+                    <!-- Create Custom Role Fields ends-->
+                    <div class="clearfix"></div>
+
+                </form>
+                <!-- Form ends -->
+
+                <!-- Permissions Accordion starts-->
+                <h3>
+                    <strong>Permissions</strong>
+                </h3>
+                <div class="panel-group summernote-detail lender-accordion" [attr.id]="'accordion_'+i" *ngFor="let perm of permissionData; let i=index ">
+                    <div class="">
+                        <!-- <div class="panel panel-default"> -->
+                        <div class="panel-heading roles-panel-head" *ngIf="perm.permissions.length == 0 && perm.submenu_count > 0">
+                            <h4 class="panel-title">
+                                <!-- [ngClass]="i==0? 'table-accordion accordion-toggle':'table-accordion accordion-toggle collapsed'" -->
+                                <a class="table-accordion accordion-toggle collapsed" data-toggle="collapse" [attr.data-parent]="'#accordion_'+i" [attr.href]="'#collapseTwo_'+i">
+                                    <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+                                    <!-- Administration -->
+                                    {{perm.sub_menu_name}}
+                                </a>
+                            </h4>
+
+                        </div>
+
+                        <!-- For Single Menu with its permissions starts-->
+                        <div class="panel-heading roles-panel-head row" *ngIf="perm.permissions.length > 0 && perm.submenu_count == 0">
+                                <div class="col-md-2 pad-top5">
+                                    <h4 class="panel-title">
+                                        {{perm.sub_menu_name}}
+                                    </h4>
+                                </div>
+                                <div class="col-md-2" *ngFor="let psubperm of perm.permissions; let subInd=index ">
+                                    <div class="checkbox">
+                                        <label class="checkbox-inline">
+                                            <p-checkbox *ngIf="selectedRole.name != 'Administrator' && checkIsSummary(psubperm.action, perm.sub_menu_name)" (onChange)="selectOnlyPermission(psubperm)"
+                                                binary="true" [disabled]="isDisableActions" [(ngModel)]="psubperm.enabled" label="{{psubperm.action_label}}"
+                                                class="check11">
+                                            </p-checkbox>
+
+                                            <p-checkbox *ngIf="selectedRole.name != 'Administrator' && !checkIsSummary(psubperm.action, perm.sub_menu_name)" binary="true"
+                                                [(ngModel)]="psubperm.enabled" [disabled]="checkIfSummaryEnabled(perm.permissions,perm.sub_menu_name)"
+                                                (onChange)="selectOnlyPermission(psubperm)" label="{{psubperm.action_label}}"
+                                                class="check12"></p-checkbox>
+
+                                            <p-checkbox *ngIf="selectedRole.name == 'Administrator'" class="select-all" binary="true" value="Administrator" [(ngModel)]="selectedRole.name"
+                                                [disabled]="true" label="{{psubperm.action_label}}" class="check13"></p-checkbox>
+                                        </label>
+                                    </div>
+                                </div>
+                        </div>
+                        <!-- For Single Menu with its permissions ends-->
+
+                        <!-- [ngClass]="i==0? 'panel-collapse collapse in':'panel-collapse collapse'" -->
+                        <div [attr.id]="'collapseTwo_'+i" class="panel-collapse collapse">
+
+                            <div class="panel-body roles-accordion" *ngIf="perm.submenu_count>0">
+                                <!-- <div class="panel-body"> -->
+                                <div *ngFor="let psub of perm.submenu_list ; let j=index " class="panel-group summernote-detail lender-accordion" [attr.id]="'accordion21_'+i+'_'+j">
+                                    <div>
+                                        <div class="row roles-accordion1">
+                                            <div class="col-md-6 pad-top5">
+                                                <!-- [ngClass]="(i==0 && j==0)? 'table-accordion accordion-toggle':'table-accordion accordion-toggle collapsed'" -->
+                                                <a [ngClass]="(psub.submenu_count>0)? 'table-accordion accordion-toggle collapsed':''" data-toggle="collapse" [attr.data-parent]="'#accordion21_'+i+'_'+j"
+                                                    [attr.href]="'#collapseTwoOne_'+i+'_'+j">
+                                                    <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+                                                    <!-- General Codes -->
+                                                    {{psub.sb_sub_menu_name}}
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6" *ngIf="psub.submenu_count>0" >
+                                                <div class="checkbox">
+                                                    <label class="checkbox-inline">
+                                                        <p-checkbox *ngIf="selectedRole.name != 'Administrator'" class="select-all" binary="true" [(ngModel)]="psub.menuChkBox" [disabled]="isDisableActions"
+                                                            (onChange)="selectAllEvent($event,i,j,false,-1,psub.submenu_count)"
+                                                            label="Select All "></p-checkbox>
+
+                                                            <!-- <p-checkbox *ngIf="selectedRole.name != 'Administrator'" binary="true" [(ngModel)]="sb.menuChkBox" [disabled]="isDisableActions"
+                                                            (onChange)="selectAllEvent($event,i,j,true,k,sb.submenu_count)"
+                                                            label="Select All debtor select" ></p-checkbox> -->
+
+                                                        <p-checkbox *ngIf="selectedRole.name == 'Administrator'" class="select-all" binary="true" value="Administrator" [(ngModel)]="selectedRole.name"
+                                                            [disabled]="true" label="Select All"></p-checkbox>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6" *ngIf="psub.submenu_count == 0">
+                                                <div class="checkbox">
+                                                    <label class="checkbox-inline" *ngFor="let psubAction of psub.permissions; let subInd=index ">
+                                                        <!-- <input type="checkbox" value="">{{psubAction.action_label}} -->
+
+                                                        <p-checkbox *ngIf="selectedRole.name != 'Administrator' && checkIsSummary(psubAction.action, psub.sb_sub_menu_name)" (onChange)="getSelectedPermissions($event,i,j,-1,-1,subInd,psubAction,psub.permissions,psub.sb_sub_menu_name)"
+                                                            binary="true" [disabled]="isDisableActions" [(ngModel)]="psubAction.enabled"
+                                                            label="{{psubAction.action_label}}" class="check3">
+                                                        </p-checkbox>
+
+                                                        <!-- <p-checkbox *ngIf="selectedRole.name != 'Administrator' && psubAction.action == 'show'"  
+                                            (onChange) = "getSelectedPermissions($event,i,j,-1,-1,subInd,psubAction,psub.permissions,psub.sb_sub_menu_name)"
+                                            binary="true"
+                                            [(ngModel)]="psubAction.enabled" 
+                                            [disabled]="checkEditPermission(psub.permissions,psub.sb_sub_menu_name) || checkIfSummaryEnabled(psub.permissions,psub.sb_sub_menu_name)"
+                                            label="{{psubAction.action_label}}" class="check1"></p-checkbox> -->
+
+                                                        <p-checkbox *ngIf="selectedRole.name != 'Administrator' && !checkIsSummary(psubAction.action, psub.sb_sub_menu_name)" (onChange)="getSelectedPermissions($event,i,j,-1,-1,subInd,psubAction,psub.permissions,psub.sb_sub_menu_name)"
+                                                            binary="true" [(ngModel)]="psubAction.enabled" [disabled]="checkIfSummaryEnabled(psub.permissions,psub.sb_sub_menu_name)"
+                                                            label="{{psubAction.action_label}}" class="check2"></p-checkbox>
+
+
+                                                        <p-checkbox *ngIf="selectedRole.name == 'Administrator'" class="select-all" binary="true" value="Administrator" [(ngModel)]="selectedRole.name"
+                                                            [disabled]="true" label="{{psubAction.action_label}}"></p-checkbox>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- [ngClass]="(i==0 && j==0)? 'panel-collapse collapse in':'panel-collapse collapse'" -->
+                                        <div [attr.id]="'collapseTwoOne_'+i+'_'+j" class="panel-collapse collapse">
+                                            <div *ngFor="let sb of psub.submenu_list; let k=index ">
+                                                <div class="row roles-accordion2">
+                                                    <div class="col-md-6" *ngIf="sb.submenu_count==0">
+                                                        <!-- <div>Sales Regions</div> -->
+                                                        <div>{{sb.sb_sb_sub_menu_name}}</div>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="sb.submenu_count==0">
+                                                        <!-- formArrayName="permissions" [formGroupName]="ind" -->
+                                                        <label class="checkbox-inline" *ngFor="let permAction of sb.permissions; let ind=index ">
+                                                            <p-checkbox *ngIf="selectedRole.name != 'Administrator' && checkIsSummary(permAction.action, sb.sb_sb_sub_menu_name)" (onChange)="getSelectedPermissions($event,i,j,k,-1,ind,permAction,sb.permissions,sb.sb_sb_sub_menu_name)"
+                                                                binary="true" [disabled]="isDisableActions || disableuniq(sb.sb_sb_sub_menu_name)" [(ngModel)]="permAction.enabled"
+                                                                label="{{permAction.action_label}}" [ngClass]="sb.sb_sb_sub_menu_name == 'Collateral Group' ? 'uniq' : ''" class="check4">
+                                                            </p-checkbox>
+
+                                                            <p-checkbox *ngIf="selectedRole.name != 'Administrator' && !checkIsSummary(permAction.action, sb.sb_sb_sub_menu_name) && permAction.action == 'show'"
+                                                                (onChange)="getSelectedPermissions($event,i,j,k,-1,ind,permAction,sb.permissions,sb.sb_sb_sub_menu_name)"
+                                                                binary="true" [(ngModel)]="permAction.enabled" [disabled]="checkEditPermission(sb.permissions,sb.sb_sb_sub_menu_name) || checkIfSummaryEnabled(sb.permissions,sb.sb_sb_sub_menu_name)"
+                                                                label="{{permAction.action_label}}" class="check20"></p-checkbox>
+
+                                                            <p-checkbox *ngIf="selectedRole.name != 'Administrator' && !checkIsSummary(permAction.action, sb.sb_sb_sub_menu_name) && permAction.action != 'show'"
+                                                                (onChange)="getSelectedPermissions($event,i,j,k,-1,ind,permAction,sb.permissions,sb.sb_sb_sub_menu_name)"
+                                                                binary="true" [(ngModel)]="permAction.enabled" [disabled]="checkIfSummaryEnabled(sb.permissions,sb.sb_sb_sub_menu_name)"
+                                                                label="{{permAction.action_label}}" class="check5"></p-checkbox>
+
+                                                            <p-checkbox *ngIf="selectedRole.name == 'Administrator'" class="select-all" binary="true" value="Administrator" [(ngModel)]="selectedRole.name"
+                                                                [disabled]="true" label="{{permAction.action_label}}" class="check6"></p-checkbox>
+
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="sb.submenu_count>0">
+                                                        <a [ngClass]="(sb.submenu_count>0)? 'table-accordion accordion-toggle collapsed':''" data-toggle="collapse" [attr.href]="'#subcollapseTwoOne_'+i+'_'+j+'_'+k">
+                                                            <!-- <i class="fa fa-plus" aria-hidden="true"></i> -->
+                                                            {{sb.sb_sb_sub_menu_name}}
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-md-6" *ngIf="sb.submenu_count>0">
+                                                        <div class="checkbox">
+                                                            <label>
+                                                                <!-- <input type="checkbox" value="">Select All -->
+                                                                <p-checkbox *ngIf="selectedRole.name != 'Administrator'" binary="true" [(ngModel)]="sb.menuChkBox" [disabled]="isDisableActions"
+                                                                    (onChange)="selectAllEvent($event,i,j,true,k,sb.submenu_count)"
+                                                                    label="Select All " ></p-checkbox>
+
+                                                                <p-checkbox *ngIf="selectedRole.name == 'Administrator'" class="select-all" binary="true" value="Administrator" [(ngModel)]="selectedRole.name"
+                                                                    [disabled]="true" label="Select All"></p-checkbox>
+
+                                                            </label>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+                                                <div class="panel-collapse collapse" *ngIf="sb.submenu_count>0" [attr.id]="'subcollapseTwoOne_'+i+'_'+j+'_'+k">
+                                                    <div class="row roles-accordion1" *ngFor="let fsub of sb.submenu_list; let q=index ">
+                                                        <div class="col-md-6 pad-top5 debtor-sub-item" *ngIf="fsub.submenu_count==0">
+                                                            <div>{{fsub.sb_sb_sb_sub_menu_name}}</div>
+                                                        </div>
+                                                        <div class="col-md-6" *ngIf="fsub.submenu_count==0">
+                                                            <label class="checkbox-inline" *ngFor="let fsubAction of fsub.permissions; let fsubInd=index ">
+                                                                <!-- <input type="checkbox" value="">{{fsubAction.action_label}} -->
+                                                                <!-- label1 -->
+                                                                <p-checkbox *ngIf="selectedRole.name != 'Administrator' && checkIsSummary(fsubAction.action, fsub.sb_sb_sb_sub_menu_name)"
+                                                                    (onChange)="getSelectedPermissions($event,i,j,k,q,fsubInd,fsubAction,fsub.permissions,fsub.sb_sb_sb_sub_menu_name, sb.submenu_count); debtorMenu($event,fsubAction,fsubInd)"
+                                                                    
+                                                                    binary="true" [disabled]="isDisableActions" [(ngModel)]="fsubAction.enabled"
+                                                                    label="{{fsubAction.action_label}}" class="check8" >
+                                          `                      </p-checkbox>
+                                                                <!-- <p-checkbox *ngIf="selectedRole.name != 'Administrator' && checkIsSummary(fsubAction.action, fsub.sb_sb_sb_sub_menu_name)"
+                                                                (onChange)="summaryEvent($event,i,j,true,k,sb.submenu_count,sb) || getSelectedPermissions($event,i,j,k,q,fsubInd,fsubAction,fsub.permissions,fsub.sb_sb_sb_sub_menu_name, sb.submenu_count); debtorMenu($event,fsubAction,fsubInd)"
+                                                                binary="true" [disabled]="isDisableActions" [(ngModel)]="fsubAction.enabled"
+                                                                label="{{fsubAction.action_label}}  " class="check8" >
+                                                            </p-checkbox> -->
+                                                                <!-- label2 -->
+                                                                <!-- <p-checkbox *ngIf="selectedRole.name != 'Administrator' && !checkIsSummary(fsubAction.action, fsub.sb_sb_sb_sub_menu_name) && fsubAction.action == 'index'"
+                                                                    (onChange)="getSelectedPermissions($event,i,j,k,q,fsubInd,fsubAction,fsub.permissions,fsub.sb_sb_sb_sub_menu_name, sb.submenu_count)"
+                                                                    binary="true" [(ngModel)]="fsubAction.enabled" [disabled]="checkEditPermission(fsub.permissions,fsub.sb_sb_sb_sub_menu_name) || checkIfSummaryEnabled(fsub.permissions,fsub.sb_sb_sb_sub_menu_name)"
+                                                                    label="{{fsubAction.action_label}} " class="check9"></p-checkbox> -->
+                                                                    
+                                                                    <!-- <p-checkbox *ngIf="selectedRole.name != 'Administrator' && !checkIsSummary(fsubAction.action, fsub.sb_sb_sb_sub_menu_name) && fsubAction.action != 'index'"
+                                                                    (onChange)="getSelectedPermission($event,i,j,k,q,fsubInd,fsubAction,fsub.permissions,fsub.sb_sb_sb_sub_menu_name, sb.submenu_count)"
+                                                                    binary="true" [(ngModel)]="fsubAction.enabled" [disabled]="checkIfSummaryEnabled(fsub.permissions,fsub.sb_sb_sb_sub_menu_name,sb.submenu_count)"
+                                                                    label="{{fsubAction.action_label}} label3" class="check21"></p-checkbox> -->
+                                                                    <!-- label3 -->
+                                                                 <p-checkbox *ngIf="selectedRole.name != 'Administrator' && !checkIsSummary(fsubAction.action, fsub.sb_sb_sb_sub_menu_name) && fsubAction.action != 'index'"
+                                                                 (onChange)="getSelectedPermissions($event,i,j,k,q,fsubInd,fsubAction,fsub.permissions,fsub.sb_sb_sb_sub_menu_name, sb.submenu_count)"
+                                                                    binary="true" [(ngModel)]="fsubAction.enabled" [disabled]="checkIfSummaryEnabled(fsub.permissions,fsub.sb_sb_sb_sub_menu_name,sb.submenu_count)" [value]="i+j+k+q" [attr.for]="i+j+k+q" [id]='i+j+k+q'
+                                                                    label="{{fsubAction.action_label}} " class="check21"></p-checkbox> 
+                                                                    <!-- label4 -->
+                                                                <p-checkbox *ngIf="selectedRole.name == 'Administrator'" class="select-all" binary="true" value="Administrator" [(ngModel)]="selectedRole.name"
+                                                                    [disabled]="true" label="{{fsubAction.action_label}} "  class="check10"></p-checkbox>  
+
+
+
+                                                                </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- </div> -->
+                            </div>
+                        </div>
+                        <!-- </div> -->
+                    </div>
+                </div>
+
+                <!-- Permissions Accordion ends-->
+                <!-- Save & Cancel Buttons starts -->
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                    <hr>
+                    <button (click)="resetFields();getAllTheRolesList()" [disabled]="disableCancelButton()" id="action_back" label="Cancel" pbutton=""
+                        type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad">Cancel</span>
+                    </button>
+                    <button (click)="saveData()" [disabled]="disableSaveButton()" id="action_save" label="Save" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad">{{buttonTextValue}}</span>
+                    </button>
+                </div>
+                <!-- Save & Cancel Buttons ends -->
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,315 @@
+<div class="app-body-container bg-white" id="app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+            <div class="close-btn-dash pull-right text-right top-action-btns">
+              
+            </div>           
+<div class="pad-inner">
+<div class="{{hideEdit}}">
+        <i id="Edit" *ngIf="isEditIconEnabled" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="onClickEdit()" class="icons-right pull-right hand fa fa-pencil fa-1x clr_grey f_s_20"></i>
+
+        <i id="Edit" *ngIf="!isEditIconEnabled" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" class="icons-right pull-right icon_disabled fa fa-pencil fa-1x clr_grey f_s_20"></i>
+
+        <img src="../../../../..{{assetsPath}}/images/icons/ico-reset.png"  data-toggle="tooltip" data-placement="top" title="Reset" class="icons-right pull-right hand" (click)="onClickReset()">
+  </div>
+  <h3 class="no-m-bt">Templates</h3>
+                
+<div class="brder-1 p-t-32">
+<form [formGroup]="editTemplates" data-parsley-validate novalidate   #addform="ngForm"  >
+    <div class="has-scrollbar" id="main_contents">
+                           
+                            
+     <div class="row no-marg email-header">
+                                
+                            
+     <div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10" data-toggle="buttons">      
+
+    <!--     <label class="btn active radio-inline col-xs-6 col-sm-6 col-md-1 w_140" (click)="onClickRadioButtonEmailTemplates($event.srcElement.innerText)">
+          <input type="radio" name="selectedValue" value="email_template" formControlName="selectedValue" 
+        [(ngModel)]="selectedValue"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span>  Email Template</span>
+        </label>
+
+        <label class="btn radio-inline col-xs-6 col-sm-6 col-md-1 " (click)="onClickRadioButtonTextTemplates($event.srcElement.innerText)">
+          <input type="radio" name="selectedValue"  value="text_template" label="Text Templates" formControlName="selectedValue" 
+        [(ngModel)]="selectedValue"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Text Template</span>
+        </label>
+ -->
+<!-- 
+     <label class="btn active radio-inline col-xs-6 col-sm-6 col-md-1 w_140" (click)="onClickRadioButtonEmailTemplates($event.srcElement.innerText)">
+          <input type="radio" name="selectedValue" value="email_template" formControlName="selectedValue" 
+        [(ngModel)]="selectedValue"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i> <span>  Email Template</span>
+        </label>
+
+        <label class="btn radio-inline col-xs-6 col-sm-6 col-md-1 " (click)="onClickRadioButtonTextTemplates($event.srcElement.innerText)">
+          <input type="radio" name="selectedValue"  value="text_template" label="Text Templates" formControlName="selectedValue" 
+        [(ngModel)]="selectedValue"><i class="fa fa-circle-o fa-2x"></i><i class="fa fa-dot-circle-o fa-2x"></i><span> Text Template</span>
+        </label> -->
+
+        <div class="col-lg-2">
+         
+          <input type="radio"  class ="align-radio-custom" name="selectedValue" value="email_template" formControlName="selectedValue" 
+        [(ngModel)]="selectedValue" on-change = "onClickRadioButtonEmailTemplates($event.target.value)">
+
+         <label>Email Template</label>
+        </div>
+
+
+ <div class="col-lg-2">
+        
+          <input type="radio"  class ="align-radio-custom"  name="selectedValue"  value="text_template" label="Text Templates" formControlName="selectedValue" [(ngModel)]="selectedValue" on-change = "onClickRadioButtonTextTemplates($event.target.value)">
+            <label>Text Template</label>
+</div>
+
+
+        
+
+      </div>
+    </div> 
+
+ 
+                <!--             <div>email templates start</div> -->
+     <div class="{{isEmailTemplateShow}} col-md-12"> 
+    <div class="row no-marg">
+      <div class="col-xs-12 col-sm-4 col-md-2 p_b_10 p-l-0">
+        <label>Product Types</label>
+        <select formControlName = "productTypeForEmailTemplate" (change) = "onChangeProductEmailTemplate($event.target.value)" class="form-control">
+        <option value="general" [attr.selected]=true>General</option>
+        <option value="abl">ABL</option>
+        <option value="factoring">Factoring</option>
+        <option value="termloan">Termloan</option>
+        </select>
+      </div>
+    </div> 
+      <div class="col-md-3 col-sm-12 col-xs-12 cync-grid-search no-marg">
+       <h5 class="col-md-12 col-sm-12 col-xs-12 p-l-15">Email Purpose</h5>
+        <div id="custom-search-input">
+          <div class="ui-corner-all ui-multiselect-header ui-helper-clearfix only-btm-brder">              
+            <div class="ui-multiselect-filter-container">
+                <p-autoComplete 
+                            placeholder="Search Purpose"  formControlName="search_emailpurpose" [suggestions]="emailTemplatesListValue" (completeMethod)="searchEmailPurpose($event)" (onSelect)="searchEmailTemplatesByPurpose()" 
+                            (onKeyUp)="setEmailCloseIcon()"
+                            field="purpose" class="search-input-text">
+                </p-autoComplete>
+                    <span class="fa fa-fw fa-search right-align" *ngIf="!showEmailCloseIcon" style="pointer-events: none;"></span>
+                    <span (click)="clearSearchBox()" *ngIf="showEmailCloseIcon">
+                      <i class="fa fa-fw fa-close pos_right" aria-hidden="true"></i>
+                    </span>    
+                    
+            </div>
+                
+           </div>
+                <ul class="list-group" style="height:220px;" id="emailTemplateListCollection" *ngIf="emailTemplatesList!=undefined">
+                <ng-container *ngFor="let x of emailTemplatesList.email_template">
+                  <li [ngClass]="(selectedListValue != x.id)? 'list-group-item':'list-group-item active-list-item'" [attr.id]="x.id">
+                      <span (click)="emaildata(x.id)">{{x.purpose}}</span>
+                  </li>                    
+                </ng-container>   
+                </ul>
+          </div>
+        </div>
+
+         <div class="col-md-8 col-sm-12 col-xs-12">
+             <div class="select-purpose {{isEditShowIcon}}">
+                 <i class="glyphicon glyphicon-info-sign fa-3x"></i>
+                 <br/>
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                        Please select the email purpose to load contents
+                  </div>
+             </div>
+
+
+         <div class="show-email-view {{isEditShowField}}">
+
+             <div class="col-xs-12 col-sm-12 col-md-12 p_b_10">
+                 <div class="input-group p_b_10">
+                    <span class="input-group-addon no-bg force-btm-brder semi_bold p-l-0">Name :</span>
+                    <input style="
+  background-color: white;
+" id="Name" [readonly]="isReadOnly" type="text" formControlName="name_from" class="form-control force-btm-brder" name="msg1" placeholder="name">
+                    <!-- <button (click)="onClickCc()"  type="text" id="subdomain">CC</button> -->
+                  </div>                 
+
+                   <div class="input-group p_b_10 CCEmail {{isEditShowCc}}">
+                    <span class="input-group-addon  no-bg force-btm-brder semi_bold p-l-0">CC :</span>
+                    <input style="
+  background-color: white;
+" id="CC" [readonly]="isReadOnly" type="text" formControlName="cc" class="form-control force-btm-brder" name="msg3" placeholder="">
+                  </div>
+
+                  <div class="input-group p_b_10">
+                    <span class="input-group-addon  no-bg force-btm-brder semi_bold p-l-0">Subject :</span>
+                    <input style="
+  background-color: white;
+" id="Subject" [readonly]="isReadOnly" type="text" formControlName="subject_from" class="form-control force-btm-brder" name="msg2" placeholder="Subject">
+                  </div>
+             </div>
+
+             <div class="">
+                   <div class="col-xs-12 col-sm-12 col-md-12 p_b_10">
+                     <app-cync-text-editor [elementId]="'email_Templates_id'" [(contentText)]="body" ></app-cync-text-editor>
+                 </div>
+            </div>
+
+      <div class="panel-group summernote-detail col-xs-12 col-sm-12 col-md-12 p_b_10" id="accordion">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                 <h6 class="panel-title">
+                 <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                            Place Holders
+                            </a>
+                          </h6>
+                      </div>
+                  <div id="collapseOne" class="panel-collapse collapse">
+                  <div class="panel-body">
+                   <div class="row" *ngFor="let emailplaceHolderK of emailplaceHolderKey; index as i" >
+                   
+                        <div  class="col-md-3 col-sm-6 text-right m-t-l">
+                         {{emailplaceHolderValue[i]}}
+                           
+                             
+                        </div>
+                       <div class="col-md-6 col-sm-6">
+                                        
+                    %{{ '{' }}{{emailplaceHolderK}}{{ '}' }}
+                                      
+                      </div>
+                    
+                </div>
+              
+                      </div>
+                    </div>
+              </div>
+            </div>
+         </div>
+     </div>
+ </div>
+                            
+              <!-- <div>email templates end</div> -->
+
+               <!-- <div>text templates start</div> -->
+                             <div class="{{isTextTemplateShow}} col-md-12">
+
+                             <div class="row no-marg">
+      <div class="col-xs-12 col-sm-4 col-md-2 p_b_10">
+        <label>Product Types</label>
+        <select formControlName = "productTypeForTextTemplate" (change) = "onChangeProductTextTemplate($event.target.value)" class="form-control">
+        <option value="general" [attr.selected]=true>General</option>
+        <option value="abl">ABL</option>
+        <option value="factoring">Factoring</option>
+        <option value="termloan">Termloan</option>
+        </select>
+      </div>
+    </div>
+ 
+                                     <div class="col-md-3 col-sm-12 col-xs-12 cync-grid-search no-marg">
+                                       <h5 class="col-md-12 col-sm-12 col-xs-12 p-l-15">
+                                     Text Templates
+                                         </h5>
+
+                <div id="custom-search-input">
+           <div class="ui-corner-all ui-multiselect-header ui-helper-clearfix only-btm-brder">       <div class="ui-multiselect-filter-container">
+                <p-autoComplete 
+                            placeholder="Search Purpose"  formControlName="search_textpurpose" [suggestions]="textTemplatesListValue" (completeMethod)="searchTextPurpose($event)" (onSelect)="searchTextTemplatesByPurpose()" 
+                            (onKeyUp)="setTextCloseIcon()"
+                            field="purpose" class="search-input-text">
+                </p-autoComplete>
+                <span class="fa fa-fw fa-search right-align" *ngIf="!showTextCloseIcon" style="pointer-events: none;"></span> 
+                 <span (click)="clearSearchBox()" *ngIf="showTextCloseIcon">
+                      <i class="fa fa-fw fa-close pos_right" aria-hidden="true"></i>
+                    </span> 
+                                                           
+                                                       </div>
+                                                    
+                                                   </div>
+                                                   <!-- Adjust the height of the box from Angular -->
+
+                                       <ul class="list-group" style="height:220px;" *ngIf="textTemplatesList!=undefined" id="textTemplateListCollection">
+                    <ng-container *ngFor="let x of textTemplatesList.text_message_templates">
+                     <li [ngClass]="(selectedListValue != x.id)? 'list-group-item':'list-group-item active-list-item'" [attr.id]="x.id">
+                      <span (click)="data(x.id)">{{x.purpose}}</span>
+                    </li>
+                       </ng-container> 
+                   
+                </ul>
+                                                </div>
+                                     </div>
+                                     <div class="col-md-8 col-sm-12 col-xs-12">
+                                         <div class="select-purpose {{isEditShow}}">
+                                   <i class="glyphicon glyphicon-info-sign fa-3x"></i>
+                                         <br/>
+                                   <div class="col-md-12 col-sm-12 col-xs-12">
+                                    Please select the text purpose to load contents
+                                 </div>
+                                   </div>
+                            
+                                     <div class="show-email-view {{isEditShowTextField}}">
+                            
+                                         <div class="col-xs-12 col-sm-12 col-md-12 p_b_10">
+                                             <div class="input-group p_b_10">
+                                                <span class="input-group-addon no-bg force-btm-brder semi_bold p-l-0">From :</span>
+                                                <input id="Name" formControlName="text_from" type="text" class="form-control force-btm-brder" name="msg">
+                                                
+                                              </div>
+                                         </div>
+                                                
+                            <div class="">
+                              <div class="col-xs-12 col-sm-12 col-md-12 p_b_10">
+                             <textarea [readonly]="isDisableTextArea" id="text_box" formControlName="text_body" class="form-control" placeholder="Message"  rows="5">
+                              </textarea>
+                               </div>
+                              </div>
+                            
+                              <div class="panel-group summernote-detail col-xs-12 col-sm-12 col-md-12 p_b_10" id="accordion">
+                                    <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                      <h6 class="panel-title">
+                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapse">
+                                                       Place Holders
+                            
+                                                        </a>
+                                                      </h6>
+                                                    </div>
+                                           <div id="collapse" class="panel-collapse collapse">
+                                                      <div class="panel-body">
+
+                  <div class="row" *ngFor="let textplaceHolderK of textplaceHolderKey; index as j" >
+                   
+                        <div  class="col-md-3 col-sm-6 text-right m-t-l">
+                         {{textplaceHolderValue[j]}}
+                           
+                             
+                        </div>
+                       <div class="col-md-6 col-sm-6">
+                                        
+                    %{{ '{' }}{{textplaceHolderK}}{{ '}' }}
+                                      
+                      </div>
+                    
+                </div>
+                                                      
+                                                       </div>
+                                                    </div>
+                                                  </div>
+                                                 </div>
+                                         </div>
+                                     </div>
+                                 </div>
+                            
+
+
+
+               <!-- <div>text templates end</div> -->
+
+      <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+              <hr>
+               <button [disabled] = 'isDisableCancel'(click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+               <button [disabled] = 'isDisable' (click)="saveEmailTemplates(editEmailTemplates)" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span class="ui-button-text ui-clickable no-pad">Save</span>                    </button>
+     </div>
+
+                                                                                                  
+     </div>
+    </form> 
+    </div>
+   </div>
+  </div>
+
+
+

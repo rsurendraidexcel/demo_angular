@@ -1,0 +1,80 @@
+<div class="app-body-container bg-white is_summary list-credit-queue" id="cync_app-body-container">
+    <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+    <div class="pad-inner">
+        <!-- <h3  *ngIf="!isNew">Credit Queue - Summary</h3> -->
+        <div class="p-t-16">
+            <div class="has-scrollbar row" [ngClass]="isNew ? 'dynamic-scroll' : ''">
+                <tabset #staticTabs [ngClass]="!isNew ? 'remove-border' : ''">
+                <tab heading="Credit Queue - Details" id="tab1">
+                    <form [formGroup]="filterForm" (ngSubmit)="onFilerBy(filterForm.getRawValue(),filterForm.valid)">
+                    <div class="row">
+                        <!-- <div class="col-md-2 filter-class">
+                            <label>Filter By :</label>
+                            </div> -->
+                        <div class="col-md-2 filter-class">
+                            <label >Filter by Status :</label>
+                            <select class="form-control"  formControlName="statusValue">
+                            <option selected value="">All</option>
+                            <option  *ngFor="let status of getStatusDropdown" value="{{status.id}}">{{status.name}}</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2 filter-class">
+                            <label >From Date :</label>
+                            <!-- <input type="date" class="form-control" placeholder="From Date"> -->
+                            <p-calendar class="form-control ie-custom-calender" [showIcon]="true" [monthNavigator]="true" 
+                            [defaultDate]="monthStartDay" formControlName="fromDate"  [maxDate]="todaysDate"
+                            [yearNavigator]="true" yearRange="2000:2030" dateFormat="mm/dd/yy"  required="true" 
+                            ></p-calendar>
+                        </div>
+                        <div class="col-md-2 filter-class">
+                            <label >To Date :</label>
+                            <p-calendar  required="true" [defaultDate]="todaysDate"  class="form-control ie-custom-calender" [showIcon]="true"
+                            [monthNavigator]="true" formControlName="toDate" [maxDate]="todaysDate" 
+                            [yearNavigator]="true" yearRange="2000:2030"  dateFormat="mm/dd/yy" ></p-calendar>
+                        </div>
+                        <div class="col-md-1 filter-class cancel-button">
+                            <label class="m-t-27">&nbsp;</label>
+                            <button type="button" class="btn btn-default" (click)="reset();">Reset</button>
+                        </div>
+                        <div class="col-md-2 filter-class m-l-20">
+                            <label class="m-t-27">&nbsp;</label>
+                            <button type="submit" class="btn btn-primary" >Filter</button>
+                        </div>
+                    </div>
+                    </form>
+                    <div class="row">
+                        <ag-grid-angular #agGrid style="width: 100%; height: calc(100vh - 360px);" class="ag-theme-balham" 
+                        [floatingFilter]="true"
+                        [rowData]="rowData" 
+                        [columnDefs]="columnDefs" 
+                        rowSelection="rowSelection"
+                        [purgeClosedRowNodes]="true"
+                        (cellClicked)="onCellClicked($event)" 
+                        (rowClicked)="onRowClicked($event)"
+                        (gridReady)="onGridReady($event)" 
+                        [defaultColDef]="defaultColDef"  
+                        [frameworkComponents]="frameworkComponents"
+                        [components]="components"
+                        [rowBuffer]="rowBuffer"
+                        [rowDeselection]="true"
+                        [paginationPageSize]="paginationPageSize"
+                        [cacheOverflowSize]="cacheOverflowSize"
+                        [maxConcurrentDatasourceRequests]="maxConcurrentDatasourceRequests"
+                        [infiniteInitialRowCount]="infiniteInitialRowCount"
+                        [maxBlocksInCache]="maxBlocksInCache" 
+                        ></ag-grid-angular>
+                    </div>
+                    <div class="addbtn">
+                        <button class="btn btn-primary" (click)="selectTab(1)" pTooltip="Add New" tooltipPosition="top">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </tab>
+                <tab heading="{{namingOfTab}}" *ngIf="isNew">
+                    <app-add-edit-queue (close)="isNew = false;renderList();"></app-add-edit-queue>
+                </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+.pad-inner .loan-equiry-heading h3 {
+    margin-left: 0px;
+}
+
+.loan-equiry-export-button{
+    padding: 0px;
+}
+
+.loan-equiry-heading{
+    padding:0px;
+}
+
+.export-button {
+    height: 25px; 
+    cursor: pointer; 
+    background-color: #e1630b;
+    color: #FFF;
+    border: none;
+    text-decoration: none;
+    text-shadow: none !important;
+    white-space: nowrap;
+    font-size: 13px;
+    padding-bottom: 2px;
+}
+
+#row_details_popup_div table, th, td {
+// border: 1px solid #ddd;  
+  border-collapse: collapse;
+  table-layout:fixed;
+  overflow:hidden;
+  word-wrap:break-word;
+  background-color: #FFFFFF;
+}
+  
+#row_details_popup_div {
+  border: 2px solid #e2e2e2f2;
+  position: absolute;
+  margin-left: 70%;
+  background: #FFFFFF;
+  z-index: 10;
+  font-size: 13px;
+  height: calc(100vh - 290px);
+}
+  
+#row_details_popup_div tr:nth-child(even) {
+  background-color: #FFFFFF;
+}
+
+#row_details_popup_div th, td {
+  //padding: 5px;
+  text-align: left;
+  padding: 0px 5px 0px 0px;
+}
+  
+#row_details_close{
+  margin-left: 95%;
+  cursor: pointer; 
+  font-size: 17px;
+}
+  
+#row_details_table{
+  width: 95%; 
+  height: 200px;
+  margin: 0px 10px;
+}
+
+#loan_enquiry_grid {
+  width: 100%;
+  position: absolute;
+  
+}
+
+#row_details_table tbody{
+  height: calc(100vh - 317px);
+  overflow-y: scroll;
+  display: block;
+}
+
+#row_details_table .row_details_td_key{
+  text-align: right;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 200px;
+}

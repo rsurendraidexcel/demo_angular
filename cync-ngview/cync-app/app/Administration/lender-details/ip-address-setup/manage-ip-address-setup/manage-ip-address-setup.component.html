@@ -1,0 +1,209 @@
+<div class="app-body-container bg-white ip-address-add" id="cync_app-body-container">
+    <div class="close-btn-dash pull-right text-right top-action-btns">
+    </div>
+    <div class="pad-inner">
+        <h3 class="no-m-bt">{{headerText}}</h3>
+        <div class="brder-1 p-t-32">
+            <!-- Form starts -->
+            <form [formGroup]="addEditIpAddress" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveRecord(addEditIpAddress.value,false)">
+                <div class="has-scrollbar" id="cync_main_contents_wradio-mapping">
+
+                    <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-sm-6 col-md-2 col-md-2 ad-bt-pad">
+                                <label class="mandatory">Name
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="hidden" formControlName="id">
+                                <input type="text" [ngClass]="displayFieldCss('name',false,0)" id="ip_name" formControlName="name" class="form-control">
+                                <cync-input-field-error-msg [control]="getFormControl('name',false,0)" labelName="Name">
+                                </cync-input-field-error-msg>
+                            </div>
+
+                            <div class="col-sm-6 col-md-2 col-md-2 ad-bt-pad">
+                                <label class="mandatory">Description
+                                    <span class="required">*</span>
+                                </label>
+                                <input type="text" id="ip_description" [ngClass]="displayFieldCss('description',false,0)" formControlName="description" class="form-control">
+                                <cync-input-field-error-msg [control]="getFormControl('description',false,0)" labelName="Description">
+                                </cync-input-field-error-msg>
+                            </div>
+
+                            <div class="col-sm-6 col-md-2 col-md-2 ad-bt-pad">
+                                <label class="mandatory">IP Type
+                                    <span class="required">*</span>
+                                </label>
+                                <select class="form-control" id="ip_type" formControlName="ip_type" (change)="onChangeOfIpType(addEditIpAddress.get('ip_type').value)">
+                                    <option *ngFor="let key of addEditIpAddress.get('ipTypesList').value" [ngValue]="key.column_value">{{key.column_display}}</option>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-6 col-md-2 col-md-2 ad-bt-pad">
+                                <label class="mandatory">Status
+                                </label>
+                                <div class="m-t-7">
+                                    <label class="switch">
+                                        <input type="checkbox" name="ip_status" id="ip_status" checked formControlName="active">
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- List of Fixed and Range fields STARTS Here  -->
+                    <div class="row brder-1">
+                        <div class="col-md-12">
+                            <h5 class="p_b_10"> {{ getSelectedIpType() }} </h5>
+                        </div>
+
+                        <div formArrayName="ip_ranges">
+                            <div [formGroupName]="i" *ngFor="let ipRangeRecord of IpRangeControls.controls; let i = index ">
+
+                                <input type="hidden" formControlName="id">
+
+                                <!-- FIXED IP FIELDS STARTS -->
+                                <div *ngIf="addEditIpAddress.get('ip_type').value == 'F'">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                                <label>Name
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" formControlName="name" [ngClass]="displayFieldCss('name',true,i)">
+                                                <cync-input-field-error-msg [control]="getFormControl('name',true,i)" labelName="Name">
+                                                </cync-input-field-error-msg>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                                <label>IP
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" formControlName="fixed_ip" [ngClass]="displayFieldCss('fixed_ip',true,i)">
+                                                <cync-input-field-error-msg [control]="getFormControl('fixed_ip',true,i)" labelName="IP">
+                                                </cync-input-field-error-msg>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 pos_chbox_middle">
+                                                <span class="add_more" *ngIf="i == IpRangeControls.controls.length - 1">
+                                                    <i aria-hidden="true" class="hand fa fa-plus fa-1x" data-placement="top" data-toggle="tooltip" title="Add More" (click)="addField(i)"></i>
+                                                </span>
+                                                <span class="add_more" *ngIf="IpRangeControls.controls.length > 1">
+                                                    <i aria-hidden="true" class="hand fa fa-minus fa-1x" data-placement="top" data-toggle="tooltip" title="Delete this Item"
+                                                        (click)="removeField(i)"></i>
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr-custom">
+                                            <hr/>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 pos_chbox_middle" *ngIf="i == IpRangeControls.controls.length - 1 && i != 0">
+                                                <span class="add_more">
+                                                    <i aria-hidden="true" class="hand fa fa-plus fa-1x" data-placement="top" data-toggle="tooltip" title="Add More" (click)="addField(i)"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <!-- FIXED IP FIELDS ENDS -->
+
+                                <!-- RANGE IP FIELDS STARTS -->
+                                <div *ngIf="addEditIpAddress.get('ip_type').value == 'R'">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                                <label>Description
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" formControlName="description" [ngClass]="displayFieldCss('description',true,i)">
+                                                <cync-input-field-error-msg [control]="getFormControl('description',true,i)" labelName="Description">
+                                                </cync-input-field-error-msg>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                                <label>From
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" formControlName="range_from" [ngClass]="displayFieldCss('range_from',true,i)">
+                                                <cync-input-field-error-msg [control]="getFormControl('range_from',true,i)" labelName="From">
+                                                </cync-input-field-error-msg>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                                <label>To
+                                                    <span class="required">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" formControlName="range_to" [ngClass]="displayFieldCss('range_to',true,i)">
+                                                <cync-input-field-error-msg [control]="getFormControl('range_to',true,i)" labelName="To">
+                                                </cync-input-field-error-msg>
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 pos_chbox_middle">
+                                                <span class="add_more" *ngIf="i == IpRangeControls.controls.length - 1">
+                                                    <i aria-hidden="true" class="hand fa fa-plus fa-1x" data-placement="top" data-toggle="tooltip" title="Add More" (click)="addField(i)"></i>
+                                                </span>
+                                                <span class="add_more" *ngIf="IpRangeControls.controls.length > 1">
+                                                    <i aria-hidden="true" class="hand fa fa-minus fa-1x" data-placement="top" data-toggle="tooltip" title="Delete this Item"
+                                                        (click)="removeField(i)"></i>
+                                                </span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 hr-custom">
+                                            <hr/>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                            </div>
+                                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 pos_chbox_middle" *ngIf="i == IpRangeControls.controls.length - 1  && i != 0">
+                                                <span class="add_more">
+                                                    <i aria-hidden="true" class="hand fa fa-plus fa-1x" data-placement="top" data-toggle="tooltip" title="Add More" (click)="addField(i)"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                </div>
+                                <!-- RANGE IP FIELDS ENDS -->
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- List of Fixed and Range fields ENDS Here  -->
+
+                </div>
+
+
+                <!-- Save and Cancel Button starts -->
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                        <hr>
+                        <button id="action_back" label="Cancel" pbutton="" type="button" (click)="navigateToIpAddressSetupSummary()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+                        </button>
+                        <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" (click)="saveRecord(addEditIpAddress.value,true)"
+                            id="action_save_new" label="Save & New" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+                        </button>
+                        <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                            <span class="ui-button-text ui-clickable no-pad"> {{currentActionBtnText}} </span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Save and Cancel Button ends -->
+            </form>
+            <!-- Form ends -->
+        </div>
+    </div>
+</div>

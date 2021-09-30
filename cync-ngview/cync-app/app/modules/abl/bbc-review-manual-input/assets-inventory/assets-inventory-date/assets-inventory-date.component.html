@@ -1,0 +1,6 @@
+<p-calendar *ngIf="hidePdate" [(ngModel)]="from_date" placeholder="From Date" yearRange="2000:2030" dateFormat="mm/dd/yy"
+			[monthNavigator]="true" [disabled]="editable" [yearNavigator]="true" [readonlyInput]="true" [showIcon]="false" appendTo="body"
+			(onSelect)="fromDateSelectMethod($event)" [inputStyle]="{'width':'150px'}" [maxDate]="current_date"></p-calendar>
+
+			<span *ngIf="hideNone">Totals</span>
+			<span *ngIf="hideBlank"></span>

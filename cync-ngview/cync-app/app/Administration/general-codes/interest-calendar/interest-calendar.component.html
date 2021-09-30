@@ -1,0 +1,31 @@
+<div class="app-body-container bg-white interest-calendar-custom" id="app-body-container">
+  <div class="pad-inner">
+    <div class="row cync-container-pannel">
+      <h3 style="display:inline-block" class="no-m-bt">{{title}} <strong *ngIf="interestType!='Factoring'"> | <i
+            class="fa fa-check-circle" aria-hidden="true" style="color: #9DE268;"></i> Calendar extended till
+          {{calendarExtendedTill}}</strong> | &nbsp;</h3>
+      <div style="display: inline-block;">
+        <label style="width: 110px; font-size: 14px;">Product Types</label>
+        <select style="width: 170px; height: 30px" (change)="onChange($event)">
+          <option selected value="ABL">ABL</option>
+          <option value="Factoring">Factoring</option>
+        </select>
+      </div>
+    </div>
+    <div class="brder-1 p-t-32">
+      <div class="has-scrollbar" id="main_contents">
+        <div id="calendar" class="calendar"></div>
+        <div class="btton-panel" style="text-align:right;margin-top: 20px;margin-right: 20px;">
+          <button *ngIf="isFactoringSaveAllowed" title="Save Calender" class="btn btn-primary"
+            (click)="saveDetails()">Save Calendar and Apply</button>
+          <button *ngIf="isSaveAllowed" title="Save Calender" class="btn btn-primary" (click)="saveDetails()">Save
+            Calendar</button>
+          <button *ngIf="isRepairAllowed" title="Repair Calender" class="btn btn-primary"
+            (click)="repairCalender()">Repair Calendar</button>
+          <button *ngIf="isExtendAllowed" title="Extend Calender" class="btn btn-primary"
+            (click)="extendCalender()">Extend Calendar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

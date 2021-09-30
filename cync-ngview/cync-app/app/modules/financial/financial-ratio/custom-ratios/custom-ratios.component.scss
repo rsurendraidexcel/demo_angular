@@ -1,0 +1,74 @@
+.m-l-r-15 {
+    margin-left: 15px !important;
+    margin-right: 15px !important;
+}
+
+.m-l-15 {
+    margin-left: 15px !important;
+}
+
+.ad-bt-pad {
+    margin-bottom: 7px !important;
+}
+
+.has-scrollbar .form-group {
+    margin-top: 0px !important
+}
+
+.p-r-0 {
+    padding-right: 0px !important
+}
+
+.brder-right-1 {
+    border-right: 1px solid #e0e2e4;
+}
+
+#suggest {
+    position: absolute;
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCFF;
+    font-size: 90%;
+    width: 200px;
+}
+
+#suggest div {
+    display: block;
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#suggest div.select {
+    /* keydown, keyup */
+    color: #FFFFFF;
+    background-color: #3366FF;
+}
+
+#suggest div.over {
+    /* mouse over */
+    background-color: #99CCFF;
+}
+
+.backdrop {
+    overflow: auto;
+}
+
+.highlights {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+.highlights {
+    color: transparent;
+}
+
+mark {
+    color: transparent;
+    background-color: #d4e9ab;
+    /* or whatever */
+}
+
+.backdrop {
+    background-color: #fff;
+    /* or whatever */
+}

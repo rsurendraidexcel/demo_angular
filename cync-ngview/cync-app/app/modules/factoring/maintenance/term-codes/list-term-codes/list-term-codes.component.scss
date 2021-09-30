@@ -1,0 +1,40 @@
+.has_scrollbar_term_codes{
+    height: calc(100vh - 345px);
+    margin-top: 10px;
+}
+.addbtn {
+    position: fixed;
+    bottom: 71px;
+    right: 69px;
+
+}
+.deletebtn{
+    position: fixed;
+    bottom: 71px;
+    right: 110px;
+}
+:focus {
+    outline: none !important;
+}
+.addbtn button, .deletebtn button {
+    border-radius: 50%;
+}
+.app-body-container{
+    height: 570px;
+}
+.d-i-b{
+    display: inline-block;
+    display: -webkit-inline-box;
+}
+.m-t-7{
+    margin-top: 7px;
+}
+.float-right{
+    float: right;
+}
+.text-right{
+    text-align: right;
+}
+.fa-2x {
+    font-size: 1.5em;
+}

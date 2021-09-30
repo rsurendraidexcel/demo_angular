@@ -1,0 +1,98 @@
+<div class="app-body-container bg-white is_summary">
+	<!-- <div class="close-btn-dash pull-right text-right top-action-btns"></div> -->
+	<div class="row topHeadingPannel" style="margin-top: 0px;">
+		<div class="col-md-3">
+			<h3 class="no-m-bt" id="templateHeading">Bucket Aging</h3>
+		</div>
+		<div class="col-md-4 pull-right text-right">
+			<button id="saveBucket" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn m-right" (click)="saveBucketAgingData()">Save Bucket Aging</button>
+			<button id="cancelBucket" type="button" class="btn btn-light primarycancelbtn" (click)="cancelBucketAgingData()">Reset</button>
+		</div>
+	</div>
+
+	<div class="row topHeadingPannel" style="background: white !important;">
+		<div class="col-md-3">
+			<h3 class="no-m-bt" id="templateHeading">AR Bucket Aging</h3>
+		</div>
+		<div class="col-md-6 col-sm-6 col-xs-12 pull-right text-right m-top">
+
+			<i id="arNew" i class="hand fa fa-plus fa-1x f_s_20 clr_grey p-right-10" aria-hidden="true" data-toggle="tooltip"
+			 data-placement="top" title="Add New" (click)="arBucketAgingAddNew()"></i>
+
+			<i id="arCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset" (click)="cancelArBucketAgingData()"
+			 class="hand fa fa-times fa-1x clr_grey f_s_20 p-right-10">
+			</i>
+
+			<i id="deleteArBucket" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteArBucketAgingData()"
+			 [ngClass]="arBucketAgingSelectedRows.length>0 ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'">
+			</i>
+
+		</div>
+	</div>
+
+	<!--AR Bucket Aging Ag-grid section start -->
+	<div class="p-top" #arBucketAgingGrid>
+		<ag-grid-angular style="width: 100%; height: 300px; padding: 10px;" 
+		class="ag-theme-balham" 
+		[floatingFilter]="true"
+		 [rowData]="arBucketAgingRowData" 
+		 rowSelection="multiple" 
+		 suppressRowClickSelection='true' 
+		 [singleClickEdit]="true"
+		 [defaultColDef]="arBucketAgingDefaultColDef" 
+		 [columnDefs]="arBucketAgingcolumnDefs" 
+		 [gridOptions]="arBucketAgingGridOptions"
+		 (rowSelected)="onArBucketAgingRowSelected($event)" 
+		 (gridReady)="arBucketAgingOnGridReady($event)">
+		</ag-grid-angular>
+	</div>
+	<!-- AR Bucket Aging Ag-grid section end -->
+
+	<div class="row bucketNamePannel">
+		<form class="form-inline" style="display: flex;">
+			<div class="bucketBlock form-group">
+				<label for="bucket-name" style="margin-left: 10px;">Bucket Name:</label>
+				<input id="bucketname" type="text" class="bucketName" id="bucketName" name="bucketName" [(ngModel)]="bucketName" [disabled]='isDisabledBucketName'>
+			</div>
+		</form>
+	</div>
+
+	<div class="row topHeadingPannel" style="background: white !important;">
+		<div class="col-md-3">
+			<h3 class="no-m-bt" id="templateHeading">AP Bucket Aging</h3>
+		</div>
+		<div class="col-md-6 col-sm-6 col-xs-12 pull-right text-right m-top">
+
+			<i id="apNew" i class="hand fa fa-plus fa-1x f_s_20 clr_grey p-right-10" aria-hidden="true" data-toggle="tooltip"
+			 data-placement="top" title="Add New" (click)="apBucketAgingAddNew()"></i>
+
+			<i id="apCancel" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Reset" (click)="cancelApBucketAgingData()"
+			 class="hand fa fa-times fa-1x clr_grey f_s_20 p-right-10">
+			</i>
+
+			<i id="deleteApBucket" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteApBucketAgingData()"
+			 [ngClass]="apBucketAgingSelectedRows.length>0 ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'">
+			</i>
+
+		</div>
+	</div>
+
+	<!-- AP Bucket Aging Ag-grid section start -->
+	<div class="p-top" #aBucketAgingGrid>
+		<ag-grid-angular style="width: 100%; height:300px ; padding: 10px;" 
+		class="ag-theme-balham" 
+		[floatingFilter]="true"
+		[enableFilter]="true" 
+		[rowData]="apBucketAgingRowData" 
+		rowSelection="multiple" 
+		[singleClickEdit]="true"
+		suppressRowClickSelection='true' 
+		[columnDefs]="apBucketAgingcolumnDefs" 
+		(rowSelected)="onApBucketAgingRowSelected($event)"
+		[gridOptions]="apBucketAgingGridOptions" 
+		(gridReady)="apBucketAgingOnGridReady($event)">
+		</ag-grid-angular>
+	</div>
+	<!-- AP Bucket Aging Ag-grid section end -->
+
+</div>

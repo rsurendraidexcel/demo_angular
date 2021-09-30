@@ -1,0 +1,45 @@
+<div class="app-body-container bg-white">
+  <div class="top-action-btns top-title text-left m-left">Receivables Rollforward</div>
+  <div class="cync-container-pannel">
+    <div class="row cync-row-margin margin-0">
+      <form [formGroup]="RollForwardDivisionCollateralGroup" class="form-inline">
+        <div class="col-md-3 cync-col-pad p-7">
+          <div class="formGroup">
+            <label for="division" class="p-right"> Division:</label>
+            <select class="form-control setwidth" id="division" formControlName="division" name="division"
+              (change)="onChangeDivision($event)">
+              <option value=''>All</option>
+              <option *ngFor="let division of divisionList" [value]="division.id">
+                {{division.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 p-7" id="collateralId" style="display: none;">
+          <div class="formGroup">
+            <label for="collateral" class="p-right"> Collateral: </label>
+            <select class="form-control setwidth" name="collateral" formControlName="collateral"
+              (change)="onChangeCollateral($event)">
+              <option value=''>All</option>
+              <option *ngFor="let collateral of collateralList" [value]="collateral.id">
+                {{collateral.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3 p-7">
+          <div class="formGroup">
+            <label for="bbc_date" class="p-right"> BBC Date: </label>
+            <input class="cync-inputstyle margin-left" disabled="disabled" name="bbc_date" formControlName="bbc_date">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="row cync-row-margin roll-forwards">
+      <app-rollforward-division-collateral [parentSubject]="parentSubject"></app-rollforward-division-collateral>
+      <br />
+      <app-rollforwardlogs></app-rollforwardlogs>
+    </div>
+
+  </div>
+</div>

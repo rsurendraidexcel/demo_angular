@@ -1,0 +1,5 @@
+<select class="form-control" (change)="onChangeCollateral($event)">
+  <option  >Select</option>
+  <option  [selected]="list.id == collateralId" *ngFor="let list of mappingGroup" [value]='list.id'>
+    {{list.name}}</option>
+</select>

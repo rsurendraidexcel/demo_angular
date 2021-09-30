@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { CollateralAdvanceRateComponent } from './collateral-advance-rate.component';
+
+describe('CollateralAdvanceRateComponent', () => {
+  let component: CollateralAdvanceRateComponent;
+  let fixture: ComponentFixture<CollateralAdvanceRateComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ CollateralAdvanceRateComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CollateralAdvanceRateComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

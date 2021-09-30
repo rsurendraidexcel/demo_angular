@@ -1,0 +1,63 @@
+<div class="app-body-container bg-white is_summary list-term-codes" id="cync_app-body-container">
+    <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+    <div class="pad-inner" *ngIf="isDataLoaded">
+        <div class="p-t-16">
+            <div class="row">
+                <tabset #staticTabs [ngClass]="!isNew ? 'remove-border' : ''">
+                    <tab heading="Term Codes - Details" id="tab1">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 d-i-b" style="padding: 0px; padding-bottom:5px;">
+                                <label class="m-t-7">Status : &nbsp; </label>
+                                <select [(ngModel)]="selectedDropDownValue" (change)="changeStatusType($event.target.value)" class="form-control ng-untouched ng-pristine ng-valid">
+                                    <option value="all">All</option>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-2 float-right text-right">
+                                <button class="btn btn-primary" (click)="selectTab(1)"
+                                pTooltip="Add" tooltipPosition="top">
+                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                </button> &nbsp;
+                                <button class="btn btn-primary" (click)="onDeleteButtonClick()"
+                                pTooltip="Delete" tooltipPosition="top">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button> &nbsp;
+                                <button class="btn btn-primary" (click)="onExportButtonClick()"
+                                pTooltip="Export" tooltipPosition="top">
+                                     <i class="fa fa-download" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="has-scrollbar row">
+                            <ag-grid-angular 
+                                #agGrid style="width: 100%; height: calc(100vh - 315px);" 
+                                class="ag-theme-balham" 
+                                [floatingFilter]="true"
+                                [rowData]="rowData" 
+                                [columnDefs]="columnDefs" 
+                                rowSelection="multiple" 
+                                (rowClicked)="onRowClicked($event)"
+                                (gridReady)="onGridReady($event)" 
+                            >
+                            </ag-grid-angular>
+                        </div>
+                        <!-- <div class="addbtn">
+                            <button class="btn btn-primary" (click)="selectTab(1)">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="deletebtn">
+                            <button class="btn btn-primary" (click)="onDeleteButtonClick()">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </div> -->
+                    </tab>
+                    <tab heading={{namingOfTab}} *ngIf="isNew">
+                        <app-manage-term-codes (close)="isNew = false; reloadGrid();"></app-manage-term-codes>
+                    </tab>
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>

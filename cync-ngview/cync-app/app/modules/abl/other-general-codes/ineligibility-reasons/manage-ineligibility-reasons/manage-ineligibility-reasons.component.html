@@ -1,0 +1,107 @@
+<div class="app-body-container bg-white" id="cync_app-body-container" ng-show="yes_visible" ng-controller="app_body_container">
+  <div class="close-btn-dash pull-right text-right top-action-btns">
+  </div>
+  <div class="pad-inner">
+    <h3 class="no-m-bt">{{headerText}}</h3>
+    <div class="p-t-16">
+
+      <!-- FORM STARTS -->
+      <form [formGroup]="addEditIneligibilityReason" (ngSubmit)="saveRecord(addEditIneligibilityReason.value)">
+        <div class="has-scrollbar brder-1 p-t-32" id="cync_main_contents">
+
+          <div class="form-group">
+            <div class="row no-marg">
+
+              <!-- INELIGIBILITY REASON CODE STARTS -->
+              <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                <label class="mandatory">Ineligibility Reason Code
+                  <span class="required">*</span>
+                </label>
+                <input type="text" formControlName="code" class="form-control" id="irCode" [ngClass]="displayFieldCss('code')">
+                <cync-input-field-error-msg [control]="getFormControl('code')" labelName="Ineligibility Reason Code"> </cync-input-field-error-msg>
+              </div>
+              <!-- INELIGIBILITY REASON CODE ENDS -->
+
+              <!-- DESCRIPTION STARTS -->
+              <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                <label class="mandatory">Description
+                 <span class="required">*</span></label>
+                <input type="text" formControlName="description" class="form-control" id="irDescription" [ngClass]="displayFieldCss('description')">
+                <cync-input-field-error-msg [control]="getFormControl('description')" labelName="Description"> </cync-input-field-error-msg>
+              </div>
+              <!-- DESCRIPTION ENDS -->
+
+              <!-- SYSTEM DEFINED STARTS -->
+              <!-- <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 display-inline-grid">
+                  <label class="mandatory">System Defined</label>
+                  <input type="checkbox" formControlName="system_defined" class="" id="irSystemDefined">
+                </div> -->
+              <!-- SYSTEM DEFINED ENDS -->
+
+              <!-- CALCULATE ON NEGATIVE ELIGIBLE BALANCE STARTS -->
+              <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 m-t-10">
+                 <div class="mandatory "> &nbsp;</div>
+            <!--    <input type="checkbox" formControlName="calculate_on_negative_balance" class="calculate-negbal-checkbox" id="irCalOnNegBal"> -->
+
+                    <p-checkbox binary="true" formControlName="calculate_on_negative_balance"
+                            _ngcontent-c2="" inputid="Recurring" label="Calculate on Negative Eligible Balance" name="group2" value="Recurring" class="ng-untouched ng-pristine ng-valid">
+                                <div class="ui-chkbox ui-widget">
+                                    <div class="ui-helper-hidden-accessible">
+                                        <input type="checkbox" id="Recurring" name="group2" value="Recurring">
+                                    </div>
+                                    <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                                        <span class="ui-chkbox-icon ui-clickable"></span>
+                                    </div>
+                                </div>
+                            </p-checkbox>
+              </div>
+              <!-- CALCULATE ON NEGATIVE ELIGIBLE BALANCE ENDS -->
+
+              <!-- CALCULATE ON NEGATIVE DEBTOR BALANCE STARTS -->
+              <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 m-t-10">
+                <div class="mandatory "> &nbsp;</div>
+           <!--    <input type="checkbox" formControlName="calculate_on_negative_balance" class="calculate-negbal-checkbox" id="irCalOnNegBal"> -->
+
+                   <p-checkbox binary="true" formControlName="calculate_on_negative_debtor_balance"
+                           _ngcontent-c2="" inputid="Recurring" label="Calculate on Negative Debtor Balance" name="group2" value="Recurring" class="ng-untouched ng-pristine ng-valid">
+                               <div class="ui-chkbox ui-widget">
+                                   <div class="ui-helper-hidden-accessible">
+                                       <input type="checkbox" id="Recurring" name="group2" value="Recurring">
+                                   </div>
+                                   <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                                       <span class="ui-chkbox-icon ui-clickable"></span>
+                                   </div>
+                               </div>
+                           </p-checkbox>
+             </div>
+             <!-- CALCULATE ON NEGATIVE DEBTOR BALANCE ENDS -->
+
+            </div>
+
+            <!-- SAVE AND CANCEL BUTTONS STARTS-->
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+              <hr/>
+              <button id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+                (click)="navigateToListIneligibilityReasons()">
+                <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+              </button>
+
+              <button [disabled]="isFormValid()" *ngIf="isCurrentActionAdd() && IsSaveAndNewBtnRequired" id="action_save_new" (click)="saveAndAddNew(addEditIneligibilityReason.value)"
+                label="SaveNew" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                <span class="ui-button-text ui-clickable no-pad">{{saveAndNewBtnText}}</span>
+              </button>
+
+              <button [disabled]="isFormValid()" id="action_save" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                <span class="ui-button-text ui-clickable no-pad"> {{currentActionBtnText}} </span>
+              </button>
+
+            </div>
+            <!-- SAVE AND CANCEL BUTTONS ENDS-->
+          </div>
+
+        </div>
+      </form>
+      <!-- FORM ENDS -->
+    </div>
+  </div>
+</div>

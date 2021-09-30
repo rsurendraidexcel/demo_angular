@@ -1,0 +1,236 @@
+<div class="app-body-container bg-white is_summary list-project" id="cync_app-body-container">
+    <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+    <div class="pad-inner">
+        <h3>Financial Analyzer - Summary</h3>
+        <div class="p-t-16">
+            <div class="cync-grid-search row">
+                <div class="col-md-6 col-sm-5 col-xs-12 p_l_2 hidden-xs hidde-sm">
+                    <div class="input-group grid-search">
+                        <input (keyup)="onKey($event)" placeholder="Search Here" [(ngModel)]="searchTerm" type="text" class="form-control search-input-text"
+                            aria-describedby="basic-addon3" autocomplete="off" id="globalSearch">
+                        <span (click)="clearSearchBox()" class="input-group-addon icon-input-field border-right-none">
+                            <i *ngIf="globalSearchCloseIcon==true" class="fa fa-close" aria-hidden="true">
+                            </i>
+                            <i *ngIf="globalSearchIcon==true" class="fa fa-search" aria-hidden="true">
+                            </i>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-12 pull-right top-action-btns text-right">
+                    <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                        title="Add New" (click)="goToAdd(folderName)"  *ngIf="isFileInsideFolder"></i>
+
+                        <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                        title="Add New" (click)="goToAdd('NoFolder')"  *ngIf="!isFileInsideFolder"></i>
+
+                    <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit" (click)="goToEdit()" [ngClass]="(toggleEditIcon)? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+                    <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="delete()" [ngClass]="(toggleDeleteIcon) ? 'hand fa fa-trash fa-2x f_s_20 clr_grey ':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+
+                    <i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                        *ngIf="isGridDataLoaded && !isFileInsideFolder" title="Export" (click)="showDialogForExport()"></i>
+
+                    <i id="Export" class="hand fa fa-share-square-o fa-2x  clr_grey f_s_20" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                        *ngIf="isFileInsideFolder" title="Export" (click)="showFolderDialogForExport()"></i>
+                </div>
+            </div>
+
+            <!--project export start-->
+            <div class="form-group" *ngIf="isGridDataLoaded && !isFileInsideFolder">
+                <p-dialog header={{listListProjectModel.type}} [(visible)]="toggleExportModal" appendTo="body" [modal]="true" width="500"
+                    height="auto" [responsive]="true" styleClass="charge-codes-export-modal">
+
+                    <div *ngFor="let col of exportColumns | slice:0:3">
+                        <p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+                        <br>
+                        <br>
+                    </div>
+                    <p-footer>
+                        <button type="button" id="exportDataConfirmButton" pButton icon="fa-check" label="Export" (click)="exportSelectedColumns(exportColumns)"></button>
+                    </p-footer>
+                </p-dialog>
+            </div>
+
+            <div class="form-group" *ngIf="isGridDataLoaded && !isFileInsideFolder">
+                <p-dialog header="Error" [(visible)]="toggleExportErrorModal" appendTo="body" [modal]="true" width="300" height="auto" [responsive]="true">
+                    <p style="color:red;">Select columns to export.</p>
+                    <!-- <button type="button" pButton icon="fa-check" label="Close" (click)="closeDialogBox()"></button> -->
+                </p-dialog>
+            </div>
+            <!--project export end-->
+
+            <!--folder export start-->
+            <div class="form-group" *ngIf="isFileInsideFolder">
+                <p-dialog header={{folderListProjectModel.type}} [(visible)]="toggleExportModal" appendTo="body" [modal]="true" width="500"
+                    height="auto" [responsive]="true" styleClass="charge-codes-export-modal">
+
+                    <div *ngFor="let col of exportColumns | slice:0:3">
+                        <p-checkbox binary="true" [(ngModel)]="col.isChecked" label={{col.columnName}}></p-checkbox>
+                        <br>
+                        <br>
+                    </div>
+                    <p-footer>
+                        <button type="button" id="exportDataConfirmButton" pButton icon="fa-check" label="Export" (click)="exportFolderSelectedColumns(exportColumns)"></button>
+                    </p-footer>
+                </p-dialog>
+            </div>
+
+            <div class="form-group" *ngIf="isFileInsideFolder">
+                <p-dialog header="Error" [(visible)]="toggleExportErrorModal" appendTo="body" [modal]="true" width="300" height="auto" [responsive]="true">
+                    <p style="color:red;">Select columns to export.</p>
+                    <!-- <button type="button" pButton icon="fa-check" label="Close" (click)="closeDialogBox()"></button> -->
+                </p-dialog>
+            </div>
+
+            <!--folder export end-->
+
+
+            <div class="has-scrollbar row" id="cync_main_contents" (scroll)="onScroll($event)">
+
+                <!-- Container for Projects and Folders -->
+                <ng-container *ngIf="isGridDataLoaded && !isFileInsideFolder">
+                <p-dataTable id="List_Project_table" [scrollable]="false"
+                    [value]="gridData" (onRowUnselect)="unSelectChkBox()" (onHeaderCheckboxToggle)="selectAllChkBox()" (onRowSelect)="goToView($event)"
+                    dataKey="id" selectionMode="multiple" [(selection)]="selectedRows" [globalFilter]="sf" (onFilter)="printFilteredData($event)"
+                    #dt>
+                    <p-column *ngIf="!listListProjectModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+                    <p-column *ngFor="let col of listListProjectModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+                        [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" [style]="{'width':'10%'}">
+                        <ng-template *ngIf="col.header == 'Projects'" let-file="rowData" pTemplate="body">
+                            <div>
+                                <div *ngIf="!file.ratioComplete && !file.folder">
+                                    <span class="ui-cell-data"></span>
+                                    <span pTooltip="Project" [escape]="false" tooltipPosition="top" (click)="fnSendId(file.id);">
+                                        <img src="{{assetsPath}}/images/icons/Icon-project.png">
+                                    </span>
+                                    <span class="m-l-10 ui-cell-data clr_blue">
+                                        <a (click)="fnSendId(file.id);">{{file.name}}</a>
+                                    </span>
+                                </div>
+                                <div *ngIf="file.folder">
+                                    <span class="ui-cell-data"></span>
+                                    <span (click)="fnShowProject(file)" pTooltip="Folder" [escape]="false" tooltipPosition="top">
+                                        <img src="{{assetsPath}}/images/icons/Icon-folder.png">
+                                    </span>
+                                    <span class="m-l-10 ui-cell-data clr_blue">
+                                        <a (click)="fnShowProject(file)">{{file.name}}</a>
+                                    </span>
+                                </div>
+                                <div *ngIf="file.ratioComplete">
+                                    <span class="ui-cell-data"></span>
+                                    <span  (click)="fnShowHighlightProject(file.id)" pTooltip="View Financial Highlights" [escape]="false" tooltipPosition="top">
+                                        <img src="{{assetsPath}}/images/icons/Icon-project-green.png">
+                                    </span>
+                                    <span class="m-l-10 ui-cell-data clr_blue">
+                                        <a (click)="fnShowHighlightProject(file.id)">{{file.name}}</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+            </ng-container>
+
+            <!-- Container for Projects inside folder -->
+        <ng-container *ngIf="isGridDataLoaded && isFileInsideFolder">
+                <p-dataTable id="List_Project_table" [scrollable]="false" [value]="gridData"
+                    (onRowUnselect)="unSelectChkBox()" rowGroupMode="subheader" groupField="" (onHeaderCheckboxToggle)="selectAllChkBox()"
+                    (onRowSelect)="goToView($event)" dataKey="id" selectionMode="multiple" [(selection)]="selectedRows" [globalFilter]="sf"
+                    (onFilter)="printFilteredData($event)" #dt>
+                    <p-column *ngIf="!folderListProjectModel.onlyListingComponent" selectionMode="multiple" disableSelection="true"></p-column>
+                    <ng-template pTemplate="rowgroupheader">
+                        <img src="{{assetsPath}}/images/icons/icon-back.png" (click)="fnShowGridProject();"> &nbsp; {{folderName}}
+                    </ng-template>
+                    <p-column *ngFor="let col of folderListProjectModel.columnDef; let idx = index" [sortable]="col.sortable" [filter]="col.filter"
+                        [field]="col.field" [header]="col.header" [hidden]="col.hidden" filterMatchMode="contains" [style]="{'width':'10%'}">
+                        <ng-template *ngIf="col.header == 'Projects'" let-file="rowData" pTemplate="body">
+                            <div>
+                                <div *ngIf="!file.ratioComplete && !file.folder">
+                                    <span class="ui-cell-data"></span>
+                                    <span pTooltip="Project" [escape]="false" tooltipPosition="top" (click)="fnSendId(file.id);">
+                                        <img src="{{assetsPath}}/images/icons/Icon-project.png">
+                                    </span>
+                                    <span class="m-l-10 ui-cell-data clr_blue">
+                                        <a (click)="fnSendId(file.id);">{{file.name}}</a>
+                                    </span>
+                                </div>
+                                <div *ngIf="file.folder">
+                                    <span class="ui-cell-data"></span>
+                                    <span (click)="fnShowProject(file);">
+                                        <img src="{{assetsPath}}/images/icons/Icon-folder.png">
+                                    </span>
+                                    <span class="m-l-10 ui-cell-data clr_blue">
+                                        <a (click)="fnShowProject(file);">{{file.name}}</a>
+                                    </span>
+                                </div>
+                                <div *ngIf="file.ratioComplete">
+                                    <span class="ui-cell-data"></span>
+                                    <span pTooltip="View Financial Highlights" [escape]="false" tooltipPosition="top" (click)="fnShowHighlightProject(file.id)">
+                                        <img src="{{assetsPath}}/images/icons/Icon-project-green.png">
+                                    </span>
+                                    <span class="m-l-10 ui-cell-data clr_blue">
+                                        <a (click)="fnShowHighlightProject(file.id)">{{file.name}}</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template *ngIf="col.header == 'Description'" let-file="rowData" pTemplate="body">
+                            <div>{{file.description}}</div>
+                        </ng-template>
+                        <ng-template *ngIf="col.header == 'Last Modified'" let-file="rowData" pTemplate="body">
+                            <div>{{file.lastModifiedDate}}</div>
+                        </ng-template>
+                    </p-column>
+                </p-dataTable>
+            </ng-container>
+
+                <div id="no_records" *ngIf="recordTotal == 0">
+                    <div class="message">
+                        <img src="{{assetsPath}}/images/icons/Icon-project-big.png">
+                        <h5>No Projects.</h5>
+                        <button (click)="goToAdd()" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn" id="create_udf_btn"
+                            label="Create UDF Field" pbutton type="button">
+                            <span class="ui-button-text ui-clickable no-pad">Add Project</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="grid-loader" *ngIf="isGridDataLoaded && !isFileInsideFolder">
+                <!-- below code is to show loader when user scrolls -->
+                <span [hidden]="!showSpinner" class="center">
+                    <i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+                </span>
+                <div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+                <ng-template #grid_count_template>
+                    <p class="recordcount">
+                        <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+                    </p>
+                </ng-template>
+                <ng-template #record_count_template>
+                    <p *ngIf="filterRecordCount != -1 && filterRecordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+                        <b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+                    </p>
+                </ng-template>
+            </div>
+
+            <div class="grid-loader" *ngIf="isFileInsideFolder">
+                <!-- below code is to show loader when user scrolls -->
+                <span [hidden]="!showSpinner" class="center">
+                    <i class="fa fa-spinner fa-spin spinner-color"></i> Loading... &nbsp;
+                </span>
+                <div *ngIf="filterRecordCount == -1;then grid_count_template else record_count_template">here is ignored</div>
+                <ng-template #grid_count_template>
+                    <p class="recordcount">
+                        <b>Showing {{gridData.length}} of {{recordTotal}} records</b>
+                    </p>
+                </ng-template>
+                <ng-template #record_count_template>
+                    <p *ngIf="filterRecordCount != -1 && filterRecordCount!=gridData.length ; else grid_count_template" class="recordcount less_count">
+                        <b>Showing {{filterRecordCount}} of {{recordTotal}} records</b>
+                    </p>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

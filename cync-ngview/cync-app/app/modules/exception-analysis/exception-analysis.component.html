@@ -1,0 +1,34 @@
+<!-- <style type="text/css">
+	.currencydemo>nav>a{
+	background: #fff;
+    padding: 10px !important;
+	}
+</style> -->
+
+<div id="particles-js">
+<div class="module-sub-menu" id="particles-js">
+<div class="subnav_nav_wrapper">
+<nav id="subnav_nav" class="pn-ProductNav">
+    <div id="subnav_navContents" class="pn-ProductNav_Contents">
+
+  <a [routerLinkActive]="['active']" [routerLink]="['document-compliance-reporting']"  class="subnav_nav_links" aria-selected="true">Document Compliance Reporting</a>
+    <a [routerLinkActive]="['active']" [routerLink]="['exception-reporting']"  class="subnav_nav_links" aria-selected="true">Exception Reporting</a> 
+   <a [routerLinkActive]="['active']" [routerLink]="['watchlist-statistics-reportings']"  class="subnav_nav_links" aria-selected="true">Watch List Statistics Reporting</a>
+ <a [routerLinkActive]="['active']" [routerLink]="['tickler-tasks']"  class="subnav_nav_links" aria-selected="true">Tickler Tasks</a>
+      <a [routerLinkActive]="['active']" [routerLink]="['dilution-analysis']"  class="subnav_nav_links" aria-selected="true">Dilution Analysis</a>
+
+            <span id="pnIndicator" class="pn-ProductNav_Indicator"></span>
+    </div>
+</nav>
+    <button id="subadvance_left" class="subadvancer subadvancer_d_left" type="button">
+        <svg class="subadvance_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 551 1024"><path d="M445.44 38.183L-2.53 512l447.97 473.817 85.857-81.173-409.6-433.23v81.172l409.6-433.23L445.44 38.18z"/></svg>
+    </button>
+    <button id="subadvance_right" class="subadvancer subadvancer_d_right" type="button">
+        <svg class="subadvance_icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 551 1024"><path d="M105.56 985.817L553.53 512 105.56 38.183l-85.857 81.173 409.6 433.23v-81.172l-409.6 433.23 85.856 81.174z"/></svg>
+    </button>
+</div>
+
+</div>
+
+<router-outlet></router-outlet>
+</div>

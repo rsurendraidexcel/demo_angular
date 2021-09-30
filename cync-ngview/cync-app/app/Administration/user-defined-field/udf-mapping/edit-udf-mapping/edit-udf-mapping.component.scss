@@ -1,0 +1,187 @@
+//colors
+$color_black_approx: #020202;
+$color_silver_chalice_approx: #afafaf;
+$color_gallery_approx: #eee;
+$white: #fff;
+
+//fonts
+$font_0: Glyphicons Halflings;
+
+//@extend-elements
+//original selectors
+//.udf-mapping .deleterow-icon, .udf-mapping .addrow-icon
+%extend_1 {
+    color: $color_black_approx;
+    font-size: 20px;
+    margin-top: 6px;
+    padding-left: 0;
+}
+
+//original selectors
+//#accordion .panel-title >a.accordion-toggle::before, #accordion a[data-toggle="collapse"]::before
+%extend_2 {
+    content: "\e114";
+    float: left;
+    font-family: $font_0;
+    margin-top: 9px;
+}
+
+
+.udf-mapping {
+    .deleterow-icon {
+        @extend %extend_1;
+    }
+    .addrow-icon {
+        @extend %extend_1;
+    }
+    .fa-arrows {
+        font-size: 18px;
+        padding: 8px;
+        color: $color_silver_chalice_approx;
+    }
+    .ui-multiselect-panel {
+        min-width: 100%;
+    }
+}
+.b-r-1 {
+    border-right: 1px solid $color_gallery_approx;
+}
+#accordion {
+    .panel {
+        border: none !important;
+        background-color: $white !important;
+        //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+        box-shadow: none !important;
+    }
+    .panel-body {
+        border: none !important;
+        background-color: $white !important;
+    }
+    .panel-heading {
+        border: none !important;
+        background-color: $white !important;
+        padding: 0;
+    }
+    a[data-toggle="collapse"]::before {
+        @extend %extend_2;
+    }
+    .panel-title > a {
+        display: block;
+        padding: 0;
+        outline: none;
+        font-weight: bold;
+        text-decoration: none;
+        border: none !important;
+        &.accordion-toggle::before {
+            @extend %extend_2;
+        }
+        &.accordion-toggle.collapsed::before {
+            content: "\e080";
+            margin-top: 9px;
+        }
+    }
+    a.collapsed[data-toggle="collapse"]::before {
+        content: "\e080";
+        margin-top: 9px;
+    }
+}
+.w-95 {
+    width: 95%;
+}
+.w-100{
+      width: 100%;
+}
+.p-b-0 {
+    padding-bottom: 0 !important;
+}
+.report-scroll {
+    overflow: auto;
+    height: 100px;
+    width: 100% !important;
+    border: 1px solid #ddd;
+    padding: 6px;
+    border-radius: 7px;
+}
+/* .report-scroll-detail{
+        overflow: auto;
+    margin-left: 16px;
+    height: 100px;
+    width: 45% !important;
+    border: 1px solid #ddd;
+    padding: 6px;
+    border-radius: 7px;
+} */
+
+.report-scroll-detail{
+        width: 45%;
+    margin-left: 13px;
+    overflow: auto;
+    /* margin-left: 16px; */
+    height: 100px;
+    /* width: 45% !important; */
+    border: 1px solid #ddd;
+    /* padding: 6px; */
+    border-radius: 7px;
+}
+.p-b-15 {
+    padding-bottom: 15px;
+}
+.client-detail-delete{
+        text-align: -webkit-right !important;
+          text-align: right;
+    padding: 0px;
+    margin-left: 20px !important;
+}
+.user-define-delete{
+        text-align: -webkit-right;
+}
+
+.clients_list_box .ui-listbox .ui-widget-header .ui-chkbox::after{
+	content:"Select All" !important;
+}
+
+.ui-helper-clearfix::before, .ui-helper-clearfix::after{
+    content:"Select All" !important;
+}
+
+.display-inline-flex{
+        display: inline-flex;
+}
+#sequence_value{
+    display:none;
+}
+.p-r-0{
+    padding-right: 0px !important;
+}
+
+.p-autoComple-align{
+    display: inline-flex;
+    position: absolute;
+}
+.ui-listbox .ui-listbox-list-wrapper {
+    overflow: hidden;
+}
+.mapping-dropdown{
+    z-index:100;
+}
+
+
+.disable-search{
+    cursor: not-allowed !important;
+    pointer-events: none;
+    color: #e3e3e3;
+   
+}
+
+.fa-search{
+    padding: 7px;
+    font-size: 15px;
+}
+
+
+.p-r-0{
+    padding-right: 0px !important;
+}
+.m-l-5{
+    margin-left: 5px !important;
+}

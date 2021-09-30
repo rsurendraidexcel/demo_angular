@@ -1,0 +1,33 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="rollforward-logs">
+    <div class="col-md-4 col-sm-5 col-xs-12">
+      <strong> Rollforward Logs </strong>
+    </div>
+    <div class="row">
+      <div class="col-md-8 col-sm-6 col-xs-12 top-action-btns p-right">
+        <i id="New" i class="hand fa fa-plus fa-1x f_s_20 clr_grey" aria-hidden="true" data-toggle="tooltip"
+          data-placement="top" title="Add New" (click)="addRollForwardLogData()"></i>
+        <i id="Edit" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Edit"
+          (click)="editRollForwardLogData(selectedRolls)"
+          [ngClass]="selectedRolls.length>0 ? 'hand fa fa-pencil fa-1x clr_grey f_s_20':'hand fa fa-pencil fa-1x clr_grey f_s_20 icon_disabled operation_disabled'"></i>
+        <i id="Delete" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Delete" (click)="deleteRollforwardLogData()"
+          [ngClass]="selectedRolls.length>0 ? 'hand fa fa-trash fa-2x f_s_20 clr_grey':'hand fa fa-trash fa-2x f_s_20 clr_grey icon_disabled operation_disabled'"></i>
+      </div>
+    </div>
+    <ag-grid-angular style="width: 100%; height: calc(100vh - 450px)" 
+    class="ag-theme-balham" 
+    [floatingFilter]="true"
+    rowSelection="multiple" 
+    [defaultColDef]="rollForwardLogdefaultColDef" 
+    [gridOptions]="rollForwardLogGridOptions"
+    [rowData]="rollForwordLogsRowData" 
+    [columnDefs]="rollForwardLogColdef" 
+    (rowSelected)="onRowSelected($event)"
+    (gridReady)="onGridReadyRollForward($event)"
+    [frameworkComponents]="frameworkComponents"
+    [suppressRowClickSelection]="true"
+    [excelStyles]="excelStyles"
+    (modelUpdated)="modelUpdatedMethod($event)">
+    </ag-grid-angular>
+  </div>
+</div>

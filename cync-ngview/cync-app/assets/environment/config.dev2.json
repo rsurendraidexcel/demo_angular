@@ -1,0 +1,22 @@
+{
+    "host": "https://currency-prestaging.cyncsoftware.com",
+    "host_ror": "https://lenderId.cyncsoftware.com/api/v1/",
+    "host_factoring": "https://lenderId.cyncsoftware.com/factoring/api/v1/",
+    "host_finance": "https://devfinservice.cyncsoftware.com/api/v1/",
+    "host_notification": "https://uhpdzfzpq7.execute-api.us-east-1.amazonaws.com/Dev/v1/",
+    "host_abl": "https://lenderId.cyncsoftware.com/abl/api/v1/",
+    "cyncUserCookie": "",
+    "lenderId": "",
+    "notificationAPIKey": "9CMaseuktl10NR35ikhhZ1jS7pnoCahF8wHtg7PW",
+    "assets_path": "/angular/assets",
+    "cdn_url" : "https://devrorapi-angular-cdn.cyncsoftware.com/angular/",
+    "host_mcl": "https://lenderId.cyncsoftware.com/api/mcl/",
+    "host_cash_application": "https://lenderId.cyncsoftware.com/api/cash-application-v2/v1/",
+    "host_webhook": "https://lenderId.cyncsoftware.com/api/webhook/",
+    "host_tableau": "https://ablreporting.cyncsoftware.com",
+    "host_tableau_tiket_token": "https://apilos.cynclosdemo.com",
+    "host_lambda_api": "https://bwwi7xjk0i.execute-api.us-east-1.amazonaws.com",
+    "host_factoring_node_api":"https://048an02mle.execute-api.us-east-1.amazonaws.com/dev/",
+    "host_tour_apps":"https://lq5d32tff1.execute-api.us-east-1.amazonaws.com/dev/api/v1/",
+    "host_matomo_tracker": {"urlPath": "https://cync-analytics.cyncsoftware.com/matomo/", "siteId":2}
+}

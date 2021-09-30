@@ -1,0 +1,29 @@
+<div class="app-body-container bg-white is_summary list-credit-queue" id="app-body-container">
+  <div class="pad-inner">
+    <div class="row topHeadingPannel">
+      <div class="col-md-3 headingmain">
+        <a href="#/client-maintenance/client-templates" class="backIndexLink">
+          <span class="backIndexicon glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <h3 class="no-m-bt" id="templateHeading">Clone Template</h3>
+      </div>
+    </div>
+
+    <div class="row templateDetailPannel">
+      <form id="creatClientTemplate" [formGroup]="creatClientTemplateForm" class="form-inline" style="display: flex;">
+        <div class="tempNameBlock form-group">
+
+          <label for="templateName">New Template Name:</label>
+          <input formControlName="templateName" type="text" class="form-control" id="templateName" name="templateName">
+        </div>
+        <div class="col-md-5" style="margin-top: -5px;">
+          <button type="submit" form="creatClientTemplate" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn primarysavebtn"
+            (click)="oncreatClientTemplateSubmit(creatClientTemplateForm.getRawValue())">Save</button>
+          <button type="button" class="btn btn-light primarycancelbtn" (click)="cancelOperationFn()">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <hr class="moreMarginhr">
+
+  </div>
+</div>

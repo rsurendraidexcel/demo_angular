@@ -1,0 +1,12 @@
+<div class="app-body-container bg-white is_summary" style="height: 450px">
+  <div class="col-md-4 col-sm-5 col-xs-12">
+    <h5> Invoice validation Template </h5>
+  </div>
+  <div class="pad-inner">
+    <div style="margin-top: 40px; height: 350px">
+      <cync-grid [rowSelection]="'single'" (rowSelected)="ongridRowSelected($event)" [floatingFilter]="true" [cyncGridConfig]="cyncGridConfig"
+        [cyncRowData]="cyncRowData" [cyncColumnDefs]="cyncColumnDefs" (cyncOnGridReady)="cyncGridReady($event)">
+      </cync-grid>
+    </div>
+  </div>
+</div>

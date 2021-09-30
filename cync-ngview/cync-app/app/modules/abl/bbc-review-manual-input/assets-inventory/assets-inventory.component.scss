@@ -1,0 +1,63 @@
+.collatral-name-select{
+    width: 200px;
+    border-radius: 5px;
+    border:1px solid black;
+    height: 30px;
+    margin-top: -5px;
+    background-color: white !important;
+}
+.bbc_date_div{
+    margin-left: 30px;
+}
+.hand{
+    margin-left: 10px;
+}
+.hscrollbar-tab{
+    margin-top: 20px;
+}
+.inventory_turn_maindiv{
+    background-color: #e3e1dc;
+    height: 40px;
+}
+
+.btn-danger{
+    margin-left: 5px;
+}
+
+.downTable{
+    margin:10px 0px 0px 20px;
+}
+
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50%;
+  }
+  
+  td {
+    border: 1px solid grey;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .ag-row-selected{
+    .ag-cell .ag-cell-wrapper .ag-selection-checkbox .ag-icon-checkbox-checked {
+        pointer-events: none;
+    }
+}
+
+.inventory_turn_maindiv{
+    display: flex;
+    width: 420px;
+}
+.labelTunDay{
+    width: 270px;
+    border:1px solid black;
+    padding-left: 8px;
+}
+.inboxTurnDay{
+    width: 150px;
+    border:1px solid black;
+    border-left: none;
+}
+ 

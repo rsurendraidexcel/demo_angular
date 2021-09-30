@@ -1,0 +1,286 @@
+<div class="app-body-container bg-white" id="cync_app-body-container">
+  <div class="titile-section">
+    <label class="top-title"> Factoring Fee Setup </label>
+    <div class="right-btn-groups">
+      <button
+      *ngIf="addnewAction()"
+      class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad"
+      (click)="openAddNewFeeDialog()"
+    >
+      Add New Fee
+    </button>
+      <button
+        *ngIf="!editForm && showEditButton"
+        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad"
+        (click)="onEditclick()"
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="editForm"
+        [disabled]="isFormValid()"
+        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad"
+        (click)="onSaveclick(factoringFeeSetupForm.getRawValue())"
+      >
+        Save
+      </button>
+      <button
+        *ngIf="editForm"
+        class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad"
+        (click)="onCancelclick()"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+  <div class="pad-inner">
+    <div
+      class="y-scrollbar"
+      id="innerScrollbar"
+    >
+      <div class="rollForward-AddForm" [formGroup]="factoringFeeSetupForm">
+        <section>
+          <div class="ui-g ui-fluid">
+            <div class="ui-md-6">
+              <div *ngIf="!showSpread" class="ui-g">
+                <label for="Name" class="ui-md-4"
+                  >Name
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-8">
+                  <input
+                    type="text"
+                    class="form-control customwidth"
+                    formControlName="name"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+                <div *ngIf="showSpread" class="ui-g">
+                  <label for="Name" class="ui-md-4"
+                    >Name
+                    <span class="required">*</span>
+                  </label>
+                  <div class="ui-md-8">
+                     <select *ngIf="!editForm"
+                    class="form-control inline-elm customwidth"
+                    [ngModel] ="parent"
+                    autocomplete="off"
+                    formControlName="fee_names"
+                    (change)="getSelectedFeeNameData($event)"
+                  >
+                    <!-- <option> Select </option> -->
+                    <option
+                      *ngFor="let list of feeNames"
+                      [value]="list.id"
+                      >{{ list.name }}
+                    </option>
+                  </select>
+                  <input *ngIf="editForm" class="form-control inline-elm customwidth" formControlName="name"/>
+                  <i class="fa fa-history fa-size" aria-hidden="true" title="View Fee History"></i> <span (click)="openViewHistoryDialog()" class="broker-link">  View Fee History</span>
+                  </div>
+                 
+              </div>
+              <div class="ui-g">
+                <label for="advance_rate" class="ui-md-4">Advance Rate</label>
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="advance_rate"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="fee_calculation_on" class="ui-md-4"
+                  >Fee Calculated On</label
+                >
+                <div class="ui-md-8">
+                  <select
+                    class="form-control customwidth"
+                    id="collateral"
+                    formControlName="fee_calculated_on_options"
+                    [ngModel]="feeCalculatedonValue"
+                  >
+                    <!-- <option value='-1' selected>Invoice Amount</option> -->
+                    <option
+                      *ngFor="let list of feeCalculatedOn"
+                      [value]="list.value"
+                      >{{ list.description }}</option
+                    >
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="ui-md-6">
+              <div class="ui-g">
+                <label for="fact_recourse_factoring" class="ui-md-4"
+                  >Recourse Factoring</label
+                >
+                <div class="ui-md-8">
+                  <input
+                    type="checkbox"
+                    formControlName="fact_recourse_factoring"
+                    (change)="changeValue($event)"
+                  />
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="fact_recourse_days" class="ui-md-4"
+                  >Recourse Days</label
+                >
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="fact_recourse_days"
+                    autocomplete="off"
+                    (keypress)="onKeyPressEvent($event)"
+                    (focusout)="
+                      noZeroValueValidation($event, 'fact_recourse_days')
+                    "
+                  />
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="fact_recourse_fee_pct" class="ui-md-4"
+                  >Recourse Fee %</label
+                >
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="fact_recourse_fee_pct"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="hrline"></div>
+          <div class="ui-g ui-fluid">
+            <div class="ui-md-6">
+              <div class="ui-g">
+                <label for="fee_calculation_method" class="ui-md-4">
+                  Fee Calculation Method</label
+                >
+                <div class="ui-md-8">
+                  <select
+                    class="form-control customwidth"
+                    formControlName="fee_calculation_methods_options"
+                    autocomplete="off"
+                    [ngModel]="feeCalculationMethodValue"
+                    (change)="getSelectedFeeCalculationMethod($event)"
+                  >
+                    <!-- <option> Select </option> -->
+                    <option
+                      *ngFor="let list of feeCalculationMethodsOptions"
+                      [value]="list.value"
+                      >{{ list.description }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div *ngIf="showSpread" class="ui-g">
+                <label for="devisor" class="ui-md-4"
+                  >Divisor
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="divisor"
+                    autocomplete="off"
+                    (keypress)="onKeyPressEvent($event)"
+                    (focusout)="noZeroValueValidation($event, 'divisor')"
+                  />
+                </div>
+              </div>
+              <div *ngIf="showSpread" class="ui-g">
+                <label for="spread_percent" class="ui-md-4">
+                  Spread %
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="spread_percentage"
+                    autocomplete="off"
+                    (focusout)="
+                      noZeroValueValidation($event, 'spread_percentage')
+                    "
+                  />
+                </div>
+              </div>
+              <div *ngIf="showSpread" class="ui-g">
+                <label for="active" class="ui-md-4">
+                  Active
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-8">
+                  <input
+                    type="checkbox"
+                    formControlName="active"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="ui-md-6"> 
+              <section class="hide-control" id="hide-control">
+              <div class="ui-g">
+                <label for="min_fee_days" class="ui-md-4"
+                  >Minimum Fee Days</label
+                >
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="min_fee_days"
+                    autocomplete="off"
+                    (keypress)="onKeyPressEvent($event)"
+                  />
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="min_per_invoice" class="ui-md-4"
+                  >Minimum $ Per Invoice</label
+                >
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="min_per_invoice"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <div class="ui-g">
+                <label for="max_fee_percent" class="ui-md-4"
+                  >Maximum Fee%
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-8">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="max_fee_percent"
+                    autocomplete="off"
+                    (focusout)="maximumFeeValue($event, 'max_fee_percent')"
+                  />
+                </div>
+              </div>
+              </section>
+            </div>
+            
+          </div>
+        </section>
+
+        <app-fee-tires-form></app-fee-tires-form>
+      </div>
+    </div>
+  </div>
+</div>

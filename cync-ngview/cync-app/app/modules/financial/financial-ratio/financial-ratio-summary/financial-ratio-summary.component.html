@@ -1,0 +1,88 @@
+<div class="app-body-container bg-white is_summary ratio-setup" id="component_html_financial_wradio" ng-show="yes_visible" ng-controller="app_body_container">
+
+    <div class="pad-inner">
+        <div class="row">
+            <h3 class="no-m-bt">{{ projectName }}</h3>
+            <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+            <div class="brder-1 p-t-32">
+                <div class="row btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0" data-toggle="buttons">
+                    <common-radio-header></common-radio-header>
+
+                </div>
+                <div class="pull-right">
+                    <button class="ui-button
+                    ui-widget ui-state-default ui-corner-all ui-button-text-only hand" (click)="goToCustomRatios()" id="custom_ratio"
+                        label="Custom Ratio" pbutton="" type="submit">
+                        <span class="ui-button-text ui-clickable no-pad">Custom Ratio</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <form *ngIf="isFormLoaded" [formGroup]="financialRatioForm" (ngSubmit)="saveRatio(financialRatioForm.value)">
+            <div class="p-t-16 has-scrollbar" id="cync_main_financial_contents">
+
+                <div class="row m-l-r-15">
+                    <div formArrayName="finFormArray">
+                        <div class="col-sm-12 col-xs-12 col-md-6 col-lg-4 vrl" *ngFor="let fin of finArrayControls.controls; let i=index" [formGroupName]="i">
+                            <h3 class="m-l-0"> {{fin.controls.name.value}} </h3>
+                            <hr/>
+                            <div formArrayName="formulas">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-pad m-b-5" *ngFor="let formula of getformulasControl(i); let j = index"
+                                    [formGroupName]="j">
+                                    <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 no-pad">
+                                        <!-- <p-checkbox name="groupname" formControlName="checked"></p-checkbox> -->
+                                        <input type="checkbox" formControlName="checked" (click)="fnClick($event,i,j);"
+                                        />
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 no-pad">
+                                        <input type="hidden" formControlName="name" class="form-control" placeholder="">
+                                        <span pTooltip="{{formula.controls.display.value}}" [escape]="false" tooltipPosition="top" class="hand title-style"
+                                        style="word-wrap: break-word;">
+                                     <span> {{formula.controls.name.value}}</span>  
+                                    </span>
+
+                                        <!-- <div class="tooltip">Hover over me
+                                            <span class="tooltiptext"> {{formula.controls.display.value}}</span>
+                                          </div> -->
+
+                                        <!-- <div class="tooltip"   style="word-wrap: break-word;">    {{formula.controls.name.value}}
+                                            <span class="tooltiptext">  {{formula.controls.display.value}}</span>
+                                          </div> -->
+                                    </div>
+                                    <div class="col-xs-1 col-sm-3 col-md-4 col-lg-3">
+                                        <select class="form-control" formControlName="operatorsType" (change)="onChange($event,formula.controls.operators.value,formula.controls.operatorsType.value,i,j,formula.controls.checked.value)"
+                                            [compareWith]="compareById">
+                                            <option [ngValue]="opera" *ngFor="let opera of formula.controls.operators.value">
+                                                {{opera.display}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-4 no-pad">
+                                        <input type="text" (focusout)="saveDraft()" class="form-control" formControlName="benchMarkValue" (keyup)="onKey($event, i ,j,formula.controls.checked.value)"
+                                        />
+                                        <input type="hidden" class="form-control" formControlName="expression" />
+                                        <input type="hidden" class="form-control" formControlName="active" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <hr class="hr-custom"/> -->
+                        </div>
+                        <!-- <hr class="hr-custom"/> -->
+                    </div>
+                </div>
+            </div>
+            <!-- Save and Cancel Button starts -->
+            <div class="row">
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                    <hr>
+                    <button id="action_save_new" label="Save & New" pbutton="" type="submit" class="ui-button
+                             ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad">{{saveAndViewBtnText}}</span>
+                    </button>
+                </div>
+            </div>
+            <!-- Save and Cancel Button ends -->
+
+        </form>
+    </div>
+</div>

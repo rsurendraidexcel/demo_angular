@@ -1,0 +1,141 @@
+.ui-datatable thead th:first-child,
+.ui-datatable-tablewrapper thead th:first-child {
+    padding-top: 8px !important
+}
+
+.fin-inputs {
+    max-width: 200px;
+    text-align: right
+}
+
+.master_head {
+    div {
+        background-color: #AAD1F0 !important;
+        margin-top: 15px;
+        padding: 4px
+    }
+    td {
+        border-width: 0px;
+        padding: 0px !important;
+    }
+    .ui-cell-data {
+        font-weight: 600;
+        font-size: 15px;
+    }
+}
+
+.master_head:first-child {
+    div {
+        margin-top: 0px !important
+    }
+}
+
+.total_cat {
+    background-color: #F9F9FA !important;
+    .ui-cell-data {
+        font-weight: 600;
+        padding-right: 8px;
+    }
+}
+
+.total_section {
+    background-color: #EDF4FB !important;
+    .ui-cell-data {
+        font-weight: 600;
+        padding-right: 8px;
+    }
+}
+
+.input_column {
+    width: 150px;
+}
+
+@media screen and (max-width: 1024px) {
+    .input_column_label {
+        width: 250px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .input_column_label {
+        width: 325px;
+    }
+}
+
+.category {
+    .ui-cell-data {
+        font-weight: 600;
+        display: block;
+        padding-top: 6px;
+    }
+}
+
+.balance_sheet_title {
+    margin: 6px auto !important
+}
+
+.font-normal {
+    font-weight: normal !important
+}
+
+.strip_marg {
+    margin: 0px 15px !important;
+}
+
+.text-center {
+    text-align: center !important
+}
+
+.report_values_label {
+    border-width: 0px !important;
+}
+
+.report_values {
+    border-width: 0px !important;
+    .col-md-4 {
+        padding: 0px !important
+    }
+}
+
+.has-border {
+    border-bottom-width: 1px !important;
+}
+
+.top-border {
+    border-top-width: 1px !important;
+    border-top-color: #a5a5a5 !important;
+}
+
+.top_8px_pad {
+    padding-top: 8px;
+    text-align: right;
+    i {
+        padding-left: 10px;
+    }
+}
+
+.left_0 {
+    left: 0px;
+}
+
+.clr_orange {
+    color: orange
+}
+
+.graph_row {
+    padding: 0px 15px;
+}
+
+.chart_items:not(:last-child) {
+    border-right: solid 1px lightgray
+}
+
+.graph-btm-brder {
+    border-bottom: solid 1px lightgray;
+}
+
+.chart_items {
+    margin-bottom: 15px;
+}
+
+.no-left-marg {margin-left: 0px;}

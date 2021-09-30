@@ -1,0 +1,110 @@
+<div [formGroup]="inventoryParameters">
+  <div class="row bPCommonTitles">
+    <h4 id="bbc_Basic_Details">Inventory Parameters</h4>
+  </div>
+  <div class="row form-group bPCommonCardsBlock">
+    <div class="row basicParameterWarpbox">
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Auto calculate NOLV</label>
+        <select formControlName="auto_calculate_nolv" #auto_novl (change)="onChangeAutoNolv(auto_novl.value)"
+          class="form-control commonDropdownStyle">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label class="isrequired">Lesser of % Cost/NOLV</label>
+        <select (change)="lesserofPerCost($event)" formControlName="lesser_of_pct_cost_or_nolv"
+          class="form-control commonDropdownStyle">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label class="isrequired">Min. Liq. Cost</label>
+        <input formControlName="min_liq_cost" type="text" class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+
+        <label class="isrequired">Variable % for Min Liq Cost</label>
+        <input formControlName="percentage_of_var_liq_cost" type="number"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label class="isrequired">Liq. Cost %</label>
+        <input formControlName="liq_cost" type="number" class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+    </div>
+    <div class="row basicParameterWarpbox">
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label class="isrequired">% of NOLV</label>
+        <input formControlName="percentage_of_nolv" type="number"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label class="isrequired">% of Cost</label>
+        <input formControlName="percentage_of_cost" type="number"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+    </div>
+    <!-- <div class="row basicParameterWarpbox"> -->
+    <!-- <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Inventory AR Reliance %</label>
+        <input formControlName="ar_reliance_pct" type="text" class="form-control commonDropdownStyle bpRightTextAlign">
+      </div> -->
+
+    <!-- <div class="row basicParameterWarpbox">
+          <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Based On</label>
+        <input formControlName="ar_reliance_based_on" type="text" class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Calculated Cap By
+        </label>
+        <input formControlName="ar_reliance_calcaulated_cap_by" type="text"
+          class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Max Cap %
+        </label>
+        <input formControlName="ar_reliance_max_cap_pct" type="text" class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+
+    </div> -->
+
+    <div class="row basicParameterWarpbox">
+
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Advance on AR vs Inventory</label>
+        <select (change)="arvsinventory($event)" formControlName="ar_or_inventory"
+          class="form-control commonDropdownStyle">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label>INV Cap is MIN Value, Deduct Reserve</label>
+        <select (change)="reversebfrcap($event)" formControlName="inventory_with_sublimit"
+          class="form-control commonDropdownStyle">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Inventory Loan Balance %</label>
+        <input formControlName="loan_amt_pct" type="number" class="form-control commonDropdownStyle bpRightTextAlign">
+      </div>
+      <div class="bpcommonElementBoxSm margin-box-common">
+        <label>Reserve Before Sublimit</label>
+        <select (change)="onReserveBeforeSublimit($event)" formControlName="reserve_before_sublimit"
+          class="form-control commonDropdownStyle">
+          <option value="false">No</option>
+          <option value="true">Yes</option>
+        </select>
+      </div>
+
+    </div>
+  </div>
+</div>

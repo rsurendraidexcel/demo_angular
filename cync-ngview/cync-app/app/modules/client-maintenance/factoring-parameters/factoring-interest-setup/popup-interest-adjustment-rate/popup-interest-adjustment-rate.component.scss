@@ -1,0 +1,91 @@
+.mainContainer {
+    height: 350px;
+    border: 1px solid #3468fa;
+}
+.editPannelHeading {
+    width: 100%;
+    height: 40px;
+    padding: 1px 1px 7px 10px;
+    background-color: #3468fa;
+    color: #ffffff;
+}
+.action-Button-Panel {
+    border: 1px solid #babfc7;
+    background-color: #f8f8f8;
+    height: 32px;
+    border-bottom: none;
+    width: 99%;
+}
+.button-right-allign {
+    float: right;
+    padding-left: 10px;
+}
+.historyPannelHeading {
+    width: 100%;
+    height: 40px;
+    padding: 1px 1px 7px 10px;
+}
+.editTemplatePannel {
+    width: 100%;
+    height: 30px;
+    //margin-left: 5px;
+}
+
+.tableWarp {
+    width: 99%;
+    height: 215px;
+    padding: 10px;
+}
+.btn {
+    margin-right: 3px;
+}
+.custom-icon {
+    font-size: 20px;
+    cursor: pointer;
+    color: #ffffff;
+}
+
+.floatingDiv {
+    position: absolute;
+    z-index: 10;
+    min-height: 50px;
+    border: 1px solid #dddddd;
+    border-top: none;
+    display: none;
+    background-color: #f5f7f7;
+    padding: 4px;
+    width: 662px;
+    margin-top: 33px;
+    .col1,
+    .col2 {
+        display: inline-block;
+    }
+    .col1 {
+        width: 45%;
+        text-align: center;
+        margin: auto;
+    }
+    .col2 {
+        width: 45%;
+        text-align: center;
+        margin: auto;
+    }
+    .text-input-style {
+        padding: 4px;
+        height: 32px;
+        border: 1px solid #dddddd;
+        width: 70%;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+    }
+    .text-right-align {
+        text-align: right;
+    }
+    .f-close {
+        cursor: pointer;
+        font-size: 18px;
+        position: relative;
+        left: 20px;
+    }
+}

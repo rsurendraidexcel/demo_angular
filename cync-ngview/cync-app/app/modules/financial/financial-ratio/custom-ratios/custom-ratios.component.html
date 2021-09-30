@@ -1,0 +1,90 @@
+<div class="app-body-container bg-white show-financial-ratio" id="component_html_financial_wradio">
+
+
+  <div class="pad-inner">
+    <div class="row m-b-15">
+      <h3 class="no-m-bt no-left-marg">{{projectName}}</h3>
+      <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+      <div class="brder-1 p-t-32">
+        <div class="row btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10 active p-l-0" data-toggle="buttons">
+          <common-radio-header></common-radio-header>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="has-scrollbar" id="component_html_financial_wradio">
+    <div class="row m-l-15 brder-1 pad-top5">
+      <div class="col-md-6 brder-right-1">
+        <form [formGroup]="customRatioForm" data-parsley-validate novalidate (ngSubmit)="createCustomFormula(customRatioForm.value,customRatioForm.valid,false)">
+          <div class="form-group row">
+            <div class="col-md-5 ad-bt-pad pad-left0">
+              <label class="mandatory" for="ratioType">Ratio Type
+                <span class="required">*</span>
+              </label>
+
+              <select class="form-control" id="ratio" formControlName="ratio" [ngClass]="displayCssField('ratio')" [compareWith]="compare">
+                <option disabled value="" selected>Select</option>
+                <option *ngFor="let cat of ratioCategories" [ngValue]="cat">
+                  {{cat.name}}
+                </option>
+              </select>
+
+            </div>
+          </div>
+          <div class="brder-1">
+            <h3>Add New Custom Ratio</h3>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-5 ad-bt-pad pad-left0">
+              <label class="mandatory" for="ratioName">Ratio Name
+                <span class="required">*</span>
+              </label>
+
+              <input class="form-control" id="formulaName" formControlName="formulaName" type="text" [ngClass]="displayCssField('formulaName')">
+              <cync-input-field-error-msg [control]="getFormControl('formulaName')" labelName="Ratio Name">
+              </cync-input-field-error-msg>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12 ad-bt-pad pad-left0">
+              <label class="mandatory" for="formula">Formula
+                <span class="required">*</span>
+              </label>
+              <textarea placeholder="Use @ key to get the list of available Parameters" [mention]="availableParameters" class="form-control"
+                id="expression" rows="4" formControlName="expression" [ngClass]="displayCssField('expression')"></textarea>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-md-12 ad-bt-pad pad-left0">
+
+              <button *ngIf="(editOperation===currentAction) ? true : false" (click)="cancelEdit()" id="action_back" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                <span class="ui-button-text ui-clickable no-pad">{{cancelBtnText}}</span>
+              </button>
+              <button id="action_new" [disabled]="isFormValid()" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                <span class="ui-button-text ui-clickable no-pad"> Save </span>
+              </button>
+
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-6 p-r-0">
+        <addedFormulaList></addedFormulaList>
+      </div>
+    </div>
+
+    <!-- Save and Cancel Button starts -->
+    <div class="row sticky_btn_actions left_0">
+
+      <hr>
+      <div class="col-md-12 text-right">
+        <button id="action_go_back" label="Back" pbutton="" (click)="backToSetup();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+          <span class="ui-button-text ui-clickable no-pad"> Back </span>
+        </button>
+      </div>
+    </div>
+    <!-- Save and Cancel Button ends -->
+  </div>
+
+</div>

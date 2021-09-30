@@ -1,0 +1,31 @@
+<div [formGroup]="overAdvanceForm">
+        <div class="row bPCommonTitles">
+                <h4>Over Advance</h4>
+        </div>
+        <div class="row form-group bPCommonCardsBlock">
+                <div class="row basicParameterWarpbox">
+                        <div class="bpcommonElementBoxMd margin-box-common">
+                                <label> Allow Over Advance </label>
+                                <select (change)="allowoveradvance($event)" formControlName="allow_over_advance"
+                                        class="form-control commonDropdownStyle">
+                                        <option value="true">Yes</option>
+                                        <option value="false">No</option>
+                                </select>
+                        </div>
+                        <div class="bpcommonElementBoxMd margin-box-common">
+                                <label>Max Over Advance %</label>
+                                <input formControlName="over_advance_pct" type="number"
+                                        class="form-control commonDropdownStyle bpRightTextAlign">
+                        </div>
+                        <div class="bpcommonElementBoxMd margin-box-common">
+                                <label>Fund Send By </label>
+                                <select formControlName="fund_send_by" class="form-control commonDropdownStyle">
+                                        <option value=null>Please Select</option>
+                                        <option *ngFor="let item of allDropDownData?.fund_send_by; let i=index"
+                                                value="{{item.value}}">{{item.display}}</option>
+
+                                </select>
+                        </div>
+                </div>
+        </div>
+</div>

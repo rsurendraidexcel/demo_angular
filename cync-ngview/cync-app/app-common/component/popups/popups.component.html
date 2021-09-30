@@ -1,0 +1,190 @@
+<div *ngIf="isConfirmPopup" id="cync_alerts">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <i class="fa fa-5x fa-exclamation-triangle clr_white f_s_64"></i>
+    </div>
+    <div class="modal-body row modal-body-textwrap">
+      <p title="{{message}}">{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button mat-button class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        cdkFocusInitial [mat-dialog-close]="true">Yes</button>
+      <button mat-button class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false">No</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isCashFlowPopup" id="cync_alerts">
+  <div class="modal-dialog">
+    <div class="modal-header b-blue">
+      <button type="button" class="close" data-dismiss="modal" [mat-dialog-close]="cancel">&times;</button>
+      <i class="fa fa-5x fa-info-circle clr_white f_s_64"></i>
+    </div>
+    <div class="modal-body row modal-body-textwrap">
+      <p title="{{message}}">{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button mat-button class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        cdkFocusInitial [mat-dialog-close]="true">Modify</button>
+      <button mat-button class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false">Override</button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isPopupWithAppendAndOverride" id="cync_alerts file-upload-modal">
+  <div class="modal-dialog">
+    <div class="modal-header b-blue">
+      <button type="button" class="close" data-dismiss="modal" [mat-dialog-close]="close">&times;</button>
+      <div class="header">{{title}}</div>
+    </div>
+    <div class="modal-body row modal-body-textwrap">
+      <p title="{{message}}">{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button mat-button class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        cdkFocusInitial [mat-dialog-close]="true">Append</button>
+      <button mat-button class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false">Overwrite</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isAlertMessage" id="cync_alerts">
+  <div class="modal-dialog">
+    <div class="modal-header b-blue">
+      <i class="fa fa-5x fa-info-circle clr_white f_s_64"></i>
+    </div>
+    <div class="modal-body">
+      <p>{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button id="modal_action_close" class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false">Close</button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isFileUploadPopup" id="cync_alerts" class="file-upload">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <img src="{{assetPath}}/images/file-upload.png">
+      <strong>Upload Successful!</strong>
+    </div>
+    <div class="modal-body">
+      <b>File upload was successful</b>
+      <p>{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button id="modal_action_close" class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false">Close</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isInformationPopUp" id="cync_alerts" class="details-popup">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <strong>{{title}}</strong>
+    </div>
+    <div class="modal-body">
+      <div id="form">
+        <fieldset class="col-md-12">
+          <div class="col-md-6">
+            <div class="form-group no-pad" *ngFor="let item of message.data | keyvalue">
+              <label for="" class=" col-md-6 no-pad " *ngIf="item.key != 'id'">{{transform(item.key)}} :</label>
+              <span class="col-md-5 no-pad m-t-10" *ngIf="item.key != 'id'" style="text-align: left;">{{item?.value}}</span>
+              <span class="col-md-5 no-pad" *ngIf="item.value == null" style="text-align: left;"> 0 </span>
+            </div>
+          </div>
+          <div class="col-md-6 links">
+            <h5>Links</h5>
+            <div class="form-group no-pad" *ngFor="let link of message.links">
+              <a href="../../{{link.redirect_url}}" target="_blank" *ngIf="link.type != 'pop_up'">
+                {{link.name}}
+              </a>
+            </div>
+
+
+
+          </div>
+        </fieldset>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button id="modal_action_close" class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false">Close</button>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="isCommentHistoryPopup" id="cync_alerts" class="details-popup comment-history">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <strong>{{title}}</strong>
+    </div>
+    <div class="modal-body">
+      <div class="col-xs-12 col-sm-12 col-md-12 ad-bt-pad col-lg-12">
+        <div class="comment col-lg-12" *ngFor="let comment of message">
+          <div *ngIf="comment.status">
+            <a class="avatar">
+              <img src="{{assetPath}}/images/profile-pic.jpg">
+            </a>
+            <div class="content">
+              <a class="author">
+                <span class="author-name"> {{comment.user_name}}</span> &nbsp; <span class="metadata">
+                  <span class="date">{{comment.created_at}}</span>
+                  <span class="status">{{comment.status}}</span>
+                </span></a>
+
+              <div class="text">
+                {{comment.comment}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+    <div class="modal-footer">
+      <button id="modal_action_close" class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false">Close</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="isReleaseBroker" id="cync_alerts">
+  <div class="modal-dialog">
+    <div class="modal-header b-blue">
+      <label class="pull-left"></label>
+      <button id="modal_action_close" class="pull-right p-close noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="false"> <span>×</span> </button>
+    </div>
+    <div class="modal-body">
+      <p>{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button id="modal_action_close" class="noradius btn btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"
+        [mat-dialog-close]="true">Download</button>
+    </div>
+  </div>
+</div>
+<div *ngIf="isSaveFeeSetupPopup" id="cync_alerts">
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <i class="fa fa-5x fa-exclamation-triangle clr_white f_s_64"></i>
+    </div>
+    <div class="modal-body row modal-body-textwrap">
+      <p title="{{message}}">{{message}}</p>
+    </div>
+    <div class="modal-footer">
+      <button mat-button class="noradius btn  btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only fee-btn"
+        cdkFocusInitial [mat-dialog-close]="true">OK</button>
+      <button mat-button class="noradius btn  btn-sm btn-primary p_r_20 p_l_20 ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only fee-btn"
+        [mat-dialog-close]="false">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,709 @@
+<div class="app-body-container bg-white" id="component_html_financial_wradio"
+ [ngClass]="{'style-for-fullscreen': isFullScreen}">
+    <div class="row m-b-15 pad-inner">
+            <h3 class="no-m-bt">{{ projectName }}</h3>
+            <!-- <small class="hidden-xs hidden-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit</small> -->
+            <div class="brder-1 p-t-32">
+                    <common-radio-header></common-radio-header>
+            </div>
+    </div>
+<div class="row no-marg">
+    <div class="col-md-12">
+        <div class="cync-grid-search">
+            <h3 class="balance_sheet_title">Balance Sheet
+                    <span class="ui-column-title font-normal edit-dollar" style="color:gray; font-style: italic">
+                                <em>( $ in '000 )</em>
+
+                         <i id="Export" class="hand fa fa-expand fa-2x  clr_grey f_s_20" 
+                         aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                          title="Expand" *ngIf="!isFullScreen" (click)="fnExpand()"></i>
+
+                          <i id="Export" class="hand fa fa-compress fa-2x  clr_grey f_s_20" 
+                          aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                           title="Compress" *ngIf="isFullScreen" (click)="fnExpand()"></i>
+                     </span>
+            </h3>
+           
+        </div>
+    </div>
+</div>
+<div *ngIf="isFormLoaded" class="pad-inner">
+    <form [formGroup]="financialStatementForm" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveBalanceSheet(financialStatementForm.getRawValue())">
+        <div class="has-scrollbar m_r_15" id="cync_main_contents_wradio-list"
+        [ngStyle]="{ 'height' : isFullScreen ? '1500px' : '' , 'overflow' : isFullScreen ? 'none': ''}">
+            <div class="form-group row">
+                <div class="col-md-12">
+                    <div class="ui-datatable ui-widget">
+                        <!-- <div class="ui-datatable-tablewrapper ui-datatable-resizable"
+                         [ngStyle]="{height:finStatementDataTableHeight+'px'}"> -->
+                 <div class="ui-datatable-tablewrapper ui-datatable-resizable"
+                 [ngStyle]="{ 'height' : isFullScreen ? 'calc(100vh - 215px)' : finStatementDataTableHeight+'px'}"> 
+                        <table>
+                                <thead class="ui-datatable-thead">
+                                    <tr class="ui-state-default">
+                                        <th class="ui-state-default ui-unselectable-text ui-resizable-column" scope="col">
+                                            <!-- <span class="ui-column-title font-normal">Period</span> -->
+                                        </th>
+                                        <th *ngFor="let timelineObj of financialStatementForm.controls.timeLinesList.value" 
+                                        class="ui-state-default ui-unselectable-text ui-resizable-column"
+                                            scope="col">
+                                            <span class="ui-column-title">{{timelineObj}} </span>
+                                        </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody class="ui-datatable-data ui-widget-content">
+                                <!-- ASSETS section starts Here -->
+                                    <!-- Assets main heading start-->
+                                    <tr class="ui-datatable-odd ui-widget-content master_head">
+                                        <td class="" [attr.colspan]="timeLineList+1">
+                                            <div> 
+                                                <span class="ui-cell-data">Assets  </span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- Assets main heading end-->
+
+                                    <!-- Current assets Heading start-->
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                            <span class="ui-cell-data">Current Assets</span>
+                                        </td>
+                                    </tr>
+                                    <!-- Current assets Heading end-->
+
+                                    <!-- Current assets data section start-->
+                                    <ng-container formGroupName="balanceSheetData">
+                                        <ng-container formGroupName="assets">
+                                            <ng-container formArrayName="currentData">
+                                               <!-- Add new row code start -->
+                                                <tr class="ui-datatable-even ui-widget-content">
+                                                    <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                                        <span class="ui-cell-data display-flex"> 
+                                                            <i aria-hidden="true" class="hand fa fa-plus-square fa-1x add-icon" data-placement="top" 
+                                                             data-toggle="tooltip" title="Add More" (click)="addCustomField('assets','currentData','')"></i>
+                                                            <label>Add new</label></span>
+                                                    </td>
+                                                </tr>
+                                                <!-- Add new row code end -->
+
+                                                <tr class="ui-datatable-even ui-widget-content" *ngFor="let currentAssetsObj of getParameterDataFormArray('assets','currentData'); let k=index"
+                                                    [formGroupName]="k">
+                                                    <div *ngIf="currentAssetsObj.controls.parameter.value != null && !currentAssetsObj.controls.newcustomfield.value && !currentAssetsObj.controls.customParameter.value; then standard_params else custom_params">here is ignored</div>
+                                                    <ng-template #standard_params>
+                                                        <td class="input_column_label">
+                                                            <span class="ui-cell-data">{{currentAssetsObj.controls.parameter.value}}</span>
+                                                        </td>
+                                                        <ng-container formArrayName="data">
+                                                            <td *ngFor="let dataObj of getDataControls(currentAssetsObj); let l=index" [formGroupName]="l" class="input_column">
+                                                                <span class="ui-cell-data">
+                                                                    <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;'
+                                                                     formControlName="value"
+                                                                     OnlyNumber="true" class="form-control fin-inputs" 
+                                                                     (focusout)="updateAssetsSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                </span>
+                                                            </td>
+                                                        </ng-container>
+                                                        <td>
+                                                            <span class="ui-cell-data">
+                                                            </span>
+                                                        </td>
+                                                    </ng-template>
+                                                    <ng-template #custom_params>   
+                                                        <td>
+                                                            <span class="ui-cell-data display-flex">
+                                                                <!-- Delete button code start -->
+                                                                <i aria-hidden="true" class="hand fa fa-times-rectangle-o fa-1x cross-icon" 
+                                                                (click)="deleteCustomField(k,'assets','currentData','', currentAssetsObj)" data-placement="top" data-toggle="tooltip" title="Delete Row"></i>
+                                                                <!-- Delete button code end -->
+
+                                                                <!-- Input Custom Paramater Field code start -->
+                                                                <input type="text" maxlength="120"  class="form-control" formControlName="parameter" (keyup)="updateCustomParamValue(k,$event.target.value, currentAssetsObj)"/>
+                                                                <!-- Input Custom Paramater Field code end -->
+                                                            </span>
+                                                        </td>
+                                                        <!-- Timeline data Field code start -->
+                                                        <ng-container formArrayName="data">
+                                                            <td *ngFor="let dataObj of getDataControls(currentAssetsObj); let l=index" [formGroupName]="l" class="input_column">
+                                                                <span class="ui-cell-data">
+                                                                    <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateAssetsSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                </span>
+                                                            </td>
+                                                        </ng-container>
+                                                        <!-- Timeline data Field code end -->
+                                                        <td>
+                                                            <span class="ui-cell-data">
+                                                            </span>
+                                                        </td>
+                                                    </ng-template>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                   
+                                    <!-- Current assets total section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_cat">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">Total Current Assets</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="assets">
+                                                <ng-container formArrayName="totalCurrent">
+                                                    <td *ngFor="let totalCurrentObj of getParameterDataFormArray('assets','totalCurrent'); let m=index" [formGroupName]="m" class="input_column  text-right">
+                                                        <span class="ui-cell-data">
+                                                            <!-- {{totalCurrentObj.controls.value.value}} -->
+                                                            <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Current assets total section end -->
+
+                                    <!-- Non current assets Heading start-->
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                            <span class="ui-cell-data">Non-current Assets</span>
+                                        </td>
+                                    </tr>
+                                    <!-- Non current assets Heading end-->
+
+                                    <!-- Non current assets data section start-->
+                                    <ng-container formGroupName="balanceSheetData">
+                                        <ng-container formGroupName="assets">
+                                            <ng-container formArrayName="nonCurrentData">
+                                                <!-- Add new row code start -->
+                                                <tr class="ui-datatable-even ui-widget-content">
+                                                    <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                                        <span class="ui-cell-data display-flex"> 
+                                                            <i aria-hidden="true" class="hand fa fa-plus-square fa-1x add-icon" data-placement="top" 
+                                                            data-toggle="tooltip" title="Add More" (click)="addCustomField('assets','nonCurrentData','')"></i>
+                                                            <label>Add new</label></span>
+                                                    </td>
+                                                </tr>
+                                                <!-- Add new row code end -->
+                       
+                                                <tr class="ui-datatable-even ui-widget-content" *ngFor="let nonCurrentAssetsObj of getParameterDataFormArray('assets','nonCurrentData'); let i=index"
+                                                    [formGroupName]="i">
+                                                    <div *ngIf="nonCurrentAssetsObj.controls.parameter.value != null && !nonCurrentAssetsObj.controls.newcustomfield.value && !nonCurrentAssetsObj.controls.customParameter.value; then standard_params else custom_params">here is ignored</div>
+                                                    <ng-template #standard_params>
+                                                        <td class="input_column_label">
+                                                            <span class="ui-cell-data">{{nonCurrentAssetsObj.controls.parameter.value}}</span>
+                                                        </td>
+                                                        <ng-container formArrayName="data">
+                                                            <td *ngFor="let dataObj of getDataControls(nonCurrentAssetsObj); let j=index" [formGroupName]="j" class="input_column">
+                                                                <span class="ui-cell-data">
+                                                                    <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateAssetsSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                </span>
+                                                            </td>
+                                                        </ng-container>
+                                                        <td>
+                                                            <span class="ui-cell-data">
+                                                            </span>
+                                                        </td>
+                                                    </ng-template>
+                                                    <ng-template #custom_params>
+                                                        <td>
+                                                            <span class="ui-cell-data display-flex">
+                                                                <!-- Delete button code start -->
+                                                                <i aria-hidden="true" class="hand fa fa-times-rectangle-o fa-1x cross-icon" 
+                                                                (click)="deleteCustomField(i,'assets','nonCurrentData','', nonCurrentAssetsObj)" data-placement="top" data-toggle="tooltip" title="Delete Row"></i>
+                                                                <!-- Delete button code end -->
+                                    
+                                                                <!-- Input Custom Paramater Field code start -->
+                                                                <input type="text" maxlength="120" class="form-control" formControlName="parameter" (keyup)="updateCustomParamValue(i,$event.target.value, nonCurrentAssetsObj)"/>
+                                                                <!-- Input Custom Paramater Field code end -->
+                                                            </span>
+                                                        </td>
+                                                        <!-- Timeline data Field code start -->
+                                                        <ng-container formArrayName="data">
+                                                            <td *ngFor="let dataObj of getDataControls(nonCurrentAssetsObj); let j=index" [formGroupName]="j" class="input_column">
+                                                                <span class="ui-cell-data">
+                                                                    <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateAssetsSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                </span>
+                                                            </td>
+                                                        </ng-container>
+                                                        <!-- Timeline data Field code end -->
+                                                        <td>
+                                                            <span class="ui-cell-data">
+                                                            </span>
+                                                        </td>
+                                                    </ng-template>
+                                                </tr>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- Non current assets data section end-->
+
+                                    <!-- Non current assets total section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_cat">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">Total Non-current Assets</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="assets">
+                                                <ng-container formArrayName="totalNonCurrent">
+                                                    <td *ngFor="let totalNonCurrentObj of getParameterDataFormArray('assets','totalNonCurrent'); let d=index" [formGroupName]="d" class="input_column  text-right">
+                                                        <span class="ui-cell-data">
+                                                            <!-- {{totalNonCurrentObj.controls.value.value}} -->
+                                                            <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Non current assets total section end -->
+
+                                    <!-- Assets total section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_section">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">Assets</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="assets">
+                                                <ng-container formArrayName="total">
+                                                    <td *ngFor="let totalAssetsObj of getParameterDataFormArray('assets','total'); let n=index" [formGroupName]="n" class="input_column  text-right">
+                                                        <span class="ui-cell-data">
+                                                            <!-- {{totalAssetsObj.controls.value.value}} -->
+                                                            <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Assets total section end -->
+                                <!-- ASSETS section end Here -->
+
+                                <!-- EQUITY AND LIABILITIES section start here -->
+
+                                    <!-- EQUITY AND LIABILITIES main heading start-->
+                                    <tr class="ui-datatable-odd ui-widget-content master_head">
+                                        <td class="" [attr.colspan]="timeLineList+1">
+                                            <div>
+                                                <span class="ui-cell-data">Equity and Liabilities</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <!-- EQUITY AND LIABILITIES main heading end-->
+
+                                    <!-- Current Liabilities Heading start-->
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                            <span class="ui-cell-data">Current Liabilities</span>
+                                        </td>
+                                    </tr>
+                                    <!-- Current Liabilities Heading end-->
+
+                                    <!-- Current Liabilities data section start-->
+                                    <ng-container formGroupName="balanceSheetData">
+                                        <ng-container formGroupName="equityAndLiabilities">
+                                            <ng-container formGroupName="liabilities">
+                                                <ng-container formArrayName="currentData">
+
+                                                    <!-- Add new row code start -->
+                                                    <tr class="ui-datatable-even ui-widget-content">
+                                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                                            <span class="ui-cell-data display-flex"> 
+                                                                <i aria-hidden="true" class="hand fa fa-plus-square fa-1x add-icon" data-placement="top" 
+                                                                data-toggle="tooltip" title="Add More" (click)="addCustomField('equityAndLiabilities','liabilities','currentData')"></i>
+                                                                <label>Add new</label></span>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Add new row code end -->
+
+                                                    <tr class="ui-datatable-even ui-widget-content" *ngFor="let currentLiabilitiesObj of getEquityLiabilityParameterDataFormArray('equityAndLiabilities','liabilities','currentData'); let q=index"
+                                                        [formGroupName]="q">
+                                                        <div *ngIf="currentLiabilitiesObj.controls.parameter.value != null && !currentLiabilitiesObj.controls.newcustomfield.value && !currentLiabilitiesObj.controls.customParameter.value; then standard_params else custom_params">here is ignored</div>
+                                                        <ng-template #standard_params>
+                                                            <td class="input_column_label">
+                                                                <span class="ui-cell-data">{{currentLiabilitiesObj.controls.parameter.value}}</span>
+                                                            </td>
+                                                            <ng-container formArrayName="data">
+                                                                <td *ngFor="let dataObj of getDataControls(currentLiabilitiesObj); let r=index" [formGroupName]="r" class="input_column">
+                                                                    <span class="ui-cell-data">
+                                                                        <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateLiabilitiesSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                    </span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <td>
+                                                                <span class="ui-cell-data">
+                                                                </span>
+                                                            </td>
+                                                        </ng-template>
+                                                        <ng-template #custom_params>
+                                                            <td>
+                                                                <span class="ui-cell-data display-flex">
+                                                                    <!-- Delete button code start -->
+                                                                    <i aria-hidden="true" class="hand fa fa-times-rectangle-o fa-1x cross-icon" 
+                                                                    (click)="deleteCustomField(q,'equityAndLiabilities','liabilities','currentData', currentLiabilitiesObj)" data-placement="top" data-toggle="tooltip" title="Delete Row"></i>
+                                                                    <!-- Delete button code end -->
+                                        
+                                                                    <!-- Input Custom Paramater Field code start -->
+                                                                    <input type="text" maxlength="120" class="form-control" formControlName="parameter" (keyup)="updateCustomParamValue(q,$event.target.value, currentLiabilitiesObj)"/>
+                                                                    <!-- Input Custom Paramater Field code end -->
+                                                                </span>
+                                                            </td>
+                                                            <!-- Timeline data Field code start -->
+                                                            <ng-container formArrayName="data">
+                                                                <td *ngFor="let dataObj of getDataControls(currentLiabilitiesObj); let r=index" [formGroupName]="r" class="input_column">
+                                                                    <span class="ui-cell-data">
+                                                                        <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateLiabilitiesSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                    </span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <!-- Timeline data Field code end -->
+                                                            <td>
+                                                                <span class="ui-cell-data">
+                                                                </span>
+                                                            </td>
+                                                        </ng-template>
+                                                    </tr>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- Current Liabilities data section end-->
+
+                                    <!-- Current Liabilities total section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_cat">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">Total Current Liabilities</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="equityAndLiabilities">
+                                                <ng-container formGroupName="liabilities">
+                                                    <ng-container formArrayName="totalCurrent">
+                                                        <td *ngFor="let totalCurrentObj of getEquityLiabilityParameterDataFormArray('equityAndLiabilities','liabilities','totalCurrent'); let s=index"
+                                                            [formGroupName]="s" class="input_column  text-right">
+                                                            <span class="ui-cell-data">
+                                                                <!-- {{totalCurrentObj.controls.value.value}} -->
+                                                                <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Current Liabilities total section end -->
+
+                                    <!-- Non-current Liabilities Heading start-->
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                            <span class="ui-cell-data">Non-current Liabilities</span>
+                                        </td>
+                                    </tr>
+                                    <!-- Non-current Liabilities Heading end-->
+
+                                    <!-- Non-current Liabilities data section start-->
+                                    <ng-container formGroupName="balanceSheetData">
+                                        <ng-container formGroupName="equityAndLiabilities">
+                                            <ng-container formGroupName="liabilities">
+                                                <ng-container formArrayName="nonCurrentData">
+                                                    <!-- Add new row code start -->
+                                                    <tr class="ui-datatable-even ui-widget-content">
+                                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                                            <span class="ui-cell-data display-flex"> 
+                                                                <i aria-hidden="true" class="hand fa fa-plus-square fa-1x add-icon" data-placement="top" 
+                                                                data-toggle="tooltip" title="Add More" (click)="addCustomField('equityAndLiabilities','liabilities','nonCurrentData')"></i>
+                                                                <label>Add new</label></span>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Add new row code end -->
+
+                                                    <tr class="ui-datatable-even ui-widget-content" *ngFor="let nonCurrentLiabilitiesObj of getEquityLiabilityParameterDataFormArray('equityAndLiabilities','liabilities','nonCurrentData'); let o=index"
+                                                        [formGroupName]="o">
+                                                        <div *ngIf="nonCurrentLiabilitiesObj.controls.parameter.value != null && !nonCurrentLiabilitiesObj.controls.newcustomfield.value && !nonCurrentLiabilitiesObj.controls.customParameter.value; then standard_params else custom_params">here is ignored</div>
+                                                        <ng-template #standard_params>
+                                                            <td class="input_column_label">
+                                                                <span class="ui-cell-data">{{nonCurrentLiabilitiesObj.controls.parameter.value}}</span>
+                                                            </td>
+                                                            <ng-container formArrayName="data">
+                                                                <td *ngFor="let dataObj of getDataControls(nonCurrentLiabilitiesObj); let p=index" [formGroupName]="p" class="input_column">
+                                                                    <span class="ui-cell-data">
+                                                                        <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateLiabilitiesSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                    </span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <td>
+                                                                <span class="ui-cell-data">
+                                                                </span>
+                                                            </td>
+                                                        </ng-template>
+                                                        <ng-template #custom_params>
+                                                            <td>
+                                                                <span class="ui-cell-data display-flex">
+                                                                    <!-- Delete button code start -->
+                                                                    <i aria-hidden="true" class="hand fa fa-times-rectangle-o fa-1x cross-icon" 
+                                                                    (click)="deleteCustomField(o,'equityAndLiabilities','liabilities','nonCurrentData', nonCurrentLiabilitiesObj)" data-placement="top" data-toggle="tooltip" title="Delete Row"></i>
+                                                                    <!-- Delete button code end -->
+                                        
+                                                                    <!-- Input Custom Paramater Field code start -->
+                                                                    <input type="text" maxlength="120" class="form-control" formControlName="parameter" (keyup)="updateCustomParamValue(o,$event.target.value, nonCurrentLiabilitiesObj)"/>
+                                                                    <!-- Input Custom Paramater Field code end -->
+                                                                </span>
+                                                            </td>
+                                                            <!-- Timeline data Field code start -->
+                                                            <ng-container formArrayName="data">
+                                                                <td *ngFor="let dataObj of getDataControls(nonCurrentLiabilitiesObj); let p=index" [formGroupName]="p" class="input_column">
+                                                                    <span class="ui-cell-data">
+                                                                        <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateLiabilitiesSum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                    </span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <!-- Timeline data Field code end -->
+                                                            <td>
+                                                                <span class="ui-cell-data">
+                                                                </span>
+                                                            </td>
+                                                        </ng-template>
+                                                    </tr>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- Non-current Liabilities data section end-->
+
+                                    <!-- Non-current Liabilities total section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_cat">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">Total Non-current Liabilities</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="equityAndLiabilities">
+                                                <ng-container formGroupName="liabilities">
+                                                    <ng-container formArrayName="totalNonCurrent">
+                                                        <td *ngFor="let totalNonCurrentObj of getEquityLiabilityParameterDataFormArray('equityAndLiabilities','liabilities','totalNonCurrent'); let p=index"
+                                                            [formGroupName]="p" class="input_column  text-right">
+                                                            <span class="ui-cell-data">
+                                                                <!-- {{totalNonCurrentObj.controls.value.value}} -->
+                                                                <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Non-current Liabilities total section end -->
+
+                                    <!-- Total Liabilities section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_section">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">Total Liabilities</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="equityAndLiabilities">
+                                                <ng-container formGroupName="liabilities">
+                                                    <ng-container formArrayName="total">
+                                                        <td *ngFor="let totalDataObj of getEquityLiabilityParameterDataFormArray('equityAndLiabilities','liabilities','total'); let t=index"
+                                                            [formGroupName]="t" class="input_column  text-right">
+                                                            <span class="ui-cell-data">
+                                                                <!-- {{totalDataObj.controls.value.value}} -->
+                                                                <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Total Liabilities section end -->
+
+                                    <!-- Equity Heading start-->
+                                    <tr class="ui-datatable-even ui-widget-content">
+                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                            <span class="ui-cell-data">Equity</span>
+                                        </td>
+                                    </tr>
+                                    <!-- Equity Heading end-->
+
+                                    <!-- Equity data section start-->
+                                    <ng-container formGroupName="balanceSheetData">
+                                        <ng-container formGroupName="equityAndLiabilities">
+                                            <ng-container formGroupName="equity">
+                                                <ng-container formArrayName="equityData">
+                                                    <!-- Add new row code start -->
+                                                    <tr class="ui-datatable-even ui-widget-content">
+                                                        <td class="input_column_label category" [attr.colspan]="timeLineList+1">
+                                                            <span class="ui-cell-data display-flex"> 
+                                                                <i aria-hidden="true" class="hand fa fa-plus-square fa-1x add-icon" data-placement="top" 
+                                                                data-toggle="tooltip" title="Add More" (click)="addCustomField('equityAndLiabilities','equity','equityData')"></i>
+                                                                <label>Add new</label></span>
+                                                        </td>
+                                                    </tr>
+                                                    <!-- Add new row code end -->
+
+                                                    <tr class="ui-datatable-even ui-widget-content" *ngFor="let equityDataObj of getEquityLiabilityParameterDataFormArray('equityAndLiabilities','equity','equityData'); let u=index"
+                                                        [formGroupName]="u">
+                                                        <div *ngIf="equityDataObj.controls.parameter.value != null && !equityDataObj.controls.newcustomfield.value && !equityDataObj.controls.customParameter.value; then standard_params else custom_params">here is ignored</div>
+                                                        <ng-template #standard_params>
+                                                            <td class="input_column_label">
+                                                                <span class="ui-cell-data">{{equityDataObj.controls.parameter.value}}</span>
+                                                            </td>
+                                                            <ng-container formArrayName="data">
+                                                                <td *ngFor="let dataObj of getDataControls(equityDataObj); let v=index" [formGroupName]="v" class="input_column">
+                                                                    <span class="ui-cell-data">
+                                                                        <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateEquitySum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                    </span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <td>
+                                                                <span class="ui-cell-data">
+                                                                </span>
+                                                            </td>
+                                                        </ng-template>
+                                                        <ng-template #custom_params>
+                                                            <td>
+                                                                <span class="ui-cell-data display-flex">
+                                                                    <!-- Delete button code start -->
+                                                                    <i aria-hidden="true" class="hand fa fa-times-rectangle-o fa-1x cross-icon" 
+                                                                    (click)="deleteCustomField(u,'equityAndLiabilities','equity','equityData', equityDataObj)" data-placement="top" data-toggle="tooltip" title="Delete Row"></i>
+                                                                    <!-- Delete button code end -->
+                                        
+                                                                    <!-- Input Custom Paramater Field code start -->
+                                                                    <input type="text" maxlength="120" class="form-control" formControlName="parameter" (keyup)="updateCustomParamValue(u,$event.target.value, equityDataObj)"/>
+                                                                    <!-- Input Custom Paramater Field code end -->
+                                                                </span>
+                                                            </td>
+                                                            <!-- Timeline data Field code start -->
+                                                            <ng-container formArrayName="data">
+                                                                <td *ngFor="let dataObj of getDataControls(equityDataObj); let v=index" [formGroupName]="v" class="input_column">
+                                                                    <span class="ui-cell-data">
+                                                                        <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' formControlName="value" OnlyNumber="true" class="form-control fin-inputs" (focusout)="updateEquitySum(dataObj.controls.timeLine.value, dataObj.controls.value)">
+                                                                    </span>
+                                                                </td>
+                                                            </ng-container>
+                                                            <!-- Timeline data Field code end -->
+                                                            <td>
+                                                                <span class="ui-cell-data">
+                                                                </span>
+                                                            </td>
+                                                        </ng-template>
+                                                        
+                                                    </tr>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                    </ng-container>
+                                    <!-- Equity data section end-->
+
+                                    <!-- Equity total section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_cat">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">Total Equity</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="equityAndLiabilities">
+                                                <ng-container formGroupName="equity">
+                                                    <ng-container formArrayName="totalEquity">
+                                                        <td *ngFor="let totalEquityDataObj of getEquityLiabilityParameterDataFormArray('equityAndLiabilities','equity','totalEquity'); let z=index"
+                                                            [formGroupName]="z" class="input_column  text-right">
+                                                            <span class="ui-cell-data">
+                                                                <!-- {{totalEquityDataObj.controls.value.value}} -->
+                                                                <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- Equity total section end -->
+
+                                    <!-- EQUITY & LIABILITIES total section start -->
+                                    <tr class="ui-datatable-even ui-widget-content total_section">
+                                        <td class="input_column_label">
+                                            <span class="ui-cell-data">EQUITY & LIABILITIES</span>
+                                        </td>
+                                        <ng-container formGroupName="balanceSheetData">
+                                            <ng-container formGroupName="equityAndLiabilities">
+                                                <ng-container formArrayName="total">
+                                                    <td *ngFor="let finalTotalObj of getParameterDataFormArray('equityAndLiabilities','total'); let a=index" [formGroupName]="a"
+                                                        class="input_column  text-right">
+                                                        <span class="ui-cell-data">
+                                                            <!-- {{finalTotalObj.controls.value.value}} -->
+                                                            <input type="number" onkeypress='javascript:  var e = window.event || event;     var charCode = e.which || e.keyCode;  if(event.target.value.length>10){     alert("Maximum allowed number is 11");    return false; }     if (charCode > 31 && (charCode < 48 || charCode > 57 || charCode > 107 || charCode > 219 ||          charCode > 221) && charCode != 40 && charCode != 32 && charCode != 41 && (charCode < 43 || charCode < 45 || charCode > 46)) { if (window.event)              window.event.returnValue = false;         else              e.preventDefault();     }     return true;' readonly formControlName="value" class="total-input-field">
+                                                        </span>
+                                                    </td>
+                                                </ng-container>
+                                            </ng-container>
+                                        </ng-container>
+                                        <td>
+                                            <span class="ui-cell-data">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                    <!-- EQUITY & LIABILITIES total section end -->
+
+                                <!-- EQUITY AND LIABILITIES section end here -->
+
+                                <!-- Final Calculation based on assets and equity data start -->
+                                    <tr class="ui-state-default">
+                                        <td class="ui-state-default ui-unselectable-text ui-resizable-column" scope="col">
+                                            <!-- <span class="ui-column-title font-normal">Period</span> -->
+                                        </td>
+                                        <td *ngFor="let timelineObj of financialStatementForm.controls.timeLinesList.value" class="ui-state-default ui-unselectable-text ui-resizable-column"
+                                            scope="col" style="text-align:center;">
+                                            <span class="ui-column-title">
+                                                <img src="{{(isBalanceSheetValid(timelineObj) ? (assetsPath+'/images/matched.png') : (assetsPath+'/images/not-matched.png'))}}">
+                                            </span>
+                                        </td>
+                                    </tr>
+                                <!-- Final Calculation based on assets and equity data end -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Save and Cancel Button starts -->
+            <div class="row">
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                    <hr>
+                    <button id="action_back" (click)="cancelButtonClick()" label="Cancel" pbutton="" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad">{{backBtnText}}</span>
+                    </button>
+                    <button id="action_save" [disabled]="!this.financialStatementForm.valid" label="Save" pbutton="" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+                        <span class="ui-button-text ui-clickable no-pad"> {{currentActionBtnText}} </span>
+                    </button>
+                </div>
+            </div>
+            <!-- Save and Cancel Button ends -->
+        </div>
+    </form>
+</div>
+</div>

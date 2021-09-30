@@ -1,0 +1,54 @@
+  <div class="app-body-container bg-white is_summary  funds-employed" >
+    <div class="pad-inner">
+      <div class="row">
+        <div class="col-md-4 col-sm-5 col-xs-12">
+          <span class="f-w">Funds Employed</span>
+        </div>
+        <div class="col-md-8 col-sm-6 col-xs-12 text-right pull-right" style="margin-top: 4px;">
+          <i id="Export" aria-hidden="true" data-toggle="tooltip" 
+          data-placement="top" title="Export"
+           class="export-icon hand fa fa-external-link fa-2x f_s_20 clr_grey'"
+            (click)="exportData()" *ngIf="isExportButtonDisable()">
+          </i>
+            <i style="font-size:20px; cursor: pointer;" class="pull-right p-top fa margin-left" 
+            title="Refresh" (click)="redrawAllRows()"  *ngIf="isRefreshButtonDisable()">&#xf021;
+          </i>
+        </div>
+      </div>
+    </div>
+
+  
+  <div class="pad-inner">
+   
+      
+      <!-- <ag-grid-angular 
+        style="width: 100%; height: calc(100vh - 350px)" 
+        class="ag-theme-balham"
+        [rowData]="fundsEmployedRowData"
+        [columnDefs]="columnDefs"
+        rowSelection="multiple"
+        [suppressRowClickSelection]="true">
+      </ag-grid-angular> -->
+
+      <ag-grid-angular 
+      style="width: 100%; height: calc(100vh - 300px);" 
+      class="ag-theme-balham"
+      [columnDefs]="fundsEmployedColoumnDefs" 
+      [defaultColDef]="fundsEmployedDefaultColDef"
+      [floatingFilter]="true" 
+      [rowData]="fundsEmployedRowData"
+      [gridOptions]="fundsEmployedGridOptions"
+      (gridReady)="fundsEmployedOnGridReady($event)"
+      (modelUpdated)="onModelUpdated($event)"
+      [suppressRowClickSelection]="true"
+      rowSelection="multiple"
+      [pagination]="true"
+      [paginationPageSize]="paginationPageSize"
+      [frameworkComponents]="frameworkComponents"
+      [excelStyles]="excelStyles" >
+      </ag-grid-angular>
+
+     
+
+  </div>
+</div>

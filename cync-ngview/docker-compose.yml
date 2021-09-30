@@ -1,0 +1,13 @@
+version: '3'
+services:
+  web:
+    image: node:latest
+    working_dir: /workspace/www/ngview
+    container_name: cync-apps
+    command: sh apprun.sh
+    volumes:
+      - .:/workspace/www/ngview
+    ports:
+      - "9090:9090"
+    restart: always
+    network_mode: bridge

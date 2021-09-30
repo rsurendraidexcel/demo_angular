@@ -1,0 +1,86 @@
+<form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)">
+    <div id="advanceSearchPopup" class="advance-search-ui">
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" (click)="closePopup(myForm)">&times;</button>
+          <strong>Advance Search</strong>
+        </div>
+        <div class="modal-body">
+          <div class="row no-pad no-marg">
+            <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-4">
+              <select class="form-control" formControlName="groupOp">
+                <option value="AND" selected>All</option>
+                <option value="OR">Any</option>
+              </select>
+            </div>
+          </div>
+          <hr/>
+          <div formArrayName="advanceSearchForms">
+            <div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+              <label>&nbsp; Field </label>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <label>&nbsp; Operator </label>
+            </div>
+  
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+              <label>&nbsp; Value</label>
+            </div>
+            </div>
+            <div [formGroupName]="i" *ngFor="let advanceSearchCntrls of advanceSearchFormsControls.controls; let i=index" class="row no-marg no-pad">
+              <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-4">
+                <label>&nbsp; </label>
+                <select class="form-control" id="column_name_{{i}}" formControlName="field" (change)="onChangeOfColumnName(i)">
+                  <option value="" selected> select </option>
+                  <option *ngFor="let everyColumn of columns" [ngValue]="everyColumn.column_value"> {{everyColumn.column_display}} </option>
+                </select>
+              </div>
+              <div *ngIf="advanceSearchCntrls.controls.operators!=undefined" class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-3">
+                <label>&nbsp; </label>
+                <select class="form-control" id="operator_{{i}}" formControlName="op">
+                  <option value="" selected> select </option>
+                  <option *ngFor="let everyOperator of advanceSearchCntrls.controls.operators.value" [ngValue]="everyOperator.operator_value">
+                  {{everyOperator.operator_name}} </option>
+                </select>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-4">
+                <label>&nbsp; </label>
+                <input *ngIf="advanceSearchCntrls.controls.searchColumnType.value == 'text_field' || advanceSearchCntrls.controls.searchColumnType.value == ''"
+                  type="text" class="form-control" id="value_{{i}}" formControlName="data">
+  
+                <select *ngIf="advanceSearchCntrls.controls.dropdown!=undefined && advanceSearchCntrls.controls.searchColumnType.value == 'drop_down'"
+                  class="form-control" id="value_{{i}}" formControlName="data">
+                  <option value="" selected> select </option>
+                  <option *ngFor="let dropdownvalue of advanceSearchCntrls.controls.dropdown.value" [ngValue]="dropdownvalue.value"> {{dropdownvalue.display}} </option>
+                </select>
+              </div>
+              <div class="col-xs-12 col-sm-6 col-md-4 ad-bt-pad col-lg-1 btn-repeat">
+                <label>&nbsp; </label>
+                <div class="wid_35 pull-left delete_btn_action">
+                  <i class="fa fa-minus-square deleterow-icon hand" aria-hidden="true" (click)="removeRow(i)"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          <div class="row no-pad no-marg">
+            <div class="pull-right">
+              <div class="wid_35 pull-left add_btn_action">
+                <i class="fa fa-plus-square  hand addrow-icon" aria-hidden="true" (click)="addRow()"></i>
+              </div>
+            </div>
+          </div>
+  
+        </div>
+        <div class="modal-footer">
+          <button id="action_back" (click)="reset()" label="Cancel" type="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Reset</span>
+          </button>
+          <button id="action_save" label="Save" type="submit" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn">
+            <span class="ui-button-text ui-clickable no-pad">Search</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>

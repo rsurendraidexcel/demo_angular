@@ -1,0 +1,13 @@
+<ul class='menuListNone level{{level}}' [ngClass]="subMenu.sub_menu_list.length>0?'sub-menu-heading':''" *ngFor="let subMenu of menuList">
+    <li>
+        <!--below will create header for sub menus -->
+        <a class="contains-sub-menu" *ngIf="subMenu.sub_menu_list.length > 0" tabindex="-1">{{subMenu.menu_name}}</a>
+        <!--below will create angular routes for current application-->
+        <a class="hand validate_url no-sub-menu" (click)="navigateToMenu($event)" *ngIf="subMenu.path.split('#')[1] != undefined && subMenu.sub_menu_list.length == 0 && isRouterLinkRequired(subMenu)" [routerLink]="editForm==true?'[javascript:return false;]':[subMenu.path.split('#')[1]]" tabindex="-1">{{subMenu.menu_name}}</a>
+        <!--below will create direct href for other angular application -->
+        <a class="hand validate_url no-sub-menu" (click)="navigateToMenu($event)" *ngIf="subMenu.path.split('#')[1] != undefined && subMenu.sub_menu_list.length == 0 && !isRouterLinkRequired(subMenu)" href="{{editForm==true? 'javascript:return false;': subMenu.path}}" tabindex="-1">{{subMenu.menu_name}}</a>
+        <!--below will create direct href for non angular application -->
+        <a class="hand validate_url no-sub-menu" (click)="navigateToMenu($event)" *ngIf="subMenu.path.split('#')[1] == undefined && subMenu.sub_menu_list.length == 0" href="{{editForm==true? 'javascript:return false;':subMenu.path}}" tabindex="-1">{{subMenu.menu_name}}</a>
+    </li>
+    <menu-list *ngIf="subMenu.sub_menu_list.length>0" [menuList] = "subMenu.sub_menu_list" [level]="level+1"></menu-list>
+</ul>

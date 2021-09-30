@@ -1,0 +1,51 @@
+<div class="app-body-container bg-white loan-enquiry-main-dev" id="cync_app-body-container">
+  <div class="row">
+    <div class="col-md-9 rollforward-equiry-heading">
+      <h3>RollForward Inquiry</h3>
+    </div>
+    <div class="col-md-2 colmd-export-div pull-right">
+      <button class="btn-style-exp btn btn-export pull-right ui-button" title="export"
+        (click)="exportData()">Export</button>
+    </div>
+  </div>
+  <div class="pad-inner">
+    <div class="row">
+      <div class="rollForward-AddForm" [formGroup]="rollForwardLogsForm">
+        <div class="search_row">
+          <div class="search-from-date col-md-3">
+            <label class="from-label" for="name">From Activity Date </label>&nbsp;&nbsp;
+            <!-- <div style="display: block;"> -->
+            <p-calendar showOn="button" class='cync-png-calendrar' formControlName="from_activity_date"
+              [monthNavigator]="true" [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true"
+              [maxDate]="max_date" dateFormat="mm/dd/yy">
+            </p-calendar>
+            <!-- </div> -->
+          </div>
+          <div class="search-from-date col-md-3">
+            <label class="to-label" for="name">To Activity Date </label>&nbsp;
+            <!-- <div style="display: block;"> -->
+            <p-calendar showOn="button" class='cync-png-calendrar' formControlName="to_activity_date"
+              [monthNavigator]="true" [yearNavigator]="true" yearRange="1956:2030" [showIcon]="true"
+              [maxDate]="max_date" dateFormat="mm/dd/yy">
+            </p-calendar>
+            <!-- </div> -->
+          </div>
+          <div class="col-md-3 colmd-search-div">
+            <button class="btn-style btn ui-button" (click)="onSearchButtonClickEvent()" title="Search">Search</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row inquery-container-grid">
+      <ag-grid-angular style="width: 100%;  height: calc(100vh - 340px);" class="ag-theme-balham"
+        [gridOptions]="rollForwardInquiryGridOptions" [floatingFilter]="true"
+        [columnDefs]="rollForwardInquirycolumnDefs" [defaultColDef]="defaultColDef"
+        [rowData]="rollForwardInquiryRowData" [frameworkComponents]="frameworkComponents" [excelStyles]="excelStyles"
+        (gridReady)="onGridReady($event)" [overlayLoadingTemplate]="loadingTemplate"
+        [overlayNoRowsTemplate]="noRowsTemplate" pagination=true [statusBar]="statusBar">
+      </ag-grid-angular>
+    </div>
+
+  </div>
+</div>

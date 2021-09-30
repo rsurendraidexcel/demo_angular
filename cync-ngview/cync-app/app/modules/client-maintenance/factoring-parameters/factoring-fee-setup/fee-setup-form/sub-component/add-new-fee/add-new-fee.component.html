@@ -1,0 +1,132 @@
+<div class="app-body-container bg-white top-mg">
+  <div class="titile-section">
+      <div class="top-title"> New Fee Setup  </div>
+  </div>
+  <div class="hrline"></div>
+  <div class="pad-inner">
+    <div
+      class="y-scrollbar"
+      id="y-scrollbar"
+      style="height: 300px; overflow-y: auto;"
+    >
+    <label class="title" > Fee Information </label>
+      <div class="rollForward-AddForm" [formGroup]="factoringFeeSetupForm">
+        <section>
+          <div class="ui-g ui-fluid">
+            <div class="ui-md-6">
+              <div class="ui-g">
+                <label for="Name" class="ui-md-4"
+                  >Name
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-6">
+                  <input
+                    type="text"
+                    class="form-control customwidth"
+                    formControlName="name"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="advance_rate" class="ui-md-4">Advance Rate</label>
+                <div class="ui-md-6">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="advance_rate"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="fee_calculation_on" class="ui-md-4"
+                  >Fee Calculated On</label
+                >
+                <div class="ui-md-6">
+                  <select
+                    class="form-control customwidth"
+                    id="collateral"
+                    formControlName="fee_calculated_on_options"
+                    [ngModel]="feeCalculatedonValue"
+                  >
+                    <!-- <option value='-1' selected>Invoice Amount</option> -->
+                    <option
+                      *ngFor="let list of feeCalculatedOn"
+                      [value]="list.value"
+                      >{{ list.description }}</option
+                    >
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="ui-md-6">
+              <div class="ui-g">
+                <label for="fee_calculation_method" class="ui-md-5">
+                  Fee Calculation Method</label
+                >
+                <div class="ui-md-6">
+                  <select
+                    class="form-control customwidth"
+                    formControlName="fee_calculation_methods_options"
+                    autocomplete="off"
+                    [ngModel]="feeCalculationMethodValue"
+                  >
+                    <!-- <option> Select </option> -->
+                    <option
+                      *ngFor="let list of feeCalculationMethodsOptions"
+                      [value]="list.value"
+                      >{{ list.description }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="devisor" class="ui-md-5"
+                  >Divisor
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-6">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="divisor"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+              <div class="ui-g">
+                <label for="spread_percent" class="ui-md-5">
+                  Spread %
+                  <span class="required">*</span>
+                </label>
+                <div class="ui-md-6">
+                  <input
+                    type="number"
+                    class="form-control customwidth"
+                    formControlName="spread_percentage"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- <div class="hrline"></div> -->
+          <!-- <div class="ui-g ui-fluid">
+            
+          </div> -->
+        </section>
+      </div>
+    </div>
+    <div class="row button">
+    <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad" (click)="onSaveclick(factoringFeeSetupForm.getRawValue())">
+    Save
+  </button>
+  <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad" (click)="onCancelclick()"
+>
+    Cancel
+  </button>
+</div>
+  </div>
+</div>

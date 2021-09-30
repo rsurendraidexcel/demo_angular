@@ -1,0 +1,268 @@
+<div class="app-body-container bg-white create-user-custom" id="app-body-container" ng-show="yes_visible"
+    ng-controller="app_body_container">
+    <div class="close-btn-dash pull-right text-right top-action-btns"></div>
+
+    <div class="pad-inner">
+        <h3 class="no-m-bt">{{headerText}}</h3>
+        <div class="brder-1 p-t-32">
+            <form [formGroup]="addEditUser" data-parsley-validate novalidate #addform="ngForm" (ngSubmit)="saveData()">
+                <div class="has-scrollbar" id="main_contents">
+                    <div class="form-group">
+
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">User Name<span
+                                    class="required">*</span></label>
+                            <input type="text" formControlName="user_login"
+                                [ngClass]="(isUserLoginValid == true)?  'form-control':'form-control has-error'"
+                                (focusout)="checkUserLogin()" autocomplete="off">
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2" >
+                            <label class="mandatory" for="currency_code">Display Name<span
+                                    class="required">*</span></label>
+                            <input type="text" formControlName="user_name"
+                                [ngClass]="(isUserNameValid == true)?  'form-control':'form-control has-error'"
+                                (focusout)="checkUserName()" autocomplete="off">
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                            <label class="mandatory">Role<span class="required">*</span></label>
+                            <select class="form-control" formControlName="role" (change)="onRoleChange()">
+                                <option *ngFor="let x of rolesList" [ngValue]="x">{{x.name}}</option>
+                            </select>
+                        </div>
+                        <!--Participation Party List -->
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3"
+                            *ngIf="addEditUser.controls['role'].value.role_type == 'PP' ">
+                            <label class="mandatory">Participation Party<span class="required">*</span></label>
+                            <select [(ngModel)]="selected" formControlName="participation_party" class="form-control">
+                                <option value="null">Select</option>
+                                <option *ngFor="let participation_party of loanParties"
+                                    [ngValue]="participation_party.id">{{participation_party.partyId}} :
+                                    {{participation_party.participation_company}}</option>
+                            </select>
+                        </div>
+                        <!--Executive Manager -->
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3"
+                            *ngIf="addEditUser.controls['role'].value.role_type == 'P'">
+                            <label class="mandatory">Executive Manager<span class="required">*</span></label>
+                            <select [(ngModel)]="selected" formControlName="executive_manager" class="form-control">
+                                <option value="null">Select</option>
+                                <option *ngFor="let exem of executiveManager" [ngValue]="exem.id">{{exem.user_name}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3"
+                            *ngIf="addEditUser.controls['role'].value.role_type == 'B' ">
+                            <label class="mandatory">Parent Borrower<span class="required">*</span></label>
+                            <select [(ngModel)]="selected" formControlName="parent_borrower" class="form-control">
+                                <option value="null">Select</option>
+                                <option *ngFor="let pb of parentBorrowersList" [ngValue]="pb.id">{{pb.client_name}}
+                                </option>
+                            </select><!-- {{addEditUser.controls['parent_borrower'].value}} -->
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-2 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">Phone<span *ngIf="isMultiFactorAuth"
+                                    class="required">*</span></label>
+                                     <!--Fixed for CYNCS-5130 Fixed-->
+                                    <input type="tel" formControlName="phoneNo" style="width: 100%; border: 1px solid #ccc; height: 32px;" id="phoneNo" [ngClass]="displayCssField('phoneNo')" />
+                        </div>
+                        <div *ngIf="addEditUser.controls['role'].value.role_type == 'B' || addEditUser.controls['role'].value.role_type == 'PP' || addEditUser.controls['role'].value.role_type == 'P' "
+                            class="clearfix"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-2">
+                            <label class="mandatory" for="currency_code">Email<span class="required">*</span>
+                            </label>
+                            <input formControlName="email" type="text"
+                                [ngClass]="(isEmailValid == true)?  'form-control':'form-control has-error'"
+                                (focusout)="checkEmail()" autocomplete="off">
+                        </div>
+
+                        <div *ngIf="addEditUser.controls['role'].value.role_type != 'B' && addEditUser.controls['role'].value.role_type != 'PP' && addEditUser.controls['role'].value.role_type != 'P' "
+                            class="clearfix"></div>
+
+                        <!--#CYNCS-7019 fixed code-->
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                            <label class="mandatory" for="currency_code">Sales Region</label>
+                            <div class="p-multi-dropdwon">
+                                <p-multiSelect formControlName="sales_region" [options]="salesRegionsList"
+                                    [(ngModel)]="salesRegionSelectedList" [panelStyle]="{minWidth:'280px'}"
+                                    [style]="multidropDownStyle" [scrollHeight]="dropDownScrollHeight" [filter]="true"
+                                    defaultLabel="Select Sales Region">
+                                </p-multiSelect>
+                            </div>
+
+                        </div>
+                        <!--                         
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                            <label class="mandatory" for="currency_code">Sales Region</label>
+                            <select formControlName="sales_region" class="form-control" >
+                                <option *ngIf="!addEditUser.value.sales_region" [ngValue]="" selected></option>
+                                <option *ngFor="let sr of salesRegionsList"
+                                [ngValue]="sr.id" >{{sr.name}}</option>
+                            </select>
+                        </div>
+                         -->
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3">
+                            <label class="mandatory" for="currency_code">User Types</label>
+                            <select formControlName="user_type" [(ngModel)]=userType class="form-control">
+                                <option value="N">Normal User</option>
+                                <option value="E">Emergency User</option>
+                            </select>
+                        </div>
+                        
+                        <div *ngIf="addEditUser.controls['user_type'].value == 'E' || addEditUser.controls['role'].value.role_type == 'P' "
+                            class="clearfix"></div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 from-date-custom"
+                            *ngIf="addEditUser.controls['user_type'].value == 'E' ">
+                            <label class="mandatory" for="currency_code">Start Date<span
+                                    class="required">*</span></label><br>
+                            <p-calendar formControlName="start_date" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3 to-date-custom"
+                            *ngIf="addEditUser.controls['user_type'].value == 'E' ">
+                            <label class="mandatory" for="currency_code">End Date<span
+                                    class="required">*</span></label><br>
+                            <p-calendar formControlName="end_date" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="2000:2030"></p-calendar>
+                        </div>
+
+
+                        <!--   <div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-2" *ngIf="currentAction == 'Edit' ">
+                         <label class="mandatory" for="currency_code">&nbsp;</label><br> -->
+                         <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" *ngIf="!hideAndShowTermsAndCondition">
+                            <label for="currency_code">Terms & Conditions</label>
+                            <select formControlName="t_and_c_type" [(ngModel)]="addEditUser.controls['t_and_c_type'].value" class="form-control" (change)="showAndHideUserDateOfStatus()">
+                                <option value="Required">Required</option>
+                                <option value="Not Required">Not Required</option>
+                            </select>
+                        </div>
+
+                        
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" *ngIf="!hideAndShowTermsAndConditionDateStatus" >
+                            <label for="currency_code" >Terms & Conditions: Date of Status  </label>
+                            <input formControlName="t_and_c_updated_at" type="text"
+                                [ngClass]="" class="form-control" disabled>
+                        </div>
+
+                         <div *ngIf="addEditUser.controls['role'].value.role_type == 'B' && addEditUser.controls['user_type'].value != 'E' && addEditUser.controls['user_type'].value != 'P' "
+                            class="clearfix"></div>
+                       
+                        <div class="col-xs-12 col-sm-6 col-md-3 ad-bt-pad col-lg-3" *ngIf="currentAction == 'Edit' ">
+                            <label class="mandatory" for="currency_code">Status</label>
+                            <select formControlName="userStatusChkbox" class="form-control" (change)="onStatusChange()">
+                                <option value=true>Active</option>
+                                <option value=false>InActive</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 ad-bt-pad col-lg-2" *ngIf="currentAction == 'Edit' ">
+                            <label class="mandatory" for="currency_code">&nbsp;</label><br>
+                            <p-checkbox
+                                [disabled]="(addEditUser.controls['userStatusChkbox'].value == 'false' || addEditUser.controls['userStatusChkbox'].value == false)"
+                                binary="true" formControlName="resendActEmailChkbox" _ngcontent-c2=""
+                                inputid="Recurring" label="User Activation Email" name="group2" value="Recurring"
+                                class="ng-untouched ng-pristine ng-valid">
+                                <div class="ui-chkbox ui-widget">
+                                    <div class="ui-helper-hidden-accessible">
+                                        <input type="checkbox" id="Recurring" name="group2" value="Recurring">
+                                    </div>
+                                    <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                                        <span class="ui-chkbox-icon ui-clickable"></span>
+                                    </div>
+                                </div>
+                            </p-checkbox>
+                        </div>
+                        <!--client activation email checkbox-->
+                        <div class="col-xs-12 col-sm-6 col-md-6 ad-bt-pad col-lg-6"
+                            *ngIf="!isClientActivationCheckBoxHidden">
+                            <label class="mandatory" for="currency_code">&nbsp;</label><br>
+                            <p-checkbox
+                                [disabled]="(addEditUser.controls['userStatusChkbox'].value == 'false' || addEditUser.controls['userStatusChkbox'].value == false)"
+                                binary="true" formControlName="clientActivationEmail" _ngcontent-c2=""
+                                inputid="Recurring" label="Client Activation Email" name="group2" value="Recurring"
+                                class="ng-untouched ng-pristine ng-valid">
+                                <div class="ui-chkbox ui-widget">
+                                    <div class="ui-helper-hidden-accessible">
+                                        <input type="checkbox" id="Recurring" name="group2" value="Recurring">
+                                    </div>
+                                    <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                                        <span class="ui-chkbox-icon ui-clickable"></span>
+                                    </div>
+                                </div>
+                            </p-checkbox>
+                        </div>
+
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4" *ngIf="currentAction == 'Edit' ">
+                            {{extendLoginTimeChkBox}}
+                            <p-checkbox binary="true" formControlName="extendLoginTimeChkBox" _ngcontent-c2=""
+                                inputid="Recurring" label="Extend Login Time" name="group2" value="Recurring"
+                                class="ng-untouched ng-pristine ng-valid">
+                                <div class="ui-chkbox ui-widget">
+                                    <div class="ui-helper-hidden-accessible">
+                                        <input type="checkbox" id="Recurring" name="group2" value="Recurring">
+                                    </div>
+                                    <div class="ui-chkbox-box ui-widget ui-corner-all ui-state-default">
+                                        <span class="ui-chkbox-icon ui-clickable"></span>
+                                    </div>
+                                </div>
+                                <label class="ui-chkbox-label" for="Recurring">Extend Login Time</label>
+                            </p-checkbox>
+                        </div>
+
+                        <div class="clearfix"></div>
+
+                        <div
+                            *ngIf="currentAction == 'Edit' && addEditUser.controls['extendLoginTimeChkBox'].value == true">
+
+                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                <label>Start Time (AM)</label>
+                                <div class='ui-inputtext-cutoff input-group date pull-left' id='datetimepicker3'>
+                                    <p-calendar class="create-user-start" formControlName="startTime" [timeOnly]="true"
+                                        placeholder="Start Time (AM)" (onSelect)="getStartTime()"></p-calendar>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-2">
+                                <label>End Time (PM)</label>
+                                <div class='ui-inputtext-cutoff input-group date pull-left' id='datetimepicker3'>
+                                    <p-calendar class="create-user-stop" formControlName="endTime" [timeOnly]="true"
+                                        placeholder="End Time (PM)" (onSelect)="getEndTime()"></p-calendar>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12 text-right sticky_btn_actions">
+                            <hr>
+
+                            <button (click)="navigateToHomeCancel()" id="action_back" label="Cancel" pbutton=""
+                                type="button"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span
+                                    class="ui-button-text ui-clickable no-pad">Cancel</span></button>
+                            <button *ngIf="currentAction == 'Add'" id="action_save_new" (click)="saveNew()"
+                                label="SaveNew" pbutton="" type="button"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span
+                                    class="ui-button-text ui-clickable no-pad">Save & New</span></button>
+                            <button id="action_save" label="Save" pbutton="" type="submit"
+                                class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only options-btn"><span
+                                    class="ui-button-text ui-clickable no-pad">Save</span></button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,144 @@
+.interest-statement {
+  padding: 8px;
+}
+.interest-statement {
+  padding: 8px;
+}
+.interestSetup-AddForm {
+  margin: auto;
+  display: block;
+  width: 100%;
+}
+.grid-wrapper {
+  height: auto;
+  margin: auto;
+  width: 100%;
+}
+.search_row {
+  width: 100%;
+  display: flex;
+}
+.search-from-date {
+  width: 22%;
+}
+.inquery-container-grid {
+  display: block;
+  width: 98%;
+  margin: auto;
+  margin-top: 4px;
+}
+.btn-style {
+  cursor: pointer;
+  min-width: 54px;
+  text-decoration: none;
+  text-shadow: none !important;
+  white-space: nowrap;
+  font-size: 13px;
+  padding: 3px 10px;
+  text-align: center;
+  height: 26px;
+}
+.btn-align-right {
+  float: right;
+}
+.colmd-search-div {
+  padding-left: 2px;
+  width: 40%;
+}
+.colmd-export-div {
+  text-align: right;
+  padding-left: 2px;
+  width: 24%;
+  padding-right: 0px;
+}
+.btn-export {
+  text-align: center;
+}
+.btn-style-exp {
+  margin-top: 15px;
+  cursor: pointer;
+  min-width: 54px;
+  text-decoration: none;
+  text-shadow: none !important;
+  white-space: nowrap;
+  font-size: 13px;
+  padding: 3px;
+  text-align: center;
+  height: 26px;
+}
+.from-label {
+  padding-top: 2px;
+  min-width: 80px;
+}
+.col-wd {
+  width: 275px;
+  
+}
+.pd-resize {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.recalculation-msg{
+    margin-left: 260px;
+    color: #F73718;
+  }
+.info-fa{
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.info-tooltip{
+    width: 50%;
+    height: auto;
+    padding: 5px;
+    background-color: #FFEFD5;
+    border: 1px solid #d3d3d3;
+    border-radius: 4px;
+    line-height: 1.6;
+    display: block;
+    position: absolute;
+    z-index: 9990;
+    margin-left: 10%;
+  .info-list{
+    margin-left:10px;
+    padding-left:10px;
+    position: relative;
+    list-style-type:none;
+    }
+    ul.info-list li::before {
+      font-family: "FontAwesome";
+      font-weight: normal;
+      content: "\f0da";
+      display: inline-block;
+      padding-right: 3px;
+      vertical-align: middle;
+      font-weight:900;
+      z-index: 9991;
+    }
+}
+.alert-msg{
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+  color:#F73718;
+  height: 65vh;
+}
+@media only screen and (max-width: 740px) {
+  .col-wd {
+    width: 42%;
+    font-size: small;
+    padding-top: 10px;
+}
+.pd-resize {
+padding-top: 10px;
+}
+.search_row {
+  width: 100%;
+  padding-top:10px ;
+  display: grid;
+}
+
+
+}
+

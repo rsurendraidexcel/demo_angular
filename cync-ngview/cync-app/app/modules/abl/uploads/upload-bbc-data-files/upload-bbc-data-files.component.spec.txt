@@ -1,0 +1,25 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { UploadRequiredDocumentsComponent } from './upload-required-documents.component';
+
+describe('UploadRequiredDocumentsComponent', () => {
+  let component: UploadRequiredDocumentsComponent;
+  let fixture: ComponentFixture<UploadRequiredDocumentsComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UploadRequiredDocumentsComponent ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UploadRequiredDocumentsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

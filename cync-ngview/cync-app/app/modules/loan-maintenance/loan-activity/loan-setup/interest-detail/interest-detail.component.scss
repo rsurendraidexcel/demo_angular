@@ -1,0 +1,45 @@
+.top-title { font-size: 14px; padding-left: 10px; display: inline-block; color:#ffff;}
+.mat-dialog-title{ margin: 0px;}
+.topHeadingPannel { margin: 1px; margin-top: 10px; background: #f4f1f1;}
+
+ /** TABLE CSS **/
+ .table-wrapper{
+   text-align: left;
+ }
+.table{ 
+  text-align:left;
+  width: 855px !important;
+  border-bottom: 1px solid #e3e3e3;
+  .t-layout{ 
+    table-layout: fixed;
+    display: block;
+    margin: auto;
+    height: auto;
+    tr {
+      border-top: 1px solid #c2c0c0;
+      th {text-align: center; background-color: #f5f7f7; font-weight: normal;}
+    }
+   
+   .t-col{ font-weight: normal; width: 214px; margin: 0px; border-left:1px solid #c2c0c0; }
+   .t-col:last-child{ border-right:1px solid #c2c0c0;}
+   .text-ralign{ text-align: right;}
+   }
+  .t-body-container{ 
+    margin: auto;
+   .t-col{ width: 214px; margin: 0px;  border-left:1px solid #eaebef;} 
+   .t-col:last-child{ width: 214px; border-right:1px solid #eaebef; }
+   .text-ralign{ text-align: right;}
+   max-height: 200px;
+   overflow-y: auto;
+   display: block;
+  }
+}
+.table-reponsive{
+    text-align: left;
+    margin: 0px 10px;
+}
+// .operation_disabled_cell {
+//   pointer-events: none;
+//     cursor: not-allowed;
+//     filter: blur(1px) !important;
+// }

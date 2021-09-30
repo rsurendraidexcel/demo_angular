@@ -1,0 +1,44 @@
+<div class="app-body-container bg-white is_summary list-letter-names" id="cync_app-body-container">
+    <h3 class="no-m-bt">&nbsp;&nbsp;&nbsp; Content</h3>
+
+    <div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+    <div class="row no-marg email-header">
+        <div class="btn-group btn-group-vertical-email col-xs-12 col-sm-12 col-md-10" data-toggle="buttons">
+            <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140" [routerLink]="['/generalCodes/content/letter-templates']">
+                <input type="radio" name='letter-type'>
+                <i class="fa fa-circle-o fa-2x"></i>
+                <i class="fa fa-dot-circle-o fa-2x"></i>
+                <span> Letter Templates</span>
+            </label>
+            <label class="btn active radio-inline col-xs-4 col-sm-4 col-md-1 w_140">
+                <input type="radio" name='letter-type' checked>
+                <i class="fa fa-circle-o fa-2x"></i>
+                <i class="fa fa-dot-circle-o fa-2x"></i>
+                <span> Letter Names</span>
+            </label>
+        </div>
+    </div>
+    <div class="pad-inner" *ngIf="isDataLoaded">
+        <div class="p-t-16">
+            <div class="row">
+                <tabset #staticTabs [ngClass]="!isNew ? 'remove-border' : ''">
+                    <!-- <tab heading="" id="tab1"> -->
+                    <div class="has-scrollbar row">
+                        <ag-grid-angular #agGrid style="width: 100%; height: calc(100vh - 315px);" class="ag-theme-balham" [floatingFilter]="true"
+                            [rowData]="rowData" [columnDefs]="columnDefs" rowSelection="single" (rowClicked)="onRowClicked($event)"
+                            [defaultColDef]="defaultColDef" [frameworkComponents]="frameworkComponents">
+                        </ag-grid-angular>
+                    </div>
+                    <div class="addbtn">
+                        <button class="btn btn-primary" (click)="addLetterNames()">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <!-- </tab> -->
+                </tabset>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <h1>"hello"</h1> -->

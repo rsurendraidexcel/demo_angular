@@ -1,0 +1,29 @@
+<div class="app-body-container bg-white top-mg">
+  <div class="titile-section">
+      <div class="top-title"> Fee History 
+      </div>
+    </div>
+  <div class="hrline"></div>
+   <div class="pad-inner"> 
+    <div class="msg-title" ><i class="fa fa-info-circle info"></i>  Note Interest rate can be adjusted by clicking the Edit button in the main screen while the fee is selected from the Name dropdown menu</div>
+    <div class="row">    
+      <ag-grid-angular style="width: 100%; height: calc(100vh - 60vh);" 
+           class="ag-theme-balham"
+           [defaultColDef]="defaultColDef" 
+           [columnDefs]="columnDefs"
+           [floatingFilter]="true" 
+           [gridOptions]="gridOptions"
+           [frameworkComponents]="frameworkComponents" 
+           [rowData]="rowData"
+          (gridReady)="onGridReady($event)">
+        </ag-grid-angular>
+     </div>
+
+  </div>
+  <div class="row buttom-section">
+      <button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only btn-pad align-right"
+      (click)="onCloseClick()">
+        Close
+      </button>
+  </div>
+</div>

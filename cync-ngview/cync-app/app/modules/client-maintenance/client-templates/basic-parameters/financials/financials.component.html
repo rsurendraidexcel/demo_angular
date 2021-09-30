@@ -1,0 +1,15 @@
+<div class="card bPCommonCards" [formGroup]="financialsForm">
+    <div class="card-title bPCommonCardsTitles">
+        <h4>Financials</h4>
+    </div>
+    <div class="row card-block form-group bPCommonCardsBlock">
+        <div class="row checkboxRow">
+            <label> Process Financial Manually </label>
+            <input formControlName="ProcessFinancialManually" type="checkbox" class="commoncheckboxStyle">
+        </div>
+        <div class="row checkboxRow">
+            <label> Calculate Current Profit / Loss </label>
+            <input formControlName="CalculateCurrentProfitLoss" type="checkbox" class="commoncheckboxStyle">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="close-btn-dash pull-right text-right top-action-btns"> </div>
+<div class="pad-inner">
+  <div class="row broker">
+    <div class="top-title"> Broker Commission Detail: {{data.brokerName}}</div>
+    <i style="font-size:20px; cursor: pointer;" class="fa close-btn" (click)="onCloseClick()">&#xf057;</i>
+  </div>
+  <div class="row margin-bottom">
+    <button type="button" class="btn" (click)="onApplyClick()">Save</button>
+    <i id="Export" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Export" class="line-height export-icon hand fa fa-external-link fa-2x f_s_20 clr_grey'"
+      (click)="exportData()"></i>
+  </div>
+  <div class="row">
+    <ag-grid-angular style="width: 100%; height: calc(100vh - 210px);" class="ag-theme-balham" [rowData]="rowData"
+      [defaultColDef]="defaultColDef" [columnDefs]="columnDefs" [floatingFilter]="true" rowSelection='multiple'
+      [gridOptions]="gridOptions" (gridReady)="onGridReady($event)" [excelStyles]="excelStyles"
+      [frameworkComponents]="frameworkComponents"  (modelUpdated)="onModelUpdated($event)">
+    </ag-grid-angular>
+  </div>
+</div>

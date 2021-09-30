@@ -1,0 +1,37 @@
+<div class="app-body-container bg-white is_summary  list-broker-inquiry" >
+    <div class="pad-inner">
+      <div class="row">
+        <div class="col-md-4 col-sm-5 col-xs-12">
+          <span class="f-w">Broker Inquiry</span>
+        </div>
+        <div class="col-md-8 col-sm-6 col-xs-12 text-right pull-right" style="margin-top: 4px;">
+          <i id="Export" aria-hidden="true" data-toggle="tooltip" 
+          data-placement="top" title="Export"
+           class="export-icon hand fa fa-external-link fa-2x f_s_20 clr_grey'"
+            (click)="exportData()" *ngIf="isExportButtonDisable()">
+          </i>
+            <i style="font-size:20px; cursor: pointer;" class="pull-right p-top fa margin-left" 
+            title="Refresh" (click)="redrawAllRows()"  *ngIf="isRefreshButtonDisable()">&#xf021;
+          </i>
+        </div>
+      </div>
+    </div>
+     <!-- Broker Inquiry Ag-grid section start -->
+    <div>
+        <ag-grid-angular 
+        #brokerInquiryGrid 
+        style="width: 100%; height: calc(100vh - 300px);" 
+        class="ag-theme-balham"
+        [columnDefs]="brokerInquiryColoumnDefs" 
+        [defaultColDef]="brokerInquiryDefaultColDef"
+        [floatingFilter]="true" 
+        [rowData]="brokerInquiryRowData"
+        [gridOptions]="brokerInquiryGridOptions"
+        (gridReady)="brokerInquiryOnGridReady($event)"
+        (modelUpdated)="onModelUpdated($event)"
+        [frameworkComponents]="frameworkComponents"
+        [excelStyles]="excelStyles">
+        </ag-grid-angular>
+    </div>
+     <!-- Broker Inquiry Ag-grid section end -->
+  </div>
